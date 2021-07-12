@@ -1,10 +1,12 @@
 import React from 'react'
-import Landing from "../components/Landing/index";
+import Landing from '../components/Landing/Landing.jsx'
+
 
 const LandingPage = () => {
-    
     return (
-        <Landing title="Landing page" />
+        <div>
+            <Landing/>
+        </div>
     )
 }
 

@@ -1,0 +1,7 @@
+@use '../sass/partials/forward-file' as filePaths;
+
+$logo-height: 5em;
+
+.logo {
+    height: $logo-height;
+}
