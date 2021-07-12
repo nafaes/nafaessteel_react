@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router";
 import { LANDING, SIGNIN } from "../constants/routes";
-import LandingPage from "../pages/landing";
+import LandingPage from "../pages/Landing";
 import SigninPage from "../pages/Signin";
 
 
