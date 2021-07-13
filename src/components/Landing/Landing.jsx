@@ -15,6 +15,9 @@ import Wood from '../../assets/img/wood.jpg';
 import Brick from '../../assets/img/brick.jpg';
 import { Divider } from '@material-ui/core';
 
+import clsx from "clsx";
+import landingEngDesk from "../../assets/scss/landing.module.scss";
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,7 +31,9 @@ const useStyles = makeStyles(theme => ({
 const Landing = (props) =>{
 
     const classes = useStyles();
-    const theme = useTheme();
+    let classesExternal = landingEngDesk;
+  
+  const theme = useTheme();
 
     const categories = useMemo(() => {
         return [{
@@ -66,7 +71,9 @@ const Landing = (props) =>{
                 <Grid item container direction="row" style={{marginTop: "3em"}} justify="center" spacing={2}>
                     {categories.map((category, index) => (
                         <Grid item key={index}>
-                        <Card className={classes.root}>
+                        <Card raised elevation={12}
+                            className={clsx(classes.root,classesExternal.animateCard)}
+                        >
                             <CardActionArea>
                             <CardMedia
                                 component="img"
