@@ -212,10 +212,10 @@ const menu = (
           transformOrigin={{ vertical: 'top', horizontal: 'left' }}
           getContentAnchorEl={null} className={classes.menuCls}>
             <Submenu popupId="moreChoicesMenu" title="Iron" className={classes.subMenu}> 
-                <MenuItem onClick={popupState.close}>Pure Iron</MenuItem>
-                <MenuItem onClick={popupState.close}>Wrought Iron</MenuItem>
-                <MenuItem onClick={popupState.close}>Cast Iron</MenuItem>
-                <MenuItem onClick={popupState.close}>Pig Iron</MenuItem>
+                <MenuItem onClick={popupState.close}> Iron</MenuItem>
+                <MenuItem onClick={popupState.close}> Iron</MenuItem>
+                <MenuItem onClick={popupState.close}> Iron</MenuItem>
+                <MenuItem onClick={popupState.close}> Iron</MenuItem>
             </Submenu>       
             <MenuItem onClick={popupState.close}>Cement</MenuItem>
             <MenuItem onClick={popupState.close}>Wood</MenuItem>
