@@ -7,7 +7,7 @@ export const navbarMobCommon = {
 
     toolbarMargin: {
         ...theme.mixins.toolbar,
-        marginBottom: "0.6em",
+        marginBottom: "1.0em",
         [theme.breakpoints.down("md")]: {
           marginBottom: "0.6em",
         },
@@ -36,11 +36,20 @@ export const navbarMobCommon = {
         marginLeft: "25px",
       },
       menuCls: {
+        textAlign: "left",
+
         // backgroundColor: theme.palette.common.blue,    
         "& .MuiMenu-paper":{
           backgroundColor: theme.palette.common.blue,
           color: "white",
           borderRadius: "0px",
+          marginRight: "10px",
+          marginTop: "-2.5px"
+          // padding: "0px 30px"
+
+        },
+        "& .MuiListItem-root": {
+            padding: "8px 45px",
         },
         "& .MuiListItem-root.Mui-selected, .MuiListItem-root.Mui-selected:hover":{
           color: "yellow",
@@ -54,16 +63,21 @@ export const navbarMobCommon = {
           backgroundColor: theme.palette.common.blue,
           color: "white",
           borderRadius: "0px",
+          marginLeft: "1px",
+          marginTop: "5px",
         },
+        "& .MuiListItem-root": {
+          padding: "8px 30px",
+      },
         "& .MuiListItem-root.Mui-selected, .MuiListItem-root.Mui-selected:hover":{
           color: "yellow",
         }
       }, 
       drawerIconContainer: {
-        marginLeft: "auto",
         "&:hover": {
           backgroundColor: "transparent"
-        }
+        },
+        position: "absolute",
       },
       drawerIcon: {
         height: "35px",
@@ -84,7 +98,6 @@ export const navbarMobCommon = {
           }  
       },
       appbar: {
-        // zIndex: theme.zIndex.modal + 1,
-        padding: 0
+        zIndex: theme.zIndex.modal + 1
       }
 }
