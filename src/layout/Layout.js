@@ -1,21 +1,21 @@
 import React from "react";
 import { ThemeProvider , createMuiTheme } from '@material-ui/core/styles';
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import { appTheme } from '../assets/theme/theme';
 // import Routes from "../routes";
 import Navbar from '../layout/NavBar/Navbar';
 import ScrollProgress from  './ScrollProgress';
 import Routes from '../routes/index';
+import Footer from "./Footer/Footer";
 
-const Layout = () => {
-
+const Layout = (props) => {
   const theme = createMuiTheme(appTheme());
 
   return (
     <ThemeProvider theme={theme}>
-       <Navbar />
+       <Navbar /*{...props}*/ />
        <ScrollProgress/>
        <Routes/>
+       <Footer/>
        {/* {[...new Array(90)]
             .map(
               () => `Cras mattis consectetur purus sit amet fermentum.
