@@ -181,7 +181,10 @@ const Landing = (props) =>{
                      <Grid item container direction="row" justify="center" alignItems="center" className={clsx(classes.aboutContent,classesExternal.aboutContent)}>
                         <Typography variant="body1" className={clsx(classes.info,classesExternal.info)} paragraph>
                         Nafees International Group was established in 2006 as a limited liability company, 
-                       
+                        and aims to provide its services according to innovative solutions that serve all the 
+                        clients and provide the necessary protection.Nafaes online service for Rebars is one of the services offered by a group 
+                        of valuables to meet the need of customers from consumers and entrepreneurs to provide types of reinforcing steel of 
+                        different sizes at competitive prices with a guarantee of quality.
                         </Typography>
                     </Grid>
                  </Grid>
