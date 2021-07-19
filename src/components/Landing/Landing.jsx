@@ -38,25 +38,25 @@ const Landing = (props) =>{
     const categories = useMemo(() => {
         return [{
             image: Iron,
-            title: "Iron",
+            title: "Irons",
             alt: "Iron",
             description: "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",    
         },
         {
             image: Cement,
-            title: "Cement",
+            title: "Cements",
             alt: "Cement",
             description: "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",    
         },
         {
             image: Wood,
-            title: "Wood",
+            title: "Woods",
             alt: "Wood",
             description: "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",    
         },
         {
             image: Brick,
-            title: "Brick",
+            title: "Bricks",
             alt: "Brick",
             description: "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",    
         }
