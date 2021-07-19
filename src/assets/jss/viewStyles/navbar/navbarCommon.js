@@ -83,7 +83,8 @@ export const navbarMobCommon = {
             opacity: 1,
           }  
       },
-      // appbar: {
-      //   zIndex: theme.zIndex.modal + 1
-      // }
+      appbar: {
+        // zIndex: theme.zIndex.modal + 1,
+        padding: 0
+      }
 }

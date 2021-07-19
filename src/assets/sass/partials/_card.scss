@@ -1,0 +1,15 @@
+%animateCard{
+    opacity: 0;
+    animation-name: fadeInUp;
+    -webkit-animation-name: fadeInUp;
+    animation-duration: 3s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-fill-mode: both;
+    margin: 0px auto;
+}
+// %ironsCard{
+//     width: 14em !important;
+//     height: 14em;
+//     margin: 1em auto;
+// }

@@ -321,7 +321,7 @@ const menu = (
   return (
     <Fragment>
       <ElevationScroll>
-        <AppBar position="fixed" className={classes.appbar}>
+        <AppBar position="fixed" className={classes.appbar} style={{padding: 0}}>
           <ToolBar disableGutters>
             <Button component={Link} to="/" onClick={() => setValue(0)} className={classes.logoContainer}>
               <img

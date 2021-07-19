@@ -1,8 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router";
-import { LANDING, SIGNIN } from "../constants/routes";
+import { LANDING, SIGNIN, IRONS, ITEMS, ADDTOCART } from "../constants/routes";
 import LandingPage from "../pages/Landing";
 import SigninPage from "../pages/Signin";
+import IronsPage from "../pages/Irons";
+import ItemsPage from "../pages/Items";
+import AddToCart from "../pages/AddToCart";
 
 
 const Routes = () => {
@@ -10,6 +13,9 @@ const Routes = () => {
     <Switch>
       <Route exact={true} path={LANDING} component={LandingPage} />
       <Route exact={true} path={SIGNIN} component={SigninPage} />
+      <Route exact={true} path={IRONS} component={IronsPage} />
+      <Route exact={true} path={ITEMS} component={ItemsPage} />
+      <Route exact={true} path={ADDTOCART} component={AddToCart} />
         {/* <Route exact path="/" />
          <Route exact path="/prices" component={() => <div>Prices</div> }/>
          <Route exact path="/trackyourorder" component={() => <div>TrackYourOrder</div> }/>
