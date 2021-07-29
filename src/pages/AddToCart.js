@@ -1,11 +1,10 @@
 import React from 'react'
+import AddToCart from '../components/AddToCart/Addtocart'
 
-const AddToCart = () => {
+const AddToCartPage = () => {
     return (
-        <div>
-            <p>Cart</p>
-        </div>
+      <AddToCart />
     )
 }
 
-export default AddToCart
+export default AddToCartPage;

@@ -1,0 +1,17 @@
+@mixin containerForm {
+  width: 60%;
+  padding: 1em;
+  margin: 4em auto 0 auto;
+  border-radius: 1em;
+  // background: linear-gradient(
+  //     to right,
+  //     rgba(20, 30, 48, 0.9),
+  //     rgba(36, 59, 85, 0.6)
+  // );
+  background: linear-gradient(
+    90deg,
+    rgba(0, 134, 179, 0.4),
+    rgba(0, 134, 179, 0.4)
+  );
+}
+

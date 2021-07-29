@@ -1,0 +1,19 @@
+@use '../sass/partials/forward-file' as filePaths;
+
+.ContainerForm {
+    @include filePaths.containerForm
+}
+.addCartSubBtn {
+    @include filePaths.button-props;
+}
+.addCartTabHdrRow,
+.addCartTabFtrRow {
+    background-color: #0086b3;
+    color: #fff !important;
+   
+}
+.addCartTabHdrRow th,
+.addCartTabFtrRow td {
+    color: #fff !important;
+    font-weight: 600;
+}

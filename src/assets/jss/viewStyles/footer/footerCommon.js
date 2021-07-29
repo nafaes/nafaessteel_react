@@ -5,24 +5,17 @@ const theme = createMuiTheme(appTheme());
 
 export const footerMobCommon = {
     footerContainer:{
-        backgroundColor: theme.palette.common.blue,
-        position: "absolute",
-        left: 0,
-        right: 0,
-        width: "100%", 
+         backgroundColor: theme.palette.common.blue,
+     },
+     footerIconsContainer:{
+        "& .MuiIconButton-root": {
+            padding: "10px",
+        },
+     },
+     footerTxt: {
+        fontSize: ".70em"
     },
-    footerTxt: {
-        paddingLeft: "2em",
-        color: "white",
-    },
-    footerIcons: {
-        paddingTop: "1em",
-         textAlign: "right",
-    },
-    footerlogo: {
-        height: "4em",
-        paddingLeft: "0.5em"
+    footerIcons:{
+        fontSize: "1em"
     }
-   
-    
 }

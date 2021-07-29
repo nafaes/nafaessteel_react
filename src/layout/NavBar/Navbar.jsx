@@ -171,7 +171,9 @@ const Navbar = (props) => {
       <Menu {...bindMenu(popupState)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        getContentAnchorEl={null} className={classes.menuCls}>
+        getContentAnchorEl={null} className={classes.menuCls}
+        disableScrollLock={true}
+        >
         <Submenu popupId="moreChoicesMenu" title="Iron" className={classes.subMenu}>
           <MenuItem onClick={popupState.close}>Pure Iron</MenuItem>
           <MenuItem onClick={popupState.close}>Wrought Iron</MenuItem>

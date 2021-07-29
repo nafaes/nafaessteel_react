@@ -10,8 +10,13 @@ export const landingMobCommon = {
       },
       contactContainer: {
         background: "linear-gradient(90deg, rgba(0, 134, 179,.7), rgba(0, 134, 179,.7))",
-        marginBottom: "30px",
+         marginBottom: "3em",
          borderRadius: "2em",
+      },
+      aboutContainer: {
+        background: "linear-gradient(90deg, rgba(0, 134, 179,.7), rgba(0, 134, 179,.7))",
+        marginBottom: "6em",
+        borderRadius: "2em",
       },
       contactHeader:{
           border: "1px solid white",
@@ -22,8 +27,9 @@ export const landingMobCommon = {
           color: "white",
       } ,
       aboutContent: {
-        padding: "25px",
-        color: "white"
+        padding: "1.5em",
+        color: "white",
+        textAlign: "center"
       },
       info: {
         fontSize: "1rem",

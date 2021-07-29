@@ -27,36 +27,45 @@
     <title>Nafaes Steel</title>
   </head>
   <style>
-     html {
-    height: 100%;
-  }
-  /* *{ margin: 0;padding: 0 !important;} */
-  
-      body {
-        position: relative;
-        /* overflow: auto !important; 
-         padding: 0 !important;  */
-        /* overflow: hidden !important; */
-    margin: 0;
-    bottom: 0;
-    min-height: 100%;
-    padding: 0px 10px 0px 10px;
-    /* background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(body_fish_bg1.jpg) no-repeat center center fixed; */
-    background: linear-gradient(35deg, rgba(38, 108, 155, 0.8),
-        rgba(241, 100, 6, 0.5)),
-      url(bg.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    /* linear-gradient(45deg, rgba(
+    html {
+      height: 100%;
+    }
+    /* *{ margin: 0;padding: 0 !important;} */
+
+    body {
+      position: relative;
+      margin: 0;
+      bottom: 0;
+      min-height: 100%;
+      padding: 0px 10px 0px 10px;
+      /* background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(body_fish_bg1.jpg) no-repeat center center fixed; */
+      background: linear-gradient(
+          35deg,
+          rgba(38, 108, 155, 0.8),
+          rgba(241, 100, 6, 0.5)
+        ),
+        url(bg.jpg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      background-attachment: fixed;
+      /* linear-gradient(45deg, rgba(
                 145, 146, 122, 0.62), rgba(
                   217, 91, 132, 0.58)) */
+    }
+    .indexRootClass {
+      padding-bottom: 6em;
+    }
+
+    @media (min-width: 768px) {
+      .indexRootClass {
+        padding-bottom: 12em;
       }
+    }
   </style>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root" class="indexRootClass"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

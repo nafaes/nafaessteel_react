@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Items from "../components/Items/Items";
 import { categories } from "../constants/data";
+import { ADDTOCART, ITEMS } from "../constants/routes";
 
 const ItemsPage = (props) => {
-    // const [AllCategories, ] = useState(categories)
-    const [items, setItems] = useState()
-    
-    const {state}=props.location
-    console.log(state.categoryId); 
 
+    const [items, setItems] = useState()
+    let history = useHistory();
+    
+    const {state:{categoryId}}=props.location
+    
     useEffect(() => {
-        const categoryItems =  categories.find(({categoryId}) => categoryId === state.categoryId);
+        const categoryItems =  categories.find(({categoryId:id}) => id === categoryId);
         setItems(categoryItems.items)
 
         return () => {
@@ -19,11 +20,20 @@ const ItemsPage = (props) => {
         }
     }, [])
 
+    const navigateToItems = (itemId) => {
+  
+        history.push(ADDTOCART,{
+            categoryId: categoryId,
+            itemId: itemId
+        });
+   
+  }
+
    
    console.log(items);
     return (
         <div>
-            <Items items={items}/>
+            <Items items={items} navigateToItems={navigateToItems}/>
         </div>
     )
 }

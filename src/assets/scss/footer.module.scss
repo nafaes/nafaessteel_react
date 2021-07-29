@@ -1,0 +1,29 @@
+
+.footerContainer {
+    // background-color: "blue";
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 1302, // to do not drawer-menu overlapping by footer
+}
+.footerlogo {
+    width: 6em;
+    vertical-align: bottom;
+    padding: .50em;
+    padding-left: 0.5em;
+}
+.footerTxt {
+    padding-left: 2em;
+    color: white;
+}
+
+.footerIconsContainer {
+    text-align: right;
+}
+.footerIcons{
+    font-size: 1.5em;
+    padding: 0px;
+    margin: 0px;
+}

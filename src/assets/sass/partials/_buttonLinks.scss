@@ -1,0 +1,17 @@
+$white-color:#fff;
+$font-size90rem: 0.90rem;
+$font-weight400: 400;
+$textDecoration: none;
+
+@mixin button-props {
+    border: 1px solid rgba(255,255,255,1) !important;
+    color: $white-color !important;
+    background-color: transparent !important;
+    text-transform: none !important;
+    font-size: "1rem";
+    font-weight: 600 !important;
+    &:hover {
+      background-color: #0086b3 !important;
+      border: 1px solid #0086b3 !important;
+    }
+}

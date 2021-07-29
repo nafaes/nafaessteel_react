@@ -5,7 +5,7 @@ import LandingPage from "../pages/Landing";
 import SigninPage from "../pages/Signin";
 import IronsPage from "../pages/Irons";
 import ItemsPage from "../pages/Items";
-import AddToCart from "../pages/AddToCart";
+import AddToCartPage from "../pages/AddToCart";
 
 
 const Routes = () => {
@@ -15,7 +15,7 @@ const Routes = () => {
       <Route exact={true} path={SIGNIN} component={SigninPage} />
       <Route exact={true} path={IRONS} component={IronsPage} />
       <Route exact={true} path={ITEMS} component={ItemsPage} />
-      <Route exact={true} path={ADDTOCART} component={AddToCart} />
+      <Route exact={true} path={ADDTOCART} component={AddToCartPage} />
         {/* <Route exact path="/" />
          <Route exact path="/prices" component={() => <div>Prices</div> }/>
          <Route exact path="/trackyourorder" component={() => <div>TrackYourOrder</div> }/>

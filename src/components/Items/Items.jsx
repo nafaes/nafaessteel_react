@@ -17,6 +17,8 @@ import { Divider } from "@material-ui/core";
 
 import clsx from "clsx";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
+import { ITEMS } from "../../constants/routes";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,50 +29,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Items = (props) => {
-const { items}=props;
+  
+const { items,navigateToItems } = props;
   const classes = useStyles();
   let classesExternal = landingEngDesk;
 
   const theme = useTheme();
-
-  const categories = useMemo(() => {
-    return [
-      {
-        image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
-        title: "Kuwait Steel",
-        alt: "Kuwait Steel",
-        price: "247 KWD per ton",
-        description:
-          "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",
-      },
-      {
-        image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
-        title: "Oman Steel",
-        alt: "Oman Steel",
-        price: "240 KWD per ton",
-        description:
-          "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",
-      },
-      {
-        image: "https://www.nafaessteel.com/IronImages/ksa_steel.png",
-        title: "Alittefaq Steel",
-        alt: "Alittefaq Steel",
-        price: "240 KWD per ton",
-        description:
-          "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",
-      },
-      {
-        image: "https://www.nafaessteel.com/IronImages/irani_steel.png",
-        title: "Irani Steel",
-        alt: "Irani Steel",
-        button: "iron",
-        price: "240 KWD per ton",
-        description:
-          "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",
-      },
-      
-    ];
-  }, []);
 
   let itemsCart = <p>Loading</p>
 
@@ -83,6 +47,7 @@ const { items}=props;
               raised
               elevation={12}
               className={clsx(classes.root, classesExternal.animateCard)}
+              onClick={navigateToItems.bind(null, item.itemId)}
             >
               <CardActionArea>
                 <CardMedia
