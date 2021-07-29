@@ -1,6 +1,5 @@
-import React, { Fragment, useMemo } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
-// import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,33 +9,19 @@ import Typography from "@material-ui/core/Typography";
 import RoomIcon from "@material-ui/icons/Room";
 import MailIcon from "@material-ui/icons/MailOutline";
 import PhoneIcon from "@material-ui/icons/PhoneInTalkOutlined";
-
-import { Divider } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
 import clsx from "clsx";
-import { ADDTOCART, IRONS, ITEMS } from "../../constants/routes";
-import { categories } from "../../constants/data";
+import { Divider } from "@material-ui/core";
+
+import { allCategories } from "../../constants/data";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
 
 const Landing = (props) => {
-  let history = useHistory();
+  const { navigateToItems } = props;
 
   const englishMobileStyles = landingMobEng();
   let classesExternal = landingEngDesk;
   let classes = englishMobileStyles;
-
-  const navigateToItems = (stage, categoryId) => {
-    if (stage === 3) {
-      history.push(ITEMS, {
-        categoryId: categoryId,
-      });
-    } else if (stage === 2) {
-      history.push(ADDTOCART, {
-        categoryId: categoryId,
-      });
-    }
-  };
 
   return (
     <Grid container direction="column">
@@ -48,8 +33,12 @@ const Landing = (props) => {
         justify="center"
         spacing={2}
       >
-        {categories.map((category, index) => (
-          <Grid item key={index} style={{ textDecoration: "none" }}>
+        {allCategories.map((category, index) => (
+          <Grid
+            item
+            key={category.categoryId}
+            style={{ textDecoration: "none" }}
+          >
             <Card
               raised
               elevation={12}

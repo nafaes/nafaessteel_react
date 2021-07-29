@@ -4,7 +4,7 @@ import ToolBar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -19,25 +19,18 @@ import { navbarEngMobile } from '../../assets/jss/viewStyles/navbar/english';
 import clsx from "clsx";
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import ListSubheader from '@material-ui/core/ListSubheader';
-
-
-
-import logo from '../../assets/img/Logo.png';
 import { Button, IconButton } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import Menu from 'material-ui-popup-state/HoverMenu';
 import { usePopupState, bindHover, bindMenu } from 'material-ui-popup-state/hooks';
 
-
-
+import logo from '../../assets/img/Logo.png';
+import { CART } from '../../constants/routes';
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -290,7 +283,7 @@ const Navbar = (props) => {
               </IconButton>
             </Tooltip>
             <Tooltip title="Cart" arrow>
-              <IconButton color="inherit">
+              <IconButton color="inherit" component={Link} to={CART}>
                 <ShoppingCart size="medium" />
               </IconButton>
             </Tooltip>

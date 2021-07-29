@@ -1,24 +1,15 @@
-import React, { Fragment, useMemo } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-
-import Iron from "../../assets/img/Iron.png";
-import Cement from "../../assets/img/cement.jpg";
-import Wood from "../../assets/img/wood.jpg";
-import Brick from "../../assets/img/brick.jpg";
 import { Divider } from "@material-ui/core";
-
 import clsx from "clsx";
+
 import landingEngDesk from "../../assets/scss/landing.module.scss";
-import { ITEMS } from "../../constants/routes";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,25 +20,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Items = (props) => {
-  
-const { items,navigateToItems } = props;
+  const { items, navigateToAddToCart } = props;
   const classes = useStyles();
   let classesExternal = landingEngDesk;
-
   const theme = useTheme();
 
-  let itemsCart = <p>Loading</p>
+  let itemsCart = <p>Loading</p>;
 
-  if(items) {
+  if (items) {
     itemsCart = (
-        <Grid container style={{marginTop: "3em"}} justify="center" spacing={2} cols={2}>
+      <Grid
+        container
+        style={{ marginTop: "3em" }}
+        justify="center"
+        spacing={2}
+        cols={2}
+      >
         {items.map((item, index) => (
-          <Grid item key={index} style={{columnGap:"12px"}} >
+          <Grid item key={index} style={{ columnGap: "12px" }}>
             <Card
               raised
               elevation={12}
               className={clsx(classes.root, classesExternal.animateCard)}
-              onClick={navigateToItems.bind(null, item.itemId)}
+              onClick={navigateToAddToCart.bind(null, item.itemId)}
             >
               <CardActionArea>
                 <CardMedia
@@ -57,10 +52,7 @@ const { items,navigateToItems } = props;
                   // image={Cement}
                   src={item.image}
                   title={item.itemName}
-                  className={clsx(
-                    classes.ironsCard,
-                    classesExternal.ironsCard
-                  )}
+                  className={clsx(classes.ironsCard, classesExternal.ironsCard)}
                 />
                 <Divider />
                 <CardContent
@@ -91,13 +83,10 @@ const { items,navigateToItems } = props;
           </Grid>
         ))}
       </Grid>
-      )
+    );
   }
 
-  return (
-    itemsCart
-    
-  );
+  return itemsCart;
 };
 
 export default Items;

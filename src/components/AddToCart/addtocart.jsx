@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -67,6 +67,19 @@ const invoiceSubtotal = subtotal(rows);
 const totalQuantity = totalqty(rows);
 
 const AddToCart = (props) => {
+  // const {
+  //   categoryName,
+  //   item,
+  //   type,
+  //   typeChangeHandler,
+  //   sizes,
+  //   size,
+  //   sizeChangeHandler,
+  //   length,
+  //   lengthHandler,
+  //   price,
+  // } = props;
+
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
@@ -195,7 +208,11 @@ const AddToCart = (props) => {
 
         <Grid container justify="center" style={{ marginTop: "2em" }}>
           <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="spanning table" size="small">
+            <Table
+              className={classes.table}
+              aria-label="spanning table"
+              size="small"
+            >
               <TableHead
                 className={clsx(
                   classes.addCartTabHdrRow,
@@ -216,8 +233,8 @@ const AddToCart = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.desc}>
+                {rows.map((row, index) => (
+                  <TableRow key={index}>
                     <TableCell>{row.desc}</TableCell>
                     <TableCell align="right">{row.qty}</TableCell>
                     <TableCell align="right">{ccyFormat(row.price)}</TableCell>
