@@ -67,19 +67,7 @@ const invoiceSubtotal = subtotal(rows);
 const totalQuantity = totalqty(rows);
 
 const AddToCart = (props) => {
-  // const {
-  //   categoryName,
-  //   item,
-  //   type,
-  //   typeChangeHandler,
-  //   sizes,
-  //   size,
-  //   sizeChangeHandler,
-  //   length,
-  //   lengthHandler,
-  //   price,
-  // } = props;
-
+  
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
