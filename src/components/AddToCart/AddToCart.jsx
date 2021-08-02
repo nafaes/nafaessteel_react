@@ -2,8 +2,6 @@ import React, { Fragment } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import clsx from "clsx";
 
 import InputLabel from "@material-ui/core/InputLabel";
@@ -26,6 +24,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { isInputNumber } from "../../utils/validations";
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -67,20 +66,17 @@ const invoiceSubtotal = subtotal(rows);
 const totalQuantity = totalqty(rows);
 
 const AddToCart = (props) => {
-  
+  const { categoryName, item, addToCartForm, formChangeHandler } = props;
+
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
 
-  const [size, setSize] = React.useState("");
-
-  const handleChange = (event) => {
-    setSize(event.target.value);
-  };
+  console.log(addToCartForm);
 
   return (
     <Fragment>
-      <form
+      <div
         className={clsx(classes.ContainerForm, classesExternal.ContainerForm)}
       >
         <Grid container justify="center">
@@ -98,7 +94,9 @@ const AddToCart = (props) => {
               }}
             >
               <Grid item>
-                <Typography variant="h6">Kuwait Steel</Typography>
+                <Typography variant="h6">{`${categoryName} ${
+                  item ? `--- ${item?.itemName}` : ""
+                }`}</Typography>
               </Grid>
               <Grid item>
                 <Typography variant="h6">247.00 Per Ton</Typography>
@@ -113,52 +111,82 @@ const AddToCart = (props) => {
               style={{ color: "#fff", marginTop: "1em" }}
             >
               <Grid item lg={8} md={8} xs={10}>
-                <FormControl
-                  variant="outlined"
-                  autoComplete="off"
-                  style={{ width: "100%", marginBottom: "2em" }}
-                >
-                  <InputLabel
-                    id="demo-simple-select-outlined-label"
-                    style={{ color: "#fff" }}
-                  >
-                    Size
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={size}
-                    onChange={handleChange}
-                    label="Size"
-                    style={{ color: "#fff" }}
-                    className={clsx(
-                      classes.selectComponentCls,
-                      classesExternal.selectComponentCls
-                    )}
-                    MenuProps={{ disableScrollLock: true }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>10 mm</MenuItem>
-                    <MenuItem value={20}>20 mm</MenuItem>
-                    <MenuItem value={30}>30 mm</MenuItem>
-                  </Select>
-                </FormControl>
+                {item?.selections &&
+                  item.selections.map((select, index) => (
+                    <FormControl
+                      variant="outlined"
+                      autoComplete="off"
+                      style={{ width: "100%", marginBottom: "2em" }}
+                      key={index}
+                    >
+                      <InputLabel id="select-type" style={{ color: "#fff" }}>
+                        {select.label}
+                      </InputLabel>
+                      <Select
+                        labelId="select-type"
+                        id="select-type-select-outlined"
+                        name={select.name}
+                        value={
+                          addToCartForm?.[select.name]?.["value"]
+                            ? addToCartForm[select.name]["value"]
+                            : ""
+                        }
+                        // defaultValue=""
+                        // onChange={formChangeHandler}
 
-                {/* <form style={{ width: "100%", marginBottom: "2em" }} autoComplete="off"> */}
+                        onChange={({ target }) => {
+                          formChangeHandler({
+                            target,
+                            ...select.types.find(
+                              ({ id }) => id === target.value
+                            ),
+                          });
+                        }}
+                        label={select.label}
+                        style={{ color: "#fff" }}
+                        className={clsx(
+                          classes.selectComponentCls,
+                          classesExternal.selectComponentCls
+                        )}
+                        MenuProps={{ disableScrollLock: true }}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {select.types.map(({ type, id }) => (
+                          <MenuItem value={id} key={id}>
+                            {type}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  ))}
+
+                {addToCartForm.price && (
+                  <Grid item xs={12} style={{ marginBottom: 16 }}>
+                    <Typography component="h1" variant="subtitle1">
+                      Price: {addToCartForm.price}
+                    </Typography>
+                  </Grid>
+                )}
+
                 <TextField
                   id="outlined-basic"
                   label="Enter Quantity"
+                  name="quantity"
+                  value={addToCartForm.quantity.value}
+                  onChange={formChangeHandler}
                   variant="outlined"
                   className={clsx(
                     classes.selectComponentCls,
                     classesExternal.selectComponentCls
                   )}
                   autoComplete="off"
+                  onKeyPress={(event) => {
+                    isInputNumber(event, 2);
+                  }}
                   style={{ width: "100%", marginBottom: "2em" }}
                 />
-                {/* </form> */}
 
                 <Grid
                   item
@@ -253,9 +281,9 @@ const AddToCart = (props) => {
             </Table>
           </TableContainer>
         </Grid>
-      </form>
+      </div>
     </Fragment>
   );
 };
 
-export default AddToCart;
+export default React.memo(AddToCart);

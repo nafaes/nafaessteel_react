@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Items = (props) => {
-  const { items, navigateToAddToCart } = props;
+  const { items, navigateToAddToCart, navigate } = props;
   const classes = useStyles();
   let classesExternal = landingEngDesk;
   const theme = useTheme();
@@ -42,7 +42,8 @@ const Items = (props) => {
               raised
               elevation={12}
               className={clsx(classes.root, classesExternal.animateCard)}
-              onClick={navigateToAddToCart.bind(null, item.itemId)}
+              onClick={navigate.bind(null, item.nextLevel, item.itemId)}
+              // onClick={navigateToAddToCart.bind(null, item.itemId)}
             >
               <CardActionArea>
                 <CardMedia
