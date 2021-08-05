@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -11,17 +11,40 @@ import MailIcon from "@material-ui/icons/MailOutline";
 import PhoneIcon from "@material-ui/icons/PhoneInTalkOutlined";
 import clsx from "clsx";
 import { Divider } from "@material-ui/core";
+import { withRouter } from "react-router-dom";
 
 import { allCategories } from "../../constants/data";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
 
 const Landing = (props) => {
-  const { navigateToItems } = props;
+  const {
+    navigateToItems,
+    location: { state },
+    history,
+  } = props;
 
   const englishMobileStyles = landingMobEng();
   let classesExternal = landingEngDesk;
   let classes = englishMobileStyles;
+
+  let contactUs = useRef(null);
+  useEffect(() => {
+    let timeOut;
+    if (state?.message) {
+      contactUs.current.scrollIntoView({
+        behavior: "smooth",
+      });
+
+      timeOut = setTimeout(() => {
+        history.push("/");
+      }, 1000);
+    }
+
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [history, state]);
 
   return (
     <Grid container direction="column">
@@ -46,7 +69,8 @@ const Landing = (props) => {
               onClick={navigateToItems.bind(
                 null,
                 category.stages,
-                category.categoryId
+                category.categoryId,
+                category.categoryName
               )}
             >
               <CardActionArea>
@@ -76,110 +100,113 @@ const Landing = (props) => {
         ))}
       </Grid>
 
-      <Grid
-        container
-        direction="column"
-        style={{ marginTop: "4em" }}
-        className={classes.contactContainer}
-      >
-        <Grid item container justify="center">
-          <Typography
-            variant="h6"
+      <div ref={contactUs}>
+        <Grid
+          container
+          direction="column"
+          style={{ marginTop: "4em" }}
+          className={classes.contactContainer}
+        >
+          <Grid item container justify="center">
+            <Typography
+              variant="h6"
+              className={clsx(
+                classes.contactHeader,
+                classesExternal.contactHeader
+              )}
+            >
+              GET IN TOUCH
+            </Typography>
+          </Grid>
+
+          <Grid
+            item
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
             className={clsx(
-              classes.contactHeader,
-              classesExternal.contactHeader
+              classes.contactContent,
+              classesExternal.contactContent
             )}
           >
-            GET IN TOUCH
-          </Typography>
-        </Grid>
-
-        <Grid
-          item
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          className={clsx(
-            classes.contactContent,
-            classesExternal.contactContent
-          )}
-        >
-          <Grid
-            item
-            container
-            direction="column"
-            style={{ textAlign: "center" }}
-          >
-            <Grid item style={{ padding: "10px" }}>
-              <Grid item>
-                <IconButton>
-                  <MailIcon color="secondary" fontSize="large" />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  className={clsx(classes.info, classesExternal.info)}
-                >
-                  info@nafaes.com
-                </Typography>
+            <Grid
+              item
+              container
+              direction="column"
+              style={{ textAlign: "center" }}
+            >
+              <Grid item style={{ padding: "10px" }}>
+                <Grid item>
+                  <IconButton>
+                    <MailIcon color="secondary" fontSize="large" />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    className={clsx(classes.info, classesExternal.info)}
+                  >
+                    info@nafaes.com
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid
-            item
-            container
-            direction="column"
-            style={{
-              textAlign: "center",
-              borderLeft: "1px solid rgba(255,255,255,0.9)",
-              borderRight: "1px solid rgba(255,255,255,0.9)",
-            }}
-          >
-            <Grid item style={{ padding: "10px" }}>
-              <Grid item>
-                <IconButton>
-                  <PhoneIcon color="secondary" fontSize="large" />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  className={clsx(classes.info, classesExternal.info)}
-                >
-                  (+965) 96065464
-                </Typography>
+            <Grid
+              item
+              container
+              direction="column"
+              style={{
+                textAlign: "center",
+                borderLeft: "1px solid rgba(255,255,255,0.9)",
+                borderRight: "1px solid rgba(255,255,255,0.9)",
+              }}
+            >
+              <Grid item style={{ padding: "10px" }}>
+                <Grid item>
+                  <IconButton>
+                    <PhoneIcon color="secondary" fontSize="large" />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    className={clsx(classes.info, classesExternal.info)}
+                  >
+                    (+965) 96065464
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid
-            item
-            container
-            direction="column"
-            style={{ textAlign: "center" }}
-          >
-            <Grid item style={{ padding: "10px" }}>
-              <Grid item>
-                <IconButton>
-                  <RoomIcon color="secondary" fontSize="large" />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  className={clsx(classes.info, classesExternal.info)}
-                >
-                  Kuwait, East, Khalid Bin Walid Street, Dhow Tower, 14th floor
-                </Typography>
+            <Grid
+              item
+              container
+              direction="column"
+              style={{ textAlign: "center" }}
+            >
+              <Grid item style={{ padding: "10px" }}>
+                <Grid item>
+                  <IconButton>
+                    <RoomIcon color="secondary" fontSize="large" />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    className={clsx(classes.info, classesExternal.info)}
+                  >
+                    Kuwait, East, Khalid Bin Walid Street, Dhow Tower, 14th
+                    floor
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </div>
 
       <Grid
         container
@@ -224,4 +251,4 @@ const Landing = (props) => {
   );
 };
 
-export default Landing;
+export default withRouter(Landing);

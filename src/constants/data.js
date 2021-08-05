@@ -306,12 +306,12 @@ export const allCategories = [
         image:
           "https://cdn.friendsoftheearth.uk/sites/default/files/styles/hero_image/public/media/images/wood-1209632_1920.jpg?itok=lEIthVkl",
         nextLevel: 2,
-        noOfSelections: 2,
+        // noOfSelections: 2,
         unit: "Board",
         subItems: [
           {
             itemName: "Chinese Grd1",
-            itemId: "woodItem1",
+            itemId: "chinesegrd1",
             image:
               "https://cdn.friendsoftheearth.uk/sites/default/files/styles/hero_image/public/media/images/wood-1209632_1920.jpg?itok=lEIthVkl",
             nextLevel: 3,
@@ -454,9 +454,6 @@ export const allCategories = [
               {
                 name: "size",
                 label: "Size",
-                nextLevel: 3,
-                noOfSelections: 1,
-                unit: "Meter",
                 types: [
                   { id: 1, type: "1cm*1cm*3cm", unit: "Meter", price: "" },
                   { id: 2, type: "1cm*1cm*4cm", unit: "Meter", price: "" },
@@ -672,6 +669,33 @@ export const allCategories = [
     description: "Description",
     nextLevel: 3,
     stages: 2,
+    selections: [
+      {
+        name: "type",
+        label: "Select Type",
+        types: [
+          {
+            id: 1,
+            type: "Regular",
+            unit: "Bag",
+            price: "KWD 5.00",
+          },
+          {
+            id: 2,
+            type: "White",
+            unit: "Bag",
+            price: "KWD 5.00",
+          },
+          {
+            id: 3,
+            type: "Water Resistant",
+            unit: "Bag",
+            price: "KWD 5.00",
+          },
+        ],
+      },
+    ],
+
     lengths: [
       {
         lengthId: 1,
@@ -695,13 +719,107 @@ export const allCategories = [
     description: "Description",
     stages: 2,
     nextLevel: 3,
+
+    selections: [
+      {
+        name: "type",
+        label: "Select Type",
+        types: [
+          {
+            id: 1,
+            type: "Black (Concrete)",
+            unit: "Meter",
+            price: "KWD 5.00",
+          },
+          {
+            id: 2,
+            type: "White",
+            unit: "Meter",
+            price: "KWD 5.00",
+          },
+        ],
+      },
+    ],
   },
-  // {
-  //   categoryId: "category5",
-  //   categoryName: "Concrete",
-  //   image:
-  //     "https://5.imimg.com/data5/SELLER/Default/2020/11/WO/IZ/KT/57029225/recycled-concrete-aggregate-500x500.jpg",
-  //   description: "Description",
-  //   stages: 2,
-  // },
+];
+
+export const allCategoryItems = [
+  {
+    menuId: "category1",
+    menuName: "Steel",
+    categoryId: "category1",
+    items: [
+      {
+        menuId: "item1",
+        menuName: "Kuwaiti Steel",
+      },
+      {
+        menuId: "item2",
+        menuName: "Omani Steel",
+      },
+      {
+        menuId: "item3",
+        menuName: "Allitefaq Steel KSA",
+      },
+      {
+        menuId: "item4",
+        menuName: "Iranian Steel",
+      },
+      {
+        menuId: "item5",
+        menuName: "Wood Nail",
+      },
+    ],
+  },
+  {
+    menuName: "Wood",
+    menuId: "category2",
+    categoryId: "category2",
+    items: [
+      {
+        menuName: "Borad",
+        menuId: "woodItem1",
+        categoryId: "category2",
+        items: [
+          {
+            menuName: "Chinese Grd1",
+            menuId: "chinesegrd1",
+          },
+          {
+            menuName: "Chinese Grd2",
+            menuId: "chinesegrd2",
+          },
+        ],
+      },
+      {
+        menuName: "White",
+        menuId: "woodItem2",
+        categoryId: "category2",
+        items: [
+          {
+            menuName: "Austrian",
+            menuId: "austrian",
+          },
+          {
+            menuName: "Russian",
+            menuId: "russian",
+          },
+          {
+            menuName: "Croatian",
+            menuId: "croatian",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    menuId: "category3",
+    menuName: "Cement",
+    categoryId: "category3",
+  },
+  {
+    menuId: "category4",
+    menuName: "Bricks",
+    categoryId: "category4",
+  },
 ];

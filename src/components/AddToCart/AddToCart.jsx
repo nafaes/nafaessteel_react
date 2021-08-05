@@ -3,20 +3,13 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import clsx from "clsx";
-
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
-import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
-import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
 import { Typography } from "@material-ui/core";
-
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -24,7 +17,15 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Link from "@material-ui/core/Link";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import { withRouter } from "react-router-dom";
+
 import { isInputNumber } from "../../utils/validations";
+import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
+import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -66,13 +67,23 @@ const invoiceSubtotal = subtotal(rows);
 const totalQuantity = totalqty(rows);
 
 const AddToCart = (props) => {
-  const { categoryName, item, addToCartForm, formChangeHandler } = props;
+  const {
+    categoryName,
+    item,
+    addToCartForm,
+    formChangeHandler,
+    historyItems,
+    breadcrumbNavigation,
+    history,
+    location: { pathname },
+  } = props;
 
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
 
-  console.log(addToCartForm);
+  // console.log(addToCartForm);
+  // console.log(item)
 
   return (
     <Fragment>
@@ -93,11 +104,54 @@ const AddToCart = (props) => {
                 borderRadius: "1em",
               }}
             >
-              <Grid item>
+              {/* <Grid item>
                 <Typography variant="h6">{`${categoryName} ${
-                  item ? `--- ${item?.itemName}` : ""
+                  item?.itemName !== undefined ? `--- ${item?.itemName}` : ""
                 }`}</Typography>
+              </Grid> */}
+
+              <Grid item>
+                <Breadcrumbs
+                  separator={<NavigateNextIcon fontSize="small" />}
+                  aria-label="breadcrumb"
+                >
+                  <Link color="inherit" onClick={() => history.push("/")}>
+                    All Categories
+                  </Link>
+                  {historyItems ? (
+                    historyItems.map((item, index) => {
+                      const last = index === historyItems.length - 1;
+
+                      if (last) {
+                        return (
+                          <Typography key={item.itemId} variant="h6">
+                            {item.name}
+                          </Typography>
+                        );
+                      } else {
+                        return (
+                          <Link
+                            color="inherit"
+                            key={item.itemId}
+                            onClick={breadcrumbNavigation.bind(
+                              null,
+                              item.itemId,
+                              item.name
+                            )}
+                          >
+                            {item.name}
+                          </Link>
+                        );
+                      }
+                    })
+                  ) : (
+                    <Grid item>
+                      <Typography variant="h6">{categoryName}</Typography>
+                    </Grid>
+                  )}
+                </Breadcrumbs>
               </Grid>
+
               <Grid item>
                 <Typography variant="h6">247.00 Per Ton</Typography>
               </Grid>
@@ -286,4 +340,4 @@ const AddToCart = (props) => {
   );
 };
 
-export default React.memo(AddToCart);
+export default React.memo(withRouter(AddToCart));

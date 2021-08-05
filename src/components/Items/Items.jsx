@@ -23,7 +23,6 @@ const Items = (props) => {
   const { items, navigateToAddToCart, navigate } = props;
   const classes = useStyles();
   let classesExternal = landingEngDesk;
-  const theme = useTheme();
 
   let itemsCart = <p>Loading</p>;
 
@@ -37,12 +36,23 @@ const Items = (props) => {
         cols={2}
       >
         {items.map((item, index) => (
-          <Grid item key={index} style={{ columnGap: "12px" }}>
+          <Grid
+            item
+            lg={3}
+            md={4}
+            sm={6}
+            xs={12}
+            key={index}
+            style={{ columnGap: "12px" }}
+          >
             <Card
               raised
               elevation={12}
               className={clsx(classes.root, classesExternal.animateCard)}
-              onClick={navigate.bind(null, item.nextLevel, item.itemId)}
+
+              onClick={navigate.bind(null, item.nextLevel, item)}
+              // onClick={navigate.bind(null, item.nextLevel, item.itemId)}
+
               // onClick={navigateToAddToCart.bind(null, item.itemId)}
             >
               <CardActionArea>
