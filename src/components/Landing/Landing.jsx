@@ -30,6 +30,8 @@ const Landing = (props) => {
   let classesExternal = landingEngDesk;
   let classes = englishMobileStyles;
 
+  const largeScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
+
   let contactUs = useRef(null);
   useEffect(() => {
     let timeOut;
@@ -107,7 +109,7 @@ const Landing = (props) => {
           container
           // direction="row"
           direction={largeScreen ? "row" : "column"}
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           className={clsx(
             classes.contactContent,

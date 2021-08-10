@@ -76,7 +76,9 @@ const AddToCart = (props) => {
     formChangeHandler,
     historyItems,
     breadcrumbNavigation,
+    size,
     history,
+    handleChange,
     location: { pathname },
   } = props;
 
@@ -94,7 +96,7 @@ const AddToCart = (props) => {
       >
         <Grid container justifyContent="center">
           <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Grid item container>
+            <Grid item container>
               <Grid
                 item
                 // component={"a"}
@@ -102,286 +104,206 @@ const AddToCart = (props) => {
                 md={5}
                 sm={5}
                 xs={12}
-               style={{display: "flex", alignItems: "center"}}
+                style={{ display: "flex", alignItems: "center" }}
               >
-                <img alt="" src={brickImg} style={{ width: "100%", borderRadius: ".75em"}} />
+                <img
+                  alt=""
+                  src={brickImg}
+                  style={{ width: "100%", borderRadius: ".75em" }}
+                />
               </Grid>
 
               <Grid item lg={7} md={7} sm={7} xs={12}>
-            <Grid
-              item
-              container
-              direction="row"
-              justifyContent="space-between"
-              style={{
-                color: "#fff",
-                background: "rgba(0, 134, 179, 0.8)",
-                padding: ".6em",
-                borderRadius: "1em",
-                width: "80%",
-                margin: "0px auto"
-              }}
-            >
-              {/* <Grid item>
-                <Typography variant="h6">{`${categoryName} ${
-                  item?.itemName !== undefined ? `--- ${item?.itemName}` : ""
-                }`}</Typography>
-              </Grid> */}
-
-              <Grid item>
-                <Breadcrumbs
-                  separator={<NavigateNextIcon fontSize="small" />}
-                  aria-label="breadcrumb"
-                >
-                  <Link color="inherit" onClick={() => history.push("/")}>
-                    All Categories
-                  </Link>
-                  {historyItems ? (
-                    historyItems.map((item, index) => {
-                      const last = index === historyItems.length - 1;
-
-                      if (last) {
-                        return (
-                          <Typography key={item.itemId} variant="h6">
-                            {item.name}
-                          </Typography>
-                        );
-                      } else {
-                        return (
-                          <Link
-                            color="inherit"
-                            key={item.itemId}
-                            onClick={breadcrumbNavigation.bind(
-                              null,
-                              item.itemId,
-                              item.name
-                            )}
-                          >
-                            {item.name}
-                          </Link>
-                        );
-                      }
-                    })
-                  ) : (
-                    <Grid item>
-                      <Typography variant="h6">{categoryName}</Typography>
-                    </Grid>
-                  )}
-                </Breadcrumbs>
-              </Grid>
-
-              {/* <Grid item>
-                <Typography variant="h6">247.00 Per Ton</Typography>
-              </Grid> */}
-            </Grid>
-            </Grid>
-
-            <Grid
-              item
-              container
-              direction="row"
-              justifyContent="center"
-              style={{ color: "#fff", marginTop: "1em" }}
-            >
-              <Grid item lg={8} md={8} xs={10}>
-                {item?.selections &&
-                  item.selections.map((select, index) => (
-                    <FormControl
-                      variant="outlined"
-                      autoComplete="off"
-                      style={{ width: "100%", marginBottom: "2em" }}
-                      key={index}
-                    >
-                      <InputLabel id="select-type" style={{ color: "#fff" }}>
-                        {select.label}
-                      </InputLabel>
-                      <Select
-                        labelId="select-type"
-                        id="select-type-select-outlined"
-                        name={select.name}
-                        value={
-                          addToCartForm?.[select.name]?.["value"]
-                            ? addToCartForm[select.name]["value"]
-                            : ""
-                        }
-                        // defaultValue=""
-                        // onChange={formChangeHandler}
-
-                        onChange={({ target }) => {
-                          formChangeHandler({
-                            target,
-                            ...select.types.find(
-                              ({ id }) => id === target.value
-                            ),
-                          });
-                        }}
-                        label={select.label}
-                        style={{ color: "#fff" }}
-                        className={clsx(
-                          classes.selectComponentCls,
-                          classesExternal.selectComponentCls
-                        )}
-                        MenuProps={{ disableScrollLock: true }}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        {select.types.map(({ type, id }) => (
-                          <MenuItem value={id} key={id}>
-                            {type}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  ))}
-
-                {addToCartForm.price && (
-                  <Grid item xs={12} style={{ marginBottom: 16 }}>
-                    <Typography component="h1" variant="subtitle1">
-                      Price: {addToCartForm.price}
-                    </Typography>
-                  </Grid>
-                )}
-
-                <TextField
-                  id="outlined-basic"
-                  label="Enter Quantity"
-                  name="quantity"
-                  value={addToCartForm.quantity.value}
-                  onChange={formChangeHandler}
-                  variant="outlined"
-                  className={clsx(
-                    classes.selectComponentCls,
-                    classesExternal.selectComponentCls
-                  )}
-                  autoComplete="off"
-                  onKeyPress={(event) => {
-                    isInputNumber(event, 2);
+                <Grid
+                  item
+                  container
+                  direction="row"
+                  justifyContent="space-between"
+                  style={{
+                    color: "#fff",
+                    background: "rgba(0, 134, 179, 0.8)",
+                    padding: ".6em",
+                    borderRadius: "1em",
+                    width: "80%",
+                    margin: "0px auto",
                   }}
-                  style={{ width: "100%", marginBottom: "2em" }}
-                />
+                >
+                  <Grid item>
+                    <Breadcrumbs
+                      separator={<NavigateNextIcon fontSize="small" />}
+                      aria-label="breadcrumb"
+                    >
+                      <Link color="inherit" onClick={() => history.push("/")}>
+                        All Categories
+                      </Link>
+                      {historyItems ? (
+                        historyItems.map((item, index) => {
+                          const last = index === historyItems.length - 1;
+
+                          if (last) {
+                            return (
+                              <Typography key={item.itemId} variant="h6">
+                                {item.name}
+                              </Typography>
+                            );
+                          } else {
+                            return (
+                              <Link
+                                color="inherit"
+                                key={item.itemId}
+                                onClick={breadcrumbNavigation.bind(
+                                  null,
+                                  item.itemId,
+                                  item.name
+                                )}
+                              >
+                                {item.name}
+                              </Link>
+                            );
+                          }
+                        })
+                      ) : (
+                        <Grid item>
+                          <Typography variant="h6">{categoryName}</Typography>
+                        </Grid>
+                      )}
+                    </Breadcrumbs>
+                  </Grid>
+                </Grid>
 
                 <Grid
                   item
                   container
                   direction="row"
-                  justify="center"
+                  justifyContent="center"
                   style={{ color: "#fff", marginTop: "1em" }}
                 >
-                  <Grid item lg={9} md={9} xs={10}>
-                    <FormControl
-                      variant="outlined"
-                      autoComplete="off"
-                      style={{ width: "100%", marginBottom: "2em" }}
-                    >
-                      <InputLabel
-                        id="demo-simple-select-outlined-label"
-                        style={{ color: "#fff" }}
-                      >
-                        Size
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
-                        value={size}
-                        onChange={handleChange}
-                        label="Size"
-                        style={{ color: "#fff" }}
-                        className={clsx(
-                          classes.selectComponentCls,
-                          classesExternal.selectComponentCls
-                        )}
-                        MenuProps={{ disableScrollLock: true }}
-                      >
-                        <MenuItem
-                          value=""
-                          className={clsx(
-                            classes.selectComponentValue,
-                            classesExternal.selectComponentValue
-                          )}
+                  <Grid item lg={8} md={8} xs={10}>
+                    {item?.selections &&
+                      item.selections.map((select, index) => (
+                        <FormControl
+                          variant="outlined"
+                          autoComplete="off"
+                          style={{ width: "100%", marginBottom: "2em" }}
+                          key={index}
                         >
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem
-                          value={10}
-                          className={clsx(
-                            classes.selectComponentValue,
-                            classesExternal.selectComponentValue
-                          )}
-                        >
-                          10 mm
-                        </MenuItem>
-                        <MenuItem
-                          value={20}
-                          className={clsx(
-                            classes.selectComponentValue,
-                            classesExternal.selectComponentValue
-                          )}
-                        >
-                          20 mm
-                        </MenuItem>
-                        <MenuItem
-                          value={30}
-                          className={clsx(
-                            classes.selectComponentValue,
-                            classesExternal.selectComponentValue
-                          )}
-                        >
-                          30 mm
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
+                          <InputLabel
+                            id="select-type"
+                            style={{ color: "#fff" }}
+                          >
+                            {select.label}
+                          </InputLabel>
+                          <Select
+                            labelId="select-type"
+                            id="select-type-select-outlined"
+                            name={select.name}
+                            value={
+                              addToCartForm?.[select.name]?.["value"]
+                                ? addToCartForm[select.name]["value"]
+                                : ""
+                            }
+                            // defaultValue=""
+                            // onChange={formChangeHandler}
 
-                    {/* <form style={{ width: "100%", marginBottom: "2em" }} autoComplete="off"> */}
+                            onChange={({ target }) => {
+                              formChangeHandler({
+                                target,
+                                ...select.types.find(
+                                  ({ id }) => id === target.value
+                                ),
+                              });
+                            }}
+                            label={select.label}
+                            style={{ color: "#fff" }}
+                            className={clsx(
+                              classes.selectComponentCls,
+                              classesExternal.selectComponentCls
+                            )}
+                            MenuProps={{ disableScrollLock: true }}
+                          >
+                            <MenuItem value="">
+                              <em>None</em>
+                            </MenuItem>
+                            {select.types.map(({ type, id }) => (
+                              <MenuItem value={id} key={id}>
+                                {type}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      ))}
+
+                    {addToCartForm.price && (
+                      <Grid item xs={12} style={{ marginBottom: 16 }}>
+                        <Typography component="h1" variant="subtitle1">
+                          Price: {addToCartForm.price}
+                        </Typography>
+                      </Grid>
+                    )}
+
                     <TextField
                       id="outlined-basic"
                       label="Enter Quantity"
+                      name="quantity"
+                      value={addToCartForm.quantity.value}
+                      onChange={formChangeHandler}
                       variant="outlined"
                       className={clsx(
                         classes.selectComponentCls,
                         classesExternal.selectComponentCls
                       )}
                       autoComplete="off"
+                      onKeyPress={(event) => {
+                        isInputNumber(event, 2);
+                      }}
                       style={{ width: "100%", marginBottom: "2em" }}
                     />
-                    {/* </form> */}
 
                     <Grid
                       item
                       container
-                      className={clsx(
-                        classes.addCartSubBtnContainer,
-                        classesExternal.addCartSubBtnContainer
-                      )}
-                      justify="center"
+                      direction="row"
+                      justifyContent="center"
+                      style={{ color: "#fff", marginTop: "1em" }}
                     >
-                      <Grid item lg={8} md={8} xs={8}>
-                        <Button
-                          type="submit"
-                          variant="contained"
-                          size="small"
+                      <Grid item lg={9} md={9} xs={10}>
+                        <Grid
+                          item
+                          container
                           className={clsx(
-                            classes.addCartSubBtn,
-                            classesExternal.addCartSubBtn
+                            classes.addCartSubBtnContainer,
+                            classesExternal.addCartSubBtnContainer
                           )}
-                          fullWidth
-                          margin="dense"
-                          style={{ fontSize: ".95rem" }}
-                          startIcon={
-                            <AddShoppingCartIcon
-                              style={{ fontSize: "1.5rem" }}
-                            />
-                          }
+                          justifyContent="center"
                         >
-                          Add To Cart
-                        </Button>
+                          <Grid item lg={8} md={8} xs={8}>
+                            <Button
+                              type="submit"
+                              variant="contained"
+                              size="small"
+                              className={clsx(
+                                classes.addCartSubBtn,
+                                classesExternal.addCartSubBtn
+                              )}
+                              fullWidth
+                              margin="dense"
+                              style={{ fontSize: ".95rem" }}
+                              startIcon={
+                                <AddShoppingCartIcon
+                                  style={{ fontSize: "1.5rem" }}
+                                />
+                              }
+                            >
+                              Add To Cart
+                            </Button>
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
           </Grid>
         </Grid>
 
