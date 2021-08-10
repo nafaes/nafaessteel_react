@@ -33,7 +33,7 @@ const Items = (props) => {
         style={{ marginTop: "3em" }}
         justifyContent="center"
         spacing={2}
-        cols={2}
+        // cols={2}
       >
         {items.map((item, index) => (
           <Grid

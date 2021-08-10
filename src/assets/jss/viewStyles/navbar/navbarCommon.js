@@ -11,7 +11,7 @@ export const navbarMobCommon = {
       marginBottom: "0.6em",
     },
     [theme.breakpoints.down("xs")]: {
-      marginBottom: "1.15em",
+      marginBottom: "0.60em",
     },
   },
   logo: {
@@ -35,8 +35,6 @@ export const navbarMobCommon = {
   },
   menuCls: {
     textAlign: "left",
-
-    // backgroundColor: theme.palette.common.blue,
     "& .MuiMenu-paper": {
       backgroundColor: theme.palette.common.blue,
       color: "white",
@@ -70,6 +68,11 @@ export const navbarMobCommon = {
       color: "yellow",
     },
   },
+  navbarIcons: {
+    [theme.breakpoints.down("xs")]: {
+      padding: "6px",
+    },
+  },
   drawerIconContainer: {
     "&:hover": {
       backgroundColor: "transparent",
@@ -82,7 +85,6 @@ export const navbarMobCommon = {
   },
   drawer: {
     backgroundColor: theme.palette.common.blue,
-    width: "240px",
   },
   drawerItem: {
     ...theme.typography.tab,

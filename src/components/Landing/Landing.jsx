@@ -10,12 +10,14 @@ import RoomIcon from "@material-ui/icons/Room";
 import MailIcon from "@material-ui/icons/MailOutline";
 import PhoneIcon from "@material-ui/icons/PhoneInTalkOutlined";
 import clsx from "clsx";
-import { Divider } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
+import { Divider, Hidden } from "@material-ui/core";
 
 import { allCategories } from "../../constants/data";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
+
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const Landing = (props) => {
   const {
@@ -103,9 +105,14 @@ const Landing = (props) => {
       <div ref={contactUs}>
         <Grid
           container
-          direction="column"
-          style={{ marginTop: "4em" }}
-          className={classes.contactContainer}
+          // direction="row"
+          direction={largeScreen ? "row" : "column"}
+          justify="center"
+          alignItems="center"
+          className={clsx(
+            classes.contactContent,
+            classesExternal.contactContent
+          )}
         >
           <Grid item container justifyContent="center">
             <Typography
@@ -118,17 +125,18 @@ const Landing = (props) => {
               GET IN TOUCH
             </Typography>
           </Grid>
-
+          <Divider
+            orientation={largeScreen ? "vertical" : "horizontal, border:'1px solid #fff'"}
+            flexItem
+            style={{ backgroundColor: "#fff" }}
+          />
           <Grid
             item
             container
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            className={clsx(
-              classes.contactContent,
-              classesExternal.contactContent
-            )}
+            direction="column"
+            style={{
+              textAlign: "center",
+            }}
           >
             <Grid
               item
@@ -153,31 +161,23 @@ const Landing = (props) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid
-              item
-              container
-              direction="column"
-              style={{
-                textAlign: "center",
-                borderLeft: "1px solid rgba(255,255,255,0.9)",
-                borderRight: "1px solid rgba(255,255,255,0.9)",
-              }}
-            >
-              <Grid item style={{ padding: "10px" }}>
-                <Grid item>
-                  <IconButton>
-                    <PhoneIcon color="secondary" fontSize="large" />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <Typography
-                    variant="h6"
-                    gutterBottom
-                    className={clsx(classes.info, classesExternal.info)}
-                  >
-                    (+965) 96065464
-                  </Typography>
-                </Grid>
+          </Grid>
+          <Divider
+            orientation={largeScreen ? "vertical" : "horizontal"}
+            flexItem
+            style={{ backgroundColor: "#fff" }}
+          />
+          <Grid
+            item
+            container
+            direction="column"
+            style={{ textAlign: "center" }}
+          >
+            <Grid item style={{ padding: "10px" }}>
+              <Grid item>
+                <IconButton>
+                  <RoomIcon color="secondary" fontSize="large" />
+                </IconButton>
               </Grid>
             </Grid>
             <Grid

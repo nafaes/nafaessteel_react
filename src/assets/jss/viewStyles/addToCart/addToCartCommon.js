@@ -30,6 +30,23 @@ export const addTocartMobCommon = {
     },
   },
 
+  selectComponentValue: {
+    "&:hover": {
+      backgroundColor: "#0086b3",
+      color: "#fff",
+    },
+    // "&:focus": {
+    //   backgroundColor: "#0086b3",
+    //   color: "#fff",
+    // },
+    "&:focus": {
+        "&:hover":{
+        backgroundColor: "#0086b3",
+        color: "#fff",
+      },
+    }
+  },
+
   addCartTabFtrRow: {
     "& .MuiTableCell-root": {
       borderBottom: "none",
