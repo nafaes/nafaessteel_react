@@ -4,7 +4,7 @@ import ToolBar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Link } from 'react-router-dom';
+// import * as Scroll from 'react-scroll';
 import MenuItem from '@material-ui/core/MenuItem';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -30,7 +30,16 @@ import Menu from 'material-ui-popup-state/HoverMenu';
 import { usePopupState, bindHover, bindMenu } from 'material-ui-popup-state/hooks';
 
 import logo from '../../assets/img/Logo.png';
-import { CART } from '../../constants/routes';
+import { CART, TRACKORDER } from '../../constants/routes';
+import { SIGNIN } from '../../constants/routes';
+
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+
+import MenuList from '@material-ui/core/MenuList';
+import {Link} from 'react-router-dom';
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -48,13 +57,6 @@ function ElevationScroll(props) {
 const ParentPopupState = React.createContext(null);
 
 const Navbar = (props) => {
-  // console.log(props)
-  // let history = useHistory();
-  // const goToContactUs = () => {
-  //   history.push("/", {
-  //     contactUs: true
-  //   })
-  // }
 
   const englishMobileStyles = navbarEngMobile();
 
@@ -64,15 +66,14 @@ const Navbar = (props) => {
   // const classes = useStyles();
   const theme = useTheme();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesXs = useMediaQuery(theme.breakpoints.down("xs"));
+
+
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const [value, setValue] = useState(0)
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [openMenu, setOpenMenu] = useState(false);
+  
   const [open, setOpen] = React.useState(false);
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const popupState = usePopupState({
     popupId: 'demoMenu',
@@ -91,7 +92,37 @@ const Navbar = (props) => {
   };
   
 
+  const [openDrop, setOpenDrop] = React.useState(false);
+  const anchorRef = React.useRef(null);
+
+  const handleToggle = () => {
+    setOpenDrop((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpenDrop(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpenDrop(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(setOpenDrop);
+
   useEffect(() => {
+    if (prevOpen.current === true && openDrop === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = openDrop;
 
     if (window.location.pathname === "/" && value !== 0) {
       setValue(0);
@@ -102,7 +133,7 @@ const Navbar = (props) => {
     else if (window.location.pathname === "/trackorder" && value !== 2) {
       setValue(2);
     }
-    else if (window.location.pathname === "/contactUs" && value !== 3) {
+    else if (window.location.pathname === "/contactus" && value !== 3) {
       setValue(3);
     }
 
@@ -122,52 +153,46 @@ const Navbar = (props) => {
           setValue(2);
         }
         break;
-      case "/contactUs":
+      case "/contactus":
         if (value !== 3) {
           setValue(3);
         }
         break;
+        default:
+          break;
+
 
     }
-  }, [value])
-  // const menu = (
-  //   <React.Fragment>
-  //     <Menu {...bindMenu(popState)}
-  //       anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-  //       transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-  //       getContentAnchorEl={null} className={classes.menuCls}>
-  //       <MenuItem onClick={popState.close}>Carbon Steel</MenuItem>
-  //       <MenuItem onClick={popState.close}>Alloy Steel</MenuItem>
-  //       <MenuItem onClick={popState.close}>Tool Steel</MenuItem>
-  //       <Submenu popupId="moreChoicesMenu" title="More Steel" className={classes.subMenu}>
-  //         <MenuItem onClick={popState.close}>Cheesecake</MenuItem>
-  //         <MenuItem onClick={popState.close}>Cheesedeath</MenuItem>
-  //       </Submenu>
-  //     </Menu>
-  //   </React.Fragment>
-  // )
+  }, [value,openDrop])
+ 
   const tabs = (
     <React.Fragment>
-      <Tabs className={classes.tabContainer}
+      <Tabs className={clsx(classes.tabContainer,classesExternal.tabContainer)}
         indicatorColor="secondary"
         onChange={handleChange}
         value={value}
       >
-        <Tab className={classes.tab} component={Link} to="/" label="Home"></Tab>
-        <Tab className={classes.tab} component={Link} to="/category" label="Category" {...bindHover(popupState)}></Tab>
-        <Tab className={classes.tab} component={Link} to="/signin" label="Track Order" /*{...bindHover(popState)}*/></Tab>
-        <Tab className={classes.tab} component={Link} to="/contactus" label="Contact Us"></Tab>
-        {/* <Tab className={classes.tab} onClick={goToContactUs.bind(null)} label="Contact Us"></Tab> */}
+        {/* <Scroll to="contact-destination" 
+                spy={true} 
+                smooth={true} 
+                duration={500} > */}
+          <Tab className={clsx(classes.tab,classesExternal.tab)} component={Link} to="/" label="Home"></Tab>
+          <Tab className={clsx(classes.tab,classesExternal.tab)} component={Link} to="/category" label="Category" {...bindHover(popupState)}></Tab>
+          <Tab className={clsx(classes.tab,classesExternal.tab)} component={Link} to={TRACKORDER} label="Track Order" /*{...bindHover(popState)}*/></Tab>
+          {/* <Scroll.Link  className={clsx(classes.tab,classesExternal.tab)} to="contactus" spy={true} smooth={true}>ContactUs</Scroll.Link> */}
+          <Tab className={clsx(classes.tab,classesExternal.tab)} component={Link} to="/contactUs" label="Contact Us"></Tab>
+
+        {/* </Scroll> */}
+       
 
       </Tabs>
-      {/* <ParentPopupState.Provider value={popupState}> */}
       <Menu {...bindMenu(popupState)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'left' }}
         getContentAnchorEl={null} className={classes.menuCls}
         disableScrollLock={true}
         >
-        <Submenu popupId="moreChoicesMenu" title="Iron" className={classes.subMenu}>
+        <Submenu popupId="moreChoicesMenu" title="Iron" className={clsx(classes.subMenu,classesExternal.subMenu)}>
           <MenuItem onClick={popupState.close}>Pure Iron</MenuItem>
           <MenuItem onClick={popupState.close}>Wrought Iron</MenuItem>
           <MenuItem onClick={popupState.close}>Cast Iron</MenuItem>
@@ -175,22 +200,37 @@ const Navbar = (props) => {
         </Submenu>
         <MenuItem onClick={popupState.close}>Cement</MenuItem>
         <MenuItem onClick={popupState.close}>Wood</MenuItem>
-        <Submenu popupId="moreChoicesMenu" title="Brick" className={classes.subMenu}>
-          {/* <Submenu popupId="evenMoreChoicesMenu" title="Even More Choices" className={classes.subMenu}>
-                <MenuItem onClick={popupState.close}>Cake (the band)</MenuItem>
-                <MenuItem onClick={popupState.close}>Death Metal</MenuItem>
-             </Submenu>
-            <Submenu popupId="moreBenignChoices" title="More Benign Choices" className={classes.subMenu}>
-                <MenuItem onClick={popupState.close}>Salad</MenuItem>
-                <MenuItem onClick={popupState.close}>Lobotomy</MenuItem>
-            </Submenu> */}
+        <Submenu popupId="moreChoicesMenu" title="Brick" className={clsx(classes.subMenu,classesExternal.subMenu)}>
+        
           <MenuItem onClick={popupState.close}>Concrete Brick</MenuItem>
           <MenuItem onClick={popupState.close}>Fly Ash Brick</MenuItem>
         </Submenu>
       </Menu>
-      {/* </ParentPopupState.Provider> */}
     </React.Fragment>
 
+  )
+
+  const popper = (
+    <React.Fragment>
+      <Popper open={openDrop} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+            >
+              <Paper className={clsx(classes.menudrop, classesExternal.menudrop)}>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList autoFocusItem={openDrop} id="menu-list-grow" onKeyDown={handleListKeyDown} className={clsx(classes.subMenu,classesExternal.subMenu)}>
+                    <MenuItem onClick={handleClose} component={Link} to={SIGNIN}>Sign In</MenuItem>
+                    <MenuItem onClick={handleClose}>SignOut</MenuItem>
+
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+    </React.Fragment>
   )
 
   const drawer = (
@@ -267,7 +307,7 @@ const Navbar = (props) => {
   return (
     <Fragment>
       <ElevationScroll>
-        <AppBar position="fixed" className={matchesMd ? classes.appbar : "undefined"}>
+        <AppBar position="fixed" className={matchesXs ? classes.appbar : "undefined"}>
           <ToolBar disableGutters>
             <Button component={Link} to="/" onClick={() => setValue(0)} className={clsx(classes.logoContainer, classesExternal.logoContainer)}>
               <img
@@ -276,22 +316,24 @@ const Navbar = (props) => {
                 src={logo}
               />
             </Button>
-            {matchesMd ? drawer : tabs}
-            <Tooltip title="Profile" arrow>
-              <IconButton color="inherit">
+            {matchesXs ? drawer : tabs}
+              <IconButton className={clsx(classes.iconButton,classesExternal.iconButton)} color="inherit"   ref={anchorRef}
+                          aria-controls={openDrop ? 'menu-list-grow' : undefined}
+                          aria-haspopup="true"
+                          onClick={handleToggle}>
                 <AccountCircleIcon size="medium" />
               </IconButton>
-            </Tooltip>
             <Tooltip title="Cart" arrow>
-              <IconButton color="inherit" component={Link} to={CART}>
+              <IconButton className={clsx(classes.iconButton,classesExternal.iconButton)} color="inherit" component={Link} to={CART}>
                 <ShoppingCart size="medium" />
               </IconButton>
             </Tooltip>
             <Tooltip title="Language" arrow>
-              <IconButton color="inherit">
+              <IconButton className={clsx(classes.iconButton,classesExternal.iconButton)} color="inherit">
                 <TranslateIcon size="medium" />
               </IconButton>
             </Tooltip>
+            {popper}
           </ToolBar>
         </AppBar>
       </ElevationScroll>

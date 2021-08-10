@@ -4,7 +4,6 @@ import { appTheme } from "../../../theme/theme";
 const theme = createMuiTheme(appTheme());
 
 export const navbarMobCommon = {
-
     toolbarMargin: {
         ...theme.mixins.toolbar,
         marginBottom: "1.0em",
@@ -12,21 +11,29 @@ export const navbarMobCommon = {
           marginBottom: "0.6em",
         },
         [theme.breakpoints.down("xs")]: {
-          marginBottom: "1.15em",
+          marginBottom: "0.7em",
         },
       },
-      logo: {
-       
-        [theme.breakpoints.down("xs")]: {
-            height: "5em",
-          },
-      },
+     
       logoContainer: {
-        // padding: 0,
-        "&:hover": {
-          backgroundColor: "transparent",
-        }
-      },
+             [theme.breakpoints.down("xs")]: {
+                  margin: "auto",
+             },
+             [theme.breakpoints.down("md")]: {
+                  margin: "auto",
+             },
+        },
+        logo: {
+             [theme.breakpoints.down("xs")]: {
+                  marginLeft: "9em",
+                  height: "4em"
+             },
+             [theme.breakpoints.down("md")]: {
+                  marginLeft: "9em",
+                  height: "4em"
+             },
+            
+        },
       tabContainer: {
         margin: "0px auto",
       },
@@ -37,16 +44,13 @@ export const navbarMobCommon = {
       },
       menuCls: {
         textAlign: "left",
-
-        // backgroundColor: theme.palette.common.blue,    
+    
         "& .MuiMenu-paper":{
           backgroundColor: theme.palette.common.blue,
           color: "white",
           borderRadius: "0px",
           marginRight: "10px",
           marginTop: "-2.5px"
-          // padding: "0px 30px"
-
         },
         "& .MuiListItem-root": {
             padding: "8px 45px",
@@ -54,6 +58,10 @@ export const navbarMobCommon = {
         "& .MuiListItem-root.Mui-selected, .MuiListItem-root.Mui-selected:hover":{
           color: "yellow",
         }
+      },
+      menudrop:{
+        backgroundColor: theme.palette.common.blue,
+        color: "white"
       },
       subMenu: {
         "&:hover": {
@@ -73,6 +81,12 @@ export const navbarMobCommon = {
           color: "yellow",
         }
       }, 
+      iconButton:{
+        [theme.breakpoints.down("xs")]: {
+           padding: "5px",
+        }
+       
+      },
       drawerIconContainer: {
         "&:hover": {
           backgroundColor: "transparent"
@@ -100,4 +114,6 @@ export const navbarMobCommon = {
       appbar: {
         zIndex: theme.zIndex.modal + 1
       }
+
+
 }

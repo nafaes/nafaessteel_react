@@ -1,0 +1,22 @@
+@use '../sass/partials/forward-file' as filePaths;
+
+.formContainer{
+    @extend %userContainer;
+}
+.loginContainForm {
+    height: 26em;
+    @extend %userContainForm;
+}
+.signupContainForm {
+    height: 28em;
+    @extend %userContainForm;
+}
+.loginImage{
+    @extend %loginImage;
+}
+.formBtn{
+    @extend %userBtn;
+}
+.formTextfield{
+    @extend %userTextfield;
+}

@@ -75,13 +75,14 @@ const Landing = (props) => {
           </Grid>
         ))}
       </Grid>
-
-      <Grid
+      <div id="contactus">
+      <Grid 
         container
         direction="column"
         style={{ marginTop: "4em" }}
         className={classes.contactContainer}
       >
+       
         <Grid item container justify="center">
           <Typography
             variant="h6"
@@ -93,7 +94,7 @@ const Landing = (props) => {
             GET IN TOUCH
           </Typography>
         </Grid>
-
+           
         <Grid
           item
           container
@@ -179,7 +180,9 @@ const Landing = (props) => {
             </Grid>
           </Grid>
         </Grid>
+        
       </Grid>
+      </div>
 
       <Grid
         container
