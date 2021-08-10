@@ -36,13 +36,37 @@ const SideDrawer = (props) => {
     setValue,
     open,
     handleClicklist,
-    allMenus,
+    menus,
   } = props;
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const englishMobileStyles = navbarEngMobile();
 
   let classes = englishMobileStyles;
-  console.log(allMenus);
+  console.log(menus);
+
+  const NestedTreeView = ({ menu, allItems }) => (
+    <TreeItem nodeId="5" label="Documents">
+      {menu.items.map((item) =>
+        item.items ? (
+          <NestedTreeView
+            ref={ref}
+            key={item.menuId}
+            menu={item}
+            allItems={[
+              ...allItems,
+              {
+                categoryId: menu.categoryId,
+                itemId: item.menuId,
+                name: item.menuName,
+              },
+            ]}
+          />
+        ) : (
+          <TreeItem nodeId="8" label="index.js" />
+        )
+      )}
+    </TreeItem>
+  );
 
   return (
     <React.Fragment>
@@ -73,41 +97,24 @@ const SideDrawer = (props) => {
             </ListItemText>
           </ListItem>
 
-          {/* <ListItem button onClick={handleClicklist} divider>
-            <ListItemText className={classes.drawerItem}>Category</ListItemText>
-            {open ? (
-              <ExpandLess style={{ color: "white" }} />
-            ) : (
-              <ExpandMore style={{ color: "white" }} />
-            )}
-          </ListItem> 
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button divider>
-                <ListItemText className={classes.drawerItem}>Iron</ListItemText>
-              </ListItem>
-              <ListItem button divider>
-                <ListItemText className={classes.drawerItem}>
-                  Cement
-                </ListItemText>
-              </ListItem>
-              <ListItem button divider>
-                <ListItemText className={classes.drawerItem}>Wood</ListItemText>
-              </ListItem>
-              <ListItem button divider>
-                <ListItemText className={classes.drawerItem}>
-                  Brick
-                </ListItemText>
-              </ListItem>
-            </List>
-          </Collapse> */}
-
-          <TreeView
-            // className={classes.root}
+          {/* <TreeView
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpandIcon={<ChevronRightIcon />}
           >
-            <TreeItem nodeId="1" label="Applications">
+            {menus.map((menu) =>
+              menu.items ? (
+                <TreeItem nodeId="1" label="Applications">
+                  <TreeItem nodeId="2" label="Calendar" />
+                  <TreeItem nodeId="3" label="Chrome" />
+                  <TreeItem nodeId="4" label="Webstorm" />
+                </TreeItem>
+              ) : (
+                <TreeItem key={menu.menuId} nodeId="2" label={menu.menuName} />
+              )
+            )}
+          </TreeView> */}
+
+          {/* <TreeItem nodeId="1" label="Applications">
               <TreeItem nodeId="2" label="Calendar" />
               <TreeItem nodeId="3" label="Chrome" />
               <TreeItem nodeId="4" label="Webstorm" />
@@ -120,8 +127,7 @@ const SideDrawer = (props) => {
                   <TreeItem nodeId="9" label="tree-view.js" />
                 </TreeItem>
               </TreeItem>
-            </TreeItem>
-          </TreeView>
+            </TreeItem> */}
 
           <ListItem
             onClick={() => {

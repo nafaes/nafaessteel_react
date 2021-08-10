@@ -1,7 +1,7 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from '@material-ui/core/styles'
 import { appTheme } from "../../../theme/theme";
 
-const theme = createMuiTheme(appTheme());
+const theme = createTheme(appTheme());
 
 export const landingMobCommon = {
     contactContent: {

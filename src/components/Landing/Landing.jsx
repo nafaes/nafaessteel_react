@@ -53,7 +53,7 @@ const Landing = (props) => {
         container
         direction="row"
         style={{ marginTop: "3em" }}
-        justify="center"
+        justifyContent="center"
         spacing={2}
       >
         {allCategories.map((category, index) => (
@@ -107,7 +107,7 @@ const Landing = (props) => {
           style={{ marginTop: "4em" }}
           className={classes.contactContainer}
         >
-          <Grid item container justify="center">
+          <Grid item container justifyContent="center">
             <Typography
               variant="h6"
               className={clsx(
@@ -123,7 +123,7 @@ const Landing = (props) => {
             item
             container
             direction="row"
-            justify="center"
+            justifyContent="center"
             alignItems="center"
             className={clsx(
               classes.contactContent,
@@ -213,7 +213,7 @@ const Landing = (props) => {
         direction="column"
         className={clsx(classes.aboutContainer, classesExternal.aboutContainer)}
       >
-        <Grid item container justify="center">
+        <Grid item container justifyContent="center">
           <Typography
             variant="h6"
             className={clsx(
@@ -228,7 +228,7 @@ const Landing = (props) => {
           item
           container
           direction="row"
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           className={clsx(classes.aboutContent, classesExternal.aboutContent)}
         >

@@ -193,7 +193,7 @@ const DesktopCartItems = () => {
           <Fragment key={item.itemId}>
             <Grid
               container
-              justify="flex-start"
+              justifyContent="flex-start"
               className={classes.itemContainer}
             >
               <Grid item xs={4} sm={4} md={3} lg={4} className={classes.image}>

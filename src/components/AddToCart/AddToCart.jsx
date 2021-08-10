@@ -90,13 +90,13 @@ const AddToCart = (props) => {
       <div
         className={clsx(classes.ContainerForm, classesExternal.ContainerForm)}
       >
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Grid item lg={8} md={8} xs={12}>
             <Grid
               item
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               style={{
                 color: "#fff",
                 background: "rgba(0, 134, 179, 0.8)",
@@ -152,16 +152,16 @@ const AddToCart = (props) => {
                 </Breadcrumbs>
               </Grid>
 
-              <Grid item>
+              {/* <Grid item>
                 <Typography variant="h6">247.00 Per Ton</Typography>
-              </Grid>
+              </Grid> */}
             </Grid>
 
             <Grid
               item
               container
               direction="row"
-              justify="center"
+              justifyContent="center"
               style={{ color: "#fff", marginTop: "1em" }}
             >
               <Grid item lg={8} md={8} xs={10}>
@@ -249,7 +249,7 @@ const AddToCart = (props) => {
                     classes.addCartSubBtnContainer,
                     classesExternal.addCartSubBtnContainer
                   )}
-                  justify="center"
+                  justifyContent="center"
                 >
                   <Grid item lg={8} md={8} xs={8}>
                     <Button
@@ -276,7 +276,7 @@ const AddToCart = (props) => {
           </Grid>
         </Grid>
 
-        <Grid container justify="center" style={{ marginTop: "2em" }}>
+        <Grid container justifyContent="center" style={{ marginTop: "2em" }}>
           <TableContainer component={Paper}>
             <Table
               className={classes.table}

@@ -1,4 +1,4 @@
-// import { createMuiTheme } from '@material-ui/core/styles';
+// import { createTheme } from "@material-ui/core/styles";
 
 const arcGrey = "#ffffff";
 const arcBlue = "#0086b3";
@@ -28,7 +28,7 @@ export const appTheme = () => {
     };
   };
 
-// export default createMuiTheme({
+// export default createTheme({
 //     palette: {
 //         common: {
 //             grey: `${arcGrey}`,

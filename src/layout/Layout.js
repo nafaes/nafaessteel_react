@@ -1,5 +1,5 @@
 import React from "react";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 
 import { appTheme } from "../assets/theme/theme";
 import Navbar from "../layout/NavBar/Navbar";
@@ -8,7 +8,7 @@ import Routes from "../routes/index";
 import Footer from "./Footer/Footer";
 
 const Layout = (props) => {
-  const theme = createMuiTheme(appTheme());
+  const theme = createTheme(appTheme());
 
   return (
     <ThemeProvider theme={theme}>

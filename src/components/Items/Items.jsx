@@ -31,7 +31,7 @@ const Items = (props) => {
       <Grid
         container
         style={{ marginTop: "3em" }}
-        justify="center"
+        justifyContent="center"
         spacing={2}
         cols={2}
       >
@@ -77,7 +77,7 @@ const Items = (props) => {
                     gutterBottom
                     variant="h6"
                     component="h6"
-                    justify="center"
+                    justifyContent="center"
                   >
                     {item.itemName}
                   </Typography>

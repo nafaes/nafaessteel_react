@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback } from "react";
+import { Link, withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -61,33 +61,152 @@ const SubMenu = withStyles(submenuStyles)(
 );
 
 const Menus = React.forwardRef((props, ref) => {
-  const { popupState, allMenus } = props;
+  const { popupState, allMenus, history, location } = props;
   const englishMobileStyles = navbarEngMobile();
   let classes = englishMobileStyles;
 
-//   const Item = React.forwardRef(({ item, categoryId }, ref) =>
-//     item.items ? (
-//       <RenderSubMenu ref={ref} key={item.menuId} menu={item} />
-//     ) : (
-//       <MenuItem
-//         ref={ref}
-//         key={item.menuId}
-//         component={Link}
-//         to={{
-//           pathname: ADDTOCART,
-//           state: {
-//             categoryId,
-//             itemId: item.menuId,
-//           },
-//         }}
-//         onClick={popupState.close}
-//       >
-//         {item.menuName}
-//       </MenuItem>
-//     )
-//   );
+  // console.log(location);
 
-  const RenderSubMenu = React.forwardRef(({ menu, props }, ref) => {
+  // const dynamicNavigation = useCallback(
+  //   ({ categoryId, categoryName, itemId, itemName }) => {
+  //     popupState.close();
+
+  //     let allItems = [];
+  //     if (location.state?.items) {
+  //       if (location.state.categoryId && location.state.itemId) {
+  //         allItems = [
+  //           {
+  //             categoryId: location.state.categoryId,
+  //             itemId: "",
+  //             name: categoryName,
+  //           },
+  //           {
+  //             categoryId: location.state.categoryId,
+  //             itemId: itemId,
+  //             name: itemName,
+  //           },
+  //         ];
+  //       } else if (location.state.itemId === "") {
+  //         allItems = [
+  //           ...location.state.items,
+  //           {
+  //             categoryId: location.state.categoryId,
+  //             itemId: "",
+  //             name: itemName,
+  //           },
+  //         ];
+  //       }
+  //     } else {
+  //       if (categoryId && itemId) {
+  //         allItems = [
+  //           {
+  //             categoryId: categoryId,
+  //             itemId: "",
+  //             name: categoryName,
+  //           },
+  //           {
+  //             categoryId: categoryId,
+  //             itemId: itemId,
+  //             name: itemName,
+  //           },
+  //         ];
+  //       } else if (categoryId) {
+  //         allItems = [
+  //           {
+  //             categoryId: categoryId,
+  //             itemId: "",
+  //             name: categoryName,
+  //           },
+  //         ];
+  //       }
+  //     }
+
+  //     history.push(ADDTOCART, {
+  //       categoryId: location.state?.categoryId
+  //         ? location.state.categoryId
+  //         : categoryId,
+  //       itemId: itemId,
+  //       items: allItems,
+  //     });
+  //   },
+  //   [location]
+  //   // [historyItems, history, categoryId]
+  // );
+
+  const dynamicNavigation = useCallback(
+    ({
+      categoryId,
+      categoryName,
+      itemId,
+      itemName,
+      allItems: historyItems,
+    }) => {
+      popupState.close();
+
+      console.log(historyItems);
+
+      let allItems = [];
+      if (location.state?.items) {
+        if (location.state.categoryId && location.state.itemId) {
+          allItems = [
+            // {
+            //   categoryId: location.state.categoryId,
+            //   itemId: "",
+            //   name: categoryName,
+            // },
+            ...historyItems,
+            {
+              categoryId: location.state.categoryId,
+              itemId: itemId,
+              name: itemName,
+            },
+          ];
+        } else if (location.state.itemId === "") {
+          allItems = [
+            ...historyItems,
+            {
+              categoryId: location.state.categoryId,
+              itemId: "",
+              name: itemName,
+            },
+          ];
+        }
+      } else {
+        if (categoryId && itemId) {
+          allItems = [
+            ...historyItems,
+            // {
+            //   categoryId: categoryId,
+            //   itemId: "",
+            //   name: categoryName,
+            // },
+            {
+              categoryId: categoryId,
+              itemId: itemId,
+              name: itemName,
+            },
+          ];
+        } else if (categoryId) {
+          allItems = [
+            {
+              categoryId: categoryId,
+              itemId: "",
+              name: categoryName,
+            },
+          ];
+        }
+      }
+
+      history.push(ADDTOCART, {
+        categoryId: categoryId ? categoryId : location.state.categoryId,
+        itemId: itemId,
+        items: allItems,
+      });
+    },
+    [location]
+  );
+
+  const RenderSubMenu = React.forwardRef(({ menu, allItems, props }, ref) => {
     return (
       <SubMenu
         ref={ref}
@@ -97,27 +216,41 @@ const Menus = React.forwardRef((props, ref) => {
         className={classes.subMenu}
       >
         {menu.items.map((item) =>
-          //   <Item
-          //     key={item.menuId}
-          //     item={item}
-          //     categoryId={menu.menuId}
-          //   />
-
           item.items ? (
-            <RenderSubMenu ref={ref} key={item.menuId} menu={item} />
+            <RenderSubMenu
+              ref={ref}
+              key={item.menuId}
+              menu={item}
+              allItems={[
+                ...allItems,
+                {
+                  categoryId: menu.categoryId,
+                  itemId: item.menuId,
+                  name: item.menuName,
+                },
+              ]}
+            />
           ) : (
             <MenuItem
               ref={ref}
               key={item.menuName}
-              component={Link}
-              to={{
-                pathname: ADDTOCART,
-                state: {
-                  categoryId: menu.categoryId,
-                  itemId: item.menuId,
-                },
-              }}
-              onClick={popupState.close}
+              // component={Link}
+              // to={{
+              //   pathname: ADDTOCART,
+              //   state: {
+              //     categoryId: menu.categoryId,
+              //     itemId: item.menuId,
+              //   },
+              // }}
+              // onClick={popupState.close}
+
+              onClick={dynamicNavigation.bind(null, {
+                categoryId: menu.categoryId,
+                categoryName: menu.menuName,
+                itemId: item.menuId,
+                itemName: item.menuName,
+                allItems,
+              })}
             >
               {item.menuName}
             </MenuItem>
@@ -138,7 +271,17 @@ const Menus = React.forwardRef((props, ref) => {
     >
       {allMenus.map((category) =>
         category.items ? (
-          <RenderSubMenu key={category.menuId} menu={category} />
+          <RenderSubMenu
+            key={category.menuId}
+            menu={category}
+            allItems={[
+              {
+                categoryId: category.menuId,
+                itemId: "",
+                name: category.menuName,
+              },
+            ]}
+          />
         ) : (
           <MenuItem
             key={category.menuId}
@@ -157,4 +300,4 @@ const Menus = React.forwardRef((props, ref) => {
   );
 });
 
-export default Menus;
+export default withRouter(Menus);

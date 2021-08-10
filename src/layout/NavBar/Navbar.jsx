@@ -142,20 +142,8 @@ const Navbar = (props) => {
           className={classes.tab}
           component={Link}
           to="/signin"
-          label="Track Order" /*{...bindHover(popState)}*/
+          label="Track Order"
         ></Tab>
-
-        {/* <Tab
-          className={classes.tab}
-          component={Link}
-          // to="/"
-          to={{
-            pathname: "/",
-            state: { message: "go to Contactus" },
-          }}
-          label="Contact Us"
-        ></Tab> */}
-
         <Tab
           className={classes.tab}
           component={Button}
@@ -178,7 +166,7 @@ const Navbar = (props) => {
       setValue={setValue}
       open={open}
       handleClicklist={handleClicklist}
-      allMenus={allCategoryItems}
+      menus={allCategoryItems}
     />
   );
 

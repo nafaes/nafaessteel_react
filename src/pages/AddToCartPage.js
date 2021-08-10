@@ -24,6 +24,7 @@ const AddToCartPage = (props) => {
   } = props.location;
 
   const { history } = props;
+  console.log(history);
 
   useEffect(() => {
     if (categoryId && itemId) {
@@ -31,6 +32,8 @@ const AddToCartPage = (props) => {
         ({ categoryId: id }) => categoryId === id
       );
       setCategoryName(categoryName);
+
+      console.log(items);
 
       const categoryItem = items.find(({ itemId: id }) => id === itemId);
 
@@ -104,7 +107,6 @@ const AddToCartPage = (props) => {
       // ];
 
       let allItems;
-
       if (itemId === "") {
         allItems = [
           {
@@ -122,7 +124,6 @@ const AddToCartPage = (props) => {
           // },
 
           historyItems[0],
-
           {
             categoryId: categoryId,
             itemId: itemId,
@@ -136,12 +137,6 @@ const AddToCartPage = (props) => {
         itemId: itemId,
         items: allItems,
       });
-
-      // history.push(ITEMS, {
-      //   categoryId: categoryId,
-      //   itemId: itemId,
-      //   items: allItems,
-      // });
     },
     [historyItems, history, categoryId]
   );

@@ -12,7 +12,7 @@ const ItemsPage = (props) => {
   const { history, location } = props;
   const categoryId = location.state?.categoryId;
   // const historyItems = location.state?.items;
-  // console.log(props);
+  console.log(props);
 
   // useEffect(() => {
   //   if (categoryId && itemId) {
@@ -85,10 +85,7 @@ const ItemsPage = (props) => {
   const navigate = useCallback(
     (nextLevel, item) => {
       let allItems;
-
       if (location.state?.items) {
-        // console.log(location.state.items);
-
         if (location.state.categoryId && location.state.itemId) {
           allItems = [
             ...location.state.items,
@@ -108,15 +105,6 @@ const ItemsPage = (props) => {
             },
           ];
         }
-
-        // allItems = [
-        //   ...location.state.items,
-        //   {
-        //     categoryId: location.state.categoryId,
-        //     itemId: item.itemId,
-        //     name: item.itemName,
-        //   },
-        // ];
       } else if (location.state.itemId === "") {
         allItems = [
           {
