@@ -1,20 +1,11 @@
 import React from "react";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import { Link } from "react-router-dom";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import MenuIcon from "@material-ui/icons/Menu";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import { Button, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
-
-import { makeStyles } from "@material-ui/core/styles";
 import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -22,11 +13,6 @@ import TreeItem from "@material-ui/lab/TreeItem";
 
 import navbarEngDesk from "../../assets/scss/navbar.module.scss";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
-
-import Menus from "./Menus";
-import logo from "../../assets/img/Logo.png";
-import { CART } from "../../constants/routes";
-import { allCategoryItems } from "../../constants/data";
 
 const SideDrawer = (props) => {
   const {
@@ -45,11 +31,14 @@ const SideDrawer = (props) => {
   console.log(menus);
 
   const NestedTreeView = ({ menu, allItems }) => (
-    <TreeItem nodeId="5" label="Documents">
+    <TreeItem
+      nodeId={menu.categoryId + menu.menuName}
+      label={menu.menuName}
+      style={{ color: "white" }}
+    >
       {menu.items.map((item) =>
         item.items ? (
           <NestedTreeView
-            ref={ref}
             key={item.menuId}
             menu={item}
             allItems={[
@@ -62,7 +51,12 @@ const SideDrawer = (props) => {
             ]}
           />
         ) : (
-          <TreeItem nodeId="8" label="index.js" />
+          <TreeItem
+            key={item.menuId}
+            nodeId={item.menuId}
+            label={item.menuName}
+            style={{ color: "white" }}
+          />
         )
       )}
     </TreeItem>
@@ -97,37 +91,33 @@ const SideDrawer = (props) => {
             </ListItemText>
           </ListItem>
 
-          {/* <TreeView
+          <TreeView
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpandIcon={<ChevronRightIcon />}
           >
             {menus.map((menu) =>
               menu.items ? (
-                <TreeItem nodeId="1" label="Applications">
-                  <TreeItem nodeId="2" label="Calendar" />
-                  <TreeItem nodeId="3" label="Chrome" />
-                  <TreeItem nodeId="4" label="Webstorm" />
-                </TreeItem>
+                <NestedTreeView
+                  key={menu.menuId}
+                  menu={menu}
+                  allItems={[
+                    {
+                      categoryId: menu.menuId,
+                      itemId: "",
+                      name: menu.menuName,
+                    },
+                  ]}
+                />
               ) : (
-                <TreeItem key={menu.menuId} nodeId="2" label={menu.menuName} />
+                <TreeItem
+                  key={menu.menuId}
+                  nodeId="2"
+                  label={menu.menuName}
+                  style={{ color: "white" }}
+                />
               )
             )}
-          </TreeView> */}
-
-          {/* <TreeItem nodeId="1" label="Applications">
-              <TreeItem nodeId="2" label="Calendar" />
-              <TreeItem nodeId="3" label="Chrome" />
-              <TreeItem nodeId="4" label="Webstorm" />
-            </TreeItem>
-            <TreeItem nodeId="5" label="Documents">
-              <TreeItem nodeId="10" label="OSS" />
-              <TreeItem nodeId="6" label="Material-UI">
-                <TreeItem nodeId="7" label="src">
-                  <TreeItem nodeId="8" label="index.js" />
-                  <TreeItem nodeId="9" label="tree-view.js" />
-                </TreeItem>
-              </TreeItem>
-            </TreeItem> */}
+          </TreeView>
 
           <ListItem
             onClick={() => {
