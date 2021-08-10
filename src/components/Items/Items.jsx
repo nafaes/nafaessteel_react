@@ -34,7 +34,7 @@ const Items = (props) => {
         style={{ marginTop: "3em" }}
         justify="center"
         spacing={2}
-        cols={2}
+        // cols={2}
       >
         {items.map((item, index) => (
           <Grid item key={index} style={{ columnGap: "12px" }}>

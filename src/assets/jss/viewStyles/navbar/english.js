@@ -13,11 +13,13 @@ export const navbarEngMobile = makeStyles((theme) => ({
           },
      },
      logo: {
+         
           [theme.breakpoints.down("xs")]: {
-               marginLeft: "9em",
+               marginLeft: "5em",
+               height: "4em",
           },
           [theme.breakpoints.down("md")]: {
-               marginLeft: "9em",
+               marginLeft: "5em",
           },
          
      }

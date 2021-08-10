@@ -3,5 +3,5 @@ import { makeStyles } from "@material-ui/core";
 import { landingMobCommon } from "./landingCommon";
 
 export const landingMobEng = makeStyles((theme) => ({
-     ...landingMobCommon,
+  ...landingMobCommon,
 }));

@@ -18,6 +18,7 @@ import { Typography } from "@material-ui/core";
 
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import brickImg from "../../assets/img/cement.jpg";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -67,7 +68,6 @@ const invoiceSubtotal = subtotal(rows);
 const totalQuantity = totalqty(rows);
 
 const AddToCart = (props) => {
-  
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
@@ -84,109 +84,159 @@ const AddToCart = (props) => {
         className={clsx(classes.ContainerForm, classesExternal.ContainerForm)}
       >
         <Grid container justify="center">
-          <Grid item lg={8} md={8} xs={12}>
-            <Grid
-              item
-              container
-              direction="row"
-              justify="space-between"
-              style={{
-                color: "#fff",
-                background: "rgba(0, 134, 179, 0.8)",
-                padding: ".6em",
-                borderRadius: "1em",
-              }}
-            >
-              <Grid item>
-                <Typography variant="h6">Kuwait Steel</Typography>
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            <Grid item container>
+              <Grid
+                item
+                // component={"a"}
+                lg={5}
+                md={5}
+                sm={5}
+                xs={12}
+               style={{display: "flex", alignItems: "center"}}
+              >
+                <img alt="" src={brickImg} style={{ width: "100%", borderRadius: ".75em"}} />
               </Grid>
-              <Grid item>
-                <Typography variant="h6">247.00 Per Ton</Typography>
-              </Grid>
-            </Grid>
 
-            <Grid
-              item
-              container
-              direction="row"
-              justify="center"
-              style={{ color: "#fff", marginTop: "1em" }}
-            >
-              <Grid item lg={8} md={8} xs={10}>
-                <FormControl
-                  variant="outlined"
-                  autoComplete="off"
-                  style={{ width: "100%", marginBottom: "2em" }}
+              <Grid item lg={7} md={7} sm={7} xs={12}>
+                 <Grid
+                  item
+                  container
+                  direction="row"
+                  justify="space-between"
+                  style={{
+                    color: "#fff",
+                    background: "rgba(0, 134, 179, 0.8)",
+                    padding: ".6em",
+                    borderRadius: "1em",
+                    width: "80%",
+                    margin: "0px auto"
+                  }}
                 >
-                  <InputLabel
-                    id="demo-simple-select-outlined-label"
-                    style={{ color: "#fff" }}
-                  >
-                    Size
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={size}
-                    onChange={handleChange}
-                    label="Size"
-                    style={{ color: "#fff" }}
-                    className={clsx(
-                      classes.selectComponentCls,
-                      classesExternal.selectComponentCls
-                    )}
-                    MenuProps={{ disableScrollLock: true }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>10 mm</MenuItem>
-                    <MenuItem value={20}>20 mm</MenuItem>
-                    <MenuItem value={30}>30 mm</MenuItem>
-                  </Select>
-                </FormControl>
-
-                {/* <form style={{ width: "100%", marginBottom: "2em" }} autoComplete="off"> */}
-                <TextField
-                  id="outlined-basic"
-                  label="Enter Quantity"
-                  variant="outlined"
-                  className={clsx(
-                    classes.selectComponentCls,
-                    classesExternal.selectComponentCls
-                  )}
-                  autoComplete="off"
-                  style={{ width: "100%", marginBottom: "2em" }}
-                />
-                {/* </form> */}
+                  <Grid item>
+                    <Typography variant="h6">Kuwait Steel</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h6">247.00 Per Ton</Typography>
+                  </Grid>
+                </Grid> 
 
                 <Grid
                   item
                   container
-                  className={clsx(
-                    classes.addCartSubBtnContainer,
-                    classesExternal.addCartSubBtnContainer
-                  )}
+                  direction="row"
                   justify="center"
+                  style={{ color: "#fff", marginTop: "1em" }}
                 >
-                  <Grid item lg={8} md={8} xs={8}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      size="small"
-                      className={clsx(
-                        classes.addCartSubBtn,
-                        classesExternal.addCartSubBtn
-                      )}
-                      fullWidth
-                      margin="dense"
-                      style={{ fontSize: ".95rem" }}
-                      startIcon={
-                        <AddShoppingCartIcon style={{ fontSize: "1.5rem" }} />
-                      }
+                  <Grid item lg={9} md={9} xs={10}>
+                    <FormControl
+                      variant="outlined"
+                      autoComplete="off"
+                      style={{ width: "100%", marginBottom: "2em" }}
                     >
-                      Add To Cart
-                    </Button>
+                      <InputLabel
+                        id="demo-simple-select-outlined-label"
+                        style={{ color: "#fff" }}
+                      >
+                        Size
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={size}
+                        onChange={handleChange}
+                        label="Size"
+                        style={{ color: "#fff" }}
+                        className={clsx(
+                          classes.selectComponentCls,
+                          classesExternal.selectComponentCls
+                        )}
+                        MenuProps={{ disableScrollLock: true }}
+                      >
+                        <MenuItem
+                          value=""
+                          className={clsx(
+                            classes.selectComponentValue,
+                            classesExternal.selectComponentValue
+                          )}
+                        >
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem
+                          value={10}
+                          className={clsx(
+                            classes.selectComponentValue,
+                            classesExternal.selectComponentValue
+                          )}
+                        >
+                          10 mm
+                        </MenuItem>
+                        <MenuItem
+                          value={20}
+                          className={clsx(
+                            classes.selectComponentValue,
+                            classesExternal.selectComponentValue
+                          )}
+                        >
+                          20 mm
+                        </MenuItem>
+                        <MenuItem
+                          value={30}
+                          className={clsx(
+                            classes.selectComponentValue,
+                            classesExternal.selectComponentValue
+                          )}
+                        >
+                          30 mm
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+
+                    {/* <form style={{ width: "100%", marginBottom: "2em" }} autoComplete="off"> */}
+                    <TextField
+                      id="outlined-basic"
+                      label="Enter Quantity"
+                      variant="outlined"
+                      className={clsx(
+                        classes.selectComponentCls,
+                        classesExternal.selectComponentCls
+                      )}
+                      autoComplete="off"
+                      style={{ width: "100%", marginBottom: "2em" }}
+                    />
+                    {/* </form> */}
+
+                    <Grid
+                      item
+                      container
+                      className={clsx(
+                        classes.addCartSubBtnContainer,
+                        classesExternal.addCartSubBtnContainer
+                      )}
+                      justify="center"
+                    >
+                      <Grid item lg={8} md={8} xs={8}>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          size="small"
+                          className={clsx(
+                            classes.addCartSubBtn,
+                            classesExternal.addCartSubBtn
+                          )}
+                          fullWidth
+                          margin="dense"
+                          style={{ fontSize: ".95rem" }}
+                          startIcon={
+                            <AddShoppingCartIcon
+                              style={{ fontSize: "1.5rem" }}
+                            />
+                          }
+                        >
+                          Add To Cart
+                        </Button>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>

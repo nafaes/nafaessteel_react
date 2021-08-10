@@ -94,7 +94,7 @@ const CartItems = () => {
   }, 0);
 
   return (
-    <Grid container>
+    <Grid container style={{marginTop: "2em"}} >
       <Grid item xs={12} sm={12} className={classes.headerContent}>
         <Typography variant="h6" gutterBottom>
           Items in your cart

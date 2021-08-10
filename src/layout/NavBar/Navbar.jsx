@@ -157,6 +157,7 @@ const Navbar = (props) => {
         <Tab className={classes.tab} component={Link} to="/category" label="Category" {...bindHover(popupState)}></Tab>
         <Tab className={classes.tab} component={Link} to="/signin" label="Track Order" /*{...bindHover(popState)}*/></Tab>
         <Tab className={classes.tab} component={Link} to="/contactus" label="Contact Us"></Tab>
+        {/* <Tab className={classes.tab} component={Link} to="/" label=""></Tab> */}
         {/* <Tab className={classes.tab} onClick={goToContactUs.bind(null)} label="Contact Us"></Tab> */}
 
       </Tabs>
@@ -278,18 +279,22 @@ const Navbar = (props) => {
             </Button>
             {matchesMd ? drawer : tabs}
             <Tooltip title="Profile" arrow>
-              <IconButton color="inherit">
-                <AccountCircleIcon size="medium" />
+              <IconButton color="inherit" className={clsx(classes.navbarIcons,classesExternal.navbarIcons)}>
+                <AccountCircleIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Cart" arrow>
-              <IconButton color="inherit" component={Link} to={CART}>
-                <ShoppingCart size="medium" />
+              <IconButton color="inherit" component={Link} to={CART}
+                className={clsx(classes.navbarIcons,classesExternal.navbarIcons)}
+              >
+                <ShoppingCart />
               </IconButton>
             </Tooltip>
             <Tooltip title="Language" arrow>
-              <IconButton color="inherit">
-                <TranslateIcon size="medium" />
+              <IconButton color="inherit"
+                className={clsx(classes.navbarIcons,classesExternal.navbarIcons)}
+              >
+                <TranslateIcon />
               </IconButton>
             </Tooltip>
           </ToolBar>
