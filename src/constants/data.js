@@ -256,44 +256,14 @@ export const allCategories = [
           },
         ],
       },
-      {
-        itemId: "item5",
-        itemName: "Wood Nail",
-        image: "https://www.nafaessteel.com/IronImages/irani_steel.png",
-        cost: "240.000 KWD Per Ton.",
-        nextLevel: 3,
-        noOfSelections: 1,
-        unit: "Box",
-        selections: [
-          {
-            name: "size",
-            label: "Size",
-            types: [
-              {
-                id: 1,
-                type: "8 cm",
-                unit: "Box",
-                price: "KWD 3.75",
-              },
-            ],
-          },
-        ],
-
-        sizes: [
-          {
-            id: 1,
-            size: "8 cm",
-            unit: "Box",
-            price: "KWD 3.75",
-          },
-        ],
-      },
+      
     ],
   },
 
   {
     categoryId: "category2",
     categoryName: "Wood",
+
     image:
       "https://cdn.friendsoftheearth.uk/sites/default/files/styles/hero_image/public/media/images/wood-1209632_1920.jpg?itok=lEIthVkl",
     description: "Description",
@@ -301,7 +271,8 @@ export const allCategories = [
     nextLevel: 2,
     items: [
       {
-        itemName: "Borad",
+        itemName: "Board",
+        cost: "240.000 KWD Per Ton.",
         itemId: "woodItem1",
         image:
           "https://cdn.friendsoftheearth.uk/sites/default/files/styles/hero_image/public/media/images/wood-1209632_1920.jpg?itok=lEIthVkl",
@@ -436,6 +407,7 @@ export const allCategories = [
       },
       {
         itemName: "White",
+        cost: "240.000 KWD Per Ton.",
         itemId: "woodItem2",
         image:
           "https://cdn.friendsoftheearth.uk/sites/default/files/styles/hero_image/public/media/images/wood-1209632_1920.jpg?itok=lEIthVkl",

@@ -26,10 +26,18 @@ import Collapse from "@material-ui/core/Collapse";
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
 
 import Menus from "./Menus";
-import logo from "../../assets/img/Logo.png";
-import { CART } from "../../constants/routes";
 import { allCategoryItems } from "../../constants/data";
 import SideDrawer from "./SideDrawer";
+import logo from '../../assets/img/Logo.png';
+import { CART, TRACKORDER } from '../../constants/routes';
+import { SIGNIN } from '../../constants/routes';
+
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+
+import MenuList from '@material-ui/core/MenuList';
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -53,15 +61,12 @@ const Navbar = (props) => {
   // const classes = useStyles();
   const theme = useTheme();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesXs = useMediaQuery(theme.breakpoints.down("xs"));
 
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [value, setValue] = useState(0);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [openMenu, setOpenMenu] = useState(false);
+  const [value, setValue] = useState(0)
+  
   const [open, setOpen] = React.useState(false);
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const popupState = usePopupState({
     popupId: "demoMenu",
@@ -88,6 +93,38 @@ const Navbar = (props) => {
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
   };
+  const [openDrop, setOpenDrop] = React.useState(false);
+  const anchorRef = React.useRef(null);
+
+  const handleToggle = () => {
+    setOpenDrop((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpenDrop(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpenDrop(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(setOpenDrop);
+
+  useEffect(() => {
+    if (prevOpen.current === true && openDrop === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = openDrop;
+  }, [openDrop])
 
   useEffect(() => {
     if (window.location.pathname === "/" && value !== 0) {
@@ -116,32 +153,33 @@ const Navbar = (props) => {
           setValue(2);
         }
         break;
-      case "/contactUs":
+      case "/contactus":
         if (value !== 3) {
           setValue(3);
         }
         break;
+        default:
+          break;
     }
-  }, [value]);
-
+  }, [value])
+ 
   const tabs = (
     <React.Fragment>
-      <Tabs
-        className={classes.tabContainer}
+      <Tabs className={clsx(classes.tabContainer,classesExternal.tabContainer)}
         indicatorColor="secondary"
         onChange={handleChange}
         value={value}
       >
-        <Tab className={classes.tab} component={Link} to="/" label="Home"></Tab>
+        <Tab className={clsx(classes.tab,classesExternal.tab)} component={Link} to="/" label="Home"></Tab>
         <Tab
-          className={classes.tab}
+          className={clsx(classes.tab,classesExternal.tab)}
           label="Category"
           {...bindHover(popupState)}
         />
         <Tab
-          className={classes.tab}
+          className={clsx(classes.tab,classesExternal.tab)}
           component={Link}
-          to="/signin"
+          to={TRACKORDER}
           label="Track Order"
         ></Tab>
         <Tab
@@ -151,12 +189,58 @@ const Navbar = (props) => {
             goToContactUs();
           }}
           label="Contact Us"
-        />
+        ></Tab>
       </Tabs>
+        
+
+      <Menu {...bindMenu(popupState)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        getContentAnchorEl={null} className={classes.menuCls}
+        disableScrollLock={true}
+        >
+        <Submenu popupId="moreChoicesMenu" title="Iron" className={clsx(classes.subMenu,classesExternal.subMenu)}>
+          <MenuItem onClick={popupState.close}>Pure Iron</MenuItem>
+          <MenuItem onClick={popupState.close}>Wrought Iron</MenuItem>
+          <MenuItem onClick={popupState.close}>Cast Iron</MenuItem>
+          <MenuItem onClick={popupState.close}>Pig Iron</MenuItem>
+        </Submenu>
+        <MenuItem onClick={popupState.close}>Cement</MenuItem>
+        <MenuItem onClick={popupState.close}>Wood</MenuItem>
+        <Submenu popupId="moreChoicesMenu" title="Brick" className={clsx(classes.subMenu,classesExternal.subMenu)}>
+        
+          <MenuItem onClick={popupState.close}>Concrete Brick</MenuItem>
+          <MenuItem onClick={popupState.close}>Fly Ash Brick</MenuItem>
+        </Submenu>
+      </Menu>
+    
 
       <Menus popupState={popupState} allMenus={allCategoryItems} />
     </React.Fragment>
   );
+
+  const popper = (
+    <React.Fragment>
+      <Popper open={openDrop} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+            >
+              <Paper className={clsx(classes.menudrop, classesExternal.menudrop)}>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList autoFocusItem={openDrop} id="menu-list-grow" onKeyDown={handleListKeyDown} className={clsx(classes.subMenu,classesExternal.subMenu)}>
+                    <MenuItem onClick={handleClose} component={Link} to={SIGNIN}>Sign In</MenuItem>
+                    <MenuItem onClick={handleClose}>SignOut</MenuItem>
+
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+    </React.Fragment>
+  )
 
   const drawer = (
     <SideDrawer
@@ -170,114 +254,11 @@ const Navbar = (props) => {
     />
   );
 
-  // const drawer = (
-  //   <React.Fragment>
-  //     <SwipeableDrawer
-  //       disableBackdropTransition={!iOS}
-  //       disableDiscovery={iOS}
-  //       open={openDrawer}
-  //       onClose={() => setOpenDrawer(false)}
-  //       onOpen={() => setOpenDrawer(true)}
-  //       classes={{ paper: classes.drawer }}
-  //     >
-  //       <div className={classes.toolbarMargin} />
-  //       <List disablePadding component="nav">
-  //         <ListItem
-  //           onClick={() => {
-  //             setOpenDrawer(false);
-  //             setValue(0);
-  //           }}
-  //           divider
-  //           button
-  //           component={Link}
-  //           to="/"
-  //           selected={value === 0}
-  //           classes={{ selected: classes.drawerItemSelected }}
-  //         >
-  //           <ListItemText className={classes.drawerItem} disableTypography>
-  //             Home
-  //           </ListItemText>
-  //         </ListItem>
-  //         <ListItem button onClick={handleClicklist} divider>
-  //           <ListItemText className={classes.drawerItem}>Category</ListItemText>
-  //           {open ? (
-  //             <ExpandLess style={{ color: "white" }} />
-  //           ) : (
-  //             <ExpandMore style={{ color: "white" }} />
-  //           )}
-  //         </ListItem>
-  //         <Collapse in={open} timeout="auto" unmountOnExit>
-  //           <List component="div" disablePadding>
-  //             <ListItem button divider>
-  //               <ListItemText className={classes.drawerItem}>Iron</ListItemText>
-  //             </ListItem>
-  //             <ListItem button divider>
-  //               <ListItemText className={classes.drawerItem}>
-  //                 Cement
-  //               </ListItemText>
-  //             </ListItem>
-  //             <ListItem button divider>
-  //               <ListItemText className={classes.drawerItem}>Wood</ListItemText>
-  //             </ListItem>
-  //             <ListItem button divider>
-  //               <ListItemText className={classes.drawerItem}>
-  //                 Brick
-  //               </ListItemText>
-  //             </ListItem>
-  //           </List>
-  //         </Collapse>
-  //         <ListItem
-  //           onClick={() => {
-  //             setOpenDrawer(false);
-  //             setValue(2);
-  //           }}
-  //           divider
-  //           button
-  //           component={Link}
-  //           to="/trackorder"
-  //           selected={value === 2}
-  //           classes={{ selected: classes.drawerItemSelected }}
-  //         >
-  //           <ListItemText className={classes.drawerItem} disableTypography>
-  //             Track Order
-  //           </ListItemText>
-  //         </ListItem>
-  //         <ListItem
-  //           onClick={() => {
-  //             setOpenDrawer(false);
-  //             setValue(3);
-  //           }}
-  //           divider
-  //           button
-  //           component={Link}
-  //           to="/contactUs"
-  //           selected={value === 3}
-  //           classes={{ selected: classes.drawerItemSelected }}
-  //         >
-  //           <ListItemText className={classes.drawerItem} disableTypography>
-  //             Contact Us
-  //           </ListItemText>
-  //         </ListItem>
-  //       </List>
-  //     </SwipeableDrawer>
-  //     <IconButton
-  //       color="inherit"
-  //       className={classes.drawerIconContainer}
-  //       onClick={() => setOpenDrawer(!openDrawer)}
-  //       disableRipple
-  //     >
-  //       <MenuIcon className={classes.drawerIcon} />
-  //     </IconButton>
-  //   </React.Fragment>
-  // );
-
+  
   return (
     <Fragment>
       <ElevationScroll>
-        <AppBar
-          position="fixed"
-          className={matchesMd ? classes.appbar : "undefined"}
-        >
+        <AppBar position="fixed" className={matchesXs ? classes.appbar : "undefined"}>
           <ToolBar disableGutters>
             <Button
               component={Link}
@@ -294,26 +275,24 @@ const Navbar = (props) => {
                 src={logo}
               />
             </Button>
-            {matchesMd ? drawer : tabs}
-            <Tooltip title="Profile" arrow>
-              <IconButton color="inherit" className={clsx(classes.navbarIcons,classesExternal.navbarIcons)}>
-                <AccountCircleIcon />
+            {matchesXs ? drawer : tabs}
+              <IconButton className={clsx(classes.iconButton,classesExternal.iconButton)} color="inherit"   ref={anchorRef}
+                          aria-controls={openDrop ? 'menu-list-grow' : undefined}
+                          aria-haspopup="true"
+                          onClick={handleToggle}>
+                <AccountCircleIcon size="medium" />
               </IconButton>
-            </Tooltip>
             <Tooltip title="Cart" arrow>
-              <IconButton color="inherit" component={Link} to={CART}
-                className={clsx(classes.navbarIcons,classesExternal.navbarIcons)}
-              >
-                <ShoppingCart />
+              <IconButton className={clsx(classes.iconButton,classesExternal.iconButton)} color="inherit" component={Link} to={CART}>
+                <ShoppingCart size="medium" />
               </IconButton>
             </Tooltip>
             <Tooltip title="Language" arrow>
-              <IconButton color="inherit"
-                className={clsx(classes.navbarIcons,classesExternal.navbarIcons)}
-              >
-                <TranslateIcon />
+              <IconButton className={clsx(classes.iconButton,classesExternal.iconButton)} color="inherit">
+                <TranslateIcon size="medium" />
               </IconButton>
             </Tooltip>
+            {popper}
           </ToolBar>
         </AppBar>
       </ElevationScroll>

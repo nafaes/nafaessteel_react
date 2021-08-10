@@ -1,0 +1,38 @@
+
+.loginContainer {
+    // width:60%;
+    margin:5em auto 5em auto;
+    background-color: #fff;
+    border-radius: 0.5em;
+}
+.loginImage  {
+    height:25em;
+    width: 20em;
+}
+.loginContainForm  {
+    border-left:1px solid  rgba(0, 134, 179,0.7);
+    border-left-style: dotted;
+    height: 26em;
+}
+
+.loginTextfield {
+    width:18em;
+    margin-bottom:0.5em;
+}
+.signInBtn {
+     text-transform:none !important;
+     width:19em !important;
+     background-Color:#0086b3 !important;
+     color: white !important;
+     font-weight: lighter !important;
+     font-size:0.9rem !important;
+     border-radius:10em !important;
+     padding:3px !important;
+     margin-bottom:0.5em !important;
+}
+// .signInBtn:hover{
+//     background-color: #0086b3;
+// }
+//  .MuiButton-root:hover {
+//      background-color:#0086b3
+//  }
