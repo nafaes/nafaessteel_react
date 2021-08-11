@@ -4,23 +4,5 @@ import { navbarMobCommon } from "./navbarCommon";
 
 export const navbarEngMobile = makeStyles((theme) => ({
      ...navbarMobCommon,
-     logoContainer: {
-          [theme.breakpoints.down("xs")]: {
-               margin: "auto",
-          },
-          [theme.breakpoints.down("md")]: {
-               margin: "auto",
-          },
-     },
-     logo: {
-         
-          [theme.breakpoints.down("xs")]: {
-               marginLeft: "5em",
-               height: "4em",
-          },
-          [theme.breakpoints.down("md")]: {
-               marginLeft: "5em",
-          },
-         
-     }
+     
 }));

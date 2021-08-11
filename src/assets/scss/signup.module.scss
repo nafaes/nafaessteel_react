@@ -1,0 +1,49 @@
+
+.loginContainer {
+    // width:60%;
+    margin:5em auto 5em auto;
+    background-color: #fff;
+    border-radius: 0.5em;
+}
+.loginImage  {
+    height:25em;
+    width: 20em;
+}
+.loginContainForm  {
+    border-left:1px solid  rgba(0, 134, 179,0.7);
+    border-left-style: dotted;
+    height: 28em;
+}
+
+.loginTextfield {
+    width:18em;
+    margin-bottom:0.5em;
+}
+.loginTextfield .MuiMuiOutlinedInput-notchedOutline {
+    border: 1px solid #0086b3 !important;
+}
+.loginTextfield .MuiInputLabel-outlined.MuiInputLabel-shrink {
+    color: #0086b3 !important;
+}
+.loginTextfield .MuiOutlinedInput-root .Mui-focused {
+    border-color:#0086b3 !important;
+    border-Width: 2px;
+    height: 3em;
+}
+.signInBtn {
+    text-transform:none;
+     width:19em;
+     background-Color:#0086b3 !important;
+     color: white !important;
+     font-weight: lighter;
+     font-size:0.9rem;
+     border-radius:10em;
+     padding:3px;
+     margin-bottom:0.5em;
+}
+.signInBtn:hover{
+    background-color: #0086b3;
+}
+ .MuiButton-root:hover {
+     background-color:#0086b3
+ }

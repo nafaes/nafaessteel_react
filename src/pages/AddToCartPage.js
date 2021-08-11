@@ -2,32 +2,66 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import AddToCart from "../components/AddToCart/AddToCart";
 import { allCategories } from "../constants/data";
+import { ITEMS } from "../constants/routes";
+
+const addToCartInitialState = {
+  quantity: {
+    name: "quantity",
+    value: "",
+  },
+  price: "",
+};
 
 const AddToCartPage = (props) => {
   const [categories] = useState(allCategories);
   const [categoryName, setCategoryName] = useState();
-  const [item, setItem] = useState([]);
-  const [type, setType] = useState();
-  const [sizes, setSizes] = useState([]);
-  const [size, setSize] = useState();
-
-  const [length, setLength] = useState();
-  const [price, setPrice] = useState();
+  const [item, setItem] = useState();
+  const [addToCartForm, setAddToCartForm] = useState(addToCartInitialState);
+  // const [price, setPrice] = useState();
 
   const {
-    state: { categoryId, itemId },
+    state: { categoryId, itemId, items: historyItems },
   } = props.location;
+
+  const { history } = props;
+  console.log(history);
 
   useEffect(() => {
     if (categoryId && itemId) {
       const { categoryName, items } = categories.find(
         ({ categoryId: id }) => categoryId === id
       );
+      setCategoryName(categoryName);
+
+      console.log(items);
+
       const categoryItem = items.find(({ itemId: id }) => id === itemId);
 
-      setCategoryName(categoryName);
-      console.log(categoryItem);
-      setItem(categoryItem);
+      if (!categoryItem && items) {
+        for (const item of items) {
+          if (item.subItems) {
+            const categoryItem = item.subItems.find(
+              ({ itemId: id }) => id === itemId
+            );
+            if (categoryItem) {
+              setItem(categoryItem);
+              break;
+            } else {
+              continue;
+            }
+          } else {
+            setItem(categoryItem);
+          }
+        }
+      } else {
+        setItem(categoryItem);
+      }
+    } else if (categoryId) {
+      const category = categories.find(
+        ({ categoryId: id }) => categoryId === id
+      );
+      setItem(category);
+      setCategoryName(category.categoryName);
     }
 
     return () => {
@@ -35,67 +69,86 @@ const AddToCartPage = (props) => {
     };
   }, [categoryId, itemId, categories]);
 
-  const typeChangeHandler = useCallback(
-    (event) => {
-      const typeId = event.target.value;
-      if (typeId) {
-        const typeSizes = item.types.find(({ id }) => id === typeId);
-        setSizes(typeSizes.sizes);
-        setSize();
-        setPrice();
+  const formChangeHandler = useCallback(
+    ({ target: { name, value }, ...values }) => {
+      if (values.hasOwnProperty("price")) {
+        setAddToCartForm({
+          ...addToCartForm,
+          [name]: {
+            ...addToCartForm?.[name],
+            name,
+            value,
+          },
+          price: values.price,
+        });
       } else {
-        setType();
-        setSizes();
-        setPrice();
+        setAddToCartForm({
+          ...addToCartForm,
+          [name]: {
+            ...addToCartForm?.[name],
+            name,
+            value,
+          },
+          // price: addToCartForm.price ? addToCartForm.price : "",
+        });
       }
     },
-    [item]
+    [addToCartForm]
   );
 
-  const sizeChangeHandler = useCallback(
-    (event) => {
-      const sizeId = event.target.value;
-      if (sizeId) {
-        setSize(sizeId);
-        const sizePrice = sizes.find(({ id }) => id === Number(sizeId));
-        setPrice(sizePrice.price);
-      } else {
-        setSize();
-        setPrice();
-      }
-    },
-    [sizes]
-  );
+  const breadcrumbNavigation = useCallback(
+    (itemId, name) => {
+      // const allItems = [
+      //   {
+      //     categoryId: categoryId,
+      //     itemId: itemId,
+      //     name: name,
+      //   },
+      // ];
 
-  const lengthHandler = useCallback(
-    (event) => {
-      const lengthId = event.target.value;
-      if (lengthId) {
-        setLength(lengthId);
-        const lengthPrice = item.lengths.find(
-          ({ lengthId: id }) => id === Number(lengthId)
-        );
-        setPrice(lengthPrice.price);
+      let allItems;
+      if (itemId === "") {
+        allItems = [
+          {
+            categoryId: categoryId,
+            itemId: "",
+            name: name,
+          },
+        ];
       } else {
-        setLength();
-        setPrice();
+        allItems = [
+          // {
+          //   categoryId: categoryId,
+          //   itemId: "",
+          //   name: categoryName,
+          // },
+
+          historyItems[0],
+          {
+            categoryId: categoryId,
+            itemId: itemId,
+            name: name,
+          },
+        ];
       }
+
+      history.push(ITEMS, {
+        categoryId: categoryId,
+        itemId: itemId,
+        items: allItems,
+      });
     },
-    [item]
+    [historyItems, history, categoryId]
   );
 
   return (
     <AddToCart
       categoryName={categoryName}
       item={item}
-      type={type}
-      typeChangeHandler={typeChangeHandler}
-      sizes={sizes}
-      size={size}
-      sizeChangeHandler={sizeChangeHandler}
-      length={length}
-      lengthHandler={lengthHandler}
-      price={price}
+      addToCartForm={addToCartForm}
+      formChangeHandler={formChangeHandler}
+      historyItems={historyItems}
+      breadcrumbNavigation={breadcrumbNavigation}
     />
   );
 };

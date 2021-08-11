@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
 import logoIcon from "../../assets/img/Logo.png";
 import Facebook from "@material-ui/icons/Facebook";
 import Twitter from "@material-ui/icons/Twitter";

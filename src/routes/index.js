@@ -6,6 +6,9 @@ import ItemsPage from "../pages/ItemsPage";
 import AddToCartPage from "../pages/AddToCartPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
+import SignupPage from "../pages/Signup";
+import TrackOrderPage from "../pages/TrackOrder";
+
 
 import {
   LANDING,
@@ -14,7 +17,10 @@ import {
   ADDTOCART,
   CART,
   CHECKOUT,
+  SIGNUP,
+  TRACKORDER,
 } from "../constants/routes";
+
 
 const Routes = () => {
   return (
@@ -23,9 +29,11 @@ const Routes = () => {
       <Route exact={true} path={SIGNIN} component={SigninPage} />
       <Route exact={true} path={ITEMS} component={ItemsPage} />
       <Route exact={true} path={ADDTOCART} component={AddToCartPage} />
-
+      <Route exact={true} path={SIGNUP} component={SignupPage} />
       <Route exact={true} path={CART} component={CartPage} />
       <Route exact={true} path={CHECKOUT} component={CheckoutPage} />
+      <Route exact={true} path={TRACKORDER} component={TrackOrderPage} />
+
 
       {/* <Route exact path="/" />
          <Route exact path="/prices" component={() => <div>Prices</div> }/>
