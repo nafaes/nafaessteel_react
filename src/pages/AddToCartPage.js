@@ -20,10 +20,17 @@ const AddToCartPage = (props) => {
   // const [price, setPrice] = useState();
 
   const {
-    state: { categoryId, itemId, items: historyItems },
-  } = props.location;
+    history,
+    location: {
+      state: { items: historyItems },
+    },
+  } = props;
 
-  const { history } = props;
+  // console.log(historyItems[historyItems.length - 1])
+
+  const categoryId = historyItems[historyItems.length - 1].categoryId;
+  const itemId = historyItems[historyItems.length - 1].itemId;
+
   console.log(history);
 
   useEffect(() => {
@@ -32,9 +39,6 @@ const AddToCartPage = (props) => {
         ({ categoryId: id }) => categoryId === id
       );
       setCategoryName(categoryName);
-
-      console.log(items);
-
       const categoryItem = items.find(({ itemId: id }) => id === itemId);
 
       if (!categoryItem && items) {
@@ -98,14 +102,6 @@ const AddToCartPage = (props) => {
 
   const breadcrumbNavigation = useCallback(
     (itemId, name) => {
-      // const allItems = [
-      //   {
-      //     categoryId: categoryId,
-      //     itemId: itemId,
-      //     name: name,
-      //   },
-      // ];
-
       let allItems;
       if (itemId === "") {
         allItems = [
@@ -117,12 +113,6 @@ const AddToCartPage = (props) => {
         ];
       } else {
         allItems = [
-          // {
-          //   categoryId: categoryId,
-          //   itemId: "",
-          //   name: categoryName,
-          // },
-
           historyItems[0],
           {
             categoryId: categoryId,
@@ -133,8 +123,8 @@ const AddToCartPage = (props) => {
       }
 
       history.push(ITEMS, {
-        categoryId: categoryId,
-        itemId: itemId,
+        // categoryId: categoryId,
+        // itemId: itemId,
         items: allItems,
       });
     },

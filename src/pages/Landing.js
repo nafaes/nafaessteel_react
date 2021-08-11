@@ -11,12 +11,13 @@ const LandingPage = (props) => {
     (stage, categoryId, categoryName) => {
       if (stage === 3) {
         history.push(ITEMS, {
-          categoryId: categoryId,
+          // categoryId: categoryId,
           items: [{ categoryId: categoryId, itemId: "", name: categoryName }],
         });
       } else if (stage === 2) {
         history.push(ADDTOCART, {
-          categoryId: categoryId,
+          // categoryId: categoryId,
+          items: [{ categoryId: categoryId, itemId: "", name: categoryName }],
         });
       }
     },

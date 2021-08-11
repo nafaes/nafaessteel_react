@@ -62,10 +62,13 @@ const SubMenu = withStyles(submenuStyles)(
 
 const Menus = React.forwardRef((props, ref) => {
   const { popupState, allMenus, history, location } = props;
+  const historyItems = location?.state?.items;
+
+  const historyCategoryId = historyItems?.[historyItems.length - 1]?.categoryId;
+  const historyItemId = historyItems?.[historyItems.length - 1]?.itemId;
+
   const englishMobileStyles = navbarEngMobile();
   let classes = englishMobileStyles;
-
-  // console.log(location);
 
   // const dynamicNavigation = useCallback(
   //   ({ categoryId, categoryName, itemId, itemName }) => {
@@ -143,43 +146,20 @@ const Menus = React.forwardRef((props, ref) => {
     }) => {
       popupState.close();
 
-      console.log(historyItems);
-
       let allItems = [];
       if (location.state?.items) {
-        if (location.state.categoryId && location.state.itemId) {
-          allItems = [
-            // {
-            //   categoryId: location.state.categoryId,
-            //   itemId: "",
-            //   name: categoryName,
-            // },
-            ...historyItems,
-            {
-              categoryId: location.state.categoryId,
-              itemId: itemId,
-              name: itemName,
-            },
-          ];
-        } else if (location.state.itemId === "") {
-          allItems = [
-            ...historyItems,
-            {
-              categoryId: location.state.categoryId,
-              itemId: "",
-              name: itemName,
-            },
-          ];
-        }
+        allItems = [
+          ...historyItems,
+          {
+            categoryId: categoryId,
+            itemId: itemId,
+            name: itemName,
+          },
+        ];
       } else {
         if (categoryId && itemId) {
           allItems = [
             ...historyItems,
-            // {
-            //   categoryId: categoryId,
-            //   itemId: "",
-            //   name: categoryName,
-            // },
             {
               categoryId: categoryId,
               itemId: itemId,
@@ -198,12 +178,10 @@ const Menus = React.forwardRef((props, ref) => {
       }
 
       history.push(ADDTOCART, {
-        categoryId: categoryId ? categoryId : location.state.categoryId,
-        itemId: itemId,
         items: allItems,
       });
     },
-    [location]
+    [popupState, history, location]
   );
 
   const RenderSubMenu = React.forwardRef(({ menu, allItems, props }, ref) => {
@@ -234,16 +212,6 @@ const Menus = React.forwardRef((props, ref) => {
             <MenuItem
               ref={ref}
               key={item.menuName}
-              // component={Link}
-              // to={{
-              //   pathname: ADDTOCART,
-              //   state: {
-              //     categoryId: menu.categoryId,
-              //     itemId: item.menuId,
-              //   },
-              // }}
-              // onClick={popupState.close}
-
               onClick={dynamicNavigation.bind(null, {
                 categoryId: menu.categoryId,
                 categoryName: menu.menuName,
@@ -288,7 +256,16 @@ const Menus = React.forwardRef((props, ref) => {
             component={Link}
             to={{
               pathname: ADDTOCART,
-              state: { categoryId: category.menuId },
+              state: {
+                // categoryId: category.menuId,
+                items: [
+                  {
+                    categoryId: category.menuId,
+                    itemId: "",
+                    name: category.menuName,
+                  },
+                ],
+              },
             }}
             onClick={popupState.close}
           >

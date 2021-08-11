@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Items = (props) => {
-  const { items, navigateToAddToCart, navigate } = props;
+  const { items, navigate } = props;
   const classes = useStyles();
   let classesExternal = landingEngDesk;
 

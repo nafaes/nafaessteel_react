@@ -11,13 +11,13 @@ import MailIcon from "@material-ui/icons/MailOutline";
 import PhoneIcon from "@material-ui/icons/PhoneInTalkOutlined";
 import clsx from "clsx";
 import { withRouter } from "react-router-dom";
-import { Divider, Hidden } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { allCategories } from "../../constants/data";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
 
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const Landing = (props) => {
   const {
