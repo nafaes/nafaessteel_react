@@ -99,6 +99,7 @@ export const navbarMobCommon = {
       },
       drawer: {
         backgroundColor: theme.palette.common.blue,
+        width:"40%",
       },
       drawerItem: {
         ...theme.typography.tab,

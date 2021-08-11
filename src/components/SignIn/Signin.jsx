@@ -33,12 +33,12 @@ const SignIn = () => {
     return (
     
             <Grid container direction="row" className={clsx(classes.formContainer, classesExternal.formContainer)}>
-                <Grid item container lg={6} justify="center" alignItems="center">
+                <Grid item container lg={6} justifyContent="center" alignItems="center">
                     <Grid item>
                          <img src={login} alt="bg" className={clsx(classes.loginImage, classesExternal.loginImage)} />
                     </Grid>
                 </Grid>
-                <Grid item container direction="column" justify="center" alignItems="center" lg={6} className={clsx(classes.loginContainForm, classesExternal.loginContainForm)}>
+                <Grid item container direction="column" justifyContent="center" alignItems="center" lg={6} className={clsx(classes.loginContainForm, classesExternal.loginContainForm)}>
                    <form>
                      <Grid>
                         <Grid item>

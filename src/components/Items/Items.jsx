@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "1.5em",
     margin: "0px auto"
   },
+  cardStyles: { backgroundColor: theme.palette.common.blue, color: "white", textAlign: "center" }
 }));
 
 const Items = (props) => {
@@ -33,7 +34,7 @@ const Items = (props) => {
         style={{ marginTop: "3em" }}
         justifyContent="center"
         spacing={2}
-        // cols={2}
+      // cols={2}
       >
         {items.map((item, index) => (
           <Grid
@@ -45,41 +46,37 @@ const Items = (props) => {
             key={index}
             style={{ columnGap: "12px" }}
           >
-            {/* <Card
-        justify="center"
-        spacing={1}
-      > */}
-        
             <Card raised
-              elevation={12} className={classes.root}>
+              elevation={12} className={classes.root}
+              onClick={navigate.bind(null, item.nextLevel, item)}>
               <CardHeader title={item.itemName}
-              titleTypographyProps={{variant: "h6"}}
-              style={{backgroundColor: theme.palette.common.blue , color: "white" , textAlign: "center" }}
-                          />              
-              <Divider/>
+                titleTypographyProps={{ variant: "h6" }}
+                className={classes.cardStyles}
+              />
+              <Divider />
               <CardMedia
-                  component="img"
-                  alt="Contemplative Reptile"
-                  // height="200px"
-                  // image={Cement}
-                  src={item.image}
-                  title={item.itemName}
-                  style={{height: "13em ", width: "13em" , margin: "auto"}}
-                  className={clsx(classes.ironsCard, classesExternal.ironsCard)}
-                />
-              <Divider/>
+                component="img"
+                alt="Contemplative Reptile"
+                // height="200px"
+                // image={Cement}
+                src={item.image}
+                title={item.itemName}
+                style={{ height: "13em ", width: "13em", margin: "auto" }}
+                className={clsx(classes.ironsCard, classesExternal.ironsCard)}
+              />
+              <Divider />
               <CardContent
-                  style={{
-                    backgroundColor: "#0086b3",
-                    color: "#fff",
-                    textAlign: "center",
-                  }}
-                  >
-                  <Typography gutterBottom variant="h6" component="h6">
-                    {item.cost}
-                  </Typography>
-                </CardContent> 
-           </Card>
+                style={{
+                  backgroundColor: "#0086b3",
+                  color: "#fff",
+                  textAlign: "center",
+                }}
+              >
+                <Typography gutterBottom variant="h6" component="h6">
+                  {item.cost}
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
         ))}
       </Grid>

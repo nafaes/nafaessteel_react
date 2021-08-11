@@ -18,7 +18,7 @@ import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import clsx from "clsx";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import { Button, IconButton } from "@material-ui/core";
+import { Button, IconButton, MenuItem } from "@material-ui/core";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -191,28 +191,7 @@ const Navbar = (props) => {
           label="Contact Us"
         ></Tab>
       </Tabs>
-        
-
-      <Menu {...bindMenu(popupState)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        getContentAnchorEl={null} className={classes.menuCls}
-        disableScrollLock={true}
-        >
-        <Submenu popupId="moreChoicesMenu" title="Iron" className={clsx(classes.subMenu,classesExternal.subMenu)}>
-          <MenuItem onClick={popupState.close}>Pure Iron</MenuItem>
-          <MenuItem onClick={popupState.close}>Wrought Iron</MenuItem>
-          <MenuItem onClick={popupState.close}>Cast Iron</MenuItem>
-          <MenuItem onClick={popupState.close}>Pig Iron</MenuItem>
-        </Submenu>
-        <MenuItem onClick={popupState.close}>Cement</MenuItem>
-        <MenuItem onClick={popupState.close}>Wood</MenuItem>
-        <Submenu popupId="moreChoicesMenu" title="Brick" className={clsx(classes.subMenu,classesExternal.subMenu)}>
-        
-          <MenuItem onClick={popupState.close}>Concrete Brick</MenuItem>
-          <MenuItem onClick={popupState.close}>Fly Ash Brick</MenuItem>
-        </Submenu>
-      </Menu>
+      
     
 
       <Menus popupState={popupState} allMenus={allCategoryItems} />

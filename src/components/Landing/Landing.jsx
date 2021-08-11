@@ -111,7 +111,7 @@ const Landing = (props) => {
           style={{ marginTop: "4em" }}
           className={classes.contactContainer}
         >
-          <Grid item container justify="center">
+          <Grid item container justifyContent="center">
             <Typography
               variant="h6"
               className={clsx(
@@ -128,7 +128,7 @@ const Landing = (props) => {
             container
             // direction="row"
             direction={largeScreen ? "row" : "column"}
-            justify="center"
+            justifyContent="center"
             alignItems="center"
             className={clsx(
               classes.contactContent,
