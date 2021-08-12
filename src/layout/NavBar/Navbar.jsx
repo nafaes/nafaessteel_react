@@ -11,23 +11,22 @@ import TranslateIcon from "@material-ui/icons/Translate";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Tooltip from "@material-ui/core/Tooltip";
-import navbarEngDesk from "../../assets/scss/navbar.module.scss";
-import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import clsx from "clsx";
 import { Button, IconButton, MenuItem } from "@material-ui/core";
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import MenuList from "@material-ui/core/MenuList";
-
-import Menus from "./Menus";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import { SIGNIN, CART, TRACKORDER } from "../../constants/routes";
+import navbarEngDesk from "../../assets/scss/navbar.module.scss";
+import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import { allCategoryItems } from "../../constants/data";
+import Menus from "./Menus";
 import SideDrawer from "./SideDrawer";
 import logo from "../../assets/img/Logo.png";
-
-import { SIGNIN, CART, TRACKORDER } from "../../constants/routes";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -165,17 +164,17 @@ const Navbar = (props) => {
         ></Tab>
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
-          label="Categories"
+          label="Products"
           {...bindHover(popupState)}
         />
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
           component={Link}
           to={TRACKORDER}
-          label="Track Order"
+          label="Orders"
         ></Tab>
         <Tab
-          className={classes.tab}
+          className={clsx(classes.tab, classesExternal.tab)}
           component={Button}
           onClick={() => {
             goToContactUs();
@@ -183,7 +182,6 @@ const Navbar = (props) => {
           label="Contact Us"
         ></Tab>
       </Tabs>
-
       <Menus popupState={popupState} allMenus={allCategoryItems} />
     </React.Fragment>
   );

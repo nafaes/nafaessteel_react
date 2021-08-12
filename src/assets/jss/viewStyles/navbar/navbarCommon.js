@@ -41,6 +41,10 @@ export const navbarMobCommon = {
         ...theme.typography.tab,
         minWidth: 10,
         marginLeft: "25px",
+        color:"#fff",
+        "& .MuiButton-root": {
+          color:"#fff",
+        }
       },
       menuCls: {
         textAlign: "left",
