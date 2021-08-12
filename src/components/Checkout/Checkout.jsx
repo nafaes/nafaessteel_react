@@ -277,7 +277,7 @@ const ScrollableTabsButtonForce = () => {
         <Paper
           elevation={12}
           style={{
-            width: "50%",
+            width: "60%",
             margin: "0px auto",
             padding: "1em 0px 1em 0px",
             borderRadius: "1em",
@@ -302,6 +302,7 @@ const ScrollableTabsButtonForce = () => {
               />
             </RadioGroup>
           </FormControl>
+
           <Grid
             container
             justifyContent="center"
@@ -333,6 +334,13 @@ const ScrollableTabsButtonForce = () => {
               12/10/2021
             </Grid>
           </Grid>
+
+          <Grid container>
+            <Grid item>
+              <Typography variant="h5">Delivery</Typography>
+            </Grid>
+          </Grid>
+
           <Grid container justifyContent="center">
             <Grid
               item
