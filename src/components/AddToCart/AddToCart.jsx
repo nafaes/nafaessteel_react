@@ -128,10 +128,11 @@ const AddToCart = (props) => {
                     margin: "0px auto",
                   }}
                 >
-                  <Grid item>
+                  <Grid item style={{color:"#fff"}}>
                     <Breadcrumbs
                       separator={<NavigateNextIcon fontSize="small" />}
                       aria-label="breadcrumb"
+                      style={{color:"#fff"}}
                     >
                       <Link color="inherit" onClick={() => history.push("/")}>
                         All Categories
