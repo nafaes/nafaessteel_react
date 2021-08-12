@@ -119,8 +119,6 @@ const AddToCartPage = (props) => {
       }
 
       history.push(ITEMS, {
-        // categoryId: categoryId,
-        // itemId: itemId,
         items: allItems,
       });
     },

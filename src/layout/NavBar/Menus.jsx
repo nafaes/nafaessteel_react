@@ -65,6 +65,7 @@ const Menus = React.forwardRef((props, ref) => {
 
   const englishMobileStyles = navbarEngMobile();
   let classes = englishMobileStyles;
+
   const dynamicNavigation = useCallback(
     ({
       categoryId,
@@ -73,24 +74,30 @@ const Menus = React.forwardRef((props, ref) => {
       itemName,
       allItems: historyItems,
     }) => {
+      const historyAllItems = location?.state?.items;
+      const historyCategoryId =
+        historyAllItems?.[historyAllItems.length - 1]?.categoryId;
+      const historyItemId =
+        historyAllItems?.[historyAllItems.length - 1]?.itemId;
+
       popupState.close();
 
       let allItems = [];
-      if (location.state?.items) {
-        if (location.state.categoryId && location.state.itemId) {
+      if (historyAllItems) {
+        if (historyCategoryId && historyItemId) {
           allItems = [
             ...historyItems,
             {
-              categoryId: location.state.categoryId,
+              categoryId: categoryId,
               itemId: itemId,
               name: itemName,
             },
           ];
-        } else if (location.state.itemId === "") {
+        } else if (historyItemId === "") {
           allItems = [
             ...historyItems,
             {
-              categoryId: location.state.categoryId,
+              categoryId: categoryId,
               itemId: "",
               name: itemName,
             },
