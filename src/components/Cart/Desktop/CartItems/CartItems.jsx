@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -8,7 +8,6 @@ import {
   TextField,
 } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
-import { Fragment } from "react";
 
 const cartItems = [
   {
@@ -47,7 +46,6 @@ const cartItems = [
   {
     itemId: "item6",
     itemName: "Kuwaiti Steel",
-    quantity: "8 mm",
     image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
     cost: "247.000 KWD Per Ton.",
     quantity: 12,
@@ -56,7 +54,6 @@ const cartItems = [
   {
     itemId: "item7",
     itemName: "Kuwaiti Steel",
-    quantity: "25 mm",
     image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
     cost: "240.000 KWD Per Ton.",
     quantity: 12,
@@ -220,8 +217,7 @@ const DesktopCartItems = () => {
 
                     <TextField
                       className={classes.root}
-                      // value={age}
-                      value={item}
+                      value={age}
                       onChange={(e) => setAge(e.target.value)}
                       variant="outlined"
                       label="Select Quantity"

@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Divider, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
-import { Fragment } from "react";
 
 const cartItems = [
   {
