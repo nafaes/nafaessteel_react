@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Divider, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
+import { Fragment } from "react";
 
 const cartItems = [
   {
@@ -74,7 +75,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   stickyBottom: {
-    backgroundColor: "#fff",
     padding: 2,
     position: "sticky",
     bottom: 0,
@@ -94,7 +94,7 @@ const CartItems = () => {
   }, 0);
 
   return (
-    <Grid container style={{marginTop: "2em"}} >
+    <Grid container style={{ marginTop: "2em" }}>
       <Grid item xs={12} sm={12} className={classes.headerContent}>
         <Typography variant="h6" gutterBottom>
           Items in your cart
@@ -102,19 +102,20 @@ const CartItems = () => {
         <Divider variant="fullWidth" />
       </Grid>
 
-      <Grid item xs={12} sm={12}>
-        {cartItems.map((item) => (
-          <Grid
-            container
-            key={item.itemId}
-            style={{
-              width: "100%",
-              backgroundColor: "#fff",
-              padding: "10px 14px",
-              marginBottom: 10,
-              //   marginTop: 10,
-            }}
-          >
+      {cartItems.map((item) => (
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          key={item.itemId}
+          style={{
+            width: "100%",
+            backgroundColor: "#fff",
+            padding: "10px 14px",
+            paddingBottom: 10,
+          }}
+        >
+          <Grid container>
             <Grid item xs={7} sm={8}>
               <Typography
                 variant="subtitle1"
@@ -167,13 +168,13 @@ const CartItems = () => {
                 width={100}
                 height={100}
                 alt={item.itemName}
-                src="https://www.nafaessteel.com/IronImages/kwt_steel.png"
                 src={item.image}
               />
             </Grid>
           </Grid>
-        ))}
-      </Grid>
+          <Divider />
+        </Grid>
+      ))}
 
       <Grid item container className={classes.stickyBottom} alignItems="center">
         <Grid item xs={6} sm={4}>

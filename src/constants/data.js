@@ -256,7 +256,6 @@ export const allCategories = [
           },
         ],
       },
-      
     ],
   },
 
@@ -548,91 +547,6 @@ export const allCategories = [
       },
     ],
   },
-
-  // {
-  //   categoryId: "category2",
-  //   categoryName: "Wood",
-  //   image:
-  //     "https://cdn.friendsoftheearth.uk/sites/default/files/styles/hero_image/public/media/images/wood-1209632_1920.jpg?itok=lEIthVkl",
-  //   description: "Description",
-  //   stages: 3,
-  //   items: [
-  //     {
-  //       itemName: "Borad",
-  //       itemId: "woodItem1",
-  //       image:
-  //         "https://cdn.friendsoftheearth.uk/sites/default/files/styles/hero_image/public/media/images/wood-1209632_1920.jpg?itok=lEIthVkl",
-  //       types: [
-  //         {
-  //           type: "Chinese Grd1",
-  //           id: "chinesegrd1",
-  //           sizes: [
-  //             { id: 1, size: "120cm*60cm", unit: "Board", price: "KWD 5.00" },
-  //             { id: 2, size: "240cm*120cm", unit: "Board", price: "KWD 10.00" },
-  //           ],
-  //         },
-  //         {
-  //           type: "Chinese Grd2",
-  //           id: "chinesegrd2",
-  //           sizes: [
-  //             { id: 1, size: "120cm*60cm", unit: "Board", price: "KWD 3.75" },
-  //             { id: 2, size: "240cm*120cm", unit: "Board", price: "KWD 7.50" },
-  //           ],
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       itemName: "White",
-  //       itemId: "woodItem2",
-  //       image:
-  //         "https://cdn.friendsoftheearth.uk/sites/default/files/styles/hero_image/public/media/images/wood-1209632_1920.jpg?itok=lEIthVkl",
-  //       types: [
-  //         {
-  //           type: "Austrian",
-  //           id: "austrian",
-  //           sizes: [
-  //             { id: 1, size: "1cm*1cm*3cm", unit: "Meter", price: "" },
-  //             { id: 2, size: "1cm*1cm*4cm", unit: "Meter", price: "" },
-  //             { id: 3, size: "6cm*6cm*3cm", unit: "Meter", price: "" },
-  //             { id: 4, size: "6cm*6cm*4cm", unit: "Meter", price: "" },
-  //             { id: 5, size: "8cm*8cm*3cm", unit: "Meter", price: "" },
-  //             { id: 6, size: "8cm*8cm*4cm", unit: "Meter", price: "" },
-  //             { id: 7, size: "10cm*10cm*3cm", unit: "Meter", price: "" },
-  //             { id: 8, size: "10cm*10cm*4cm", unit: "Meter", price: "" },
-  //           ],
-  //         },
-  //         {
-  //           type: "Russian",
-  //           id: "russian",
-  //           sizes: [
-  //             { id: 1, size: "1cm*1cm*3cm", unit: "Meter", price: "" },
-  //             { id: 2, size: "1cm*1cm*4cm", unit: "Meter", price: "" },
-  //             { id: 3, size: "6cm*6cm*3cm", unit: "Meter", price: "" },
-  //             { id: 4, size: "6cm*6cm*4cm", unit: "Meter", price: "" },
-  //             { id: 5, size: "8cm*8cm*3cm", unit: "Meter", price: "" },
-  //             { id: 6, size: "8cm*8cm*4cm", unit: "Meter", price: "" },
-  //             { id: 7, size: "10cm*10cm*3cm", unit: "Meter", price: "" },
-  //             { id: 8, size: "10cm*10cm*4cm", unit: "Meter", price: "" },
-  //           ],
-  //         },
-  //         {
-  //           type: "Croatian",
-  //           id: "croatian",
-  //           sizes: [
-  //             { id: 1, size: "1cm*1cm*3cm", unit: "Meter", price: "" },
-  //             { id: 2, size: "1cm*1cm*4cm", unit: "Meter", price: "" },
-  //             { id: 3, size: "6cm*6cm*3cm", unit: "Meter", price: "" },
-  //             { id: 4, size: "6cm*6cm*4cm", unit: "Meter", price: "" },
-  //             { id: 5, size: "8cm*8cm*3cm", unit: "Meter", price: "" },
-  //             { id: 6, size: "8cm*8cm*4cm", unit: "Meter", price: "" },
-  //             { id: 7, size: "10cm*10cm*3cm", unit: "Meter", price: "" },
-  //             { id: 8, size: "10cm*10cm*4cm", unit: "Meter", price: "" },
-  //           ],
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
   {
     categoryId: "category3",
     categoryName: "Cement",

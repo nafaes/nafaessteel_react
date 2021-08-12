@@ -11,7 +11,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
 
-import navbarEngDesk from "../../assets/scss/navbar.module.scss";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 
 const SideDrawer = (props) => {
@@ -20,15 +19,11 @@ const SideDrawer = (props) => {
     toggleDrawer,
     value,
     setValue,
-    open,
-    handleClicklist,
     menus,
   } = props;
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const englishMobileStyles = navbarEngMobile();
-
   let classes = englishMobileStyles;
-  console.log(menus);
 
   const NestedTreeView = ({ menu, allItems }) => (
     <TreeItem

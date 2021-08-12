@@ -7,8 +7,6 @@ import Tab from "@material-ui/core/Tab";
 import { Link, useHistory } from "react-router-dom";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import MenuIcon from "@material-ui/icons/Menu";
 import TranslateIcon from "@material-ui/icons/Translate";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -16,28 +14,20 @@ import Tooltip from "@material-ui/core/Tooltip";
 import navbarEngDesk from "../../assets/scss/navbar.module.scss";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import clsx from "clsx";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
 import { Button, IconButton, MenuItem } from "@material-ui/core";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
+import MenuList from "@material-ui/core/MenuList";
 
 import Menus from "./Menus";
 import { allCategoryItems } from "../../constants/data";
 import SideDrawer from "./SideDrawer";
-import logo from '../../assets/img/Logo.png';
-import { CART, TRACKORDER } from '../../constants/routes';
-import { SIGNIN } from '../../constants/routes';
+import logo from "../../assets/img/Logo.png";
 
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-
-import MenuList from '@material-ui/core/MenuList';
+import { SIGNIN, CART, TRACKORDER } from "../../constants/routes";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -58,14 +48,10 @@ const Navbar = (props) => {
   let classesExternal = navbarEngDesk;
   let classes = englishMobileStyles;
 
-  // const classes = useStyles();
   const theme = useTheme();
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const matchesXs = useMediaQuery(theme.breakpoints.down("xs"));
-
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [value, setValue] = useState(0)
-  
+  const [value, setValue] = useState(0);
   const [open, setOpen] = React.useState(false);
 
   const popupState = usePopupState({
@@ -109,7 +95,7 @@ const Navbar = (props) => {
   };
 
   function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
+    if (event.key === "Tab") {
       event.preventDefault();
       setOpenDrop(false);
     }
@@ -124,7 +110,7 @@ const Navbar = (props) => {
     }
 
     prevOpen.current = openDrop;
-  }, [openDrop])
+  }, [openDrop]);
 
   useEffect(() => {
     if (window.location.pathname === "/" && value !== 0) {
@@ -158,26 +144,32 @@ const Navbar = (props) => {
           setValue(3);
         }
         break;
-        default:
-          break;
+      default:
+        break;
     }
-  }, [value])
- 
+  }, [value]);
+
   const tabs = (
     <React.Fragment>
-      <Tabs className={clsx(classes.tabContainer,classesExternal.tabContainer)}
+      <Tabs
+        className={clsx(classes.tabContainer, classesExternal.tabContainer)}
         indicatorColor="secondary"
         onChange={handleChange}
         value={value}
       >
-        <Tab className={clsx(classes.tab,classesExternal.tab)} component={Link} to="/" label="Home"></Tab>
         <Tab
-          className={clsx(classes.tab,classesExternal.tab)}
-          label="Category"
+          className={clsx(classes.tab, classesExternal.tab)}
+          component={Link}
+          to="/"
+          label="Home"
+        ></Tab>
+        <Tab
+          className={clsx(classes.tab, classesExternal.tab)}
+          label="Categories"
           {...bindHover(popupState)}
         />
         <Tab
-          className={clsx(classes.tab,classesExternal.tab)}
+          className={clsx(classes.tab, classesExternal.tab)}
           component={Link}
           to={TRACKORDER}
           label="Track Order"
@@ -191,8 +183,6 @@ const Navbar = (props) => {
           label="Contact Us"
         ></Tab>
       </Tabs>
-      
-    
 
       <Menus popupState={popupState} allMenus={allCategoryItems} />
     </React.Fragment>
@@ -200,26 +190,41 @@ const Navbar = (props) => {
 
   const popper = (
     <React.Fragment>
-      <Popper open={openDrop} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper className={clsx(classes.menudrop, classesExternal.menudrop)}>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList autoFocusItem={openDrop} id="menu-list-grow" onKeyDown={handleListKeyDown} className={clsx(classes.subMenu,classesExternal.subMenu)}>
-                    <MenuItem onClick={handleClose} component={Link} to={SIGNIN}>Sign In</MenuItem>
-                    <MenuItem onClick={handleClose}>SignOut</MenuItem>
-
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+      <Popper
+        open={openDrop}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom" ? "center top" : "center bottom",
+            }}
+          >
+            <Paper className={clsx(classes.menudrop, classesExternal.menudrop)}>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList
+                  autoFocusItem={openDrop}
+                  id="menu-list-grow"
+                  onKeyDown={handleListKeyDown}
+                  className={clsx(classes.subMenu, classesExternal.subMenu)}
+                >
+                  <MenuItem onClick={handleClose} component={Link} to={SIGNIN}>
+                    Sign In
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>SignOut</MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
     </React.Fragment>
-  )
+  );
 
   const drawer = (
     <SideDrawer
@@ -233,11 +238,13 @@ const Navbar = (props) => {
     />
   );
 
-  
   return (
     <Fragment>
       <ElevationScroll>
-        <AppBar position="fixed" className={matchesXs ? classes.appbar : "undefined"}>
+        <AppBar
+          position="fixed"
+          className={matchesXs ? classes.appbar : "undefined"}
+        >
           <ToolBar disableGutters>
             <Button
               component={Link}
@@ -255,19 +262,31 @@ const Navbar = (props) => {
               />
             </Button>
             {matchesXs ? drawer : tabs}
-              <IconButton className={clsx(classes.iconButton,classesExternal.iconButton)} color="inherit"   ref={anchorRef}
-                          aria-controls={openDrop ? 'menu-list-grow' : undefined}
-                          aria-haspopup="true"
-                          onClick={handleToggle}>
-                <AccountCircleIcon size="medium" />
-              </IconButton>
+            <IconButton
+              className={clsx(classes.iconButton, classesExternal.iconButton)}
+              color="inherit"
+              ref={anchorRef}
+              aria-controls={openDrop ? "menu-list-grow" : undefined}
+              aria-haspopup="true"
+              onClick={handleToggle}
+            >
+              <AccountCircleIcon size="medium" />
+            </IconButton>
             <Tooltip title="Cart" arrow>
-              <IconButton className={clsx(classes.iconButton,classesExternal.iconButton)} color="inherit" component={Link} to={CART}>
+              <IconButton
+                className={clsx(classes.iconButton, classesExternal.iconButton)}
+                color="inherit"
+                component={Link}
+                to={CART}
+              >
                 <ShoppingCart size="medium" />
               </IconButton>
             </Tooltip>
             <Tooltip title="Language" arrow>
-              <IconButton className={clsx(classes.iconButton,classesExternal.iconButton)} color="inherit">
+              <IconButton
+                className={clsx(classes.iconButton, classesExternal.iconButton)}
+                color="inherit"
+              >
                 <TranslateIcon size="medium" />
               </IconButton>
             </Tooltip>

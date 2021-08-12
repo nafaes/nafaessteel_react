@@ -14,7 +14,7 @@ const cartItems = [
   {
     itemId: "item1",
     itemName: "Kuwaiti Steel",
-    quantity: "8 mm",
+    quantity: 8,
     image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
     cost: "247.000 KWD Per Ton.",
     amount: 494.0,
@@ -22,7 +22,7 @@ const cartItems = [
   {
     itemId: "item2",
     itemName: "Kuwaiti Steel",
-    quantity: "25 mm",
+    quantity: 10,
     image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
     cost: "240.000 KWD Per Ton.",
     amount: 988.0,
@@ -32,6 +32,7 @@ const cartItems = [
     itemName: "BGH Wooden Sticks, Plank for Art & Craft",
     image: "https://m.media-amazon.com/images/I/71XO3ndJMGS._AC_UL320_.jpg",
     cost: "299.000 KWD Per 10 Pieces.",
+    quantity: 12,
     amount: 299.0,
   },
   {
@@ -39,6 +40,7 @@ const cartItems = [
     itemName: "BGH Wooden Sticks, Plank for Art & Craft",
     image: "https://m.media-amazon.com/images/I/71i+z+eHk1S._AC_UL320_.jpg",
     cost: "250.000 KWD Per 10 Pieces.",
+    quantity: 12,
     amount: 250.0,
   },
 
@@ -48,6 +50,7 @@ const cartItems = [
     quantity: "8 mm",
     image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
     cost: "247.000 KWD Per Ton.",
+    quantity: 12,
     amount: 494.0,
   },
   {
@@ -56,6 +59,7 @@ const cartItems = [
     quantity: "25 mm",
     image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
     cost: "240.000 KWD Per Ton.",
+    quantity: 12,
     amount: 988.0,
   },
   {
@@ -63,6 +67,7 @@ const cartItems = [
     itemName: "BGH Wooden Sticks, Plank for Art & Craft",
     image: "https://m.media-amazon.com/images/I/71XO3ndJMGS._AC_UL320_.jpg",
     cost: "299.000 KWD Per 10 Pieces.",
+    quantity: 12,
     amount: 299.0,
   },
   {
@@ -70,6 +75,7 @@ const cartItems = [
     itemName: "BGH Wooden Sticks, Plank for Art & Craft",
     image: "https://m.media-amazon.com/images/I/71i+z+eHk1S._AC_UL320_.jpg",
     cost: "250.000 KWD Per 10 Pieces.",
+    quantity: 12,
     amount: 250.0,
   },
 ];
@@ -158,14 +164,13 @@ const DesktopCartItems = () => {
 
   const [age, setAge] = React.useState("");
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setAge(event.target.value);
+  // };
 
   return (
     <Grid item xs={12} sm={12} md={8} lg={8}>
       <Paper className={classes.paper}>
-        {/* <Divider variant="middle" /> */}
         <Grid
           container
           style={{
@@ -197,14 +202,8 @@ const DesktopCartItems = () => {
               className={classes.itemContainer}
             >
               <Grid item xs={4} sm={4} md={3} lg={4} className={classes.image}>
-                <img
-                  className={classes.img}
-                  alt="complex"
-                  //   src="https://m.media-amazon.com/images/I/51qBngYwQxL._AC_AA180_.jpg"
-                  src={item.image}
-                />
+                <img className={classes.img} alt="complex" src={item.image} />
               </Grid>
-              {/* <Grid item xs={12} sm container> */}
               <Grid item xs={8} sm={8} md={8} lg={8} container>
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item>
@@ -221,7 +220,8 @@ const DesktopCartItems = () => {
 
                     <TextField
                       className={classes.root}
-                      value={age}
+                      // value={age}
+                      value={item}
                       onChange={(e) => setAge(e.target.value)}
                       variant="outlined"
                       label="Select Quantity"
@@ -265,7 +265,6 @@ const DesktopCartItems = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
-            // alignItems: "center"
           }}
         >
           <Typography variant="subtitle1" gutterBottom>

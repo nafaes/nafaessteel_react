@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -15,9 +15,13 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "18em",
     // transition: "transform 0.15s ease-in-out",
     borderRadius: "1.5em",
-    margin: "0px auto"
+    margin: "0px auto",
   },
-  cardStyles: { backgroundColor: theme.palette.common.blue, color: "white", textAlign: "center" }
+  cardStyles: {
+    backgroundColor: theme.palette.common.blue,
+    color: "white",
+    textAlign: "center",
+  },
 }));
 
 const Items = (props) => {
@@ -34,7 +38,7 @@ const Items = (props) => {
         style={{ marginTop: "3em" }}
         justifyContent="center"
         spacing={2}
-      // cols={2}
+        // cols={2}
       >
         {items.map((item, index) => (
           <Grid
@@ -46,10 +50,14 @@ const Items = (props) => {
             key={index}
             style={{ columnGap: "12px" }}
           >
-            <Card raised
-              elevation={12} className={classes.root}
-              onClick={navigate.bind(null, item.nextLevel, item)}>
-              <CardHeader title={item.itemName}
+            <Card
+              raised
+              elevation={12}
+              className={classes.root}
+              onClick={navigate.bind(null, item.nextLevel, item)}
+            >
+              <CardHeader
+                title={item.itemName}
                 titleTypographyProps={{ variant: "h6" }}
                 className={classes.cardStyles}
               />

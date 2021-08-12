@@ -10,8 +10,6 @@ import Select from "@material-ui/core/Select";
 import { Typography } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import brickImg from "../../assets/img/cement.jpg";
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -19,15 +17,15 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import { withRouter } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 import { isInputNumber } from "../../utils/validations";
 import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
 import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
+import brickImg from "../../assets/img/cement.jpg";
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -76,18 +74,11 @@ const AddToCart = (props) => {
     formChangeHandler,
     historyItems,
     breadcrumbNavigation,
-    size,
-    history,
-    handleChange,
-    location: { pathname },
   } = props;
 
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
-
-  // console.log(addToCartForm);
-  // console.log(item)
 
   return (
     <Fragment>
@@ -99,7 +90,6 @@ const AddToCart = (props) => {
             <Grid item container>
               <Grid
                 item
-                // component={"a"}
                 lg={5}
                 md={5}
                 sm={5}
@@ -132,8 +122,9 @@ const AddToCart = (props) => {
                     <Breadcrumbs
                       separator={<NavigateNextIcon fontSize="small" />}
                       aria-label="breadcrumb"
+                      style={{ color: "white" }}
                     >
-                      <Link color="inherit" onClick={() => history.push("/")}>
+                      <Link color="inherit" component={RouterLink} to="/">
                         All Categories
                       </Link>
                       {historyItems ? (
@@ -202,9 +193,6 @@ const AddToCart = (props) => {
                                 ? addToCartForm[select.name]["value"]
                                 : ""
                             }
-                            // defaultValue=""
-                            // onChange={formChangeHandler}
-
                             onChange={({ target }) => {
                               formChangeHandler({
                                 target,
@@ -371,4 +359,4 @@ const AddToCart = (props) => {
   );
 };
 
-export default React.memo(withRouter(AddToCart));
+export default React.memo(AddToCart);

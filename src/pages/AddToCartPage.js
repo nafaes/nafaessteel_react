@@ -17,7 +17,6 @@ const AddToCartPage = (props) => {
   const [categoryName, setCategoryName] = useState();
   const [item, setItem] = useState();
   const [addToCartForm, setAddToCartForm] = useState(addToCartInitialState);
-  // const [price, setPrice] = useState();
 
   const {
     history,
@@ -26,12 +25,8 @@ const AddToCartPage = (props) => {
     },
   } = props;
 
-  // console.log(historyItems[historyItems.length - 1])
-
   const categoryId = historyItems[historyItems.length - 1].categoryId;
   const itemId = historyItems[historyItems.length - 1].itemId;
-
-  console.log(history);
 
   useEffect(() => {
     if (categoryId && itemId) {
@@ -75,27 +70,28 @@ const AddToCartPage = (props) => {
 
   const formChangeHandler = useCallback(
     ({ target: { name, value }, ...values }) => {
+      let price;
       if (values.hasOwnProperty("price")) {
-        setAddToCartForm({
-          ...addToCartForm,
-          [name]: {
-            ...addToCartForm?.[name],
-            name,
-            value,
-          },
-          price: values.price,
-        });
+        price = values.price;
       } else {
-        setAddToCartForm({
-          ...addToCartForm,
-          [name]: {
-            ...addToCartForm?.[name],
-            name,
-            value,
-          },
-          // price: addToCartForm.price ? addToCartForm.price : "",
-        });
+        price = "";
       }
+
+      // else if (name === "type" && values.hasOwnProperty("price") === false) {
+      //   price = "";
+      // } else if (values.hasOwnProperty("price") === false) {
+      //   price = addToCartForm.price ? addToCartForm.price : "";
+      // }
+
+      setAddToCartForm({
+        ...addToCartForm,
+        [name]: {
+          ...addToCartForm?.[name],
+          name,
+          value,
+        },
+        price,
+      });
     },
     [addToCartForm]
   );

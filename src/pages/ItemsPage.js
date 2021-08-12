@@ -18,8 +18,6 @@ const ItemsPage = (props) => {
   const categoryId = historyItems[historyItems.length - 1].categoryId;
   const itemId = historyItems[historyItems.length - 1].itemId;
 
-  console.log(props);
-
   useEffect(() => {
     if (categoryId && itemId) {
       const category = categories.find(
@@ -68,58 +66,6 @@ const ItemsPage = (props) => {
     },
     [historyItems, categoryId, history]
   );
-
-  // const navigate = useCallback(
-  //   (nextLevel, item) => {
-  //     let allItems;
-  //     if (location.state?.items) {
-  //       if (location.state.categoryId && location.state.itemId) {
-  //         allItems = [
-  //           ...location.state.items,
-  //           {
-  //             categoryId: location.state.categoryId,
-  //             itemId: item.itemId,
-  //             name: item.itemName,
-  //           },
-  //         ];
-  //       } else {
-  //         allItems = [
-  //           ...location.state.items,
-  //           {
-  //             categoryId: location.state.categoryId,
-  //             itemId: item.itemId,
-  //             name: item.itemName,
-  //           },
-  //         ];
-  //       }
-  //     } else if (location.state.itemId === "") {
-  //       allItems = [
-  //         {
-  //           categoryId: location.state.categoryId,
-  //           itemId: "",
-  //           name: category.categoryName,
-  //         },
-  //       ];
-  //     }
-
-  //     if (nextLevel === 2) {
-  //       history.push(ITEMS, {
-  //         ...location.state,
-  //         categoryId: location.state.categoryId,
-  //         itemId: item.itemId,
-  //         items: allItems,
-  //       });
-  //     } else if (nextLevel === 3) {
-  //       history.push(ADDTOCART, {
-  //         ...location.state,
-  //         categoryId: location.state.categoryId,
-  //         items: allItems,
-  //         itemId: item.itemId,
-  //       });
-  //     }
-  //   },
-  //   [category, location, history]
-  // );
 
   return <Items items={items} navigate={navigate} />;
 };
