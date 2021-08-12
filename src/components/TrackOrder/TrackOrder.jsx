@@ -583,30 +583,6 @@ const TrackOrder = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid
-        item
-        container
-        direction="row"
-        lg={6}
-        style={{ flexWrap: "nowrap" }}
-      >
-        <Grid item container direction="column">
-          <Grid item>
-            <Typography variant="h6">ORDER PLACED</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="p">10 August 2021</Typography>
-          </Grid>
-        </Grid>
-        <Grid item container direction="column">
-          <Grid item>
-            <Typography variant="h6">TOTAL</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="p">KWD 50.00</Typography>
-          </Grid>
-        </Grid>
-      </Grid>
     </Fragment>
   );
 };
