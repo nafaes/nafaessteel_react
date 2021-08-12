@@ -749,7 +749,7 @@ export const allCategoryItems = [
     categoryId: "category2",
     items: [
       {
-        menuName: "Borad",
+        menuName: "Board",
         menuId: "woodItem1",
         categoryId: "category2",
         items: [
@@ -793,5 +793,33 @@ export const allCategoryItems = [
     menuId: "category4",
     menuName: "Bricks",
     categoryId: "category4",
+  },
+];
+export const allOrderItems = [
+  {
+    itemName: "Steel",
+    categoryId: "category1",
+    items: [
+      {
+        menuId: "item1",
+        menuName: "Kuwaiti Steel",
+      },
+      {
+        menuId: "item2",
+        menuName: "Omani Steel",
+      },
+      {
+        menuId: "item3",
+        menuName: "Allitefaq Steel KSA",
+      },
+      {
+        menuId: "item4",
+        menuName: "Iranian Steel",
+      },
+      {
+        menuId: "item5",
+        menuName: "Wood Nail",
+      },
+    ],
   },
 ];
