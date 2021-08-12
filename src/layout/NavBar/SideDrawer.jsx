@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback } from "react";
+import { Link, useHistory } from "react-router-dom";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import MenuIcon from "@material-ui/icons/Menu";
 import { IconButton } from "@material-ui/core";
@@ -12,18 +12,32 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
 
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
+import useNavigation from "../../hooks/useNavigation";
+import { ADDTOCART } from "../../constants/routes";
 
 const SideDrawer = (props) => {
-  const {
-    openDrawer,
-    toggleDrawer,
-    value,
-    setValue,
-    menus,
-  } = props;
+  const history = useHistory();
+
+  const { openDrawer, toggleDrawer, value, setValue, menus } = props;
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const englishMobileStyles = navbarEngMobile();
   let classes = englishMobileStyles;
+
+  const { dynamicNavigation } = useNavigation();
+
+  const navigation = useCallback(
+    ({ categoryId, categoryName, itemId, itemName, allItems }) => {
+      toggleDrawer();
+      dynamicNavigation({
+        categoryId,
+        categoryName,
+        itemId,
+        itemName,
+        allItems,
+      });
+    },
+    [toggleDrawer, dynamicNavigation]
+  );
 
   const NestedTreeView = ({ menu, allItems }) => (
     <TreeItem
@@ -51,6 +65,13 @@ const SideDrawer = (props) => {
             nodeId={item.menuId}
             label={item.menuName}
             style={{ color: "white" }}
+            onClick={navigation.bind(null, {
+              categoryId: menu.categoryId,
+              categoryName: menu.menuName,
+              itemId: item.menuId,
+              itemName: item.menuName,
+              allItems,
+            })}
           />
         )
       )}
@@ -109,6 +130,18 @@ const SideDrawer = (props) => {
                   nodeId="2"
                   label={menu.menuName}
                   style={{ color: "white" }}
+                  onClick={() => {
+                    toggleDrawer();
+                    history.push(ADDTOCART, {
+                      items: [
+                        {
+                          categoryId: menu.menuId,
+                          itemId: "",
+                          name: menu.menuName,
+                        },
+                      ],
+                    });
+                  }}
                 />
               )
             )}
