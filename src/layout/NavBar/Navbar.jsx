@@ -7,37 +7,27 @@ import Tab from "@material-ui/core/Tab";
 import { Link, useHistory } from "react-router-dom";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import MenuIcon from "@material-ui/icons/Menu";
 import TranslateIcon from "@material-ui/icons/Translate";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Tooltip from "@material-ui/core/Tooltip";
-import navbarEngDesk from "../../assets/scss/navbar.module.scss";
-import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import clsx from "clsx";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
 import { Button, IconButton, MenuItem } from "@material-ui/core";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
-
-import Menus from "./Menus";
-import { allCategoryItems } from "../../constants/data";
-import SideDrawer from "./SideDrawer";
-import logo from '../../assets/img/Logo.png';
-import { CART, TRACKORDER } from '../../constants/routes';
-import { SIGNIN } from '../../constants/routes';
-
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
-
 import MenuList from '@material-ui/core/MenuList';
+
+import { CART, TRACKORDER } from '../../constants/routes';
+import { SIGNIN } from '../../constants/routes';
+import navbarEngDesk from "../../assets/scss/navbar.module.scss";
+import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
+import { allCategoryItems } from "../../constants/data";
+import Menus from "./Menus";
+import SideDrawer from "./SideDrawer";
+import logo from '../../assets/img/Logo.png';
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -173,17 +163,17 @@ const Navbar = (props) => {
         <Tab className={clsx(classes.tab,classesExternal.tab)} component={Link} to="/" label="Home"></Tab>
         <Tab
           className={clsx(classes.tab,classesExternal.tab)}
-          label="Category"
+          label="Products"
           {...bindHover(popupState)}
         />
         <Tab
           className={clsx(classes.tab,classesExternal.tab)}
           component={Link}
           to={TRACKORDER}
-          label="Track Order"
+          label="Orders"
         ></Tab>
         <Tab
-          className={classes.tab}
+          className={clsx(classes.tab,classesExternal.tab)}
           component={Button}
           onClick={() => {
             goToContactUs();
@@ -191,9 +181,6 @@ const Navbar = (props) => {
           label="Contact Us"
         ></Tab>
       </Tabs>
-      
-    
-
       <Menus popupState={popupState} allMenus={allCategoryItems} />
     </React.Fragment>
   );
