@@ -7,8 +7,8 @@ import { getAllCategories } from "../services/categories.js";
 const LandingPage = (props) => {
   const [allCategories, setAllCategories] = useState([]);
   const { history } = props;
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [, setIsLoading] = useState(false);
+  const [, setError] = useState(null);
 
   const getCategories = useCallback(async () => {
     try {

@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-
-import clsx from "clsx";
-import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-
 import Paper from "@material-ui/core/Paper";
 import { Button, Grid } from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
@@ -20,7 +13,7 @@ import RadioButton from "../../../common/RadioButton/RadioButton";
 
 export const Shipping = () => {
   const classes = checkoutStyles();
-  
+
   const [shippingType, setShippingType] = useState();
   const handleShippingType = (event, newValue) => {
     setShippingType(newValue);
