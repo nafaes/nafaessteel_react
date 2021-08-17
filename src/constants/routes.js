@@ -6,3 +6,4 @@ export const CART = "/cart";
 export const CHECKOUT = "/checkout";
 export const SIGNUP = "/signup";
 export const TRACKORDER = "/trackorder";
+export const ORDERS =  "/orders"

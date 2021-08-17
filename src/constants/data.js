@@ -797,29 +797,37 @@ export const allCategoryItems = [
 ];
 export const allOrderItems = [
   {
-    itemName: "Steel",
-    categoryId: "category1",
-    items: [
-      {
-        menuId: "item1",
-        menuName: "Kuwaiti Steel",
-      },
-      {
-        menuId: "item2",
-        menuName: "Omani Steel",
-      },
-      {
-        menuId: "item3",
-        menuName: "Allitefaq Steel KSA",
-      },
-      {
-        menuId: "item4",
-        menuName: "Iranian Steel",
-      },
-      {
-        menuId: "item5",
-        menuName: "Wood Nail",
-      },
-    ],
+    orderPlaced: "10 August 2021",
+    Total: "KWD 90.00",
+    ShipTo: "Nimeelya",
+    itemName: "Kuwaiti Iron",
+    orderId:1,
+    image: "/brick.jpg"
+  },
+  {
+    orderPlaced: "12 August 2021",
+    Total: "KWD 110.00",
+    ShipTo: "Korean",
+    itemName: "Wood",
+    orderId:2,
+    image: "/brick.jpg"
+  },
+  {
+    orderPlaced: "17 August 2021",
+    Total: "KWD 70.00",
+    ShipTo: "Japan",
+    itemName: "Brick",
+    orderId:3,
+    image: "/brick.jpg"
+
+  },
+  {
+    orderPlaced: "19 August 2021",
+    Total: "KWD 80.00",
+    ShipTo: "Afganisthan",
+    itemName: "Cement",
+    orderId:4,
+    image: "/brick.jpg"
+
   },
 ];
