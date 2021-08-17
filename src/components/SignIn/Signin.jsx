@@ -17,8 +17,9 @@ import clsx from "clsx";
 import { SIGNUP } from "../../constants/routes";
 import { Link } from "react-router-dom";
 
-const SignIn = () => {
-  const englishMobileStyles = signinEngMobile();
+const SignIn = (props) => {
+  const {isDisplayImage, userCheckoutStyles} = props
+  const englishMobileStyles = signinEngMobile(userCheckoutStyles)();
   let classesExternal = signinEngDesk;
   let classes = englishMobileStyles;
 
@@ -35,21 +36,25 @@ const SignIn = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
   return (
     <Grid
       container
       direction="row"
       className={clsx(classes.formContainer, classesExternal.formContainer)}
     >
-      <Grid item container lg={6} justifyContent="center" alignItems="center">
-        <Grid item>
-          <img
-            src={login}
-            alt="bg"
-            className={clsx(classes.loginImage, classesExternal.loginImage)}
-          />
+      {isDisplayImage ? (
+        <Grid item container lg={6} justifyContent="center" alignItems="center">
+          <Grid item>
+            <img
+              src={login}
+              alt="bg"
+              className={clsx(classes.loginImage, classesExternal.loginImage)}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      ) : null}
+
       <Grid
         item
         container

@@ -4,7 +4,7 @@ import SignIn from "../components/SignIn/Signin";
 
 const SigninPage = () => {
   return (
-    <SignIn/>
+    <SignIn isDisplayImage={true} />
     // <Profile/>
 
   );
