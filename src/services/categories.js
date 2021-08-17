@@ -14,6 +14,6 @@ export const getAllCategories = async () => {
       throw new Error("Some Thing Went Wrong!");
     }
   } catch (err) {
-    return err.message;
+    throw err;
   }
 };
