@@ -7,7 +7,8 @@ import AddToCartPage from "../pages/AddToCartPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import SignupPage from "../pages/Signup";
-import TrackOrderPage from "../pages/TrackOrder";
+import OrdersPage from "../pages/Orders";
+import TrackOrdersPage from "../pages/TrackOrder";
 
 import {
   LANDING,
@@ -17,6 +18,7 @@ import {
   CART,
   CHECKOUT,
   SIGNUP,
+  ORDERS,
   TRACKORDER,
 } from "../constants/routes";
 
@@ -30,7 +32,8 @@ const Routes = () => {
       <Route exact={true} path={SIGNUP} component={SignupPage} />
       <Route exact={true} path={CART} component={CartPage} />
       <Route exact={true} path={CHECKOUT} component={CheckoutPage} />
-      <Route exact={true} path={TRACKORDER} component={TrackOrderPage} />
+      <Route exact={true} path={ORDERS} component={ OrdersPage} />
+      <Route exact={true} path={TRACKORDER} component={ TrackOrdersPage} />
     </Switch>
   );
 };
