@@ -11,7 +11,7 @@ import { TRACKORDER } from '../../constants/routes';
 import { Link } from 'react-router-dom';
 
 
-const imageList = ["Iron", "wood", "brick", "cement"]
+const imageList = ["iron", "wood", "bricks", "cement"]
 
 
 const useStyles = makeStyles((theme) => ({
@@ -86,7 +86,7 @@ const Orders = () => {
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
-            disableScrollLock="true"
+            disableScrollLock={true}
             className={classes.DialogWidth}
          >
             <DialogTitle id="alert-dialog-title" style={{ backgroundColor: "#cccccc", padding: "0.5em" }}>
@@ -144,7 +144,6 @@ const Orders = () => {
          </Dialog>
       </React.Fragment>
    )
-   console.log(require("../../assets/img/Iron.jpg").default)
 
    return (
       <Fragment>
@@ -198,7 +197,7 @@ const Orders = () => {
                   <Grid item container style={{ border: " 1px solid #cccccc", borderBottomLeftRadius: "0.8em", borderBottomRightRadius: "0.8em" }}>
                      <Grid item container lg={6} justifyContent="flex-start" alignItems="center" style={{ padding: "0.5em" }}>
                         <Grid item>
-                           <img src={require("../../assets/img/" + imageList[index] + ".jpg").default} style={{ borderRadius: "50%", width: "5em", height: "5em", border: "1px solid #cccccc" }}></img>
+                           <img alt="productImg" src={require("../../assets/img/" + imageList[index] + ".jpg").default} style={{ borderRadius: "50%", width: "5em", height: "5em", border: "1px solid #cccccc" }}></img>
                         </Grid>
                         <Grid item style={{ padding: "1em" }}>
                            <Typography variant="subtitle1">{orderItem.itemName}</Typography>

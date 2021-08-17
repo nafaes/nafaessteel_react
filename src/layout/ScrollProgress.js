@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Progress = styled.div`
@@ -17,24 +17,27 @@ const ScrollProgress = () => {
 
   const [scrollPostion, setScrollPostion] = useState(0);
 
-  const listenToScrollEvent = () => {
-    document.addEventListener("scroll", () => {
-      requestAnimationFrame(() => {
-        calculateScrollDistance();
+  
+
+  const listenToScrollEvent = useCallback(
+    () => {
+      document.addEventListener("scroll", () => {
+        requestAnimationFrame(() => {
+          const scrollTop = window.pageYOffset; // how much the user has scrolled by
+          const winHeight = window.innerHeight;
+          const docHeight = getDocHeight();
+      
+          const totalDocScrollLength = docHeight - winHeight;
+          const scrollPostion = Math.floor(scrollTop / totalDocScrollLength * 100)
+      
+          setScrollPostion(scrollPostion);
+        });
       });
-    });
-  }
+    },
+    [],
+  )
 
-  const calculateScrollDistance = () => {
-    const scrollTop = window.pageYOffset; // how much the user has scrolled by
-    const winHeight = window.innerHeight;
-    const docHeight = getDocHeight();
-
-    const totalDocScrollLength = docHeight - winHeight;
-    const scrollPostion = Math.floor(scrollTop / totalDocScrollLength * 100)
-
-    setScrollPostion(scrollPostion);
-  }
+  
 
   const getDocHeight = () => {
     return Math.max(
@@ -46,7 +49,7 @@ const ScrollProgress = () => {
 
   useEffect(() => {
     listenToScrollEvent()
-  },[]
+  },[listenToScrollEvent]
   )
   
     return (

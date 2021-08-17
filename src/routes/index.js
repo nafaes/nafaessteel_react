@@ -7,12 +7,8 @@ import AddToCartPage from "../pages/AddToCartPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import SignupPage from "../pages/Signup";
-<<<<<<< HEAD
-import TrackOrderPage from "../pages/TrackOrder";
-=======
 import OrdersPage from "../pages/Orders";
 import TrackOrdersPage from "../pages/TrackOrder";
->>>>>>> iron_branch_nimeelya
 
 import {
   LANDING,
