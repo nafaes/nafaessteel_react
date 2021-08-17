@@ -27,6 +27,7 @@ import { allCategoryItems } from "../../constants/data";
 import Menus from "./Menus";
 import SideDrawer from "./SideDrawer";
 import logo from "../../assets/img/Logo.png";
+import { useCallback } from "react";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -75,9 +76,10 @@ const Navbar = (props) => {
     setOpen(!open);
   };
 
-  const toggleDrawer = () => {
+  const toggleDrawer = useCallback(() => {
     setOpenDrawer(!openDrawer);
-  };
+  }, [openDrawer]);
+
   const [openDrop, setOpenDrop] = React.useState(false);
   const anchorRef = React.useRef(null);
 

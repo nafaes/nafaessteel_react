@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import Iron from '../../img/Iron.png';
+import Iron from '../../img/iron.jpg';
 import Cement from '../../img/cement.jpg';
 import Wood from '../../img/wood.jpg';
 import Brick from '../../img/brick.jpg';

@@ -2,9 +2,9 @@ import { Button, Chip, Divider, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { Fragment } from "react";
 import { makeStyles } from "@material-ui/styles";
-import kuwaitiIron from "../../assets/img/Iron.png";
+import kuwaitiIron from "../../assets/img/iron.jpg";
 import wood from "../../assets/img/wood.jpg";
-import Brick from "../../assets/img/brick.jpg";
+import Brick from "../../assets/img/bricks.jpg";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";

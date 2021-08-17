@@ -14,13 +14,12 @@ import { withRouter } from "react-router-dom";
 import { Divider } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import { allCategories } from "../../constants/data";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
 
-
 const Landing = (props) => {
   const {
+    allCategories,
     navigateToItems,
     location: { state },
     history,
@@ -33,6 +32,9 @@ const Landing = (props) => {
   const largeScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
   let contactUs = useRef(null);
+
+  console.log("Rendering Landing Child Component");
+
   useEffect(() => {
     let timeOut;
     if (state?.message) {
@@ -44,6 +46,8 @@ const Landing = (props) => {
         history.push("/");
       }, 1000);
     }
+
+    console.log("After Rendering Landing Child Component");
 
     return () => {
       clearTimeout(timeOut);
@@ -72,7 +76,7 @@ const Landing = (props) => {
               className={clsx(classes.root, classesExternal.animateCard)}
               onClick={navigateToItems.bind(
                 null,
-                category.stages,
+                category.isParent,
                 category.categoryId,
                 category.categoryName
               )}
@@ -82,7 +86,9 @@ const Landing = (props) => {
                   component="img"
                   alt="Contemplative Reptile"
                   height="250"
-                  image={category.image}
+                  image={
+                    require(`../../assets/img/${category.picturePath}`).default
+                  }
                   title={category.categoryName}
                 />
                 <Divider />
@@ -95,7 +101,7 @@ const Landing = (props) => {
                     color="textSecondary"
                     component="p"
                   >
-                    {category.description}
+                    Description
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -126,7 +132,6 @@ const Landing = (props) => {
           <Grid
             item
             container
-            // direction="row"
             direction={largeScreen ? "row" : "column"}
             justifyContent="center"
             alignItems="center"
@@ -159,9 +164,7 @@ const Landing = (props) => {
               </Grid>
             </Grid>
             <Divider
-              orientation={
-                largeScreen ? "vertical" : "horizontal, border:'1px solid #fff'"
-              }
+              orientation={largeScreen ? "vertical" : "horizontal"}
               flexItem
               style={{ backgroundColor: "#fff" }}
             />
