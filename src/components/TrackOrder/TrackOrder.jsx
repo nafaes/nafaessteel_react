@@ -1,590 +1,273 @@
-import { Button, Chip, Divider, Grid, Typography } from "@material-ui/core";
-import React from "react";
-import { Fragment } from "react";
-import { makeStyles } from "@material-ui/styles";
-import kuwaitiIron from "../../assets/img/iron.jpg";
-import wood from "../../assets/img/wood.jpg";
-import Brick from "../../assets/img/bricks.jpg";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Check from '@material-ui/icons/Check';
+import SettingsIcon from '@material-ui/icons/Settings';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import VideoLabelIcon from '@material-ui/icons/VideoLabel';
+import StepConnector from '@material-ui/core/StepConnector';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+const QontoConnector = withStyles({
+  alternativeLabel: {
+    top: 10,
+    left: 'calc(-50% + 16px)',
+    right: 'calc(50% + 16px)',
+  },
+  active: {
+    '& $line': {
+      borderColor: '#784af4',
+    },
+  },
+  completed: {
+    '& $line': {
+      borderColor: '#784af4',
+    },
+  },
+  line: {
+    borderColor: '#eaeaf0',
+    borderTopWidth: 3,
+    borderRadius: 1,
+  },
+})(StepConnector);
+
+const useQontoStepIconStyles = makeStyles({
+  root: {
+    color: '#eaeaf0',
+    display: 'flex',
+    height: 22,
+    alignItems: 'center',
+  },
+  active: {
+    color: '#784af4',
+  },
+  circle: {
+    width: 8,
+    height: 8,
+    borderRadius: '50%',
+    backgroundColor: 'currentColor',
+  },
+  completed: {
+    color: '#784af4',
+    zIndex: 1,
+    fontSize: 18,
+  },
+});
+
+function QontoStepIcon(props) {
+  const classes = useQontoStepIconStyles();
+  const { active, completed } = props;
+
+  return (
+    <div
+      className={clsx(classes.root, {
+        [classes.active]: active,
+      })}
+    >
+      {completed ? <Check className={classes.completed} /> : <div className={classes.circle} />}
+    </div>
+  );
+}
+
+QontoStepIcon.propTypes = {
+  /**
+   * Whether this step is active.
+   */
+  active: PropTypes.bool,
+  /**
+   * Mark the step as completed. Is passed to child components.
+   */
+  completed: PropTypes.bool,
+};
+
+const ColorlibConnector = withStyles({
+  alternativeLabel: {
+    top: 22,
+  },
+  active: {
+    '& $line': {
+      backgroundImage:
+        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+    },
+  },
+  completed: {
+    '& $line': {
+      backgroundImage:
+        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+    },
+  },
+  line: {
+    height: 3,
+    border: 0,
+    backgroundColor: '#eaeaf0',
+    borderRadius: 1,
+  },
+})(StepConnector);
+
+const useColorlibStepIconStyles = makeStyles({
+  root: {
+    backgroundColor: '#ccc',
+    zIndex: 1,
+    color: '#fff',
+    width: 50,
+    height: 50,
+    display: 'flex',
+    borderRadius: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  active: {
+    backgroundImage:
+      'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+    boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+  },
+  completed: {
+    backgroundImage:
+      'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+  },
+});
+
+function ColorlibStepIcon(props) {
+  const classes = useColorlibStepIconStyles();
+  const { active, completed } = props;
+
+  const icons = {
+    1: <SettingsIcon />,
+    2: <GroupAddIcon />,
+    3: <VideoLabelIcon />,
+  };
+
+  return (
+    <div
+      className={clsx(classes.root, {
+        [classes.active]: active,
+        [classes.completed]: completed,
+      })}
+    >
+      {icons[String(props.icon)]}
+    </div>
+  );
+}
+
+ColorlibStepIcon.propTypes = {
+  /**
+   * Whether this step is active.
+   */
+  active: PropTypes.bool,
+  /**
+   * Mark the step as completed. Is passed to child components.
+   */
+  completed: PropTypes.bool,
+  /**
+   * The label displayed in the step icon.
+   */
+  icon: PropTypes.node,
+};
 
 const useStyles = makeStyles((theme) => ({
-  textHeader: {
-    fontSize: "0.95em",
-    fontWeight: "600",
+  root: {
+    width: '100%',
   },
-  mainHeader: {
-    fontWeight: "100",
-    fontSize: "1.25em",
-    padding: "0.5em 1em ",
+  button: {
+    marginRight: theme.spacing(1),
   },
-  container: {
-    display: "flex",
-    alignItems: "center",
-    width: "96%",
-    margin: "1em 3em",
-  },
-  border: {
-    borderBottom: "2px dotted #0086b3",
-    width: "100%",
-  },
-  content: {
-    paddingTop: theme.spacing(0.5),
-    paddingBottom: theme.spacing(0.5),
-    paddingRight: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    fontWeight: 500,
-    fontSize: "1.25em",
-    color: "black",
-    width: "26%",
-    margin: "auto",
-    textAlign: "center",
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
 }));
 
-const TrackOrder = () => {
+function getSteps() {
+  return ['Ordererd', 'Shipping', 'Out for Delivery'];
+}
+
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return 'Select campaign settings...';
+    case 1:
+      return 'What is an ad group anyways?';
+    case 2:
+      return 'This is the bit I really care about!';
+    default:
+      return 'Unknown step';
+  }
+}
+
+export default function CustomizedSteppers() {
   const classes = useStyles();
+  const [activeStep, setActiveStep] = React.useState(1);
+  const steps = getSteps();
 
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpenDialog(true);
-  };
-  const handleClose = () => {
-    setOpenDialog(false);
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const DividerForm = ({ children }) => {
-    return (
-      <div className={classes.container}>
-        <div className={classes.border} />
-        <span className={classes.content}>{children}</span>
-        <div className={classes.border} />
-      </div>
-    );
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const DialogModal = (
-    <React.Fragment>
-      <Dialog
-        open={openDialog}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        disableScrollLock="true"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        {/* <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Agree
-          </Button>
-        </DialogActions> */}
-      </Dialog>
-    </React.Fragment>
-  );
+  const handleReset = () => {
+    setActiveStep(0);
+  };
 
   return (
-    <Fragment>
-      <Grid
-        container
-        direction="row"
-        style={{ marginTop: "3em", backgroundColor: "white" }}
-      >
-        {/* <Grid item container direction="row">
-               <Typography variant="h6" className={classes.mainHeader}>Your Orders</Typography>    
-            </Grid> */}
-        {/* <Divider style={{width: "97%",backgroundColor:"#0086b3"}} variant="middle"></Divider> */}
-        <DividerForm>
-          <Chip
-            variant="outlined"
-            color="primary"
-            label="Your Orders"
-            style={{ padding: "0px 25px", fontSize: "0.85em" }}
-          />
-        </DividerForm>
-        <Grid item container style={{ margin: "1em auto", width: "70%" }}>
-          <Grid
-            item
-            container
-            style={{
-              backgroundColor: " #e6e6e6",
-              padding: "0.5em",
-              borderTopLeftRadius: "0.8em",
-              borderTopRightRadius: "0.8em",
-            }}
-          >
-            <Grid
-              item
-              container
-              direction="row"
-              lg={5}
-              style={{ flexWrap: "nowrap", textAlign: "center" }}
-            >
-              <Grid item container direction="column">
-                <Grid item>
-                  <Typography variant="h6" className={classes.textHeader}>
-                    ORDER PLACED
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">10 August 2021</Typography>
-                </Grid>
-              </Grid>
-              <Grid item container direction="column">
-                <Grid item>
-                  <Typography variant="h6" className={classes.textHeader}>
-                    TOTAL
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">KWD 50.00</Typography>
-                </Grid>
-              </Grid>
-              <Grid item container direction="column">
-                <Grid item>
-                  <Typography variant="h6" className={classes.textHeader}>
-                    SHIP TO
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">Nimeelya</Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              direction="row"
-              lg={3}
-              style={{ flexWrap: "nowrap" }}
-            ></Grid>
-            <Grid
-              item
-              container
-              direction="row"
-              lg={4}
-              style={{ flexWrap: "nowrap", textAlign: "center" }}
-            >
-              <Grid item container direction="column" justifyContent="center">
-                <Grid item>
-                  {/* <Typography variant="h6" className={classes.textHeader}>View OrderDetails</Typography>    */}
-                  <Button
-                    style={{
-                      textTransform: "none",
-                      fontWeight: "600",
-                      fontSize: "0.93em",
-                    }}
-                    onClick={handleClickOpen}
-                  >
-                    View OrderDetails
-                  </Button>
-                </Grid>
-              </Grid>
-              <Divider orientation="vertical" />
-              <Grid item container direction="column" justifyContent="center">
-                <Grid item>
-                  <Button
-                    style={{
-                      textTransform: "none",
-                      fontWeight: "600",
-                      fontSize: "0.93em",
-                    }}
-                  >
-                    Print
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid
-            item
-            container
-            style={{
-              border: " 1px solid #cccccc",
-              borderBottomLeftRadius: "0.8em",
-              borderBottomRightRadius: "0.8em",
-            }}
-          >
-            <Grid
-              item
-              container
-              lg={6}
-              justifyContent="flex-start"
-              alignItems="center"
-              style={{ padding: "0.5em" }}
-            >
-              <Grid item>
-                <img
-                  src={kuwaitiIron}
-                  style={{
-                    borderRadius: "50%",
-                    width: "5em",
-                    height: "5em",
-                    border: "1px solid #cccccc",
-                  }}
-                  alt="productImage"
-                />
-              </Grid>
-              <Grid item style={{ padding: "1em" }}>
-                <Typography variant="subtitle1">Kuwaiti Iron</Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              lg={6}
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="center"
-              style={{ paddingRight: "2em" }}
-            >
-              <Grid item>
-                <Button
-                  style={{
-                    backgroundColor: "#0086b3",
-                    color: "white",
-                    fontSize: "1.05em",
-                    padding: "0.2em 2em",
-                    textTransform: "none",
-                  }}
-                >
-                  Track Order
-                </Button>
-              </Grid>
-              {/* <Grid item style={{marginLeft:"0.5em"}}>
-                        <Button style={{backgroundColor:"#0086b3", color:"white", fontSize:"1.05em" ,padding:"0.2em 2em", textTransform:"none" }}>Cancel Order</Button>
-                     </Grid> */}
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item container style={{ margin: "1em auto", width: "70%" }}>
-          <Grid
-            item
-            container
-            style={{
-              backgroundColor: " #e6e6e6",
-              padding: "0.5em",
-              borderTopLeftRadius: "0.8em",
-              borderTopRightRadius: "0.8em",
-            }}
-          >
-            <Grid
-              item
-              container
-              direction="row"
-              lg={5}
-              style={{ flexWrap: "nowrap", textAlign: "center" }}
-            >
-              <Grid item container direction="column">
-                <Grid item>
-                  <Typography variant="h6" className={classes.textHeader}>
-                    ORDER PLACED
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">10 August 2021</Typography>
-                </Grid>
-              </Grid>
-              <Grid item container direction="column">
-                <Grid item>
-                  <Typography variant="h6" className={classes.textHeader}>
-                    TOTAL
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">KWD 50.00</Typography>
-                </Grid>
-              </Grid>
-              <Grid item container direction="column">
-                <Grid item>
-                  <Typography variant="h6" className={classes.textHeader}>
-                    SHIP TO
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">Nimeelya</Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              direction="row"
-              lg={3}
-              style={{ flexWrap: "nowrap" }}
-            ></Grid>
-            <Grid
-              item
-              container
-              direction="row"
-              lg={4}
-              style={{ flexWrap: "nowrap", textAlign: "center" }}
-            >
-              <Grid item container direction="column" justifyContent="center">
-                <Grid item>
-                  {/* <Typography variant="h6" className={classes.textHeader}>View OrderDetails</Typography>    */}
-                  <Button
-                    style={{
-                      textTransform: "none",
-                      fontWeight: "600",
-                      fontSize: "0.93em",
-                    }}
-                  >
-                    View OrderDetails
-                  </Button>
-                </Grid>
-              </Grid>
-              <Divider orientation="vertical" />
-              <Grid item container direction="column" justifyContent="center">
-                <Grid item>
-                  <Button
-                    style={{
-                      textTransform: "none",
-                      fontWeight: "600",
-                      fontSize: "0.93em",
-                    }}
-                  >
-                    Print
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid
-            item
-            container
-            style={{
-              border: " 1px solid #cccccc",
-              borderBottomLeftRadius: "0.8em",
-              borderBottomRightRadius: "0.8em",
-            }}
-          >
-            <Grid
-              item
-              container
-              lg={6}
-              justifyContent="flex-start"
-              alignItems="center"
-              style={{ padding: "0.5em" }}
-            >
-              <Grid item>
-                <img
-                  src={wood}
-                  style={{
-                    borderRadius: "50%",
-                    width: "5em",
-                    height: "5em",
-                    border: "1px solid #cccccc",
-                  }}
-                  alt="productImage"
-                />
-              </Grid>
-              <Grid item style={{ padding: "1em" }}>
-                <Typography variant="subtitle1">Wood</Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              lg={6}
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="center"
-              style={{ paddingRight: "2em" }}
-            >
-              <Grid item>
-                <Button
-                  style={{
-                    backgroundColor: "#0086b3",
-                    color: "white",
-                    fontSize: "1.05em",
-                    padding: "0.2em 2em",
-                    textTransform: "none",
-                  }}
-                >
-                  Track Order
-                </Button>
-              </Grid>
-              {/* <Grid item style={{marginLeft:"0.5em"}}>
-                        <Button style={{backgroundColor:"#0086b3", color:"white", fontSize:"1.05em" ,padding:"0.2em 2em", textTransform:"none" }}>Cancel Order</Button>
-                     </Grid> */}
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item container style={{ margin: "1em auto", width: "70%" }}>
-          <Grid
-            item
-            container
-            style={{
-              backgroundColor: " #e6e6e6",
-              padding: "0.5em",
-              borderTopLeftRadius: "0.8em",
-              borderTopRightRadius: "0.8em",
-            }}
-          >
-            <Grid
-              item
-              container
-              direction="row"
-              lg={5}
-              style={{ flexWrap: "nowrap", textAlign: "center" }}
-            >
-              <Grid item container direction="column">
-                <Grid item>
-                  <Typography variant="h6" className={classes.textHeader}>
-                    ORDER PLACED
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">10 August 2021</Typography>
-                </Grid>
-              </Grid>
-              <Grid item container direction="column">
-                <Grid item>
-                  <Typography variant="h6" className={classes.textHeader}>
-                    TOTAL
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">KWD 50.00</Typography>
-                </Grid>
-              </Grid>
-              <Grid item container direction="column">
-                <Grid item>
-                  <Typography variant="h6" className={classes.textHeader}>
-                    SHIP TO
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">Nimeelya</Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              direction="row"
-              lg={3}
-              style={{ flexWrap: "nowrap" }}
-            ></Grid>
-            <Grid
-              item
-              container
-              direction="row"
-              lg={4}
-              style={{ flexWrap: "nowrap", textAlign: "center" }}
-            >
-              <Grid item container direction="column" justifyContent="center">
-                <Grid item>
-                  {/* <Typography variant="h6" className={classes.textHeader}>View OrderDetails</Typography>    */}
-                  <Button
-                    style={{
-                      textTransform: "none",
-                      fontWeight: "600",
-                      fontSize: "0.93em",
-                    }}
-                  >
-                    View OrderDetails
-                  </Button>
-                </Grid>
-              </Grid>
-              <Divider orientation="vertical" />
-              <Grid item container direction="column" justifyContent="center">
-                <Grid item>
-                  <Button
-                    style={{
-                      textTransform: "none",
-                      fontWeight: "600",
-                      fontSize: "0.93em",
-                    }}
-                  >
-                    Print
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid
-            item
-            container
-            style={{
-              border: " 1px solid #cccccc",
-              borderBottomLeftRadius: "0.8em",
-              borderBottomRightRadius: "0.8em",
-            }}
-          >
-            <Grid
-              item
-              container
-              lg={6}
-              justifyContent="flex-start"
-              alignItems="center"
-              style={{ padding: "0.5em" }}
-            >
-              {/* <Grid item style={{padding:"1em"}}>
-                        <Typography variant="subtitle1">Dispatched</Typography>
-                     </Grid> */}
-              <Grid item>
-                <img
-                  src={Brick}
-                  style={{
-                    borderRadius: "50%",
-                    width: "5em",
-                    height: "5em",
-                    border: "1px solid #cccccc",
-                  }}
-                  alt="productImage"
-                />
-              </Grid>
-              <Grid item style={{ padding: "1em" }}>
-                <Typography variant="subtitle1">Brick</Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              lg={6}
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="center"
-              style={{ paddingRight: "2em" }}
-            >
-              <Grid item>
-                <Button
-                  style={{
-                    backgroundColor: "#0086b3",
-                    color: "white",
-                    fontSize: "1.05em",
-                    padding: "0.2em 2em",
-                    textTransform: "none",
-                  }}
-                >
-                  Track Order
-                </Button>
-              </Grid>
-              {/* <Grid item style={{marginLeft:"0.5em"}}>
-                        <Button style={{backgroundColor:"#0086b3", color:"white", fontSize:"1.05em" ,padding:"0.2em 2em", textTransform:"none" }}>Cancel Order</Button>
-                     </Grid> */}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Fragment>
+    <div className={classes.root}>
+      <Stepper alternativeLabel activeStep={activeStep}>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <div>
+        {activeStep === steps.length ? (
+          <div>
+            <Typography className={classes.instructions}>
+              All steps completed - you&apos;re finished
+            </Typography>
+            <Button onClick={handleReset} className={classes.button}>
+              Reset
+            </Button>
+          </div>
+        ) : (
+          <div>
+            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            <div>
+              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                className={classes.button}
+              >
+                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
-};
-
-export default TrackOrder;
+}

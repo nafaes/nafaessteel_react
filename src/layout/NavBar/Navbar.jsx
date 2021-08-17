@@ -15,12 +15,8 @@ import clsx from "clsx";
 import { Button, IconButton, MenuItem } from "@material-ui/core";
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
 
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import MenuList from "@material-ui/core/MenuList";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import { SIGNIN, CART, TRACKORDER } from "../../constants/routes";
+import { CART, TRACKORDER, ORDERS} from '../../constants/routes';
+import { SIGNIN } from '../../constants/routes';
 import navbarEngDesk from "../../assets/scss/navbar.module.scss";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import { allCategoryItems } from "../../constants/data";
@@ -172,7 +168,7 @@ const Navbar = (props) => {
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
           component={Link}
-          to={TRACKORDER}
+          to={ORDERS}
           label="Orders"
         ></Tab>
         <Tab

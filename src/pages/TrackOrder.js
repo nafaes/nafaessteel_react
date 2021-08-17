@@ -1,12 +1,12 @@
 import React from "react";
 import TrackOrder from "../components/TrackOrder/TrackOrder";
 
-const TrackOrderPage = () => {
+const TrackOrdersPage = () => {
   return (
     <TrackOrder/>
 
   );
 };
 
-export default TrackOrderPage;
+export default TrackOrdersPage;
 
