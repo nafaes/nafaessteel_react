@@ -3,7 +3,7 @@ import SignUp from "../components/SignUp/Signup";
 
 const SignupPage = () => {
   return (
-    <SignUp/>
+    <SignUp  isDisplayImage={true} />
   );
 };
 

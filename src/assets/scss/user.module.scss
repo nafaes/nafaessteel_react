@@ -5,11 +5,11 @@
 }
 .loginContainForm {
     height: 26em;
-    @extend %userContainForm;
+    // @extend %userContainForm;
 }
 .signupContainForm {
     height: 28em;
-    @extend %userContainForm;
+    // @extend %userContainForm;
 }
 .loginImage{
     @extend %loginImage;
