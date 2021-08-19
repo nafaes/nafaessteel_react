@@ -41,7 +41,6 @@ const Landing = (props) => {
       contactUs.current.scrollIntoView({
         behavior: "smooth",
       });
-
       timeOut = setTimeout(() => {
         history.push("/");
       }, 1000);
@@ -78,7 +77,8 @@ const Landing = (props) => {
                 null,
                 category.isParent,
                 category.categoryId,
-                category.categoryName
+                category.categoryName,
+                category.nextLevel
               )}
             >
               <CardActionArea>

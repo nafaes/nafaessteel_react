@@ -130,7 +130,6 @@ const AddToCart = (props) => {
                       {historyItems ? (
                         historyItems.map((item, index) => {
                           const last = index === historyItems.length - 1;
-
                           if (last) {
                             return (
                               <Typography key={item.itemId} variant="h6">
@@ -308,12 +307,6 @@ const AddToCart = (props) => {
                   classesExternal.addCartTabHdrRow
                 )}
               >
-                {/* <TableRow>
-                  <TableCell align="center" colSpan={3}>
-                    Details
-                  </TableCell>
-                  <TableCell align="right">Price</TableCell>
-                </TableRow> */}
                 <TableRow>
                   <TableCell>Desc</TableCell>
                   <TableCell align="right">Qty.</TableCell>

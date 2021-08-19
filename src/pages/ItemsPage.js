@@ -1,73 +1,62 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import Items from "../components/Items/Items";
-import { allCategories } from "../constants/data";
 import { ADDTOCART, ITEMS } from "../constants/routes";
+import { getAllCatergoryItems } from "../services/categories";
 
 const ItemsPage = (props) => {
-  const [categories] = useState(allCategories);
-  const [items, setItems] = useState([]);
+  const [catergoryItems, setCategoryItems] = useState([])
 
   const {
     history,
     location: {
-      state: { items: historyItems },
-    },
+      state: { items: historyItems}
+    }
   } = props;
 
   const categoryId = historyItems[historyItems.length - 1].categoryId;
   const itemId = historyItems[historyItems.length - 1].itemId;
+  const level = historyItems[historyItems.length - 1].level;
+ 
+  console.log(historyItems)
+
+  const getCatergoryItems = useCallback(async () => {
+    const response = await getAllCatergoryItems(categoryId, level, 2);
+    setCategoryItems(response);
+  }, [categoryId, level])
+
 
   useEffect(() => {
-    if (categoryId && itemId) {
-      const category = categories.find(
-        ({ categoryId: id }) => categoryId === id
-      );
-
-      const categoryItem = category.items.find(
-        ({ itemId: id }) => id === itemId
-      );
-      setItems(categoryItem.subItems);
-    } else if (categoryId) {
-      const category = categories.find(
-        ({ categoryId: id }) => categoryId === id
-      );
-      const { items: categoryItems } = category;
-      setItems(categoryItems);
+    if (categoryId) {
+      getCatergoryItems();
     }
-
     return () => {
-      setItems(null);
+      setCategoryItems(null);
     };
-  }, [categoryId, itemId, categories]);
+  }, [categoryId, getCatergoryItems]);
 
-  const navigate = useCallback(
-    (nextLevel, item) => {
-      let allItems;
-
-      allItems = [
-        ...historyItems,
-        {
-          categoryId: categoryId,
-          itemId: item.itemId,
-          name: item.itemName,
-        },
+  const navigate = useCallback((isParent,item) => {
+      let allItems = [
+          ...historyItems,
+          {
+            categoryId: item.categoryId,
+            itemId: item.itemId,
+            name: item.categoryName,
+            level: item.nextLevel
+          }
       ];
-
-      if (nextLevel === 2) {
-        history.push(ITEMS, {
-          items: allItems,
-        });
-      } else if (nextLevel === 3) {
-        history.push(ADDTOCART, {
-          items: allItems,
-        });
+      if (isParent === true){
+        history.push(ITEMS,{
+          items: allItems
+        })
+      }else if (isParent === false){
+          history.push(ADDTOCART,{
+            items: allItems
+          })
       }
-    },
-    [historyItems, categoryId, history]
-  );
+  },[historyItems,categoryId,history])
 
-  return <Items items={items} navigate={navigate} />;
+  return <Items items={catergoryItems} navigate={navigate} />;
 };
 
 export default ItemsPage;

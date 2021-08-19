@@ -19,6 +19,7 @@ const LandingPage = (props) => {
     } catch (err) {
       setIsLoading(false);
       setError(err.message);
+      alert(err);
     }
   }, []);
 
@@ -31,14 +32,22 @@ const LandingPage = (props) => {
   console.log("Rendering Landing Parent Component");
 
   const navigateToItems = useCallback(
-    (isParent, categoryId, categoryName) => {
+    (isParent, categoryId, categoryName, nextLevel) => {
       if (isParent === true) {
         history.push(ITEMS, {
-          items: [{ categoryId: categoryId, itemId: "", name: categoryName }],
+          items: [{ 
+            categoryId: categoryId, 
+            itemId: "", 
+            name: categoryName, 
+            level: nextLevel }],
         });
       } else if (isParent === false) {
         history.push(ADDTOCART, {
-          items: [{ categoryId: categoryId, itemId: "", name: categoryName }],
+          items: [{ 
+            categoryId: categoryId, 
+            itemId: "", 
+            name: categoryName, 
+            level: nextLevel }],
         });
       }
     },

@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import AddToCart from "../components/AddToCart/AddToCart";
-import { allCategories } from "../constants/data";
 import { ITEMS } from "../constants/routes";
+import { getCatergoryItemDetails } from "../services/categories";
 
 const addToCartInitialState = {
   quantity: {
@@ -13,7 +13,6 @@ const addToCartInitialState = {
 };
 
 const AddToCartPage = (props) => {
-  const [categories] = useState(allCategories);
   const [categoryName, setCategoryName] = useState();
   const [item, setItem] = useState();
   const [addToCartForm, setAddToCartForm] = useState(addToCartInitialState);
@@ -26,47 +25,25 @@ const AddToCartPage = (props) => {
   } = props;
 
   const categoryId = historyItems[historyItems.length - 1].categoryId;
+  const level = historyItems[historyItems.length - 1].level;
   const itemId = historyItems[historyItems.length - 1].itemId;
 
+  const getItemDetails = useCallback(async () => {
+      const response = await getCatergoryItemDetails(2, categoryId);
+      console.log(response)
+      setItem(response)
+    },
+    [categoryId],
+  )
+
   useEffect(() => {
-    if (categoryId && itemId) {
-      const { categoryName, items } = categories.find(
-        ({ categoryId: id }) => categoryId === id
-      );
-      setCategoryName(categoryName);
-      const categoryItem = items.find(({ itemId: id }) => id === itemId);
-
-      if (!categoryItem && items) {
-        for (const item of items) {
-          if (item.subItems) {
-            const categoryItem = item.subItems.find(
-              ({ itemId: id }) => id === itemId
-            );
-            if (categoryItem) {
-              setItem(categoryItem);
-              break;
-            } else {
-              continue;
-            }
-          } else {
-            setItem(categoryItem);
-          }
-        }
-      } else {
-        setItem(categoryItem);
-      }
-    } else if (categoryId) {
-      const category = categories.find(
-        ({ categoryId: id }) => categoryId === id
-      );
-      setItem(category);
-      setCategoryName(category.categoryName);
+    if (categoryId) {
+      getItemDetails()
     }
-
     return () => {
       setItem(null);
     };
-  }, [categoryId, itemId, categories]);
+  }, [categoryId, getItemDetails]);
 
   const formChangeHandler = useCallback(
     ({ target: { name, value }, ...values }) => {
@@ -76,13 +53,11 @@ const AddToCartPage = (props) => {
       } else {
         price = "";
       }
-
       // else if (name === "type" && values.hasOwnProperty("price") === false) {
       //   price = "";
       // } else if (values.hasOwnProperty("price") === false) {
       //   price = addToCartForm.price ? addToCartForm.price : "";
       // }
-
       setAddToCartForm({
         ...addToCartForm,
         [name]: {
@@ -96,28 +71,27 @@ const AddToCartPage = (props) => {
     [addToCartForm]
   );
 
-  const breadcrumbNavigation = useCallback(
-    (itemId, name) => {
+  const breadcrumbNavigation = useCallback((itemId, name) => {
       let allItems;
       if (itemId === "") {
         allItems = [
           {
-            categoryId: categoryId,
+            categoryId: historyItems[0].categoryId,
             itemId: "",
             name: name,
+            level: historyItems[0].level
           },
         ];
       } else {
-        allItems = [
-          historyItems[0],
+        allItems = [historyItems[0],
           {
-            categoryId: categoryId,
+            categoryId: historyItems[0].categoryId,
             itemId: itemId,
             name: name,
+            level: historyItems[0].level
           },
         ];
       }
-
       history.push(ITEMS, {
         items: allItems,
       });

@@ -38,7 +38,6 @@ const Items = (props) => {
         style={{ marginTop: "3em" }}
         justifyContent="center"
         spacing={2}
-        // cols={2}
       >
         {items.map((item, index) => (
           <Grid
@@ -54,10 +53,10 @@ const Items = (props) => {
               raised
               elevation={12}
               className={classes.root}
-              onClick={navigate.bind(null, item.nextLevel, item)}
+              onClick={navigate.bind(null, item.isParent, item)}
             >
               <CardHeader
-                title={item.itemName}
+                title={item.categoryName}
                 titleTypographyProps={{ variant: "h6" }}
                 className={classes.cardStyles}
               />
@@ -68,7 +67,7 @@ const Items = (props) => {
                 // height="200px"
                 // image={Cement}
                 src={item.image}
-                title={item.itemName}
+                title={item.categoryName}
                 style={{ height: "13em ", width: "13em", margin: "auto" }}
                 className={clsx(classes.ironsCard, classesExternal.ironsCard)}
               />
