@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import AddToCart from "../components/AddToCart/AddToCart";
 import { ITEMS } from "../constants/routes";
@@ -8,14 +8,19 @@ const addToCartInitialState = {
   quantity: {
     name: "quantity",
     value: "",
+    validationMsg: "Enter Quantity",
+    valid: false,
+    touched: false,
   },
   price: "",
+  formIsValid: false,
 };
 
 const AddToCartPage = (props) => {
   const [categoryName] = useState();
   const [item, setItem] = useState();
   const [addToCartForm, setAddToCartForm] = useState(addToCartInitialState);
+  const [itemSummary, setItemSummary] = useState();
 
   const {
     history,
@@ -24,28 +29,29 @@ const AddToCartPage = (props) => {
     },
   } = props;
 
-  const categoryId = historyItems[historyItems.length - 1].categoryId;
-  // const level = historyItems[historyItems.length - 1].level;
-  // const itemId = historyItems[historyItems.length - 1].itemId;
+  const historyItem = useMemo(
+    () => historyItems[historyItems.length - 1],
+    [historyItems]
+  );
 
   const getItemDetails = useCallback(async () => {
-    const response = await getCatergoryItemDetails(2, categoryId);
-    // console.log(response)
+    const response = await getCatergoryItemDetails(2, historyItem.categoryId);
     setItem(response);
-  }, [categoryId]);
+  }, [historyItem]);
 
   useEffect(() => {
-    if (categoryId) {
+    if (historyItem) {
       getItemDetails();
     }
     return () => {
       setItem(null);
     };
-  }, [categoryId, getItemDetails]);
+  }, [historyItem, getItemDetails]);
 
   const formChangeHandler = useCallback(
     ({ target: { name, value }, ...values }) => {
       let price;
+      let formIsValid = true;
       if (values.hasOwnProperty("price")) {
         price = values.price;
       } else {
@@ -62,8 +68,11 @@ const AddToCartPage = (props) => {
           ...addToCartForm?.[name],
           name,
           value,
+          valid: true,
+          touched: true,
         },
         price,
+        formIsValid,
       });
     },
     [addToCartForm]
@@ -91,6 +100,25 @@ const AddToCartPage = (props) => {
     [historyItems, history]
   );
 
+  const addToCartHandler = useCallback(() => {
+    if (!addToCartForm.formIsValid) {
+      const updatedForm = {
+        ...addToCartForm,
+        quantity: { ...addToCartForm.quantity, touched: true },
+      };
+      setAddToCartForm(updatedForm);
+    } else {
+      setItemSummary({
+        itemId: historyItem.categoryId,
+        itemName: historyItem.name,
+        quantity: addToCartForm.quantity.value,
+        price: 566.0,
+      });
+
+      setAddToCartForm(addToCartInitialState);
+    }
+  }, [historyItem.categoryId, historyItem.name, addToCartForm]);
+
   return (
     <AddToCart
       categoryName={categoryName}
@@ -99,6 +127,8 @@ const AddToCartPage = (props) => {
       formChangeHandler={formChangeHandler}
       historyItems={historyItems}
       breadcrumbNavigation={breadcrumbNavigation}
+      addToCartHandler={addToCartHandler}
+      itemSummary={itemSummary}
     />
   );
 };

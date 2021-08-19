@@ -21,6 +21,7 @@ import {
   Paper,
   ClickAwayListener,
   MenuList,
+  Badge,
 } from "@material-ui/core";
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
 
@@ -274,6 +275,7 @@ const Navbar = (props) => {
             >
               <AccountCircleIcon size="medium" />
             </IconButton>
+
             <Tooltip title="Cart" arrow>
               <IconButton
                 className={clsx(classes.iconButton, classesExternal.iconButton)}
@@ -281,7 +283,21 @@ const Navbar = (props) => {
                 component={Link}
                 to={CART}
               >
-                <ShoppingCart size="medium" />
+                <Badge
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  badgeContent={8}
+                  // badgeContent={0}
+                  showZero={true}
+                  // invisible={false}
+                  max={999}
+                  variant="standard"
+                  color="secondary"
+                >
+                  <ShoppingCart size="medium" />
+                </Badge>
               </IconButton>
             </Tooltip>
             <Tooltip title="Language" arrow>

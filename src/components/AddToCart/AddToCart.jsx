@@ -31,40 +31,40 @@ function ccyFormat(num) {
   return `${num.toFixed(2)}`;
 }
 
-function priceRow(qty, unit) {
-  return qty * unit;
-}
+// function priceRow(qty, unit) {
+//   return qty * unit;
+// }
 
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, qty, unit, price };
-}
+// function createRow(desc, qty, unit) {
+//   const price = priceRow(qty, unit);
+//   return { desc, qty, unit, price };
+// }
 
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
+// function subtotal(items) {
+//   return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+// }
 
-function totalqty(quantity) {
-  return quantity.map(({ qty }) => qty).reduce((sum, i) => sum + i, 0);
-}
+// function totalqty(quantity) {
+//   return quantity.map(({ qty }) => qty).reduce((sum, i) => sum + i, 0);
+// }
 
-const rows = [
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-];
+// const rows = [
+//   createRow("Paperclips (Box)", 100, 1.15),
+//   createRow("Paper (Case)", 10, 45.99),
+//   createRow("Waste Basket", 2, 17.99),
+//   createRow("Paperclips (Box)", 100, 1.15),
+//   createRow("Paper (Case)", 10, 45.99),
+//   createRow("Waste Basket", 2, 17.99),
+//   createRow("Paperclips (Box)", 100, 1.15),
+//   createRow("Paper (Case)", 10, 45.99),
+//   createRow("Waste Basket", 2, 17.99),
+//   createRow("Paperclips (Box)", 100, 1.15),
+//   createRow("Paper (Case)", 10, 45.99),
+//   createRow("Waste Basket", 2, 17.99),
+// ];
 
-const invoiceSubtotal = subtotal(rows);
-const totalQuantity = totalqty(rows);
+// const invoiceSubtotal = subtotal(rows);
+// const totalQuantity = totalqty(rows);
 
 const AddToCart = (props) => {
   const {
@@ -74,6 +74,8 @@ const AddToCart = (props) => {
     formChangeHandler,
     historyItems,
     breadcrumbNavigation,
+    addToCartHandler,
+    itemSummary,
   } = props;
 
   const englishMobileStyles = addToCartMobEng();
@@ -141,12 +143,6 @@ const AddToCart = (props) => {
                               <Link
                                 color="inherit"
                                 key={item.itemId}
-                                // onClick={breadcrumbNavigation.bind(
-                                //   null,
-                                //   item.itemId,
-                                //   item.name
-                                // )}
-
                                 onClick={breadcrumbNavigation.bind(
                                   null,
                                   item.categoryId,
@@ -250,6 +246,16 @@ const AddToCart = (props) => {
                       onKeyPress={(event) => {
                         isInputNumber(event, 2);
                       }}
+                      // error={
+                      //   !addToCartForm.quantity.valid &&
+                      //   addToCartForm.quantity.touched
+                      // }
+                      helperText={
+                        !addToCartForm.quantity.valid &&
+                        addToCartForm.quantity.touched
+                          ? addToCartForm.quantity.validationMsg
+                          : null
+                      }
                       style={{ width: "100%", marginBottom: "2em" }}
                     />
 
@@ -275,6 +281,7 @@ const AddToCart = (props) => {
                               type="submit"
                               variant="contained"
                               size="small"
+                              onClick={addToCartHandler.bind(null)}
                               className={clsx(
                                 classes.addCartSubBtn,
                                 classesExternal.addCartSubBtn
@@ -301,32 +308,34 @@ const AddToCart = (props) => {
           </Grid>
         </Grid>
 
-        <Grid container justifyContent="center" style={{ marginTop: "2em" }}>
-          <TableContainer component={Paper}>
-            <Table
-              className={classes.table}
-              aria-label="spanning table"
-              size="small"
-            >
-              <TableHead
-                className={clsx(
-                  classes.addCartTabHdrRow,
-                  classesExternal.addCartTabHdrRow
-                )}
+        {itemSummary ? (
+          <Grid container justifyContent="center" style={{ marginTop: "2em" }}>
+            <TableContainer component={Paper}>
+              <Table
+                className={classes.table}
+                aria-label="spanning table"
+                size="small"
               >
-                <TableRow>
-                  <TableCell>Desc</TableCell>
-                  <TableCell align="right">Qty.</TableCell>
-                  <TableCell align="right">Sum</TableCell>
-                  <TableCell align="right">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{row.desc}</TableCell>
-                    <TableCell align="right">{row.qty}</TableCell>
-                    <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+                <TableHead
+                  className={clsx(
+                    classes.addCartTabHdrRow,
+                    classesExternal.addCartTabHdrRow
+                  )}
+                >
+                  <TableRow>
+                    <TableCell>Item</TableCell>
+                    <TableCell align="right">Quantity</TableCell>
+                    <TableCell align="right">Price</TableCell>
+                    <TableCell align="right">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>{itemSummary.itemName}</TableCell>
+                    <TableCell align="right">{itemSummary.quantity}</TableCell>
+                    <TableCell align="right">
+                      {ccyFormat(itemSummary.price)}
+                    </TableCell>
                     <TableCell align="right">
                       <Button>
                         <DeleteForeverIcon
@@ -335,25 +344,42 @@ const AddToCart = (props) => {
                       </Button>
                     </TableCell>
                   </TableRow>
-                ))}
 
-                <TableRow
-                  className={clsx(
-                    classes.addCartTabFtrRow,
-                    classesExternal.addCartTabFtrRow
-                  )}
-                >
-                  <TableCell align="right">Total</TableCell>
-                  <TableCell align="right">{totalQuantity}</TableCell>
-                  <TableCell align="right">
-                    {ccyFormat(invoiceSubtotal)}
-                  </TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid>
+                  {/* {rows.map((row, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{row.desc}</TableCell>
+                      <TableCell align="right">{row.qty}</TableCell>
+                      <TableCell align="right">
+                        {ccyFormat(row.price)}
+                      </TableCell>
+                      <TableCell align="right">
+                        <Button>
+                          <DeleteForeverIcon
+                            style={{ fontSize: "2rem", color: "#d9534f" }}
+                          />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))} */}
+
+                  {/* <TableRow
+                    className={clsx(
+                      classes.addCartTabFtrRow,
+                      classesExternal.addCartTabFtrRow
+                    )}
+                  >
+                    <TableCell align="right">Total</TableCell>
+                    <TableCell align="right">{totalQuantity}</TableCell>
+                    <TableCell align="right">
+                      {ccyFormat(invoiceSubtotal)}
+                    </TableCell>
+                    <TableCell></TableCell>
+                  </TableRow> */}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        ) : null}
       </div>
     </Fragment>
   );
