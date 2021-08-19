@@ -54,7 +54,8 @@ const Categories = (props) => {
                 null,
                 category.isParent,
                 category.categoryId,
-                category.categoryName
+                category.categoryName,
+                category.nextLevel
               )}
             >
               <CardActionArea>

@@ -19,7 +19,6 @@ const LandingPage = (props) => {
     } catch (err) {
       setIsLoading(false);
       setError(err.message);
-      alert(err);
     }
   }, []);
 

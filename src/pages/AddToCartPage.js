@@ -13,7 +13,7 @@ const addToCartInitialState = {
 };
 
 const AddToCartPage = (props) => {
-  const [categoryName, setCategoryName] = useState();
+  const [categoryName] = useState();
   const [item, setItem] = useState();
   const [addToCartForm, setAddToCartForm] = useState(addToCartInitialState);
 
@@ -25,20 +25,18 @@ const AddToCartPage = (props) => {
   } = props;
 
   const categoryId = historyItems[historyItems.length - 1].categoryId;
-  const level = historyItems[historyItems.length - 1].level;
-  const itemId = historyItems[historyItems.length - 1].itemId;
+  // const level = historyItems[historyItems.length - 1].level;
+  // const itemId = historyItems[historyItems.length - 1].itemId;
 
   const getItemDetails = useCallback(async () => {
-      const response = await getCatergoryItemDetails(2, categoryId);
-      console.log(response)
-      setItem(response)
-    },
-    [categoryId],
-  )
+    const response = await getCatergoryItemDetails(2, categoryId);
+    // console.log(response)
+    setItem(response);
+  }, [categoryId]);
 
   useEffect(() => {
     if (categoryId) {
-      getItemDetails()
+      getItemDetails();
     }
     return () => {
       setItem(null);
@@ -71,32 +69,26 @@ const AddToCartPage = (props) => {
     [addToCartForm]
   );
 
-  const breadcrumbNavigation = useCallback((itemId, name) => {
-      let allItems;
-      if (itemId === "") {
-        allItems = [
-          {
-            categoryId: historyItems[0].categoryId,
-            itemId: "",
-            name: name,
-            level: historyItems[0].level
-          },
-        ];
-      } else {
-        allItems = [historyItems[0],
-          {
-            categoryId: historyItems[0].categoryId,
-            itemId: itemId,
-            name: name,
-            level: historyItems[0].level
-          },
-        ];
-      }
+  const breadcrumbNavigation = useCallback(
+    (categoryId, name, level) => {
+      const currentCategoryIndex = historyItems.findIndex(
+        ({ categoryId: id }) => id === categoryId
+      );
+      let allItems = [
+        ...historyItems.slice(0, currentCategoryIndex),
+        {
+          categoryId: categoryId,
+          itemId: "",
+          name: name,
+          level: level,
+        },
+      ];
+
       history.push(ITEMS, {
         items: allItems,
       });
     },
-    [historyItems, history, categoryId]
+    [historyItems, history]
   );
 
   return (

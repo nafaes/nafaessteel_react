@@ -5,26 +5,22 @@ import { ADDTOCART, ITEMS } from "../constants/routes";
 import { getAllCatergoryItems } from "../services/categories";
 
 const ItemsPage = (props) => {
-  const [catergoryItems, setCategoryItems] = useState([])
+  const [catergoryItems, setCategoryItems] = useState([]);
 
   const {
     history,
     location: {
-      state: { items: historyItems}
-    }
+      state: { items: historyItems },
+    },
   } = props;
 
   const categoryId = historyItems[historyItems.length - 1].categoryId;
-  const itemId = historyItems[historyItems.length - 1].itemId;
   const level = historyItems[historyItems.length - 1].level;
- 
-  console.log(historyItems)
 
   const getCatergoryItems = useCallback(async () => {
     const response = await getAllCatergoryItems(categoryId, level, 2);
     setCategoryItems(response);
-  }, [categoryId, level])
-
+  }, [categoryId, level]);
 
   useEffect(() => {
     if (categoryId) {
@@ -35,26 +31,29 @@ const ItemsPage = (props) => {
     };
   }, [categoryId, getCatergoryItems]);
 
-  const navigate = useCallback((isParent,item) => {
+  const navigate = useCallback(
+    (isParent, item) => {
       let allItems = [
-          ...historyItems,
-          {
-            categoryId: item.categoryId,
-            itemId: item.itemId,
-            name: item.categoryName,
-            level: item.nextLevel
-          }
+        ...historyItems,
+        {
+          categoryId: item.categoryId,
+          itemId: item.itemId,
+          name: item.categoryName,
+          level: item.nextLevel,
+        },
       ];
-      if (isParent === true){
-        history.push(ITEMS,{
-          items: allItems
-        })
-      }else if (isParent === false){
-          history.push(ADDTOCART,{
-            items: allItems
-          })
+      if (isParent === true) {
+        history.push(ITEMS, {
+          items: allItems,
+        });
+      } else if (isParent === false) {
+        history.push(ADDTOCART, {
+          items: allItems,
+        });
       }
-  },[historyItems,categoryId,history])
+    },
+    [historyItems, history]
+  );
 
   return <Items items={catergoryItems} navigate={navigate} />;
 };

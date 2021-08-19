@@ -141,10 +141,17 @@ const AddToCart = (props) => {
                               <Link
                                 color="inherit"
                                 key={item.itemId}
+                                // onClick={breadcrumbNavigation.bind(
+                                //   null,
+                                //   item.itemId,
+                                //   item.name
+                                // )}
+
                                 onClick={breadcrumbNavigation.bind(
                                   null,
-                                  item.itemId,
-                                  item.name
+                                  item.categoryId,
+                                  item.name,
+                                  item.level
                                 )}
                               >
                                 {item.name}
