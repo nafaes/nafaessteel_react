@@ -1,9 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import RoomIcon from "@material-ui/icons/Room";
@@ -14,6 +10,7 @@ import { withRouter } from "react-router-dom";
 import { Divider } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
+import Categories from "./Categories";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
 
@@ -28,87 +25,33 @@ const Landing = (props) => {
   const englishMobileStyles = landingMobEng();
   let classesExternal = landingEngDesk;
   let classes = englishMobileStyles;
-
   const largeScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
-
-  let contactUs = useRef(null);
-
-  console.log("Rendering Landing Child Component");
+  const contactUs = useRef(null);
 
   useEffect(() => {
     let timeOut;
-    if (state?.message) {
+    if (state?.message === "from contactus") {
       contactUs.current.scrollIntoView({
         behavior: "smooth",
+        block: "start",
+        inline: "end",
       });
       timeOut = setTimeout(() => {
         history.push("/");
       }, 1000);
     }
 
-    console.log("After Rendering Landing Child Component");
-
     return () => {
       clearTimeout(timeOut);
     };
-  }, [history, state]);
+  });
 
   return (
     <Grid container direction="column">
-      <Grid
-        item
-        container
-        direction="row"
-        style={{ marginTop: "3em" }}
-        justifyContent="center"
-        spacing={2}
-      >
-        {allCategories.map((category, index) => (
-          <Grid
-            item
-            key={category.categoryId}
-            style={{ textDecoration: "none" }}
-          >
-            <Card
-              raised
-              elevation={12}
-              className={clsx(classes.root, classesExternal.animateCard)}
-              onClick={navigateToItems.bind(
-                null,
-                category.isParent,
-                category.categoryId,
-                category.categoryName,
-                category.nextLevel
-              )}
-            >
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  alt="Contemplative Reptile"
-                  height="250"
-                  image={
-                    require(`../../assets/img/${category.picturePath}`).default
-                  }
-                  title={category.categoryName}
-                />
-                <Divider />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {category.categoryName}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    Description
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <Categories
+        allCategories={allCategories}
+        navigateToItems={navigateToItems}
+      />
 
       <div ref={contactUs}>
         <Grid

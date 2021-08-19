@@ -25,11 +25,7 @@ const LandingPage = (props) => {
 
   useEffect(() => {
     getCategories();
-
-    console.log("After Rendering Landing Parent Component");
   }, [getCategories]);
-
-  console.log("Rendering Landing Parent Component");
 
   const navigateToItems = useCallback(
     (isParent, categoryId, categoryName, nextLevel) => {
