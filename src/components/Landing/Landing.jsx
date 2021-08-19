@@ -26,13 +26,15 @@ const Landing = (props) => {
   let classesExternal = landingEngDesk;
   let classes = englishMobileStyles;
   const largeScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
-  let contactUs = useRef(null);
+  const contactUs = useRef(null);
 
   useEffect(() => {
     let timeOut;
-    if (state?.message) {
+    if (state?.message === "from contactus") {
       contactUs.current.scrollIntoView({
         behavior: "smooth",
+        block: "start",
+        inline: "end",
       });
 
       timeOut = setTimeout(() => {
@@ -43,7 +45,7 @@ const Landing = (props) => {
     return () => {
       clearTimeout(timeOut);
     };
-  }, [history, state]);
+  });
 
   return (
     <Grid container direction="column">
@@ -51,6 +53,7 @@ const Landing = (props) => {
         allCategories={allCategories}
         navigateToItems={navigateToItems}
       />
+
       <div ref={contactUs}>
         <Grid
           container

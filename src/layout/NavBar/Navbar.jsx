@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
@@ -12,18 +12,26 @@ import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Tooltip from "@material-ui/core/Tooltip";
 import clsx from "clsx";
-import { Button, IconButton, MenuItem, Popper , Grow, Paper,ClickAwayListener,MenuList } from "@material-ui/core";
+import {
+  Button,
+  IconButton,
+  MenuItem,
+  Popper,
+  Grow,
+  Paper,
+  ClickAwayListener,
+  MenuList,
+} from "@material-ui/core";
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
 
-import { CART, ORDERS} from '../../constants/routes';
-import { SIGNIN } from '../../constants/routes';
+import { CART, ORDERS } from "../../constants/routes";
+import { SIGNIN } from "../../constants/routes";
 import navbarEngDesk from "../../assets/scss/navbar.module.scss";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import { allCategoryItems } from "../../constants/data";
 import Menus from "./Menus";
 import SideDrawer from "./SideDrawer";
 import logo from "../../assets/img/Logo.png";
-import { useCallback } from "react";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -58,11 +66,11 @@ const Navbar = (props) => {
 
   let history = useHistory();
 
-  const goToContactUs = () => {
+  const goToContactUs = useCallback(() => {
     history.push("/", {
-      message: "go to Contactus",
+      message: "from contactus",
     });
-  };
+  }, [history]);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -174,9 +182,7 @@ const Navbar = (props) => {
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
           component={Button}
-          onClick={() => {
-            goToContactUs();
-          }}
+          onClick={goToContactUs.bind(null)}
           label="Contact Us"
         ></Tab>
       </Tabs>
