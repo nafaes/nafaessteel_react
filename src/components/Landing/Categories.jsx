@@ -50,13 +50,7 @@ const Categories = (props) => {
               raised
               elevation={12}
               className={clsx(classes.root, classesExternal.animateCard)}
-              onClick={navigateToItems.bind(
-                null,
-                category.isParent,
-                category.categoryId,
-                category.categoryName,
-                category.nextLevel
-              )}
+              onClick={navigateToItems.bind(null, category)}
             >
               <CardActionArea>
                 <CardMedia

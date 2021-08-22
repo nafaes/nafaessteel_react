@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import Items from "../components/Items/Items";
-import { ADDTOCART, ITEMS } from "../constants/routes";
+import useHistoryNavigation from "../hooks/useHistoryNavigation";
 import { getAllCatergoryItems } from "../services/categories";
 
 const ItemsPage = (props) => {
   const [catergoryItems, setCategoryItems] = useState([]);
+  const navigate = useHistoryNavigation();
 
   const {
-    history,
     location: {
       state: { items: historyItems },
     },
@@ -30,30 +30,6 @@ const ItemsPage = (props) => {
       setCategoryItems(null);
     };
   }, [categoryId, getCatergoryItems]);
-
-  const navigate = useCallback(
-    (isParent, item) => {
-      let allItems = [
-        ...historyItems,
-        {
-          categoryId: item.categoryId,
-          itemId: item.itemId,
-          name: item.categoryName,
-          level: item.nextLevel,
-        },
-      ];
-      if (isParent === true) {
-        history.push(ITEMS, {
-          items: allItems,
-        });
-      } else if (isParent === false) {
-        history.push(ADDTOCART, {
-          items: allItems,
-        });
-      }
-    },
-    [historyItems, history]
-  );
 
   return <Items items={catergoryItems} navigate={navigate} />;
 };

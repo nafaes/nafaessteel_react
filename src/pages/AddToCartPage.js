@@ -17,7 +17,6 @@ const addToCartInitialState = {
 };
 
 const AddToCartPage = (props) => {
-  const [categoryName] = useState();
   const [item, setItem] = useState();
   const [addToCartForm, setAddToCartForm] = useState(addToCartInitialState);
   const [itemSummary, setItemSummary] = useState();
@@ -87,7 +86,6 @@ const AddToCartPage = (props) => {
         ...historyItems.slice(0, currentCategoryIndex),
         {
           categoryId: categoryId,
-          itemId: "",
           name: name,
           level: level,
         },
@@ -121,7 +119,6 @@ const AddToCartPage = (props) => {
 
   return (
     <AddToCart
-      categoryName={categoryName}
       item={item}
       addToCartForm={addToCartForm}
       formChangeHandler={formChangeHandler}
