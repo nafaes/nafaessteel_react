@@ -48,7 +48,7 @@ const ProductSummary = (props) => {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell>{itemSummary.itemName}</TableCell>
+              <TableCell>{itemSummary.categoryName}</TableCell>
               <TableCell align="right">{itemSummary.quantity}</TableCell>
               <TableCell align="right">
                 {ccyFormat(itemSummary.price)}

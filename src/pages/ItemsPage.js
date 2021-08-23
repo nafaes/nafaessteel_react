@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import Items from "../components/Items/Items";
 import useHistoryNavigation from "../hooks/useHistoryNavigation";
@@ -8,14 +8,17 @@ const ItemsPage = (props) => {
   const [catergoryItems, setCategoryItems] = useState([]);
   const navigate = useHistoryNavigation();
 
-  const {
-    location: {
-      state: { items: historyItems },
-    },
-  } = props;
+  const { location } = props;
+  const { categoryId, level } = useMemo(() => {
+    const historyItems = location.state?.items;
+    const categoryId = historyItems[historyItems?.length - 1].categoryId;
+    const level = historyItems[historyItems?.length - 1].level;
 
-  const categoryId = historyItems[historyItems.length - 1].categoryId;
-  const level = historyItems[historyItems.length - 1].level;
+    return {
+      categoryId,
+      level,
+    };
+  }, [location.state]);
 
   const getCatergoryItems = useCallback(async () => {
     const response = await getAllCatergoryItems(categoryId, level, 2);

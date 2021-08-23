@@ -7,7 +7,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { Typography } from "@material-ui/core";
+import { FormHelperText, Typography } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
 import { isInputNumber } from "../../utils/validations";
@@ -38,12 +38,11 @@ const AddToCartForm = (props) => {
               style={{ width: "100%", marginBottom: "2em" }}
               key={index}
             >
-              <InputLabel id="select-type" style={{ color: "#fff" }}>
+              <InputLabel id="dynamic-select" style={{ color: "#fff" }}>
                 {select.name}
               </InputLabel>
               <Select
-                labelId="select-type"
-                id="select-type-select-outlined"
+                id="dynamic-select"
                 name={select.name}
                 value={
                   addToCartForm?.[select.name]?.["value"]
@@ -53,7 +52,7 @@ const AddToCartForm = (props) => {
                 onChange={({ target }) => {
                   formChangeHandler({
                     target,
-                    ...select.types.find(({ id }) => id === target.value),
+                    // ...select.types.find(({ id }) => id === target.value),
                   });
                 }}
                 label={select.name}
@@ -62,7 +61,7 @@ const AddToCartForm = (props) => {
                   classes.selectComponentCls,
                   classesExternal.selectComponentCls
                 )}
-                MenuProps={{ disableScrollLock: false }}
+                MenuProps={{ disableScrollLock: true }}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -73,6 +72,13 @@ const AddToCartForm = (props) => {
                   </MenuItem>
                 ))}
               </Select>
+
+              {!addToCartForm[select.name]?.valid &&
+              addToCartForm[select.name]?.touched ? (
+                <FormHelperText id="dynamic-select">
+                  {addToCartForm[select.name].validationMsg}
+                </FormHelperText>
+              ) : null}
             </FormControl>
           ))}
 
@@ -80,6 +86,14 @@ const AddToCartForm = (props) => {
           <Grid item xs={12} style={{ marginBottom: 16 }}>
             <Typography component="h1" variant="subtitle1">
               Price: {addToCartForm.price}
+            </Typography>
+          </Grid>
+        )}
+
+        {addToCartForm.unit && (
+          <Grid item xs={12} style={{ marginBottom: 16 }}>
+            <Typography component="h1" variant="subtitle1">
+              Unit: {addToCartForm.unit}
             </Typography>
           </Grid>
         )}

@@ -12,6 +12,7 @@ const addToCartInitialState = {
     valid: false,
     touched: false,
   },
+  unit: "",
   price: "",
   formIsValid: false,
 };
@@ -36,6 +37,28 @@ const AddToCartPage = (props) => {
   const getItemDetails = useCallback(async () => {
     const response = await getCatergoryItemDetails(2, historyItem.categoryId);
     setItem(response);
+    let form = {};
+
+    if (response?.selections) {
+      response.selections.forEach((dropDown) => {
+        const formDropDown = {
+          name: dropDown.name,
+          value: "",
+          validationMsg: `Select ${dropDown.name}`,
+          valid: false,
+          touched: false,
+        };
+
+        form[dropDown.name] = formDropDown;
+      });
+    }
+
+    setAddToCartForm((addToCartForm) => {
+      return {
+        ...addToCartForm,
+        ...form,
+      };
+    });
   }, [historyItem]);
 
   useEffect(() => {
@@ -48,33 +71,58 @@ const AddToCartPage = (props) => {
   }, [historyItem, getItemDetails]);
 
   const formChangeHandler = useCallback(
-    ({ target: { name, value }, ...values }) => {
-      let price;
-      let formIsValid = true;
-      if (values.hasOwnProperty("price")) {
-        price = values.price;
+    ({ target: { name, value } }) => {
+      let valid;
+      let price = addToCartForm.price ? addToCartForm.price : "";
+      let unit = addToCartForm.unit ? addToCartForm.unit : "";
+
+      if (value) {
+        valid = true;
       } else {
-        price = "";
+        valid = false;
       }
-      // else if (name === "type" && values.hasOwnProperty("price") === false) {
-      //   price = "";
-      // } else if (values.hasOwnProperty("price") === false) {
-      //   price = addToCartForm.price ? addToCartForm.price : "";
-      // }
-      setAddToCartForm({
+
+      if (name !== "quantity") {
+        const selectedDropdown = item.selections.find(
+          ({ name: selectName }) => selectName === name
+        );
+        const selectedItem = selectedDropdown?.types.find(
+          ({ itemId }) => itemId === value
+        );
+
+        if (selectedItem && selectedItem.hasOwnProperty("price")) {
+          unit = selectedDropdown.unit;
+          price = selectedItem.price;
+        }
+      }
+
+      const updatedAddToCartForm = {
         ...addToCartForm,
         [name]: {
           ...addToCartForm?.[name],
           name,
           value,
-          valid: true,
+          valid: valid,
           touched: true,
         },
         price,
-        formIsValid,
+        unit,
+      };
+
+      let formIsValid = true;
+      for (let inputIdentifier in updatedAddToCartForm) {
+        if (typeof updatedAddToCartForm[inputIdentifier] === "object") {
+          formIsValid =
+            updatedAddToCartForm[inputIdentifier].valid && formIsValid;
+        }
+      }
+
+      setAddToCartForm({
+        ...updatedAddToCartForm,
+        formIsValid: formIsValid,
       });
     },
-    [addToCartForm]
+    [addToCartForm, item?.selections]
   );
 
   const breadcrumbNavigation = useCallback(
@@ -99,18 +147,25 @@ const AddToCartPage = (props) => {
   );
 
   const addToCartHandler = useCallback(() => {
-    if (!addToCartForm.formIsValid) {
-      const updatedForm = {
-        ...addToCartForm,
-        quantity: { ...addToCartForm.quantity, touched: true },
-      };
-      setAddToCartForm(updatedForm);
+    if (addToCartForm.formIsValid === false) {
+      let updatedForm = {};
+      for (let inputIdentifier in addToCartForm) {
+        if (typeof addToCartForm[inputIdentifier] === "object") {
+          updatedForm[inputIdentifier] = {
+            ...addToCartForm[inputIdentifier],
+            touched: true,
+          };
+        }
+      }
+      setAddToCartForm((addToCartForm) => {
+        return { ...addToCartForm, ...updatedForm };
+      });
     } else {
       setItemSummary({
-        itemId: historyItem.categoryId,
-        itemName: historyItem.name,
+        categoryId: historyItem.categoryId,
+        categoryName: historyItem.name,
         quantity: addToCartForm.quantity.value,
-        price: 566.0,
+        price: addToCartForm.price,
       });
 
       setAddToCartForm(addToCartInitialState);
