@@ -26,42 +26,30 @@ const AddToCart = (props) => {
 
   return (
     <Fragment>
-      <div
-        className={clsx(classes.ContainerForm, classesExternal.ContainerForm)}
-      >
+      <div className={clsx(classes.ContainerForm, classesExternal.ContainerForm)}>
         <Grid container justifyContent="center">
-          <Grid item lg={12} md={12} sm={12} xs={12}>
-            <Grid item container>
-              <Grid
-                item
-                lg={5}
-                md={5}
-                sm={5}
-                xs={12}
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <img
-                  alt=""
-                  src={brickImg}
-                  style={{ width: "100%", borderRadius: ".75em" }}
-                />
-              </Grid>
+            <Grid item lg={12} md={12} sm={12} xs={12}>
+                <Grid item container>
+                  <Grid item lg={5} md={5} sm={5} xs={12}
+                    style={{ display: "flex", alignItems: "center" }} >
+                    <img alt="" src={brickImg}
+                      style={{ width: "100%", borderRadius: ".75em" }}/>
+                  </Grid>
 
-              <Grid item lg={7} md={7} sm={7} xs={12}>
-                <BreadcrumbsNavigation
-                  historyItems={historyItems}
-                  breadcrumbNavigation={breadcrumbNavigation}
-                />
-
-                <AddToCartForm
-                  item={item}
-                  addToCartForm={addToCartForm}
-                  formChangeHandler={formChangeHandler}
-                  addToCartHandler={addToCartHandler}
-                />
-              </Grid>
+                  <Grid item lg={7} md={7} sm={7} xs={12}>
+                    <BreadcrumbsNavigation
+                      historyItems={historyItems}
+                      breadcrumbNavigation={breadcrumbNavigation} />
+                   
+                      <AddToCartForm
+                      item={item}
+                      addToCartForm={addToCartForm}
+                      formChangeHandler={formChangeHandler}
+                      addToCartHandler={addToCartHandler}
+                    />
+                  </Grid>
+                </Grid>
             </Grid>
-          </Grid>
         </Grid>
 
         {itemSummary ? <ProductSummary itemSummary={itemSummary} /> : null}

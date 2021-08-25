@@ -22,45 +22,34 @@ const AddToCartForm = (props) => {
   let classes = englishMobileStyles;
 
   return (
-    <Grid
-      item
-      container
-      direction="row"
-      justifyContent="center"
-      style={{ color: "#fff", marginTop: "1em" }}
-    >
+    <Grid item container direction="row" justifyContent="center"
+      style={{ color: "#fff", marginTop: "1em" }}>
       <Grid item lg={8} md={8} xs={10}>
         {item?.selections &&
           item.selections.map((select, index) => (
             <FormControl
               variant="outlined"
               autoComplete="off"
-              style={{ width: "100%", marginBottom: "2em" }}
+              style={{ width: "100%", marginBottom: "1em" }}
               key={index}
             >
               <InputLabel id="dynamic-select" style={{ color: "#fff" }}>
                 {select.name}
               </InputLabel>
-              <Select
-                id="dynamic-select"
-                name={select.name}
-                value={
-                  addToCartForm?.[select.name]?.["value"]
-                    ? addToCartForm[select.name]["value"]
-                    : ""
-                }
-                onChange={({ target }) => {
-                  formChangeHandler({
-                    target,
-                    // ...select.types.find(({ id }) => id === target.value),
-                  });
-                }}
-                label={select.name}
+              <Select id="dynamic-select" 
                 style={{ color: "#fff" }}
                 className={clsx(
                   classes.selectComponentCls,
                   classesExternal.selectComponentCls
                 )}
+                name={select.name}                
+                value={addToCartForm?.[select.name]?.["value"]  ? addToCartForm[select.name]["value"]  : ""  }
+                label={select.name}
+                onChange={({ target }) => {
+                  formChangeHandler({
+                    target,
+                  });
+                }}
                 MenuProps={{ disableScrollLock: true }}
               >
                 <MenuItem value="">
@@ -74,7 +63,7 @@ const AddToCartForm = (props) => {
               </Select>
 
               {!addToCartForm[select.name]?.valid &&
-              addToCartForm[select.name]?.touched ? (
+                addToCartForm[select.name]?.touched ? (
                 <FormHelperText id="dynamic-select">
                   {addToCartForm[select.name].validationMsg}
                 </FormHelperText>
@@ -82,27 +71,28 @@ const AddToCartForm = (props) => {
             </FormControl>
           ))}
 
-        {addToCartForm.price && (
-          <Grid item xs={12} style={{ marginBottom: 16 }}>
-            <Typography component="h1" variant="subtitle1">
-              Price: {addToCartForm.price}
-            </Typography>
-          </Grid>
-        )}
+          <Grid container item xs={12}  style={{ marginBottom: 16 }}>
+              {addToCartForm.price && 
+               (<Grid item xs={6}>
+                  <Typography component="h1" variant="subtitle1">
+                    Price: {addToCartForm.price}
+                  </Typography>
+               </Grid>)}
 
-        {addToCartForm.unit && (
-          <Grid item xs={12} style={{ marginBottom: 16 }}>
-            <Typography component="h1" variant="subtitle1">
-              Unit: {addToCartForm.unit}
-            </Typography>
+               {addToCartForm.unit && (
+                <Grid item xs={6}>
+                  <Typography component="h1" variant="subtitle1">
+                    Unit: {addToCartForm.unit}
+                  </Typography>
+                </Grid>
+                )}
           </Grid>
-        )}
-
         <TextField
           id="outlined-basic"
           label="Enter Quantity"
           name="quantity"
           value={addToCartForm.quantity.value}
+          
           onChange={formChangeHandler}
           variant="outlined"
           className={clsx(
@@ -113,10 +103,6 @@ const AddToCartForm = (props) => {
           onKeyPress={(event) => {
             isInputNumber(event, 2);
           }}
-          // error={
-          //   !addToCartForm.quantity.valid &&
-          //   addToCartForm.quantity.touched
-          // }
           helperText={
             !addToCartForm.quantity.valid && addToCartForm.quantity.touched
               ? addToCartForm.quantity.validationMsg
@@ -124,6 +110,7 @@ const AddToCartForm = (props) => {
           }
           style={{ width: "100%", marginBottom: "2em" }}
         />
+        
 
         <Grid
           item

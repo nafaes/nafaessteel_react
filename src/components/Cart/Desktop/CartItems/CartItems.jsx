@@ -161,10 +161,6 @@ const DesktopCartItems = () => {
 
   const [age, setAge] = React.useState("");
 
-  // const handleChange = (event) => {
-  //   setAge(event.target.value);
-  // };
-
   return (
     <Grid item xs={12} sm={12} md={8} lg={8}>
       <Paper className={classes.paper}>

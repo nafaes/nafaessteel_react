@@ -29,16 +29,17 @@ const AddToCartPage = (props) => {
     },
   } = props;
 
-  const historyItem = useMemo(
-    () => historyItems[historyItems.length - 1],
-    [historyItems]
-  );
+  const historyItem =
+    useMemo(() => {
+      return historyItems[historyItems.length - 1]
+    }, [historyItems]
+    );
 
   const getItemDetails = useCallback(async () => {
     const response = await getCatergoryItemDetails(2, historyItem.categoryId);
     setItem(response);
-    let form = {};
 
+    let form = {};
     if (response?.selections) {
       response.selections.forEach((dropDown) => {
         const formDropDown = {
@@ -48,11 +49,10 @@ const AddToCartPage = (props) => {
           valid: false,
           touched: false,
         };
-
         form[dropDown.name] = formDropDown;
+        console.log(form[dropDown.name])
       });
     }
-
     setAddToCartForm((addToCartForm) => {
       return {
         ...addToCartForm,
@@ -72,6 +72,7 @@ const AddToCartPage = (props) => {
 
   const formChangeHandler = useCallback(
     ({ target: { name, value } }) => {
+      
       let valid;
       let price = addToCartForm.price ? addToCartForm.price : "";
       let unit = addToCartForm.unit ? addToCartForm.unit : "";
@@ -82,15 +83,22 @@ const AddToCartPage = (props) => {
         valid = false;
       }
 
+      console.log(name)
+
       if (name !== "quantity") {
         const selectedDropdown = item.selections.find(
-          ({ name: selectName }) => selectName === name
+          ({ name: selectName }) => selectName === name,
+         
         );
+        console.log(name)
+        console.log(selectedDropdown)
+
         const selectedItem = selectedDropdown?.types.find(
           ({ itemId }) => itemId === value
         );
-
-        if (selectedItem && selectedItem.hasOwnProperty("price")) {
+         
+        console.log(selectedItem)
+        if (selectedItem.hasOwnProperty("price")) {
           unit = selectedDropdown.unit;
           price = selectedItem.price;
         }
@@ -112,11 +120,9 @@ const AddToCartPage = (props) => {
       let formIsValid = true;
       for (let inputIdentifier in updatedAddToCartForm) {
         if (typeof updatedAddToCartForm[inputIdentifier] === "object") {
-          formIsValid =
-            updatedAddToCartForm[inputIdentifier].valid && formIsValid;
+          formIsValid = updatedAddToCartForm[inputIdentifier].valid && formIsValid; 
         }
       }
-
       setAddToCartForm({
         ...updatedAddToCartForm,
         formIsValid: formIsValid,
@@ -130,6 +136,9 @@ const AddToCartPage = (props) => {
       const currentCategoryIndex = historyItems.findIndex(
         ({ categoryId: id }) => id === categoryId
       );
+      console.log(historyItems)
+      console.log(currentCategoryIndex)
+
       let allItems = [
         ...historyItems.slice(0, currentCategoryIndex),
         {
@@ -138,7 +147,6 @@ const AddToCartPage = (props) => {
           level: level,
         },
       ];
-
       history.push(ITEMS, {
         items: allItems,
       });

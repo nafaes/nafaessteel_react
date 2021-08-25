@@ -37,8 +37,7 @@ const ProductSummary = (props) => {
             className={clsx(
               classes.addCartTabHdrRow,
               classesExternal.addCartTabHdrRow
-            )}
-          >
+            )} >
             <TableRow>
               <TableCell>Item</TableCell>
               <TableCell align="right">Quantity</TableCell>
