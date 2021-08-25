@@ -8,70 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 
-const cartItems = [
-  {
-    itemId: "item1",
-    itemName: "Kuwaiti Steel",
-    quantity: "8 mm",
-    image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
-    cost: "247.000 KWD Per Ton.",
-    amount: 494.0,
-  },
-  {
-    itemId: "item2",
-    itemName: "Kuwaiti Steel",
-    quantity: "25 mm",
-    image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
-    cost: "240.000 KWD Per Ton.",
-    amount: 988.0,
-  },
-  {
-    itemId: "item3",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71XO3ndJMGS._AC_UL320_.jpg",
-    cost: "299.000 KWD Per 10 Pieces.",
-    amount: 299.0,
-  },
-  {
-    itemId: "item5",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71i+z+eHk1S._AC_UL320_.jpg",
-    cost: "250.000 KWD Per 10 Pieces.",
-    amount: 250.0,
-  },
-
-  {
-    itemId: "item6",
-    itemName: "Kuwaiti Steel",
-    quantity: "8 mm",
-    image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
-    cost: "247.000 KWD Per Ton.",
-    amount: 494.0,
-  },
-  {
-    itemId: "item7",
-    itemName: "Kuwaiti Steel",
-    quantity: "25 mm",
-    image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
-    cost: "240.000 KWD Per Ton.",
-    amount: 988.0,
-  },
-  {
-    itemId: "item8",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71XO3ndJMGS._AC_UL320_.jpg",
-    cost: "299.000 KWD Per 10 Pieces.",
-    amount: 299.0,
-  },
-  {
-    itemId: "item4",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71i+z+eHk1S._AC_UL320_.jpg",
-    cost: "250.000 KWD Per 10 Pieces.",
-    amount: 250.0,
-  },
-];
-
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "sticky",
@@ -87,12 +23,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CartSummary = () => {
+const CartSummary = ({ totalCartItems, totalCartAmount }) => {
   const classes = useStyles();
-
-  const cartTotal = cartItems.reduce((total, { amount }) => {
-    return total + amount;
-  }, 0);
 
   return (
     <Grid item xs={12} sm={12} md={4} lg={4}>
@@ -118,7 +50,7 @@ const CartSummary = () => {
                   fontWeight: "bold",
                 }}
               >
-                {cartItems.length}
+                {totalCartItems}
               </Typography>
             </Grid>
             <Grid item md={6} lg={6}>
@@ -135,7 +67,8 @@ const CartSummary = () => {
                   fontWeight: "bold",
                 }}
               >
-                {`KWD ${cartTotal.toFixed(3)}`}
+                {`KWD ${(totalCartAmount).toLocaleString(undefined, { minimumFractionDigits: 3 })}`}
+                {/* {`KWD ${totalCartAmount.toFixed(3)}`} */}
               </Typography>
             </Grid>
           </Grid>

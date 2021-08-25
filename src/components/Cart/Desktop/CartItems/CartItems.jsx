@@ -2,80 +2,15 @@ import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
-  MenuItem,
   Paper,
   Typography,
-  TextField,
+  ButtonGroup,
+  Button,
 } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
-const cartItems = [
-  {
-    itemId: "item1",
-    itemName: "Kuwaiti Steel",
-    quantity: 8,
-    image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
-    cost: "247.000 KWD Per Ton.",
-    amount: 494.0,
-  },
-  {
-    itemId: "item2",
-    itemName: "Kuwaiti Steel",
-    quantity: 10,
-    image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
-    cost: "240.000 KWD Per Ton.",
-    amount: 988.0,
-  },
-  {
-    itemId: "item3",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71XO3ndJMGS._AC_UL320_.jpg",
-    cost: "299.000 KWD Per 10 Pieces.",
-    quantity: 12,
-    amount: 299.0,
-  },
-  {
-    itemId: "item5",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71i+z+eHk1S._AC_UL320_.jpg",
-    cost: "250.000 KWD Per 10 Pieces.",
-    quantity: 12,
-    amount: 250.0,
-  },
-
-  {
-    itemId: "item6",
-    itemName: "Kuwaiti Steel",
-    image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
-    cost: "247.000 KWD Per Ton.",
-    quantity: 12,
-    amount: 494.0,
-  },
-  {
-    itemId: "item7",
-    itemName: "Kuwaiti Steel",
-    image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
-    cost: "240.000 KWD Per Ton.",
-    quantity: 12,
-    amount: 988.0,
-  },
-  {
-    itemId: "item8",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71XO3ndJMGS._AC_UL320_.jpg",
-    cost: "299.000 KWD Per 10 Pieces.",
-    quantity: 12,
-    amount: 299.0,
-  },
-  {
-    itemId: "item4",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71i+z+eHk1S._AC_UL320_.jpg",
-    cost: "250.000 KWD Per 10 Pieces.",
-    quantity: 12,
-    amount: 250.0,
-  },
-];
+import { addItem, removeItem } from "../../../../context/actions/cartActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -105,65 +40,12 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     maxHeight: "100%",
   },
-
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-
-  quantitySelect: {
-    ".MuiSelect-outlined": {
-      color: "#fff",
-    },
-  },
-
-  root: {
-    width: 200,
-    "& .MuiOutlinedInput-input": {
-      color: "green",
-    },
-    "& .MuiInputLabel-root": {
-      color: "green",
-    },
-    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "green",
-    },
-    "&:hover .MuiOutlinedInput-input": {
-      // color: "red",
-      color: theme.palette.primary.main,
-    },
-    "&:hover .MuiInputLabel-root": {
-      // color: "red",
-      color: theme.palette.primary.main,
-    },
-    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      // borderColor: "red",
-      borderColor: theme.palette.primary.main,
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-      color: "purple",
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "purple",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "purple",
-    },
-  },
 }));
 
-const DesktopCartItems = () => {
+const DesktopCartItems = (props) => {
+  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } =
+    props;
   const classes = useStyles();
-
-  const cartTotal = cartItems.reduce((total, { amount }) => {
-    return total + amount;
-  }, 0);
-
-  const [age, setAge] = React.useState("");
-
-  // const handleChange = (event) => {
-  //   setAge(event.target.value);
-  // };
 
   return (
     <Grid item xs={12} sm={12} md={8} lg={8}>
@@ -191,7 +73,7 @@ const DesktopCartItems = () => {
 
         <Divider variant="fullWidth" />
 
-        {cartItems.map((item) => (
+        {cartItems.map((item, index) => (
           <Fragment key={item.itemId}>
             <Grid
               container
@@ -199,7 +81,13 @@ const DesktopCartItems = () => {
               className={classes.itemContainer}
             >
               <Grid item xs={4} sm={4} md={3} lg={4} className={classes.image}>
-                <img className={classes.img} alt="complex" src={item.image} />
+                <img
+                  className={classes.img}
+                  alt={item.itemName}
+                  src={
+                    require(`../../../../assets/img/${item.itemImage}`).default
+                  }
+                />
               </Grid>
               <Grid item xs={8} sm={8} md={8} lg={8} container>
                 <Grid item xs container direction="column" spacing={2}>
@@ -207,37 +95,52 @@ const DesktopCartItems = () => {
                     <Typography gutterBottom variant="subtitle1">
                       {item.itemName}
                     </Typography>
-                    <Typography
-                      gutterBottom
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      {item.cost}
-                    </Typography>
+                    {item.selectedValues.map(({ name, item }, index) => (
+                      <Fragment key={index}>
+                        <Typography
+                          gutterBottom
+                          variant="subtitle2"
+                          color="textSecondary"
+                        >
+                          {item}
+                        </Typography>
+                      </Fragment>
+                    ))}
 
-                    <TextField
-                      className={classes.root}
-                      value={age}
-                      onChange={(e) => setAge(e.target.value)}
-                      variant="outlined"
-                      label="Select Quantity"
-                      select
-                      SelectProps={{
-                        MenuProps: { disableScrollLock: true },
-                      }}
+                    <ButtonGroup
+                      variant="contained"
+                      color="primary"
+                      aria-label="contained primary button group"
                     >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </TextField>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="body2" style={{ cursor: "pointer" }}>
-                      Remove
-                    </Typography>
+                      <Button
+                        onClick={dispatchCartActions.bind(
+                          null,
+                          removeItem(item.itemId, 1)
+                        )}
+                      >
+                        -
+                      </Button>
+                      <Button>{item.quantity}</Button>
+                      <Button
+                        onClick={dispatchCartActions.bind(
+                          null,
+                          addItem(item.itemId, 1)
+                        )}
+                      >
+                        +
+                      </Button>
+                    </ButtonGroup>
+
+                    <Button
+                      onClick={dispatchCartActions.bind(
+                        null,
+                        removeItem(item.itemId, 0)
+                      )}
+                    >
+                      <DeleteForeverIcon
+                        style={{ fontSize: "2rem", color: "#d9534f" }}
+                      />
+                    </Button>
                   </Grid>
                 </Grid>
                 <Grid item>
@@ -246,7 +149,7 @@ const DesktopCartItems = () => {
                     color="textPrimary"
                     style={{ fontWeight: "bold" }}
                   >
-                    {item.amount.toFixed(3)}
+                    {item.price.toFixed(3)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -264,7 +167,7 @@ const DesktopCartItems = () => {
           }}
         >
           <Typography variant="subtitle1" gutterBottom>
-            {`Subtotal (${cartItems.length} items):`}
+            {`Subtotal (${totalCartItems} items):`}
           </Typography>
           <Typography
             variant="subtitle1"
@@ -273,7 +176,10 @@ const DesktopCartItems = () => {
               fontWeight: "bold",
             }}
           >
-            {`KWD ${cartTotal.toFixed(3)}`}
+            {`KWD ${totalCartAmount.toLocaleString(undefined, {
+              minimumFractionDigits: 3,
+            })}`}
+            {/* {`KWD ${totalCartAmount.toFixed(3)}`} */}
           </Typography>
         </Grid>
       </Paper>

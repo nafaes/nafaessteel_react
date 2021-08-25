@@ -1,71 +1,19 @@
-import React from "react";
-import { Button, Divider, Grid, Typography } from "@material-ui/core";
+import React, { Fragment } from "react";
+import {
+  Button,
+  ButtonGroup,
+  Divider,
+  Grid,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
-const cartItems = [
-  {
-    itemId: "item1",
-    itemName: "Kuwaiti Steel",
-    quantity: "8 mm",
-    image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
-    cost: "247.000 KWD Per Ton.",
-    amount: 494.0,
-  },
-  {
-    itemId: "item2",
-    itemName: "Kuwaiti Steel",
-    quantity: "25 mm",
-    image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
-    cost: "240.000 KWD Per Ton.",
-    amount: 988.0,
-  },
-  {
-    itemId: "item3",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71XO3ndJMGS._AC_UL320_.jpg",
-    cost: "299.000 KWD Per 10 Pieces.",
-    amount: 299.0,
-  },
-  {
-    itemId: "item5",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71i+z+eHk1S._AC_UL320_.jpg",
-    cost: "250.000 KWD Per 10 Pieces.",
-    amount: 250.0,
-  },
-
-  {
-    itemId: "item6",
-    itemName: "Kuwaiti Steel",
-    quantity: "8 mm",
-    image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
-    cost: "247.000 KWD Per Ton.",
-    amount: 494.0,
-  },
-  {
-    itemId: "item7",
-    itemName: "Kuwaiti Steel",
-    quantity: "25 mm",
-    image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
-    cost: "240.000 KWD Per Ton.",
-    amount: 988.0,
-  },
-  {
-    itemId: "item8",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71XO3ndJMGS._AC_UL320_.jpg",
-    cost: "299.000 KWD Per 10 Pieces.",
-    amount: 299.0,
-  },
-  {
-    itemId: "item4",
-    itemName: "BGH Wooden Sticks, Plank for Art & Craft",
-    image: "https://m.media-amazon.com/images/I/71i+z+eHk1S._AC_UL320_.jpg",
-    cost: "250.000 KWD Per 10 Pieces.",
-    amount: 250.0,
-  },
-];
+import { addItem, removeItem } from "../../../../context/actions/cartActions";
 
 const useStyles = makeStyles((theme) => ({
   headerContent: {
@@ -85,127 +33,192 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CartItems = () => {
+const CartItems = (props) => {
+  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } = props;
   const classes = useStyles();
 
-  const cartTotal = cartItems.reduce((total, { amount }) => {
-    return total + amount;
-  }, 0);
-
   return (
-    <Grid container style={{ marginTop: "2em" }}>
-      <Grid item xs={12} sm={12} className={classes.headerContent}>
-        <Typography variant="h6" gutterBottom>
-          Items in your cart
-        </Typography>
-        <Divider variant="fullWidth" />
-      </Grid>
-
-      {cartItems.map((item) => (
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          key={item.itemId}
-          style={{
-            width: "100%",
-            backgroundColor: "#fff",
-            padding: "10px 14px",
-            paddingBottom: 10,
-          }}
-        >
-          <Grid container>
-            <Grid item xs={7} sm={8}>
-              <Typography
-                variant="subtitle1"
-                noWrap={true}
-                style={{
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  width: "inherit",
-                }}
-              >
-                {item.itemName}
-              </Typography>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                noWrap={true}
-                style={{
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  width: "inherit",
-                }}
-              >
-                {item.cost}
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                noWrap={true}
-                style={{ fontWeight: "bold" }}
-              >
-                {item.amount.toFixed(3)}
-              </Typography>
-              <Typography variant="body2" style={{ cursor: "pointer" }}>
-                Remove
-              </Typography>
-            </Grid>
-
-            <Grid
-              item
-              xs={5}
-              sm={4}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img
-                //   className={classes.img}
-                width={100}
-                height={100}
-                alt={item.itemName}
-                src={item.image}
-              />
-            </Grid>
-          </Grid>
-          <Divider />
-        </Grid>
-      ))}
-
-      <Grid item container className={classes.stickyBottom} alignItems="center">
-        <Grid item xs={6} sm={4}>
-          <Typography variant="subtitle1" component="div">
-            {`Subtotal (${cartItems.length} items):`}
+    cartItems && (
+      <Grid container style={{ marginTop: "2em" }}>
+        <Grid item xs={12} sm={12} className={classes.headerContent}>
+          <Typography variant="h6" gutterBottom>
+            Items in your cart
           </Typography>
+          <Divider variant="fullWidth" />
         </Grid>
-        <Grid item xs={6} sm={4}>
-          <Typography
-            variant="subtitle1"
-            component="div"
+
+        {cartItems.map((item) => (
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            key={item.itemId}
             style={{
-              fontWeight: "bold",
+              width: "100%",
+              backgroundColor: "#fff",
+              padding: "10px 14px",
+              paddingBottom: 10,
             }}
           >
-            {`KWD ${cartTotal.toFixed(3)}`}
-          </Typography>
-        </Grid>
+            <Grid container>
+              <Grid
+                item
+                xs={5}
+                sm={4}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  width={100}
+                  height={100}
+                  alt={item.itemName}
+                  src={
+                    require(`../../../../assets/img/${item.itemImage}`).default
+                  }
+                />
+              </Grid>
 
-        <Grid item xs={12} sm={4}>
-          <Button
-            component={Link}
-            to="/checkout"
-            variant="contained"
-            color="primary"
-            style={{ marginTop: 10, margin: 10 }}
-          >
-            Place Order
-          </Button>
+              <Grid container item xs={7} sm={8}>
+                <Grid item>
+                  <Typography
+                    variant="subtitle1"
+                    noWrap={true}
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      width: "inherit",
+                    }}
+                  >
+                    {item.itemName}
+                  </Typography>
+
+                  {item.selectedValues.map(({ name, item }, index) => (
+                    <Fragment key={index}>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        noWrap={true}
+                        style={{
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          width: "inherit",
+                        }}
+                      >
+                        {item}
+                      </Typography>
+                    </Fragment>
+                  ))}
+                  <Typography
+                    variant="subtitle1"
+                    noWrap={true}
+                    style={{ fontWeight: "bold" }}
+                  >
+                    {item.price.toFixed(3)}
+                  </Typography>
+                </Grid>
+
+                <Grid
+                  container
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Grid item xs={8}>
+                    <ButtonGroup
+                      variant="contained"
+                      size="small"
+                      // color="primary"
+                      aria-label="contained primary button group"
+                    >
+                      <IconButton
+                        color="primary"
+                        size="small"
+                        onClick={dispatchCartActions.bind(
+                          null,
+                          removeItem(item.itemId, 1)
+                        )}
+                      >
+                        <RemoveIcon />
+                      </IconButton>
+                      <Button>{item.quantity}</Button>
+                      <IconButton
+                        color="primary"
+                        size="small"
+                        onClick={dispatchCartActions.bind(
+                          null,
+                          addItem(item.itemId, 1)
+                        )}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                    </ButtonGroup>
+                  </Grid>
+
+                  <Grid item xs={4}>
+                    <Button
+                      onClick={dispatchCartActions.bind(
+                        null,
+                        removeItem(item.itemId, 0)
+                      )}
+                    >
+                      <DeleteForeverIcon
+                        style={{ fontSize: "2rem", color: "#d9534f" }}
+                      />
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Divider />
+          </Grid>
+        ))}
+
+        <Grid
+          item
+          container
+          className={classes.stickyBottom}
+          alignItems="center"
+        >
+          <Grid item xs={6} sm={4}>
+            <Typography variant="subtitle1" component="div">
+              {`Subtotal (${totalCartItems} items):`}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sm={4}>
+            <Typography
+              variant="subtitle1"
+              component="div"
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              {`KWD ${totalCartAmount.toLocaleString(undefined, {
+                minimumFractionDigits: 3,
+              })}`}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <Button
+              component={Link}
+              to="/checkout"
+              variant="contained"
+              color="primary"
+              style={{ marginTop: 10, margin: 10 }}
+            >
+              Place Order
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    )
   );
 };
 

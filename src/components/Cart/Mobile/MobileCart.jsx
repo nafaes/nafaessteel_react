@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../../../context/Provider";
 import CartItems from "./CartItems/CartItems";
 
 const MobileCart = () => {
-  return <CartItems />;
+  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } = useContext(GlobalContext);
+
+  return (
+    <CartItems
+      cartItems={cartItems}
+      totalCartItems={totalCartItems}
+      totalCartAmount={totalCartAmount}
+      dispatchCartActions={dispatchCartActions}
+    />
+  );
 };
 
 export default MobileCart;

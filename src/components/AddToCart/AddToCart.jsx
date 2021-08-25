@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
 import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
-import brickImg from "../../assets/img/cement.jpg";
+// import brickImg from "../../assets/img/cement.jpg";
 import BreadcrumbsNavigation from "./BreadcrumbsNavigation";
 import AddToCartForm from "./AddToCartForm";
 import ProductSummary from "./ProductSummary";
@@ -40,11 +40,14 @@ const AddToCart = (props) => {
                 xs={12}
                 style={{ display: "flex", alignItems: "center" }}
               >
-                <img
-                  alt=""
-                  src={brickImg}
-                  style={{ width: "100%", borderRadius: ".75em" }}
-                />
+                {item?.image && (
+                  <img
+                    alt=""
+                    // src={brickImg}
+                    src={require(`../../assets/img/${item?.image}`).default}
+                    style={{ width: "100%", borderRadius: ".75em" }}
+                  />
+                )}
               </Grid>
 
               <Grid item lg={7} md={7} sm={7} xs={12}>

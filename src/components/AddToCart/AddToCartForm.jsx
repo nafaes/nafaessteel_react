@@ -52,7 +52,7 @@ const AddToCartForm = (props) => {
                 onChange={({ target }) => {
                   formChangeHandler({
                     target,
-                    // ...select.types.find(({ id }) => id === target.value),
+                    ...select.types.find(({ itemId }) => itemId === target.value),
                   });
                 }}
                 label={select.name}

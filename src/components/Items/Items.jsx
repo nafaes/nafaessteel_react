@@ -67,7 +67,7 @@ const Items = (props) => {
                 // height="200px"
                 // image={Cement}
                 // src={item.image}
-                // src={require(`../../assets/img/${item.picturePath}`).default}
+                src={require(`../../assets/img/${item.picturePath}`).default}
                 title={item.categoryName}
                 style={{ height: "13em ", width: "13em", margin: "auto" }}
                 className={clsx(classes.ironsCard, classesExternal.ironsCard)}
