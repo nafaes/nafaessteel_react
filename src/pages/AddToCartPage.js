@@ -1,7 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import AddToCart from "../components/AddToCart/AddToCart";
 import { ITEMS } from "../constants/routes";
+import { GlobalContext } from "../context/Provider";
 import { getCatergoryItemDetails } from "../services/categories";
 
 const addToCartInitialState = {
@@ -21,6 +28,8 @@ const AddToCartPage = (props) => {
   const [item, setItem] = useState();
   const [addToCartForm, setAddToCartForm] = useState(addToCartInitialState);
   const [itemSummary, setItemSummary] = useState();
+
+  const context = useContext(GlobalContext);
 
   const {
     history,
@@ -71,8 +80,10 @@ const AddToCartPage = (props) => {
   }, [historyItem, getItemDetails]);
 
   const formChangeHandler = useCallback(
-    ({ target: { name, value } }) => {
-      
+    // ({ target: { name, value } }) => {
+    ({ target: { name, value }, ...values }) => {
+      // console.log(values);
+
       let valid;
       let price = addToCartForm.price ? addToCartForm.price : "";
       let unit = addToCartForm.unit ? addToCartForm.unit : "";
@@ -83,9 +94,9 @@ const AddToCartPage = (props) => {
         valid = false;
       }
 
-      console.log(name)
+      let dropdown;
 
-      if (name !== "quantity") {
+      if (name !== "quantity" && value !== "") {
         const selectedDropdown = item.selections.find(
           ({ name: selectName }) => selectName === name,
          
@@ -96,11 +107,21 @@ const AddToCartPage = (props) => {
         const selectedItem = selectedDropdown?.types.find(
           ({ itemId }) => itemId === value
         );
-         
-        console.log(selectedItem)
-        if (selectedItem.hasOwnProperty("price")) {
+
+        dropdown = {
+          item: selectedItem.item,
+          itemId: selectedItem.itemId,
+        };
+
+        if (selectedItem && selectedItem.hasOwnProperty("price")) {
           unit = selectedDropdown.unit;
           price = selectedItem.price;
+
+          dropdown = {
+            item: selectedItem.item,
+            itemId: selectedItem.itemId,
+            price: selectedItem.price,
+          };
         }
       }
 
@@ -112,6 +133,7 @@ const AddToCartPage = (props) => {
           value,
           valid: valid,
           touched: true,
+          ...dropdown,
         },
         price,
         unit,
@@ -132,21 +154,11 @@ const AddToCartPage = (props) => {
   );
 
   const breadcrumbNavigation = useCallback(
-    (categoryId, name, level) => {
+    (categoryId) => {
       const currentCategoryIndex = historyItems.findIndex(
         ({ categoryId: id }) => id === categoryId
       );
-      console.log(historyItems)
-      console.log(currentCategoryIndex)
-
-      let allItems = [
-        ...historyItems.slice(0, currentCategoryIndex),
-        {
-          categoryId: categoryId,
-          name: name,
-          level: level,
-        },
-      ];
+      let allItems = historyItems.slice(0, currentCategoryIndex + 1);
       history.push(ITEMS, {
         items: allItems,
       });
@@ -169,16 +181,51 @@ const AddToCartPage = (props) => {
         return { ...addToCartForm, ...updatedForm };
       });
     } else {
+      let selectedValues = [];
+      let itemId;
+      for (let inputIdentifier in addToCartForm) {
+        if (
+          typeof addToCartForm[inputIdentifier] === "object" &&
+          addToCartForm[inputIdentifier].name !== "quantity"
+        ) {
+          selectedValues.push({
+            name: addToCartForm[inputIdentifier].name,
+            item: addToCartForm[inputIdentifier].item,
+            value: addToCartForm[inputIdentifier].value,
+          });
+
+          if (addToCartForm[inputIdentifier].hasOwnProperty("item")) {
+            itemId = addToCartForm[inputIdentifier].itemId;
+          }
+        }
+      }
+
+      context.dispatchCartActions({
+        type: "ADD",
+        payload: {
+          categoryId: historyItem.categoryId,
+          itemId: itemId,
+          itemName: historyItem.name,
+          itemImage: item.image,
+          selectedValues,
+          quantity: addToCartForm.quantity.value,
+          price: addToCartForm.price,
+        },
+      });
+
       setItemSummary({
-        categoryId: historyItem.categoryId,
-        categoryName: historyItem.name,
-        quantity: addToCartForm.quantity.value,
-        price: addToCartForm.price,
+        itemId: historyItem.categoryId,
       });
 
       setAddToCartForm(addToCartInitialState);
     }
-  }, [historyItem.categoryId, historyItem.name, addToCartForm]);
+  }, [
+    historyItem.categoryId,
+    historyItem.name,
+    item?.image,
+    addToCartForm,
+    context,
+  ]);
 
   return (
     <AddToCart

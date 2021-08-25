@@ -1,4 +1,10 @@
-import React, { Fragment, useState, useEffect, useCallback } from "react";
+import React, {
+  Fragment,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from "react";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
@@ -30,6 +36,7 @@ import { SIGNIN } from "../../constants/routes";
 import navbarEngDesk from "../../assets/scss/navbar.module.scss";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import { allCategoryItems } from "../../constants/data";
+import { GlobalContext } from "../../context/Provider";
 import Menus from "./Menus";
 import SideDrawer from "./SideDrawer";
 import logo from "../../assets/img/Logo.png";
@@ -49,9 +56,10 @@ function ElevationScroll(props) {
 
 const Navbar = (props) => {
   const englishMobileStyles = navbarEngMobile();
-
   let classesExternal = navbarEngDesk;
   let classes = englishMobileStyles;
+
+  const { totalCartItems } = useContext(GlobalContext);
 
   const theme = useTheme();
   const matchesXs = useMediaQuery(theme.breakpoints.down("xs"));
@@ -288,7 +296,7 @@ const Navbar = (props) => {
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  badgeContent={8}
+                  badgeContent={totalCartItems}
                   // badgeContent={0}
                   showZero={true}
                   // invisible={false}

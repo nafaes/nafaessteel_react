@@ -36,7 +36,21 @@ const AddToCartForm = (props) => {
               <InputLabel id="dynamic-select" style={{ color: "#fff" }}>
                 {select.name}
               </InputLabel>
-              <Select id="dynamic-select" 
+              <Select
+                id="dynamic-select"
+                name={select.name}
+                value={
+                  addToCartForm?.[select.name]?.["value"]
+                    ? addToCartForm[select.name]["value"]
+                    : ""
+                }
+                onChange={({ target }) => {
+                  formChangeHandler({
+                    target,
+                    ...select.types.find(({ itemId }) => itemId === target.value),
+                  });
+                }}
+                label={select.name}
                 style={{ color: "#fff" }}
                 className={clsx(
                   classes.selectComponentCls,
