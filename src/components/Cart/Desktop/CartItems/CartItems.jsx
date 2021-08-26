@@ -43,8 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DesktopCartItems = (props) => {
-  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } =
-    props;
+  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } = props;
   const classes = useStyles();
 
   return (
@@ -124,7 +123,7 @@ const DesktopCartItems = (props) => {
                       <Button
                         onClick={dispatchCartActions.bind(
                           null,
-                          addItem(item.itemId, 1)
+                          addItem({ itemId: item.itemId, quantity: 1 })
                         )}
                       >
                         +

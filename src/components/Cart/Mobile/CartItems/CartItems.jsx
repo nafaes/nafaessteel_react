@@ -153,7 +153,7 @@ const CartItems = (props) => {
                         size="small"
                         onClick={dispatchCartActions.bind(
                           null,
-                          addItem(item.itemId, 1)
+                          addItem({ itemId: item.itemId, quantity: 1 })
                         )}
                       >
                         <AddIcon />
