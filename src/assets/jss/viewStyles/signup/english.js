@@ -15,7 +15,7 @@ export const signupEngMobile = (userCheckoutStyles) => {
      ? {
          borderLeft: "none",
          borderLeftStyle: "none",
-         height: "10em",
+         height: "26em",
        }
      : signupMobCommon.signupContainForm;
  

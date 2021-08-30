@@ -12,14 +12,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: "sticky",
     top: "6.4rem",
-    // minWidth: "275"
   },
-
   title: {
     fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
   },
 }));
 
@@ -55,7 +50,6 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
             </Grid>
             <Grid item md={6} lg={6}>
               <Typography variant="subtitle1" component="div">
-                {/* {`Subtotal (${cartItems.length} items):`} */}
                 Total Price
               </Typography>
             </Grid>
@@ -68,7 +62,6 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
                 }}
               >
                 {`KWD ${(totalCartAmount).toLocaleString(undefined, { minimumFractionDigits: 3 })}`}
-                {/* {`KWD ${totalCartAmount.toFixed(3)}`} */}
               </Typography>
             </Grid>
           </Grid>
@@ -76,13 +69,13 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
 
         <CardActions>
           <Grid container>
-            <Grid item sm={11} lg={12}>
+            <Grid item md={12} lg={12} style={{ textAlign: "center" }}>
               <Button
                 component={Link}
                 to="/checkout"
                 variant="contained"
                 color="primary"
-                style={{ marginTop: 10, margin: 10 }}
+                style={{ margin: "6px 0px", }}
               >
                 Place Order
               </Button>
