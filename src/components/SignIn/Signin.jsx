@@ -19,7 +19,7 @@ import { SIGNUP } from "../../constants/routes";
 import login from "../../assets/img/Login-illustration.svg";
 
 const SignIn = (props) => {
-  const { signinForm, formChangeHandler, isDisplayImage, userCheckoutStyles } = props;
+  const { signinForm, formChangeHandler, signinHandler, isDisplayImage, userCheckoutStyles } = props;
   const englishMobileStyles = signinEngMobile(userCheckoutStyles)();
   let classesExternal = signinEngDesk;
   let classes = englishMobileStyles;
@@ -155,6 +155,7 @@ const SignIn = (props) => {
             <Grid item style={{ textAlign: "center" }}>
               <Button
                 className={classesExternal.formBtn}
+                onClick={signinHandler}
                 disabled={
                   signinForm.email.valid === false ||
                   signinForm.password.valid === false

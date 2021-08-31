@@ -61,7 +61,9 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
                   fontWeight: "bold",
                 }}
               >
-                {`KWD ${(totalCartAmount).toLocaleString(undefined, { minimumFractionDigits: 3 })}`}
+                {`KWD ${totalCartAmount.toLocaleString(undefined, {
+                  minimumFractionDigits: 3,
+                })}`}
               </Typography>
             </Grid>
           </Grid>
@@ -69,13 +71,13 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
 
         <CardActions>
           <Grid container>
-            <Grid item md={12} lg={12} style={{ textAlign: "center" }}>
+            <Grid item md={12} lg={12} style={{textAlign: "center"}}>
               <Button
                 component={Link}
                 to="/checkout"
                 variant="contained"
                 color="primary"
-                style={{ margin: "6px 0px", }}
+                style={{ margin: "6px", width: "20em" }}
               >
                 Place Order
               </Button>

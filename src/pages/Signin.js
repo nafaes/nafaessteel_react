@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 
 import SignIn from "../components/SignIn/Signin";
+import Notification from "../common/Notification/Notification";
 import { updateObject } from "../utils/updateObject";
 import { checkValidity } from "../utils/validations";
 
@@ -32,6 +33,11 @@ const signinFormInitialState = {
 
 const SigninPage = (props) => {
   const [signinForm, setSigninForm] = useState(signinFormInitialState);
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
 
   const formChangeHandler = (event) => {
     const {
@@ -52,13 +58,26 @@ const SigninPage = (props) => {
     setSigninForm(updatedForm);
   };
 
+  const signinHandler = () => {
+    setNotify({isOpen: true, message: "Login Success", type: "success"});
+  };
+
   return (
-    <SignIn
-      isDisplayImage={props?.isDisplayImage === false ? props.isDisplayImage : true}
-      userCheckoutStyles={props?.userCheckoutStyles ? props?.userCheckoutStyles : false}
-      signinForm={signinForm}
-      formChangeHandler={formChangeHandler}
-    />
+    <Fragment>
+      <SignIn
+        isDisplayImage={
+          props?.isDisplayImage === false ? props.isDisplayImage : true
+        }
+        userCheckoutStyles={
+          props?.userCheckoutStyles ? props?.userCheckoutStyles : false
+        }
+        signinForm={signinForm}
+        formChangeHandler={formChangeHandler}
+        signinHandler={signinHandler}
+      />
+
+      {notify.isOpen && <Notification notify={notify} setNotify={setNotify} />}
+    </Fragment>
   );
 };
 

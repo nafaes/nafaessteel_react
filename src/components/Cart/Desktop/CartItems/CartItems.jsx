@@ -20,12 +20,19 @@ const useStyles = makeStyles((theme) => ({
     padding: 20,
     // flexGrow: 1,
   },
-
   itemContainer: {
     paddingTop: 12,
     marginBottom: 12,
   },
-
+  itemText: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+  },
+  textContainer: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    width: "56%",
+  },
   image: {
     width: 110,
     height: 110,
@@ -89,9 +96,20 @@ const DesktopCartItems = (props) => {
                 />
               </Grid>
               <Grid item xs={8} sm={8} md={8} lg={8} container>
-                <Grid item xs container direction="column" spacing={2}>
+                <Grid
+                  item
+                  xs
+                  container
+                  direction="column"
+                  spacing={2}
+                  className={classes.itemText}
+                >
                   <Grid item>
-                    <Typography gutterBottom variant="subtitle1">
+                    <Typography
+                      gutterBottom
+                      variant="subtitle1"
+                      className={classes.textContainer}
+                    >
                       {item.itemName}
                     </Typography>
                     {item.selectedValues.map(({ name, item }, index) => (
@@ -100,6 +118,7 @@ const DesktopCartItems = (props) => {
                           gutterBottom
                           variant="subtitle2"
                           color="textSecondary"
+                          className={classes.textContainer}
                         >
                           {item}
                         </Typography>
