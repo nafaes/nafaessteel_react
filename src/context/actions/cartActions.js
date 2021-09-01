@@ -1,5 +1,5 @@
-export const addItem = (itemId, quantity) => {
-  return { type: "ADD", payload: { itemId, quantity } };
+export const addItem = (item) => {
+  return { type: "ADD", payload: item };
 };
 
 export const removeItem = (itemId, quantity) => {

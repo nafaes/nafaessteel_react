@@ -6,25 +6,18 @@ import Paper from "@material-ui/core/Paper";
 import { Button, Grid } from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
 
-import Pickup from "./Pickup";
-import Delivery from "./Delivery";
+// import Pickup from "./Pickup";
+// import Delivery from "./Delivery";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import RadioButton from "../../../common/RadioButton/RadioButton";
 
-export const Shipping = () => {
+export const Payment = () => {
   const classes = checkoutStyles();
 
-  const [shippingType, setShippingType] = useState();
-  const handleShippingType = (event, newValue) => {
-    setShippingType(newValue);
+  const [paymentType, setPaymentType] = useState();
+  const handlePaymentType = (event, newValue) => {
+    setPaymentType(newValue);
   };
-
-  let renderShippingType;
-  if (shippingType === "pickup") {
-    renderShippingType = <Pickup />;
-  } else if (shippingType === "delivery") {
-    renderShippingType = <Delivery />;
-  }
 
   return (
     <Paper
@@ -42,22 +35,22 @@ export const Shipping = () => {
           name="customized-radios"
           className={classes.radioContainer}
           fullWidth
-          onChange={handleShippingType}
+          onChange={handlePaymentType}
         >
           <FormControlLabel
-            value="pickup"
+            value="ondelivery"
             control={<RadioButton />}
-            label="Pickup"
+            label="Payment On Delivery"
+            className={classes.paymentRadioBtns}
           />
           <FormControlLabel
-            value="delivery"
+            value="knet"
             control={<RadioButton />}
-            label="Delivery"
+            label="Checkout Using KNET"
+            className={classes.paymentRadioBtns}
           />
         </RadioGroup>
       </FormControl>
-
-      {renderShippingType}
 
       <Grid container justifyContent="center">
         <Grid
@@ -67,7 +60,7 @@ export const Shipping = () => {
             borderRadius: "1em",
             width: "50%",
             padding: ".1em 0px",
-            background: "rgba(0, 134, 179, 1)",
+            background: "rgba(0, 134, 179, 0.8)",
           }}
         >
           <Button

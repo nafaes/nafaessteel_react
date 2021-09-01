@@ -51,13 +51,11 @@ const ProductSummary = (props) => {
             )} >
             <TableRow>
               <TableCell>Item</TableCell>
-
-              {/* {itemSummary.selectedValues.map((selectedValue, index) => (
+              {itemSummary.selectedValues.map((selectedValue, index) => (
                 <TableCell key={index} align="center">
                   {selectedValue.name}
                 </TableCell>
-              ))} */}
-              <TableCell align="center">Size</TableCell>
+              ))}
               <TableCell align="center">Price</TableCell>
               <TableCell align="center">Quantity</TableCell>
               <TableCell align="right">Action</TableCell>
@@ -94,7 +92,7 @@ const ProductSummary = (props) => {
                     <Button
                       onClick={dispatchCartActions.bind(
                         null,
-                        addItem(cartItem.itemId, 1)
+                        addItem({ itemId: cartItem.itemId, quantity: 1 })
                       )}
                     >
                       +

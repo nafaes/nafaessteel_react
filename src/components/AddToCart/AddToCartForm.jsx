@@ -10,13 +10,12 @@ import Select from "@material-ui/core/Select";
 import { FormHelperText, Typography } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
-import { isInputNumber } from "../../utils/validations";
+import { limitMaxlength } from "../../utils/validations";
 import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
 import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
 
 const AddToCartForm = (props) => {
   const { item, addToCartForm, formChangeHandler, addToCartHandler } = props;
-
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
@@ -47,7 +46,12 @@ const AddToCartForm = (props) => {
                 onChange={({ target }) => {
                   formChangeHandler({
                     target,
-                    ...select.types.find(({ itemId }) => itemId === target.value),
+                    // ...select.types.find(({ itemId }) => itemId === target.value),
+                    ...(addToCartForm?.[select.name]?.["value"]
+                      ? addToCartForm?.[select.name]
+                      : select.types.find(
+                          ({ itemId }) => itemId === target.value
+                        )),
                   });
                 }}
                 label={select.name}
@@ -113,9 +117,10 @@ const AddToCartForm = (props) => {
             classes.selectComponentCls,
             classesExternal.selectComponentCls
           )}
+          type="number"
           autoComplete="off"
           onKeyPress={(event) => {
-            isInputNumber(event, 2);
+            limitMaxlength(event, 2);
           }}
           helperText={
             !addToCartForm.quantity.valid && addToCartForm.quantity.touched

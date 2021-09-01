@@ -6,12 +6,11 @@ import FormControl from "@material-ui/core/FormControl";
 import Paper from "@material-ui/core/Paper";
 import { Grid } from "@material-ui/core";
 import Guest from "./Guest";
-
 import RadioButton from "../../../common/RadioButton/RadioButton";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
-import SignIn from "../../SignIn/Signin";
-import SignUp from "../../SignUp/Signup";
 import CheckoutButton from "../../../common/Button/Button";
+import SigninPage from "../../../pages/Signin";
+import SignupPage from "../../../pages/Signup";
 
 const UserCheckout = () => {
   const classes = checkoutStyles();
@@ -26,16 +25,24 @@ const UserCheckout = () => {
     renderUserType = <Guest />;
   } else if (userType === "member") {
     renderUserType = (
-      <SignIn isDisplayImage={false} userCheckoutStyles={true} />
+      <SigninPage isDisplayImage={false} userCheckoutStyles={true} />
     );
   } else if (userType === "register") {
     renderUserType = (
-      <SignUp isDisplayImage={false} userCheckoutStyles={true} />
+      <SignupPage isDisplayImage={false} userCheckoutStyles={true} />
     );
   }
 
   return (
-    <Paper>
+    <Paper
+      elevation={12}
+      style={{
+        width: "80%",
+        margin: "0px auto",
+        padding: "1em 0px 1em 0px",
+        borderRadius: "1em",
+      }}
+    >
       <FormControl component="fieldset" fullWidth>
         <RadioGroup
           defaultValue="guest"
@@ -69,7 +76,7 @@ const UserCheckout = () => {
         <Grid
           item
           className={clsx(classes.checkNextButtonGridItem)}
-          style={{ width: "50%", margin: "0px auto" }}
+          style={{ width: "40%", margin: "0px auto .5em auto" }}
         >
           <CheckoutButton />
         </Grid>

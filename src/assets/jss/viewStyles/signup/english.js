@@ -6,7 +6,7 @@ export const signupEngMobile = (userCheckoutStyles) => {
      const formContainer = userCheckoutStyles
      ? {
          width: "100%",
-         margin: "8em auto 7em auto",
+         margin: "2em auto 1em auto !important",
          justifyContent: "center",
        }
      : signupMobCommon.formContainer;
@@ -15,7 +15,7 @@ export const signupEngMobile = (userCheckoutStyles) => {
      ? {
          borderLeft: "none",
          borderLeftStyle: "none",
-         height: "10em",
+        //  height: "10em",
        }
      : signupMobCommon.signupContainForm;
  

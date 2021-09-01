@@ -6,8 +6,7 @@ export const signinEngMobile = (userCheckoutStyles) => {
   const formContainer = userCheckoutStyles
     ? {
         width: "100%",
-        // margin: "5em auto",
-        margin: "5em auto 3em auto",
+        margin: "4em auto 3em auto !important",
         justifyContent: "center",
       }
     : signinMobCommon.formContainer;

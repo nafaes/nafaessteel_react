@@ -1,9 +1,12 @@
 import { makeStyles } from "@material-ui/styles";
 
 const checkoutStyles = makeStyles((theme) => ({
+  // signupContainForm:{
+  //   height: "20em"
+  // },
   checkoutRoot: {
     flexGrow: 1,
-    width: "55%",
+    // width: "55%",
     marginTop: "2em",
     backgroundColor: theme.palette.background.paper,
   },
@@ -59,10 +62,17 @@ const checkoutStyles = makeStyles((theme) => ({
     },
   },
 
-  checkNextButtonGridItem: {
-    
-    margin: "1em auto",
+  paymentRadioBtns: {
+    background: "#0086b3",
+    color: "#fff",
+    padding: "0px .8em",
     borderRadius: "1em",
+    marginLeft: ".5em",
+  },
+
+  checkNextButtonGridItem: {
+    margin: "1em auto",
+    borderRadius: "5em",
     width: "40%",
     padding: ".1em 0px",
   },
@@ -75,16 +85,14 @@ const checkoutStyles = makeStyles((theme) => ({
     // borderRadius: "1em",
     // width: "100%",
     // padding: ".1em 0px",
-     background: "rgba(0, 134, 179, 0.8)",
-     fontSize: "0.95rem",
+    background: "rgba(0, 134, 179, 0.8)",
+    fontSize: "0.95rem",
     fontWeight: "600",
     color: "#fff",
-     "&:hover": {
+    "&:hover": {
       background: "rgba(0, 134, 179, 0.8)",
-     }
-    
-  }
-
+    },
+  },
 }));
 
 export default checkoutStyles;
