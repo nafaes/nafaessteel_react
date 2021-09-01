@@ -3,14 +3,14 @@
 .formContainer{
     @extend %userContainer;
 }
-.loginContainForm {
-    height: 26em;
-    // @extend %userContainForm;
-}
-.signupContainForm {
-    height: 28em;
-    // @extend %userContainForm;
-}
+// .loginContainForm {
+//     // height: 26em;
+//     // @extend %userContainForm;
+// }
+// .signupContainForm {
+//     //  height: 18em;
+//     // @extend %userContainForm;
+// }
 .loginImage{
     @extend %loginImage;
 }

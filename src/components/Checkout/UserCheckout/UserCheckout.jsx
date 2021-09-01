@@ -6,7 +6,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Paper from "@material-ui/core/Paper";
 import { Grid } from "@material-ui/core";
 import Guest from "./Guest";
-
 import RadioButton from "../../../common/RadioButton/RadioButton";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import SignIn from "../../SignIn/Signin";
@@ -35,7 +34,15 @@ const UserCheckout = () => {
   }
 
   return (
-    <Paper>
+    <Paper
+      elevation={12}
+      style={{
+        width: "80%",
+        margin: "0px auto",
+        padding: "1em 0px 1em 0px",
+        borderRadius: "1em",
+      }}
+    >
       <FormControl component="fieldset" fullWidth>
         <RadioGroup
           defaultValue="guest"
@@ -69,7 +76,7 @@ const UserCheckout = () => {
         <Grid
           item
           className={clsx(classes.checkNextButtonGridItem)}
-          style={{ width: "50%", margin: "0px auto" }}
+          style={{ width: "40%", margin: "0px auto .5em auto" }}
         >
           <CheckoutButton />
         </Grid>

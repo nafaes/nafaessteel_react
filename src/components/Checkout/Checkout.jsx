@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
+import Grid from "@material-ui/core/Grid";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import ContactsIcon from "@material-ui/icons/Contacts";
@@ -9,9 +10,11 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PaymentIcon from "@material-ui/icons/Payment";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { Shipping } from "./Shipping/Shipping";
-import checkoutStyles from "../../assets/jss/viewStyles/checkout/checkout";
 import UserCheckout from "./UserCheckout/UserCheckout";
+import { Shipping } from "./Shipping/Shipping";
+import { Payment } from "./Payment/Payment";
+import CheckoutSummary from "./CheckoutSummary";
+import checkoutStyles from "../../assets/jss/viewStyles/checkout/checkout";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,7 +58,7 @@ const ScrollableTabsButtonForce = () => {
   };
 
   return (
-    <div className={classes.checkoutRoot}>
+    <Grid item xs={12} sm={12} md={7} lg={7} className={classes.checkoutRoot}>
       <AppBar position="static" color="default">
         <Tabs
           value={value}
@@ -85,99 +88,6 @@ const ScrollableTabsButtonForce = () => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        {/* <FormControl component="fieldset" fullWidth>
-          <RadioGroup
-            defaultValue="guest"
-            aria-label="gender"
-            name="customized-radios"
-            className={classes.radioContainer}
-            fullWidth
-          >
-            <FormControlLabel
-              value="guest"
-              control={<RadioButton />}
-              label="As Guest"
-            />
-            <FormControlLabel
-              value="member"
-              control={<RadioButton component={Link} to="/signin" />}
-              label="As Member"
-            />
-            <FormControlLabel
-              value="register"
-              control={<RadioButton component={Link} to="/signup" />}
-              label="Register"
-            />
-          </RadioGroup>
-        </FormControl> */}
-
-        {/* <Grid container justifyContent="center">
-          <Paper elevation={12} style={{ margin: "2em 0px 1em 0px" }}>
-            <Grid item>
-              <TextField
-                className={clsx(
-                  classes.formTextfield
-                  // classesExternal.formTextfield
-                )}
-                label="Name*"
-                id="outlined-start-adornment"
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonIcon fontSize="small" />
-                    </InputAdornment>
-                  ),
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
-              />
-            </Grid>
-            <Grid item style={{ marginTop: "1em" }}>
-              <TextField
-                className={clsx(
-                  classes.formTextfield
-                  // classesExternal.formTextfield
-                )}
-                label="Email*"
-                id="outlined-start-adornment"
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <MailIcon fontSize="small" />
-                    </InputAdornment>
-                  ),
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
-              />
-            </Grid>
-            <Grid item style={{ marginTop: "1em" }}>
-              <TextField
-                className={clsx(
-                  classes.formTextfield
-                  // classesExternal.formTextfield
-                )}
-                label="Mobile Number*"
-                id="outlined-start-adornment"
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <CallIcon fontSize="small" />
-                    </InputAdornment>
-                  ),
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
-              />
-            </Grid>
-          </Paper>
-        </Grid> */}
         <UserCheckout />
       </TabPanel>
 
@@ -186,12 +96,13 @@ const ScrollableTabsButtonForce = () => {
       </TabPanel>
 
       <TabPanel value={value} index={2}>
-        Order Summary
+        {/* <CheckoutSummary /> */}
       </TabPanel>
+
       <TabPanel value={value} index={3}>
-        Payment Method
+        <Payment />
       </TabPanel>
-    </div>
+    </Grid>
   );
 };
 
