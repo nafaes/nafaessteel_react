@@ -30,6 +30,7 @@ import {
   Badge,
 } from "@material-ui/core";
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
+import { useTranslation } from "react-i18next";
 
 import { CART, ORDERS } from "../../constants/routes";
 import { SIGNIN } from "../../constants/routes";
@@ -58,8 +59,8 @@ const Navbar = (props) => {
   const englishMobileStyles = navbarEngMobile();
   let classesExternal = navbarEngDesk;
   let classes = englishMobileStyles;
-
-  const { totalCartItems } = useContext(GlobalContext);
+  const { languageChangeHandler, totalCartItems } = useContext(GlobalContext);
+  const { t } = useTranslation();
 
   const theme = useTheme();
   const matchesXs = useMediaQuery(theme.breakpoints.down("xs"));
@@ -175,7 +176,7 @@ const Navbar = (props) => {
           className={clsx(classes.tab, classesExternal.tab)}
           component={Link}
           to="/"
-          label="Home"
+          label={t("Navbar.Home")}
         ></Tab>
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
@@ -186,13 +187,13 @@ const Navbar = (props) => {
           className={clsx(classes.tab, classesExternal.tab)}
           component={Link}
           to={ORDERS}
-          label="Orders"
+          label={t("Navbar.Orders")}
         ></Tab>
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
           component={Button}
           onClick={goToContactUs.bind(null)}
-          label="Contact Us"
+          label={t("Navbar.ContactUS")}
         ></Tab>
       </Tabs>
       <Menus popupState={popupState} allMenus={allCategoryItems} />
@@ -312,6 +313,7 @@ const Navbar = (props) => {
               <IconButton
                 className={clsx(classes.iconButton, classesExternal.iconButton)}
                 color="inherit"
+                onClick={languageChangeHandler}
               >
                 <TranslateIcon size="medium" />
               </IconButton>

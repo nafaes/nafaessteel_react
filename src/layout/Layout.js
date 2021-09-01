@@ -1,22 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
+import { create } from "jss";
+import rtl from "jss-rtl";
+import DirectionProvider from "react-with-direction/dist/DirectionProvider";
+import { jssPreset, StylesProvider } from "@material-ui/styles";
 
-import { appTheme } from "../assets/theme/theme";
 import Navbar from "../layout/NavBar/Navbar";
+import Footer from "./Footer/Footer";
 import ScrollProgress from "./ScrollProgress";
 import Routes from "../routes/index";
-import Footer from "./Footer/Footer";
+import { appTheme } from "../assets/theme/theme";
+import { GlobalContext } from "../context/Provider";
 
-const Layout = (props) => {
-  const theme = createTheme(appTheme());
+const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+
+const Layout = () => {
+  const { direction } = useContext(GlobalContext);
+  const theme = createTheme(appTheme(direction));
 
   return (
-    <ThemeProvider theme={theme}>
-      <Navbar />
-      <ScrollProgress />
-      <Routes />
-      <Footer />
-    </ThemeProvider>
+    <DirectionProvider direction={direction}>
+      <StylesProvider jss={jss}>
+        <ThemeProvider theme={theme}>
+          <Navbar />
+          <ScrollProgress />
+          <Routes />
+          <Footer />
+        </ThemeProvider>
+      </StylesProvider>
+    </DirectionProvider>
   );
 };
 

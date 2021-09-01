@@ -335,7 +335,7 @@ const Orders = (props) => {
                 direction="row"
                 justifyContent="flex-end"
                 alignItems="center"
-                style={{ paddingRight: "2em" }}
+                style={{ padding: "2em" }}
               >
                 <Grid item>
                   <Button
