@@ -117,65 +117,6 @@ const ProductSummary = (props) => {
             ))}
           </TableBody>
         </Table>
-
-        {/* <Table
-          className={classes.table}
-          aria-label="spanning table"
-          size="small"
-        >
-          <TableHead
-            className={clsx(
-              classes.addCartTabHdrRow,
-              classesExternal.addCartTabHdrRow
-            )}
-          >
-            <TableRow>
-              <TableCell>Item</TableCell>
-
-              {itemSummary.selectedValues.map((selectedValue, index) => (
-                <TableCell key={index} align="center">
-                  {selectedValue.name}
-                </TableCell>
-              ))}
-
-              <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Quantity</TableCell>
-              <TableCell align="right">Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell>{itemSummary.itemName}</TableCell>
-              {itemSummary.selectedValues.map((selectedValue, index) => (
-                <TableCell key={index} align="center">
-                  {selectedValue.item}
-                </TableCell>
-              ))}
-              <TableCell align="center">
-                {ccyFormat(itemSummary.price)}
-              </TableCell>
-
-              <TableCell align="center">
-                <ButtonGroup
-                  variant="contained"
-                  color="primary"
-                  aria-label="contained primary button group"
-                >
-                  <Button>-</Button>
-                  <Button>{itemSummary.quantity}</Button>
-                  <Button>+</Button>
-                </ButtonGroup>
-              </TableCell>
-              <TableCell align="right">
-                <Button>
-                  <DeleteForeverIcon
-                    style={{ fontSize: "2rem", color: "#d9534f" }}
-                  />
-                </Button>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table> */}
       </TableContainer>
     </Grid>
   ) : null;
