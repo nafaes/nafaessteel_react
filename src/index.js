@@ -2,14 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
-import App from "./App";
+import Layout from "./layout/Layout";
 import GlobalProvider from "./context/Provider";
+import "../src/translations/i18n";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <GlobalProvider>
     <BrowserRouter>
-      <App />
+      <Layout />
     </BrowserRouter>
   </GlobalProvider>,
   document.getElementById("root")

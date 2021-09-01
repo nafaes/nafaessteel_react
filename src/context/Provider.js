@@ -1,4 +1,14 @@
-import React, { createContext, useEffect, useMemo, useReducer } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
+import i18next from "i18next";
+import { DIRECTIONS } from "react-with-direction/dist/DirectionProvider";
+
 import cartReducer from "./reducers/cartReducer";
 
 export const GlobalContext = createContext();
@@ -9,10 +19,22 @@ const cartInitilState = {
 };
 
 const GlobalProvider = ({ children }) => {
+  const [direction, setDirection] = useState(DIRECTIONS.LTR);
   const [cartState, dispatchCartActions] = useReducer(
     cartReducer,
     cartInitilState
   );
+
+  const languageChangeHandler = useCallback(() => {
+    let lang = "ar";
+    if (i18next.language === "ar") lang = "en";
+    i18next.changeLanguage(lang);
+    if (lang === "ar") {
+      setDirection(DIRECTIONS.RTL);
+    } else {
+      setDirection(DIRECTIONS.LTR);
+    }
+  }, []);
 
   const totalCartItems = useMemo(() => {
     return cartState.items.reduce((totalQuantity, { quantity }) => {
@@ -31,6 +53,8 @@ const GlobalProvider = ({ children }) => {
   }, [cartState]);
 
   const context = {
+    direction,
+    languageChangeHandler,
     cartItems: cartState.items,
     totalCartItems,
     totalCartAmount,

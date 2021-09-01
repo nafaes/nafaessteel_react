@@ -61,18 +61,20 @@ export const checkValidity = (value, rules) => {
   if (rules.isEmail) {
     let valid = true;
     let validationMsg = "";
-    const pattern =
-      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
     if (!value) {
       valid = false;
-      validationMsg = "Email Required!";
+      validationMsg = { msg: "SignIn.Validations.Email", length: "" };
     } else if (!pattern.test(value)) {
       valid = false;
-      validationMsg = "Not a valid Email";
+      validationMsg = { msg: "SignIn.Validations.ValidEmail", length: "" };
     } else if (value.length > rules.maxLength) {
       valid = false;
-      validationMsg = `Email is too long (Maximum ${rules.maxLength} characters allowed)`;
+      validationMsg = {
+        msg: "SignIn.Validations.EmailMax",
+        length: rules.maxLength,
+      };
     }
 
     return {

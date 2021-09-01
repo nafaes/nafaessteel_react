@@ -13,13 +13,22 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import signinEngDesk from "../../assets/scss/user.module.scss";
 import { signinEngMobile } from "../../assets/jss/viewStyles/signin/english";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { SIGNUP } from "../../constants/routes";
 import login from "../../assets/img/Login-illustration.svg";
 
 const SignIn = (props) => {
-  const { signinForm, formChangeHandler, signinHandler, isDisplayImage, userCheckoutStyles } = props;
+  const {
+    signinForm,
+    formChangeHandler,
+    signinHandler,
+    isDisplayImage,
+    userCheckoutStyles,
+  } = props;
+  const { t } = useTranslation();
+
   const englishMobileStyles = signinEngMobile(userCheckoutStyles)();
   let classesExternal = signinEngDesk;
   let classes = englishMobileStyles;
@@ -72,7 +81,7 @@ const SignIn = (props) => {
                   classesExternal.formTextfield
                 )}
                 autoFocus={true}
-                label="Email"
+                label={t("SignIn.InputFields.Email")}
                 id="email"
                 variant="outlined"
                 required={true}
@@ -92,7 +101,9 @@ const SignIn = (props) => {
                 error={!signinForm.email.valid && signinForm.email.touched}
                 helperText={
                   !signinForm.email.valid && signinForm.email.touched
-                    ? signinForm.email.validation.validationMsg
+                    ? t(signinForm.email.validation.validationMsg.msg, {
+                        length: signinForm.email.validation.validationMsg.length,
+                      })
                     : null
                 }
               />
@@ -103,7 +114,7 @@ const SignIn = (props) => {
                   classes.formTextfield,
                   classesExternal.formTextfield
                 )}
-                label="Password"
+                label={t("SignIn.InputFields.Password")}
                 required={true}
                 id="password"
                 type={showPassword ? "text" : "password"}
@@ -149,7 +160,7 @@ const SignIn = (props) => {
             </Grid>
             <Grid item style={{ textAlign: "right" }}>
               <Button style={{ textTransform: "none", marginBottom: "0.5em" }}>
-                Forgot Password ?
+                {`${t("SignIn.InputFields.ForgotPassword")} ?`}
               </Button>
             </Grid>
             <Grid item style={{ textAlign: "center" }}>
@@ -161,19 +172,19 @@ const SignIn = (props) => {
                   signinForm.password.valid === false
                 }
               >
-                Sign In
+                {t("SignIn.InputFields.SignIn")}
               </Button>
             </Grid>
 
             {userCheckoutStyles === false && (
               <Grid item style={{ textAlign: "center" }}>
-                <label>Don't have account?</label>
+                <label>{`${t("SignIn.InputFields.DontHaveAccount")} ?`}</label>
                 <Button
                   style={{ textTransform: "none" }}
                   component={Link}
                   to={SIGNUP}
                 >
-                  Sign Up
+                  {t("SignIn.InputFields.SignUp")}
                 </Button>
               </Grid>
             )}
