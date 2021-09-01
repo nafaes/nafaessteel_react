@@ -8,9 +8,9 @@ import { Grid } from "@material-ui/core";
 import Guest from "./Guest";
 import RadioButton from "../../../common/RadioButton/RadioButton";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
-import SignIn from "../../SignIn/Signin";
-import SignUp from "../../SignUp/Signup";
 import CheckoutButton from "../../../common/Button/Button";
+import SigninPage from "../../../pages/Signin";
+import SignupPage from "../../../pages/Signup";
 
 const UserCheckout = () => {
   const classes = checkoutStyles();
@@ -25,11 +25,11 @@ const UserCheckout = () => {
     renderUserType = <Guest />;
   } else if (userType === "member") {
     renderUserType = (
-      <SignIn isDisplayImage={false} userCheckoutStyles={true} />
+      <SigninPage isDisplayImage={false} userCheckoutStyles={true} />
     );
   } else if (userType === "register") {
     renderUserType = (
-      <SignUp isDisplayImage={false} userCheckoutStyles={true} />
+      <SignupPage isDisplayImage={false} userCheckoutStyles={true} />
     );
   }
 

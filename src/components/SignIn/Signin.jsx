@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import Grid from "@material-ui/core/Grid";
-import login from "../../assets/img/Login-illustration.svg";
 import {
   Button,
   IconButton,
@@ -14,28 +13,25 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import signinEngDesk from "../../assets/scss/user.module.scss";
 import { signinEngMobile } from "../../assets/jss/viewStyles/signin/english";
 import clsx from "clsx";
-import { SIGNUP } from "../../constants/routes";
 import { Link } from "react-router-dom";
 
+import { SIGNUP } from "../../constants/routes";
+import login from "../../assets/img/Login-illustration.svg";
+
 const SignIn = (props) => {
-  const {isDisplayImage, userCheckoutStyles} = props
+  const { signinForm, formChangeHandler, signinHandler, isDisplayImage, userCheckoutStyles } = props;
   const englishMobileStyles = signinEngMobile(userCheckoutStyles)();
   let classesExternal = signinEngDesk;
   let classes = englishMobileStyles;
 
-  const [values, setValues] = React.useState({
-    password: "",
-    showPassword: false,
-  });
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-  const handleMouseDownPassword = (event) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = useCallback(() => {
+    setShowPassword(!showPassword);
+  }, [showPassword]);
+
+  const handleMouseDownPassword = useCallback((event) => {
     event.preventDefault();
-  };
+  }, []);
 
   return (
     <Grid
@@ -75,9 +71,11 @@ const SignIn = (props) => {
                   classes.formTextfield,
                   classesExternal.formTextfield
                 )}
-                label="Email*"
-                id="outlined-start-adornment"
+                autoFocus={true}
+                label="Email"
+                id="email"
                 variant="outlined"
+                required={true}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -88,6 +86,15 @@ const SignIn = (props) => {
                     notchedOutline: classes.notchedOutline,
                   },
                 }}
+                name="email"
+                onChange={formChangeHandler}
+                value={signinForm.email.value}
+                error={!signinForm.email.valid && signinForm.email.touched}
+                helperText={
+                  !signinForm.email.valid && signinForm.email.touched
+                    ? signinForm.email.validation.validationMsg
+                    : null
+                }
               />
             </Grid>
             <Grid item style={{ marginTop: "1em" }}>
@@ -97,10 +104,9 @@ const SignIn = (props) => {
                   classesExternal.formTextfield
                 )}
                 label="Password"
-                id="outlined-start-adornment"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handleChange("password")}
+                required={true}
+                id="password"
+                type={showPassword ? "text" : "password"}
                 variant="outlined"
                 InputProps={{
                   startAdornment: (
@@ -116,7 +122,7 @@ const SignIn = (props) => {
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {values.showPassword ? (
+                        {showPassword ? (
                           <Visibility color="primary" />
                         ) : (
                           <VisibilityOff />
@@ -128,6 +134,17 @@ const SignIn = (props) => {
                     notchedOutline: classes.notchedOutline,
                   },
                 }}
+                name="password"
+                onChange={formChangeHandler}
+                value={signinForm.password.value}
+                error={
+                  !signinForm.password.valid && signinForm.password.touched
+                }
+                helperText={
+                  !signinForm.password.valid && signinForm.password.touched
+                    ? signinForm.password.validation.validationMsg
+                    : null
+                }
               />
             </Grid>
             <Grid item style={{ textAlign: "right" }}>
@@ -136,24 +153,34 @@ const SignIn = (props) => {
               </Button>
             </Grid>
             <Grid item style={{ textAlign: "center" }}>
-              <Button className={classesExternal.formBtn}>Sign In</Button>
-            </Grid>
-            <Grid item style={{ textAlign: "center" }}>
-              <label>Don't have account?</label>
               <Button
-                style={{ textTransform: "none" }}
-                component={Link}
-                to={SIGNUP}
+                className={classesExternal.formBtn}
+                onClick={signinHandler}
+                disabled={
+                  signinForm.email.valid === false ||
+                  signinForm.password.valid === false
+                }
               >
-                Sign Up
+                Sign In
               </Button>
             </Grid>
+
+            {userCheckoutStyles === false && (
+              <Grid item style={{ textAlign: "center" }}>
+                <label>Don't have account?</label>
+                <Button
+                  style={{ textTransform: "none" }}
+                  component={Link}
+                  to={SIGNUP}
+                >
+                  Sign Up
+                </Button>
+              </Grid>
+            )}
           </Grid>
         </form>
       </Grid>
     </Grid>
-    //   </Grid>
-    // </Grid>
   );
 };
 

@@ -1,10 +1,9 @@
-import React, { Fragment } from "react";
+import React from "react";
 import {
   Button,
   ButtonGroup,
   Divider,
   Grid,
-  IconButton,
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
@@ -20,16 +19,32 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fff",
     padding: 16,
   },
-
+  card: {
+    width: "100%",
+    backgroundColor: "#fff",
+    padding: "10px 14px",
+    paddingBottom: "10px",
+  },
+  itemImage: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  itemText: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+  },
   stickyBottom: {
     padding: 2,
     position: "sticky",
     bottom: 0,
-
     backgroundColor: "#F8F8F8",
-    borderTop: "1.4px solid #E7E7E7",
-    // bottom: theme.spacing(2),
-    // right: theme.spacing(2),
+    borderTop: "1.6px solid #E7E7E7",
+  },
+  placeOrderBtn: {
+    margin: "10px",
+    width: "16em",
   },
 }));
 
@@ -48,30 +63,9 @@ const CartItems = (props) => {
         </Grid>
 
         {cartItems.map((item) => (
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            key={item.itemId}
-            style={{
-              width: "100%",
-              backgroundColor: "#fff",
-              padding: "10px 14px",
-              paddingBottom: 10,
-            }}
-          >
+          <Grid item xs={12} sm={12} key={item.itemId} className={classes.card}>
             <Grid container>
-              <Grid
-                item
-                xs={5}
-                sm={4}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <Grid item xs={5} sm={4} className={classes.itemImage}>
                 <img
                   width={100}
                   height={100}
@@ -83,34 +77,28 @@ const CartItems = (props) => {
               </Grid>
 
               <Grid container item xs={7} sm={8}>
-                <Grid item>
+                <Grid item className={classes.itemText}>
                   <Typography
                     variant="subtitle1"
-                    noWrap={true}
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      width: "inherit",
-                    }}
+                    style={{ overflow: "hidden", textOverflow: "ellipsis" }}
                   >
                     {item.itemName}
                   </Typography>
 
                   {item.selectedValues.map(({ name, item }, index) => (
-                    <Fragment key={index}>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        noWrap={true}
-                        style={{
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          width: "inherit",
-                        }}
-                      >
-                        {item}
-                      </Typography>
-                    </Fragment>
+                    <Typography
+                      key={index}
+                      variant="body2"
+                      color="textSecondary"
+                      noWrap={true}
+                      style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        width: "inherit",
+                      }}
+                    >
+                      {item}
+                    </Typography>
                   ))}
                   <Typography
                     variant="subtitle1"
@@ -122,6 +110,7 @@ const CartItems = (props) => {
                 </Grid>
 
                 <Grid
+                  item
                   container
                   style={{
                     display: "flex",
@@ -131,33 +120,24 @@ const CartItems = (props) => {
                   }}
                 >
                   <Grid item xs={8}>
-                    <ButtonGroup
-                      variant="contained"
-                      size="small"
-                      // color="primary"
-                      aria-label="contained primary button group"
-                    >
-                      <IconButton
-                        color="primary"
-                        size="small"
+                    <ButtonGroup variant="contained" size="small">
+                      <Button
                         onClick={dispatchCartActions.bind(
                           null,
                           removeItem(item.itemId, 1)
                         )}
                       >
-                        <RemoveIcon />
-                      </IconButton>
+                        <RemoveIcon color="primary" />
+                      </Button>
                       <Button>{item.quantity}</Button>
-                      <IconButton
-                        color="primary"
-                        size="small"
+                      <Button
                         onClick={dispatchCartActions.bind(
                           null,
                           addItem({ itemId: item.itemId, quantity: 1 })
                         )}
                       >
-                        <AddIcon />
-                      </IconButton>
+                        <AddIcon color="primary" />
+                      </Button>
                     </ButtonGroup>
                   </Grid>
 
@@ -185,6 +165,7 @@ const CartItems = (props) => {
           container
           className={classes.stickyBottom}
           alignItems="center"
+          style={{ textAlign: "center" }}
         >
           <Grid item xs={6} sm={4}>
             <Typography variant="subtitle1" component="div">
@@ -211,7 +192,7 @@ const CartItems = (props) => {
               to="/checkout"
               variant="contained"
               color="primary"
-              style={{ marginTop: 10, margin: 10 }}
+              className={classes.placeOrderBtn}
             >
               Place Order
             </Button>

@@ -17,7 +17,7 @@ export const signupMobCommon = {
       height: "22em",
       borderLeft: "none",
     },
-    height: "26em",
+    height: "38em",
     borderLeft: "1px solid  rgba(0, 134, 179,0.7)",
     borderLeftStyle: "dotted",
   },
