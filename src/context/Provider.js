@@ -10,6 +10,7 @@ import i18next from "i18next";
 import { DIRECTIONS } from "react-with-direction/dist/DirectionProvider";
 
 import cartReducer from "./reducers/cartReducer";
+import { authReducer } from "./reducers/authReducer";
 
 export const GlobalContext = createContext();
 
@@ -17,12 +18,23 @@ const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
 const cartInitilState = {
   items: cartFromLocalStorage ? cartFromLocalStorage : [],
 };
+const authInitialState = {
+  loading: false,
+  token: null,
+  expiresIn: null,
+  isAuthenticated: false,
+  errorMessage: null,
+};
 
 const GlobalProvider = ({ children }) => {
   const [direction, setDirection] = useState(DIRECTIONS.LTR);
   const [cartState, dispatchCartActions] = useReducer(
     cartReducer,
     cartInitilState
+  );
+  const [userState, dispatchAuthActions] = useReducer(
+    authReducer,
+    authInitialState
   );
 
   const languageChangeHandler = useCallback(() => {
@@ -59,6 +71,8 @@ const GlobalProvider = ({ children }) => {
     totalCartItems,
     totalCartAmount,
     dispatchCartActions: dispatchCartActions,
+    userState,
+    dispatchAuthActions,
   };
 
   return (

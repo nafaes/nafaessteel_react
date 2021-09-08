@@ -1,24 +1,24 @@
 import axios from "axios";
-// const Buffer = require("buffer").Buffer;
 
-// const encodedBase64Token = Buffer("admin:bmFmYWVzQGNhcnQkMTIzIw==").toString(
-//   "base64"
-// );
-// const authorization = `Basic ${encodedBase64Token}`;
+const user = JSON.parse(localStorage.getItem("user"));
+let axiosInstance;
+if (user) {
+  axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_OAUTH_API_URL,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${user.token}`,
+    },
+  });
+} else {
+  axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+    withCredentials: true,
+    auth: {
+      username: process.env.REACT_APP_API_USERNAME,
+      password: process.env.REACT_APP_API_PASSWORD,
+    },
+  });
+}
 
-export const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-
-  withCredentials: true,
-  auth: {
-    username: "admin",
-    password: "bmFmYWVzQGNhcnQkMTIzIw==",
-  },
-
-  headers: {
-    "Content-Type": "application/json",
-    // Authorization: authorization,
-    // Authorization: `Basic ${token}`,
-    // Authorization: `Basic admin:bmFmYWVzQGNhcnQkMTIzIw==`,
-  },
-});
+export default axiosInstance;

@@ -1,9 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useCallback, useContext, useState } from "react";
 
 import SignIn from "../components/SignIn/Signin";
 import Notification from "../common/Notification/Notification";
 import { updateObject } from "../utils/updateObject";
 import { checkValidity } from "../utils/validations";
+import { GlobalContext } from "../context/Provider";
+import { login } from "../context/actions/authActions";
 
 const signinFormInitialState = {
   email: {
@@ -22,7 +24,7 @@ const signinFormInitialState = {
     validation: {
       isPassword: true,
       required: true,
-      minLength: 8,
+      minLength: 4,
       maxLength: 16,
       validationMsg: "SignIn.Validations.Password",
     },
@@ -32,6 +34,11 @@ const signinFormInitialState = {
 };
 
 const SigninPage = (props) => {
+  const {
+    dispatchAuthActions,
+    userState: { loading: loginLoading },
+  } = useContext(GlobalContext);
+
   const [signinForm, setSigninForm] = useState(signinFormInitialState);
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -58,9 +65,48 @@ const SigninPage = (props) => {
     setSigninForm(updatedForm);
   };
 
-  const signinHandler = () => {
-    setNotify({isOpen: true, message: "Login Success", type: "success"});
-  };
+  const signinHandler = useCallback(async () => {
+    if (!signinForm.email.valid || !signinForm.password.valid) {
+      setSigninForm((signinForm) => {
+        let updatedForm = {};
+        for (let inputIdentifier in signinForm) {
+          updatedForm[inputIdentifier] = {
+            ...signinForm[inputIdentifier],
+            touched: true,
+          };
+        }
+        return updatedForm;
+      });
+    }
+
+    if (signinForm.email.valid && signinForm.password.valid) {
+      login(
+        signinForm.email.value,
+        signinForm.password.value,
+        dispatchAuthActions
+      )((errorMessage) => {
+        setNotify({ isOpen: true, message: errorMessage, type: "error" });
+      });
+      setSigninForm((signinForm) => {
+        let updatedForm = {};
+        for (let inputIdentifier in signinForm) {
+          updatedForm[inputIdentifier] = {
+            ...signinForm[inputIdentifier],
+            value: "",
+            valid: false,
+            touched: false,
+          };
+        }
+        return updatedForm;
+      });
+    }
+  }, [
+    signinForm.email.value,
+    signinForm.email.valid,
+    signinForm.password.value,
+    signinForm.password.valid,
+    dispatchAuthActions,
+  ]);
 
   return (
     <Fragment>
@@ -74,6 +120,7 @@ const SigninPage = (props) => {
         signinForm={signinForm}
         formChangeHandler={formChangeHandler}
         signinHandler={signinHandler}
+        loginLoading={loginLoading}
       />
 
       {notify.isOpen && <Notification notify={notify} setNotify={setNotify} />}

@@ -11,11 +11,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { ButtonGroup } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
 import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
 import { GlobalContext } from "../../context/Provider";
 import { addItem, removeItem } from "../../context/actions/cartActions";
+import { CART } from "../../constants/routes";
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -114,6 +116,29 @@ const ProductSummary = (props) => {
                 </TableCell>
               </TableRow>
             ))}
+
+            <TableRow
+              className={clsx(
+                classes.addCartTabFtrRow,
+                classesExternal.addCartTabFtrRow
+              )}
+            >
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell align="right">
+                <Button
+                  component={Link}
+                  to={CART}
+                  variant="contained"
+                  // color="primary"
+                  // style={{ margin: "6px", width: "20em" }}
+                >
+                  Go to Cart
+                </Button>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

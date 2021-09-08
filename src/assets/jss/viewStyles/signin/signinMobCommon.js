@@ -1,4 +1,6 @@
 import { createTheme } from "@material-ui/core/styles";
+import { blue } from "@material-ui/core/colors";
+
 import { appTheme } from "../../../theme/theme";
 
 const theme = createTheme(appTheme());
@@ -37,5 +39,17 @@ export const signinMobCommon = {
     "& .MuiOutlinedInput-inputAdornedStart": {
       height: "8px",
     },
+  },
+  buttonWrapper: {
+    margin: theme.spacing(1),
+    position: "relative",
+  },
+  buttonProgress: {
+    color: blue[600],
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -16,
+    marginLeft: -12,
   },
 };

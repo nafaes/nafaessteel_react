@@ -1,6 +1,11 @@
+import {
+  ADD_ITEM_TO_CART,
+  REMOVE_ITEM_FROM_CART,
+} from "../../constants/actionTypes/cartConstants";
+
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case "ADD":
+    case ADD_ITEM_TO_CART:
       const item = action.payload;
       const currentItemIndex = state.items.findIndex(
         ({ itemId }) => itemId === item.itemId
@@ -25,7 +30,7 @@ const cartReducer = (state, action) => {
         };
       }
 
-    case "REMOVE":
+    case REMOVE_ITEM_FROM_CART:
       const itemIndex = state.items.findIndex(
         ({ itemId }) => itemId === action.payload.itemId
       );

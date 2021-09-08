@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import { create } from "jss";
 import rtl from "jss-rtl";
@@ -11,18 +11,30 @@ import ScrollProgress from "./ScrollProgress";
 import Routes from "../routes/index";
 import { appTheme } from "../assets/theme/theme";
 import { GlobalContext } from "../context/Provider";
+import { authCheckState } from "../context/actions/authActions";
 
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 const Layout = () => {
-  const { direction } = useContext(GlobalContext);
+  const {
+    direction,
+    userState: { isAuthenticated },
+    dispatchAuthActions,
+  } = useContext(GlobalContext);
   const theme = createTheme(appTheme(direction));
+
+  useEffect(() => {
+    authCheckState(dispatchAuthActions);
+  }, [dispatchAuthActions]);
 
   return (
     <DirectionProvider direction={direction}>
       <StylesProvider jss={jss}>
         <ThemeProvider theme={theme}>
-          <Navbar />
+          <Navbar
+            isAuthenticated={isAuthenticated}
+            dispatchAuthActions={dispatchAuthActions}
+          />
           <ScrollProgress />
           <Routes />
           <Footer />

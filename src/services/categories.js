@@ -1,8 +1,8 @@
-import { axiosInstance } from "../helpers/axiosInstance";
+import axiosInstance from "../helpers/axiosInstance";
 
 export const getAllCategories = async () => {
   try {
-    const response = await axiosInstance.post("categories", {
+    const response = await axiosInstance.post("/categories", {
       id: 0,
       level: 1,
       lng: 2,
@@ -20,7 +20,7 @@ export const getAllCategories = async () => {
 
 export const getAllCatergoryItems = async (id, level, lng) => {
   try {
-    const response = await axiosInstance.post("categories", {
+    const response = await axiosInstance.post("/categories", {
       id,
       level,
       lng,
@@ -38,7 +38,9 @@ export const getAllCatergoryItems = async (id, level, lng) => {
 
 export const getCatergoryItemDetails = async (lng, categoryId) => {
   try {
-    const response = await axiosInstance.get(`categories/${lng}/${categoryId}`);
+    const response = await axiosInstance.get(
+      `/categories/${lng}/${categoryId}`
+    );
     if (response.status === 200) {
       return response.data;
     } else {

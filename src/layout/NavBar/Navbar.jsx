@@ -32,6 +32,7 @@ import {
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
 import { useTranslation } from "react-i18next";
 
+import { userLogout } from "../../context/actions/authActions";
 import { CART, ORDERS } from "../../constants/routes";
 import { SIGNIN } from "../../constants/routes";
 import navbarEngDesk from "../../assets/scss/navbar.module.scss";
@@ -56,6 +57,7 @@ function ElevationScroll(props) {
 }
 
 const Navbar = (props) => {
+  const { isAuthenticated, dispatchAuthActions } = props;
   const englishMobileStyles = navbarEngMobile();
   let classesExternal = navbarEngDesk;
   let classes = englishMobileStyles;
@@ -164,6 +166,12 @@ const Navbar = (props) => {
     }
   }, [value]);
 
+  const logOutHandler = useCallback((event) => {
+    handleClose(event);
+    dispatchAuthActions(userLogout());
+    history.push(SIGNIN);
+  }, [dispatchAuthActions, history]);
+
   const tabs = (
     <React.Fragment>
       <Tabs
@@ -218,17 +226,26 @@ const Navbar = (props) => {
             }}
           >
             <Paper className={clsx(classes.menudrop, classesExternal.menudrop)}>
-              <ClickAwayListener onClickAway={handleClose}>
+              <ClickAwayListener
+                onClickAway={(event) => handleClose.bind(null, event)}
+              >
                 <MenuList
                   autoFocusItem={openDrop}
                   id="menu-list-grow"
                   onKeyDown={handleListKeyDown}
                   className={clsx(classes.subMenu, classesExternal.subMenu)}
                 >
-                  <MenuItem onClick={handleClose} component={Link} to={SIGNIN}>
-                    Sign In
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>SignOut</MenuItem>
+                  {isAuthenticated ? (
+                    <MenuItem onClick={logOutHandler}>SignOut</MenuItem>
+                  ) : (
+                    <MenuItem
+                      onClick={handleClose}
+                      component={Link}
+                      to={SIGNIN}
+                    >
+                      Sign In
+                    </MenuItem>
+                  )}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
