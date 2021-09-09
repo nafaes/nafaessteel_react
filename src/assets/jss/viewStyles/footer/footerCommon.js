@@ -11,6 +11,7 @@ export const footerMobCommon = {
         width: "5em",
      },
      footerIconsContainer:{
+       textAlign: "right",
        "& .MuiIconButton-root": {
             padding: "6px",
         },

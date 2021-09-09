@@ -24,7 +24,7 @@ const signinFormInitialState = {
       required: true,
       minLength: 8,
       maxLength: 16,
-      validationMsg: "SignIn.Validations.Password",
+      validationMsg: { msg: "SignIn.Validations.Password", length: ""},
     },
     valid: false,
     touched: false,

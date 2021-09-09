@@ -17,7 +17,7 @@ const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 const Layout = () => {
   const { direction } = useContext(GlobalContext);
   const theme = createTheme(appTheme(direction));
-
+  
   return (
     <DirectionProvider direction={direction}>
       <StylesProvider jss={jss}>

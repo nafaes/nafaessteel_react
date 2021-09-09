@@ -23,13 +23,19 @@ export const checkValidity = (value, rules) => {
     let validationMsg = "";
     if (!value) {
       valid = false;
-      validationMsg = "Name Required!";
+      validationMsg = { msg: "SignUp.Validations.Name", length: "" };
     } else if (value.length < rules.minLength) {
       valid = false;
-      validationMsg = `Name is too short (Minimum ${rules.minLength} characters needed.)`;
+      validationMsg = {
+        msg: "SignUp.Validations.NameMin",
+        length: rules.minLength,
+      };
     } else if (value.length > rules.maxLength) {
       valid = false;
-      validationMsg = `Name is too long (Maximum ${rules.maxLength} characters allowed.)`;
+      validationMsg = {
+        msg: "SignUp.Validations.NameMax",
+        length: rules.maxLength,
+      };
     }
 
     return {
@@ -43,13 +49,13 @@ export const checkValidity = (value, rules) => {
     let validationMsg = "";
     if (!value) {
       valid = false;
-      validationMsg = "Mobile Number Required!";
+      validationMsg = { msg: "SignUp.Validations.MobileNumber" }
     } else if (value === "0000") {
       valid = false;
-      validationMsg = "Mobile Number Should not contain All Zeros";
+      validationMsg = { msg: "SignUp.Validations.NotValidMobileNumber" }
     } else if (value.length !== 8) {
       valid = false;
-      validationMsg = "Mobile Number must contain (8 digits.)";
+      validationMsg = { msg: "SignUp.Validations.ValidMobileNumber" }
     }
 
     return {
@@ -60,8 +66,9 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isEmail) {
     let valid = true;
-    let validationMsg = {};
-    const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    let  validationMsg = { msg: "", length: "" };
+    const pattern =
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
     if (!value) {
       valid = false;
@@ -84,11 +91,11 @@ export const checkValidity = (value, rules) => {
   }
 
   if (rules.isPassword) {
-    let valid;
-    let validationMsg;
+    let valid=true;
+    let  validationMsg = { msg: "", length: "" };
     if (!value) {
       valid = false;
-      validationMsg = "Password Required!";
+      validationMsg = { msg: "SignUp.Validations.Password", length: "" };
     } else {
       if (rules?.isSignup) {
         // var lowerCaseAlphabetRegex = new RegExp("^(?=.*[a-z])");
@@ -123,20 +130,32 @@ export const checkValidity = (value, rules) => {
           validationMsg = "";
         } else {
           valid = false;
-          validationMsg = `"Must contain one number, one uppercase and lowercase letter, one special character, and at least 8 characters",`;
+          validationMsg = {
+            msg: "SignUp.Validations.ValidPassword",
+            length: "",
+          };
         }
 
         if (strongRegex.test(value) && value.length > rules.maxLength) {
           valid = false;
-          validationMsg = `Password is too long (Maximum ${rules.maxLength} characters allowed.)`;
+          validationMsg = {
+            msg: "SignUp.Validations.PasswordMax",
+            length: rules.maxLength,
+          };
         }
       } else {
         if (value.length > rules.maxLength) {
           valid = false;
-          validationMsg = `Password is too long (Maximum ${rules.maxLength} characters allowed.)`;
+          validationMsg = {
+            msg: "SignUp.Validations.PasswordMax",
+            length: rules.maxLength,
+          };
         } else if (value.length < rules.minLength) {
           valid = false;
-          validationMsg = `Password is too short (Minimum ${rules.minLength} characters needed.)`;
+          validationMsg = {
+            msg: "SignUp.Validations.PasswordMin",
+            length: rules.minLength,
+          };
         }
       }
     }
@@ -149,20 +168,11 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isConfirmPassword) {
     let valid = true;
-    let validationMsg = "";
+    let  validationMsg = { msg: ""};
     if (!value) {
       valid = false;
-      validationMsg = "Confirm Password Required!";
-    } else {
-      if (value.length > rules.maxLength) {
-        valid = false;
-        validationMsg = `Confirm Password is too long (Maximum ${rules.maxLength} characters allowed.)`;
-      } else if (value.length < rules.minLength) {
-        valid = false;
-        validationMsg = `Confirm Password is too short (Minimum ${rules.minLength} characters needed.)`;
-      }
-    }
-
+      validationMsg = { msg: "SignUp.Validations.ConfirmPassword" };
+    } 
     return {
       valid,
       validationMsg,

@@ -153,7 +153,9 @@ const SignIn = (props) => {
                 }
                 helperText={
                   !signinForm.password.valid && signinForm.password.touched
-                    ? signinForm.password.validation.validationMsg
+                    ? t(signinForm.password.validation.validationMsg.msg, {
+                      length: signinForm.password.validation.validationMsg.length
+                    })
                     : null
                 }
               />
