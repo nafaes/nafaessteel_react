@@ -47,22 +47,34 @@ const SigninPage = (props) => {
   });
 
   const formChangeHandler = (event) => {
-    const {
-      target: { value, name },
-    } = event;
-
+    const { value, name } = event.target;
     const validation = checkValidity(value, signinForm[name].validation);
-    const updatedForm = updateObject(signinForm, {
-      [name]: updateObject(signinForm[name], {
+
+    const updatedForm = {
+      ...signinForm,
+      [name]: {
         value: value,
         valid: validation.valid,
-        validation: updateObject(signinForm[name].validation, {
-          validationMsg: validation.validationMsg,
-        }),
         touched: true,
-      }),
-    });
-    setSigninForm(updatedForm);
+        validation: {
+          ...signinForm[name].validation,
+          validationMsg: validation.validationMsg
+        }
+      }
+    }
+
+    // const updatedForm = updateObject(signinForm, {
+    //   [name]: updateObject(signinForm[name], {
+    //     value: value,
+    //     valid: validation.valid,
+    //     validation: updateObject(signinForm[name].validation, {
+    //       validationMsg: validation.validationMsg,
+    //     }),
+    //     touched: true,
+    //   }),
+    // });
+
+    setSigninForm(updatedForm)
   };
 
   const signinHandler = useCallback(async () => {
@@ -122,7 +134,6 @@ const SigninPage = (props) => {
         signinHandler={signinHandler}
         loginLoading={loginLoading}
       />
-
       {notify.isOpen && <Notification notify={notify} setNotify={setNotify} />}
     </Fragment>
   );

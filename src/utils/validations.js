@@ -37,7 +37,6 @@ export const checkValidity = (value, rules) => {
         length: rules.maxLength,
       };
     }
-
     return {
       valid,
       validationMsg,
@@ -98,30 +97,6 @@ export const checkValidity = (value, rules) => {
       validationMsg = { msg: "SignUp.Validations.Password", length: "" };
     } else {
       if (rules?.isSignup) {
-        // var lowerCaseAlphabetRegex = new RegExp("^(?=.*[a-z])");
-        // var upperCaseAlphabetRegex = new RegExp("^(?=.*[A-Z])");
-        // var numberRegex = new RegExp("^(?=.*[0-9])");
-        // var specialCharRegex = new RegExp("^(?=.*[!@#%&])");
-        // if (!lowerCaseAlphabetRegex.test(value)) {
-        //   valid = false;
-        //   validationMsg = "Must contain one lowercase letter!";
-        // } else if (!upperCaseAlphabetRegex.test(value)) {
-        //   valid = false;
-        //   validationMsg = "Must contain one uppercase letter!";
-        // } else if (!numberRegex.test(value)) {
-        //   valid = false;
-        //   validationMsg = "Must contain one number!";
-        // } else if (!specialCharRegex.test(value)) {
-        //   valid = false;
-        //   validationMsg = "Must contain one special character!";
-        // } else if (value.length > rules.maxLength) {
-        //   valid = false;
-        //   validationMsg = `Password is too long (Maximum ${rules.maxLength} characters allowed.)`;
-        // } else if (value.length < rules.minLength) {
-        //   valid = false;
-        //   validationMsg = `Password is too short (Minimum ${rules.minLength} characters needed.)`;
-        // }
-
         var strongRegex = new RegExp(
           "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#%&])(?=.{8,})"
         );

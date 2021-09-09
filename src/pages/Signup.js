@@ -69,32 +69,32 @@ const signupFormInitialState = {
 const SignupPage = (props) => {
   const [signupForm, setSignupForm] = useState(signupFormInitialState);
 
-  const conformPasswordHandler = useCallback(
-    ({ target: { value, name } }) => {
-      let valid = true;
-      let validationMsg = "";
-      let formIsValid = true;
+  // const conformPasswordHandler = useCallback(
+  //   ({ target: { value, name } }) => {
+  //     let valid = true;
+  //     let validationMsg = "";
+  //     let formIsValid = true;
 
-      if (signupForm.password.value && signupForm.password.value !== value) {
-        valid = false;
-        validationMsg = "Not matched with password!";
-        formIsValid = false;
-      }
+  //     if (signupForm.password.value && signupForm.password.value !== value) {
+  //       valid = false;
+  //       validationMsg = "Not matched with password!";
+  //       formIsValid = false;
+  //     }
 
-      const updatedForm = updateObject(signupForm, {
-        [name]: updateObject(signupForm[name], {
-          value: value,
-          valid: valid,
-          validation: updateObject(signupForm[name].validation, {
-            validationMsg: validationMsg,
-          }),
-          touched: true,
-        }),
-      });
-      setSignupForm({ ...updatedForm, formIsValid: formIsValid });
-    },
-    [signupForm]
-  );
+  //     const updatedForm = updateObject(signupForm, {
+  //       [name]: updateObject(signupForm[name], {
+  //         value: value,
+  //         valid: valid,
+  //         validation: updateObject(signupForm[name].validation, {
+  //           validationMsg: validationMsg,
+  //         }),
+  //         touched: true,
+  //       }),
+  //     });
+  //     setSignupForm({ ...updatedForm, formIsValid: formIsValid });
+  //   },
+  //   [signupForm]
+  // );
 
   const formChangeHandler = ({ target: { value, name } }) => {
     const validation = checkValidity(value, signupForm[name].validation);
@@ -144,7 +144,6 @@ const SignupPage = (props) => {
       }
       signupForm={signupForm}
       formChangeHandler={formChangeHandler}
-      conformPasswordHandler={conformPasswordHandler}
       signupHandler={signupHandler}
     />
   );

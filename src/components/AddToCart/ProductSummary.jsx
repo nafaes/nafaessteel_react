@@ -50,8 +50,7 @@ const ProductSummary = (props) => {
             className={clsx(
               classes.addCartTabHdrRow,
               classesExternal.addCartTabHdrRow
-            )}
-          >
+            )} >
             <TableRow>
               <TableCell>Item</TableCell>
               {itemSummary.selectedValues.map((selectedValue, index) => (

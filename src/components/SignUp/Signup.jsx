@@ -15,7 +15,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
-
+import { useTranslation } from 'react-i18next'
 import signupEngDesk from "../../assets/scss/user.module.scss";
 import { signupEngMobile } from "../../assets/jss/viewStyles/signup/english";
 import { isInputNumber } from "../../utils/validations";
@@ -117,7 +117,7 @@ const SignUp = (props) => {
                       classes.formTextfield,
                       classesExternal.formTextfield
                     )}
-                    label={t("SignUp.InputFields.Email")}
+                    label={t("SignIn.InputFields.Email")}
                     name="email"
                     id="email"
                     variant="outlined"
@@ -150,7 +150,7 @@ const SignUp = (props) => {
                       classes.formTextfield,
                       classesExternal.formTextfield
                     )}
-                    label={t("SignUp.InputFields.Password")}
+                    label={t("SignIn.InputFields.Password")}
                     name="password"
                     id="password"
                     type={showPassword ? "text" : "password"}
@@ -203,7 +203,6 @@ const SignUp = (props) => {
                     name="confirmPassword"
                     id="confirmPassword"
                     type="password"
-                    // onChange={conformPasswordHandler}
                     onChange={formChangeHandler}
                     value={signupForm.confirmPassword.value}
                     error={!signupForm.confirmPassword.valid && signupForm.confirmPassword.touched}

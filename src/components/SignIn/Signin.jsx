@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 
 import { SIGNUP } from "../../constants/routes";
 import login from "../../assets/img/Login-illustration.svg";
+import { limitMaxlength } from "../../utils/validations";
 
 const SignIn = (props) => {
   const {
@@ -99,6 +100,7 @@ const SignIn = (props) => {
                 }}
                 name="email"
                 onChange={formChangeHandler}
+                
                 value={signinForm.email.value}
                 error={!signinForm.email.valid && signinForm.email.touched}
                 helperText={
@@ -150,7 +152,7 @@ const SignIn = (props) => {
                 }}
                 name="password"
                 onChange={formChangeHandler}
-                value={signinForm.password.value}
+                value={signinForm.password.value}       
                 error={
                   !signinForm.password.valid && signinForm.password.touched
                 }
