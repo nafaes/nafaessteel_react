@@ -13,6 +13,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import CallIcon from "@material-ui/icons/Call";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 import signupEngDesk from "../../assets/scss/user.module.scss";
@@ -21,6 +22,7 @@ import { isInputNumber } from "../../utils/validations";
 
 const SignUp = (props) => {
   const { signupForm, formChangeHandler, signupHandler, isDisplayImage, userCheckoutStyles } = props;
+  const { t } = useTranslation();
   const englishMobileStyles = signupEngMobile(userCheckoutStyles)();
   let classesExternal = signupEngDesk;
   let classes = englishMobileStyles;
@@ -82,7 +84,7 @@ const SignUp = (props) => {
                       classes.formTextfield,
                       classesExternal.formTextfield
                     )}
-                    label="Name"
+                    label={t("SignUp.InputFields.Name")}
                     name="name"
                     id="name"
                     variant="outlined"
@@ -102,7 +104,9 @@ const SignUp = (props) => {
                     error={!signupForm.name.valid && signupForm.name.touched}
                     helperText={
                       !signupForm.name.valid && signupForm.name.touched
-                        ? signupForm.name.validation.validationMsg
+                        ? t(signupForm.name.validation.validationMsg.msg, {
+                          length: signupForm.name.validation.validationMsg.length,
+                        })
                         : null
                     }
                   />
@@ -113,7 +117,7 @@ const SignUp = (props) => {
                       classes.formTextfield,
                       classesExternal.formTextfield
                     )}
-                    label="Email"
+                    label={t("SignUp.InputFields.Email")}
                     name="email"
                     id="email"
                     variant="outlined"
@@ -133,7 +137,9 @@ const SignUp = (props) => {
                     error={!signupForm.email.valid && signupForm.email.touched}
                     helperText={
                       !signupForm.email.valid && signupForm.email.touched
-                        ? signupForm.email.validation.validationMsg
+                        ? t(signupForm.email.validation.validationMsg.msg, {
+                          length:signupForm.email.validation.validationMsg.length
+                        })
                         : null
                     }
                   />
@@ -144,7 +150,7 @@ const SignUp = (props) => {
                       classes.formTextfield,
                       classesExternal.formTextfield
                     )}
-                    label="Password"
+                    label={t("SignUp.InputFields.Password")}
                     name="password"
                     id="password"
                     type={showPassword ? "text" : "password"}
@@ -153,7 +159,9 @@ const SignUp = (props) => {
                     error={!signupForm.password.valid && signupForm.password.touched}
                     helperText={
                       !signupForm.password.valid && signupForm.password.touched
-                        ? signupForm.password.validation.validationMsg
+                        ? t(signupForm.password.validation.validationMsg.msg, {
+                          length:signupForm.password.validation.validationMsg.length
+                        })
                         : null
                     }
                     variant="outlined"
@@ -191,7 +199,7 @@ const SignUp = (props) => {
                       classes.formTextfield,
                       classesExternal.formTextfield
                     )}
-                    label="Confirm Password"
+                    label={t("SignUp.InputFields.ConfirmPassword")}
                     name="confirmPassword"
                     id="confirmPassword"
                     type="password"
@@ -201,7 +209,7 @@ const SignUp = (props) => {
                     error={!signupForm.confirmPassword.valid && signupForm.confirmPassword.touched}
                     helperText={
                       !signupForm.confirmPassword.valid && signupForm.confirmPassword.touched
-                        ? signupForm.confirmPassword.validation.validationMsg
+                        ? t(signupForm.confirmPassword.validation.validationMsg.msg)
                         : null
                     }
                     variant="outlined"
@@ -223,7 +231,7 @@ const SignUp = (props) => {
                       classes.formTextfield,
                       classesExternal.formTextfield
                     )}
-                    label="Mobile Number"
+                    label={t("SignUp.InputFields.MobileNumber")}
                     name="mobileNumber"
                     id="mobileNumber"
                     variant="outlined"
@@ -236,7 +244,7 @@ const SignUp = (props) => {
                     error={!signupForm.mobileNumber.valid && signupForm.mobileNumber.touched}
                     helperText={
                       !signupForm.mobileNumber.valid && signupForm.mobileNumber.touched
-                        ? signupForm.mobileNumber.validation.validationMsg
+                        ? t(signupForm.mobileNumber.validation.validationMsg.msg)
                         : null
                     }
                     InputProps={{
@@ -253,7 +261,7 @@ const SignUp = (props) => {
                 </Grid>
                 <Grid item style={{ textAlign: "center", marginTop: "1em" }}>
                   <Button className={clsx(classesExternal.formBtn)} onClick={signupHandler} disabled={!signupForm.formIsValid}>
-                    Sign Up
+                  {t("SignIn.InputFields.SignUp")}
                   </Button>
                 </Grid>
               </Grid>

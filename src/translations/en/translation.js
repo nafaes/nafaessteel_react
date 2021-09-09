@@ -21,4 +21,15 @@ export const TRANSLATIONS_EN = {
       Alert2: "Failed to Connect",
     },
   },
+  SignUp: {
+    InputFields: {
+      Name: "Name",
+      Email: "Email",
+      Password: "Password",
+      ConfirmPassword: "Confirm password",
+      MobileNumber: "Mobile Number",
+      SignUp: "Sign Up"
+    },
+    Validations: VALIDATIONS.SignUp,
+  }
 };

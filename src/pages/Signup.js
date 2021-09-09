@@ -12,7 +12,8 @@ const signupFormInitialState = {
       isUserName: true,
       minLength: 3,
       maxLength: 40,
-      validationMsg: "Name Required!",
+      // validationMsg: "Name Required!",
+      validationMsg: { msg: "SignUp.Validations.Name", length: "" },
     },
     valid: false,
     touched: false,
@@ -24,6 +25,7 @@ const signupFormInitialState = {
       isEmail: true,
       maxLength: 32,
       validationMsg: "Email Required!",
+      validationMsg: { msg: "SignIn.Validations.Email", length: "" },
     },
     valid: false,
     touched: false,
@@ -36,7 +38,7 @@ const signupFormInitialState = {
       required: true,
       minLength: 8,
       maxLength: 16,
-      validationMsg: "Password Required!",
+      validationMsg: { msg: "SignUp.Validations.Password", length: "" },
     },
     valid: false,
     touched: false,
@@ -46,9 +48,9 @@ const signupFormInitialState = {
     validation: {
       required: true,
       isConfirmPassword: true,
-      minLength: 8,
-      maxLength: 16,
-      validationMsg: "Confirm Password Required!",
+      // minLength: 8,
+      // maxLength: 16,
+      validationMsg: { msg: "SignUp.Validations.ConfirmPassword" }
     },
     valid: false,
     touched: false,
@@ -58,7 +60,7 @@ const signupFormInitialState = {
     validation: {
       required: true,
       isMobileNo: true,
-      validationMsg: "Mobile Number Required!",
+      validationMsg: { msg: "SignUp.validations.MobileNumber" }
     },
     valid: false,
     touched: false,
@@ -125,7 +127,7 @@ const SignupPage = (props) => {
         confirmPassword: updateObject(signupForm.confirmPassword, {
           valid: false,
           validation: updateObject(signupForm.confirmPassword.validation, {
-            validationMsg: "Password not matched",
+            validationMsg: { msg:"SignUp.Validations.PasswordNotMatched" },
           }),
           touched: true,
         }),
