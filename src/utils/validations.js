@@ -20,7 +20,7 @@ export const limitMaxlength = (event, maxLength) => {
 export const checkValidity = (value, rules) => {
   if (rules.isUserName) {
     let valid = true;
-    let validationMsg = { msg: "", length: "" };
+    let validationMsg = rules.validationMsg;
     if (!value) {
       valid = false;
       validationMsg = { msg: "SignUp.Validations.Name", length: "" };
@@ -45,7 +45,7 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isMobileNo) {
     let valid = true;
-    let validationMsg = { msg: "", length: "" };
+    let validationMsg = rules.validationMsg;
     if (!value) {
       valid = false;
       validationMsg = { msg: "SignUp.Validations.MobileNumber" };
@@ -65,7 +65,7 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isEmail) {
     let valid = true;
-    let validationMsg = { msg: "", length: "" };
+    let validationMsg = rules.validationMsg;
     const pattern =
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
@@ -91,7 +91,7 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isPassword) {
     let valid = true;
-    let validationMsg = { msg: "", length: "" };
+    let validationMsg = rules.validationMsg;
     if (!value) {
       valid = false;
       validationMsg = { msg: "SignUp.Validations.Password", length: "" };
@@ -102,7 +102,7 @@ export const checkValidity = (value, rules) => {
         );
         if (strongRegex.test(value)) {
           valid = true;
-          validationMsg = { msg: "", length: "" };
+          validationMsg = rules.validationMsg;
         } else {
           valid = false;
           validationMsg = {
@@ -143,7 +143,7 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isConfirmPassword) {
     let valid = true;
-    let validationMsg = { msg: "", length: "" };
+    let validationMsg = rules.validationMsg;
     if (!value) {
       valid = false;
       validationMsg = { msg: "SignUp.Validations.ConfirmPassword" };
