@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 
 import { SIGNUP } from "../../constants/routes";
 import login from "../../assets/img/Login-illustration.svg";
-import { limitMaxlength } from "../../utils/validations";
+// import { limitMaxlength } from "../../utils/validations";
 
 const SignIn = (props) => {
   const {

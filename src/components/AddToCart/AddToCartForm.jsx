@@ -21,8 +21,13 @@ const AddToCartForm = (props) => {
   let classes = englishMobileStyles;
 
   return (
-    <Grid item container direction="row" justifyContent="center"
-      style={{ color: "#fff", marginTop: "1em" }}>
+    <Grid
+      item
+      container
+      direction="row"
+      justifyContent="center"
+      style={{ color: "#fff", marginTop: "1em" }}
+    >
       <Grid item lg={8} md={8} xs={10}>
         {item?.selections &&
           item.selections.map((select, index) => (
@@ -46,7 +51,6 @@ const AddToCartForm = (props) => {
                 onChange={({ target }) => {
                   formChangeHandler({
                     target,
-                    // ...select.types.find(({ itemId }) => itemId === target.value),
                     ...(addToCartForm?.[select.name]?.["value"]
                       ? addToCartForm?.[select.name]
                       : select.types.find(
@@ -60,14 +64,6 @@ const AddToCartForm = (props) => {
                   classes.selectComponentCls,
                   classesExternal.selectComponentCls
                 )}
-                name={select.name}                
-                value={addToCartForm?.[select.name]?.["value"]  ? addToCartForm[select.name]["value"]  : ""  }
-                label={select.name}
-                onChange={({ target }) => {
-                  formChangeHandler({
-                    target,
-                  });
-                }}
                 MenuProps={{ disableScrollLock: true }}
               >
                 <MenuItem value="">
@@ -81,7 +77,7 @@ const AddToCartForm = (props) => {
               </Select>
 
               {!addToCartForm[select.name]?.valid &&
-                addToCartForm[select.name]?.touched ? (
+              addToCartForm[select.name]?.touched ? (
                 <FormHelperText id="dynamic-select">
                   {addToCartForm[select.name].validationMsg}
                 </FormHelperText>
@@ -89,28 +85,28 @@ const AddToCartForm = (props) => {
             </FormControl>
           ))}
 
-          <Grid container item xs={12}  style={{ marginBottom: 16 }}>
-              {addToCartForm.price && 
-               (<Grid item xs={6}>
-                  <Typography component="h1" variant="subtitle1">
-                    Price: {addToCartForm.price}
-                  </Typography>
-               </Grid>)}
+        <Grid container item xs={12} style={{ marginBottom: 16 }}>
+          {addToCartForm.price && (
+            <Grid item xs={6}>
+              <Typography component="h1" variant="subtitle1">
+                Price: {addToCartForm.price}
+              </Typography>
+            </Grid>
+          )}
 
-               {addToCartForm.unit && (
-                <Grid item xs={6}>
-                  <Typography component="h1" variant="subtitle1">
-                    Unit: {addToCartForm.unit}
-                  </Typography>
-                </Grid>
-                )}
-          </Grid>
+          {addToCartForm.unit && (
+            <Grid item xs={6}>
+              <Typography component="h1" variant="subtitle1">
+                Unit: {addToCartForm.unit}
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
         <TextField
           id="outlined-basic"
           label="Enter Quantity"
           name="quantity"
           value={addToCartForm.quantity.value}
-          
           onChange={formChangeHandler}
           variant="outlined"
           className={clsx(
@@ -129,7 +125,6 @@ const AddToCartForm = (props) => {
           }
           style={{ width: "100%", marginBottom: "2em" }}
         />
-        
 
         <Grid
           item

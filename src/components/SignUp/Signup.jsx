@@ -15,7 +15,6 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
-import { useTranslation } from 'react-i18next'
 import signupEngDesk from "../../assets/scss/user.module.scss";
 import { signupEngMobile } from "../../assets/jss/viewStyles/signup/english";
 import { isInputNumber } from "../../utils/validations";

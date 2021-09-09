@@ -2,7 +2,6 @@ import React, { Fragment, useCallback, useContext, useState } from "react";
 
 import SignIn from "../components/SignIn/Signin";
 import Notification from "../common/Notification/Notification";
-import { updateObject } from "../utils/updateObject";
 import { checkValidity } from "../utils/validations";
 import { GlobalContext } from "../context/Provider";
 import { login } from "../context/actions/authActions";
