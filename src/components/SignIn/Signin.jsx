@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 
 import { SIGNUP } from "../../constants/routes";
 import login from "../../assets/img/Login-illustration.svg";
+import { limitMaxlength } from "../../utils/validations";
 
 const SignIn = (props) => {
   const {
@@ -97,6 +98,7 @@ const SignIn = (props) => {
                 }}
                 name="email"
                 onChange={formChangeHandler}
+                
                 value={signinForm.email.value}
                 error={!signinForm.email.valid && signinForm.email.touched}
                 helperText={
@@ -147,13 +149,15 @@ const SignIn = (props) => {
                 }}
                 name="password"
                 onChange={formChangeHandler}
-                value={signinForm.password.value}
+                value={signinForm.password.value}       
                 error={
                   !signinForm.password.valid && signinForm.password.touched
                 }
                 helperText={
                   !signinForm.password.valid && signinForm.password.touched
-                    ? signinForm.password.validation.validationMsg
+                    ? t(signinForm.password.validation.validationMsg.msg, {
+                        length: signinForm.password.validation.validationMsg.length,
+                      })
                     : null
                 }
               />
@@ -166,12 +170,11 @@ const SignIn = (props) => {
             <Grid item style={{ textAlign: "center" }}>
               <Button
                 className={classesExternal.formBtn}
-                onClick={signinHandler}
-                disabled={
-                  signinForm.email.valid === false ||
-                  signinForm.password.valid === false
-                }
-              >
+                onClick={signinHandler}>
+                {/* // disabled={
+                //   signinForm.email.valid === false ||
+                //   signinForm.password.valid === false
+                // } */}
                 {t("SignIn.InputFields.SignIn")}
               </Button>
             </Grid>

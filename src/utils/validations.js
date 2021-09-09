@@ -19,8 +19,8 @@ export const limitMaxlength = (event, maxLength) => {
 
 export const checkValidity = (value, rules) => {
   if (rules.isUserName) {
-    let valid = true;
-    let validationMsg = "";
+     let valid = true;
+     let validationMsg = { msg: "", length: "" };
     if (!value) {
       valid = false;
       validationMsg = "Name Required!";
@@ -31,7 +31,6 @@ export const checkValidity = (value, rules) => {
       valid = false;
       validationMsg = `Name is too long (Maximum ${rules.maxLength} characters allowed.)`;
     }
-
     return {
       valid,
       validationMsg,
@@ -40,7 +39,7 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isMobileNo) {
     let valid = true;
-    let validationMsg = "";
+    let validationMsg = { msg: "", length: "" };
     if (!value) {
       valid = false;
       validationMsg = "Mobile Number Required!";
@@ -60,9 +59,8 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isEmail) {
     let valid = true;
-    let validationMsg = "";
+    let validationMsg = { msg: "", length: "" };
     const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-
     if (!value) {
       valid = false;
       validationMsg = { msg: "SignIn.Validations.Email", length: "" };
@@ -84,37 +82,13 @@ export const checkValidity = (value, rules) => {
   }
 
   if (rules.isPassword) {
-    let valid;
-    let validationMsg;
+    let valid = true;
+    let validationMsg = { msg: "", length: "" };
     if (!value) {
       valid = false;
-      validationMsg = "Password Required!";
+      validationMsg = { msg: "SignIn.Validations.Password", length: "" };
     } else {
       if (rules?.isSignup) {
-        // var lowerCaseAlphabetRegex = new RegExp("^(?=.*[a-z])");
-        // var upperCaseAlphabetRegex = new RegExp("^(?=.*[A-Z])");
-        // var numberRegex = new RegExp("^(?=.*[0-9])");
-        // var specialCharRegex = new RegExp("^(?=.*[!@#%&])");
-        // if (!lowerCaseAlphabetRegex.test(value)) {
-        //   valid = false;
-        //   validationMsg = "Must contain one lowercase letter!";
-        // } else if (!upperCaseAlphabetRegex.test(value)) {
-        //   valid = false;
-        //   validationMsg = "Must contain one uppercase letter!";
-        // } else if (!numberRegex.test(value)) {
-        //   valid = false;
-        //   validationMsg = "Must contain one number!";
-        // } else if (!specialCharRegex.test(value)) {
-        //   valid = false;
-        //   validationMsg = "Must contain one special character!";
-        // } else if (value.length > rules.maxLength) {
-        //   valid = false;
-        //   validationMsg = `Password is too long (Maximum ${rules.maxLength} characters allowed.)`;
-        // } else if (value.length < rules.minLength) {
-        //   valid = false;
-        //   validationMsg = `Password is too short (Minimum ${rules.minLength} characters needed.)`;
-        // }
-
         var strongRegex = new RegExp(
           "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#%&])(?=.{8,})"
         );
@@ -133,10 +107,16 @@ export const checkValidity = (value, rules) => {
       } else {
         if (value.length > rules.maxLength) {
           valid = false;
-          validationMsg = `Password is too long (Maximum ${rules.maxLength} characters allowed.)`;
+          validationMsg = {
+            msg: "SignIn.Validations.PasswordMax",
+            length: rules.maxLength,
+          };
         } else if (value.length < rules.minLength) {
           valid = false;
-          validationMsg = `Password is too short (Minimum ${rules.minLength} characters needed.)`;
+          validationMsg = {
+            msg: "SignIn.Validations.PasswordMin",
+            length: rules.minLength,
+          };
         }
       }
     }
@@ -149,7 +129,7 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isConfirmPassword) {
     let valid = true;
-    let validationMsg = "";
+    let validationMsg = { msg: "", length: "" };
     if (!value) {
       valid = false;
       validationMsg = "Confirm Password Required!";

@@ -21,4 +21,11 @@ export const TRANSLATIONS_AR = {
       Alert2: "تعذر الاتصال",
     },
   },
+  SignUp: {
+    InputFields: {
+       Name: "اسم",
+       ConfirmPassword: "تأكيد كلمة المرور",
+       MobileNumber: "رقم الهاتف المحمول",
+    }
+  },
 };

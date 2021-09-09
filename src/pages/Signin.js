@@ -24,7 +24,7 @@ const signinFormInitialState = {
       required: true,
       minLength: 8,
       maxLength: 16,
-      validationMsg: "SignIn.Validations.Password",
+      validationMsg: { msg: "SignIn.Validations.Password", length: "" }
     },
     valid: false,
     touched: false,
@@ -40,26 +40,53 @@ const SigninPage = (props) => {
   });
 
   const formChangeHandler = (event) => {
-    const {
-      target: { value, name },
-    } = event;
-
+    const { value, name } = event.target;
     const validation = checkValidity(value, signinForm[name].validation);
-    const updatedForm = updateObject(signinForm, {
-      [name]: updateObject(signinForm[name], {
+
+    const updatedForm = {
+      ...signinForm,
+      [name]: {
         value: value,
         valid: validation.valid,
-        validation: updateObject(signinForm[name].validation, {
-          validationMsg: validation.validationMsg,
-        }),
         touched: true,
-      }),
-    });
-    setSigninForm(updatedForm);
+        validation: {
+          ...signinForm[name].validation,
+          validationMsg: validation.validationMsg
+        }
+      }
+    }
+
+    // const updatedForm = updateObject(signinForm, {
+    //   [name]: updateObject(signinForm[name], {
+    //     value: value,
+    //     valid: validation.valid,
+    //     validation: updateObject(signinForm[name].validation, {
+    //       validationMsg: validation.validationMsg,
+    //     }),
+    //     touched: true,
+    //   }),
+    // });
+
+    setSigninForm(updatedForm)
   };
 
   const signinHandler = () => {
-    setNotify({isOpen: true, message: "Login Success", type: "success"});
+    if (!signinForm.email.valid || !signinForm.password.valid) {
+      const updatedForm = {
+        email: {
+          ...signinForm.email,
+          touched: true
+        },
+        password: {
+          ...signinForm.password,
+          touched: true
+        }
+      }
+
+      setSigninForm(updatedForm)
+    } else {
+      setNotify({ isOpen: true, message: "Login Success", type: "success" });
+    }
   };
 
   return (
@@ -75,7 +102,6 @@ const SigninPage = (props) => {
         formChangeHandler={formChangeHandler}
         signinHandler={signinHandler}
       />
-
       {notify.isOpen && <Notification notify={notify} setNotify={setNotify} />}
     </Fragment>
   );
