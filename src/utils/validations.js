@@ -20,7 +20,7 @@ export const limitMaxlength = (event, maxLength) => {
 export const checkValidity = (value, rules) => {
   if (rules.isUserName) {
     let valid = true;
-    let validationMsg = "";
+    let validationMsg = { msg: "", length: "" };
     if (!value) {
       valid = false;
       validationMsg = { msg: "SignUp.Validations.Name", length: "" };
@@ -46,16 +46,16 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isMobileNo) {
     let valid = true;
-    let validationMsg = "";
+    let validationMsg = { msg: "", length: "" };
     if (!value) {
       valid = false;
-      validationMsg = { msg: "SignUp.Validations.MobileNumber" }
+      validationMsg = { msg: "SignUp.Validations.MobileNumber" };
     } else if (value === "0000") {
       valid = false;
-      validationMsg = { msg: "SignUp.Validations.NotValidMobileNumber" }
+      validationMsg = { msg: "SignUp.Validations.NotValidMobileNumber" };
     } else if (value.length !== 8) {
       valid = false;
-      validationMsg = { msg: "SignUp.Validations.ValidMobileNumber" }
+      validationMsg = { msg: "SignUp.Validations.ValidMobileNumber" };
     }
 
     return {
@@ -66,7 +66,7 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isEmail) {
     let valid = true;
-    let  validationMsg = { msg: "", length: "" };
+    let validationMsg = { msg: "", length: "" };
     const pattern =
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
@@ -91,8 +91,8 @@ export const checkValidity = (value, rules) => {
   }
 
   if (rules.isPassword) {
-    let valid=true;
-    let  validationMsg = { msg: "", length: "" };
+    let valid = true;
+    let validationMsg = { msg: "", length: "" };
     if (!value) {
       valid = false;
       validationMsg = { msg: "SignUp.Validations.Password", length: "" };
@@ -127,7 +127,7 @@ export const checkValidity = (value, rules) => {
         );
         if (strongRegex.test(value)) {
           valid = true;
-          validationMsg = "";
+          validationMsg = { msg: "", length: "" };
         } else {
           valid = false;
           validationMsg = {
@@ -168,11 +168,11 @@ export const checkValidity = (value, rules) => {
 
   if (rules.isConfirmPassword) {
     let valid = true;
-    let  validationMsg = { msg: ""};
+    let validationMsg = { msg: "", length: "" };
     if (!value) {
       valid = false;
       validationMsg = { msg: "SignUp.Validations.ConfirmPassword" };
-    } 
+    }
     return {
       valid,
       validationMsg,
