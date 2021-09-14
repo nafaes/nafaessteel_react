@@ -1,24 +1,46 @@
-import React, { useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import clsx from "clsx";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Paper from "@material-ui/core/Paper";
 import { Grid } from "@material-ui/core";
+
 import Guest from "./Guest";
 import RadioButton from "../../../common/RadioButton/RadioButton";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import CheckoutButton from "../../../common/Button/Button";
 import SigninPage from "../../../pages/Signin";
 import SignupPage from "../../../pages/Signup";
+import { CheckoutContext } from "../../../pages/CheckoutPage";
 
 const UserCheckout = () => {
-  const classes = checkoutStyles();
+  const { handleTabChange, guestForm, setGuestForm } = useContext(CheckoutContext);
 
+  const classes = checkoutStyles();
   const [userType, setUserType] = useState("guest");
   const handleUserType = (event, newvalue) => {
     setUserType(newvalue);
   };
+
+  const submitDetailsHandler = useCallback(() => {
+    if (!guestForm.formIsValid) {
+      setGuestForm((guestForm) => {
+        let updatedForm = { formIsValid: false };
+        for (let inputIdentifier in guestForm) {
+          if (typeof guestForm[inputIdentifier] === "object") {
+            updatedForm[inputIdentifier] = {
+              ...guestForm[inputIdentifier],
+              touched: true,
+            };
+          }
+        }
+        return updatedForm;
+      });
+    } else {
+      handleTabChange(undefined, 1);
+    }
+  }, [guestForm.formIsValid, setGuestForm, handleTabChange]);
 
   let renderUserType;
   if (userType === "guest") {
@@ -43,13 +65,12 @@ const UserCheckout = () => {
         borderRadius: "1em",
       }}
     >
-      <FormControl component="fieldset" fullWidth>
+      <FormControl component="fieldset" fullWidth={true}>
         <RadioGroup
           defaultValue="guest"
           aria-label="gender"
           name="customized-radios"
           className={classes.radioContainer}
-          fullWidth
           onChange={handleUserType}
         >
           <FormControlLabel
@@ -78,7 +99,7 @@ const UserCheckout = () => {
           className={clsx(classes.checkNextButtonGridItem)}
           style={{ width: "40%", margin: "0px auto .5em auto" }}
         >
-          <CheckoutButton />
+          <CheckoutButton onClick={submitDetailsHandler} />
         </Grid>
       </Grid>
     </Paper>

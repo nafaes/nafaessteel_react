@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Grid from "@material-ui/core/Grid";
@@ -10,11 +10,13 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PaymentIcon from "@material-ui/icons/Payment";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+
 import UserCheckout from "./UserCheckout/UserCheckout";
 import { Shipping } from "./Shipping/Shipping";
 import { Payment } from "./Payment/Payment";
-import CheckoutSummary from "./CheckoutSummary";
+// import CheckoutSummary from "./CheckoutSummary";
 import checkoutStyles from "../../assets/jss/viewStyles/checkout/checkout";
+import { CheckoutContext } from "../../pages/CheckoutPage";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -29,7 +31,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography component="h1">{children}</Typography>
         </Box>
       )}
     </div>
@@ -51,55 +53,69 @@ function a11yProps(index) {
 
 const ScrollableTabsButtonForce = () => {
   const classes = checkoutStyles();
-  const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const {
+    tabValue,
+    handleTabChange,
+    checkoutProcess: {
+      isCheckoutDisabled,
+      isShippingDisabled,
+      isOrderSummaryDisabled,
+      isPaymentDisabled,
+    },
+  } = useContext(CheckoutContext);
 
   return (
     <Grid item xs={12} sm={12} md={7} lg={7} className={classes.checkoutRoot}>
       <AppBar position="static" color="default">
         <Tabs
-          value={value}
-          onChange={handleChange}
+          value={tabValue}
+          onChange={handleTabChange}
           variant="scrollable"
           scrollButtons="on"
           indicatorColor="primary"
           textColor="primary"
           aria-label="scrollable force tabs example"
         >
-          <Tab label="CheckOut" icon={<ContactsIcon />} {...a11yProps(0)} />
+          <Tab
+            label="CheckOut"
+            icon={<ContactsIcon />}
+            {...a11yProps(0)}
+            disabled={isCheckoutDisabled}
+          />
           <Tab
             label="Shipping"
             icon={<LocalShippingIcon />}
             {...a11yProps(1)}
+            disabled={isShippingDisabled}
           />
           <Tab
             label="Order Summary"
             icon={<ShoppingCartIcon />}
             {...a11yProps(2)}
+            disabled={isOrderSummaryDisabled}
           />
           <Tab
             label="Payment Method"
             icon={<PaymentIcon />}
             {...a11yProps(3)}
+            disabled={isPaymentDisabled}
           />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={tabValue} index={0}>
         <UserCheckout />
       </TabPanel>
 
-      <TabPanel value={value} index={1}>
+      <TabPanel value={tabValue} index={1}>
         <Shipping />
       </TabPanel>
 
-      <TabPanel value={value} index={2}>
+      <TabPanel value={tabValue} index={2}>
         {/* <CheckoutSummary /> */}
       </TabPanel>
 
-      <TabPanel value={value} index={3}>
+      <TabPanel value={tabValue} index={3}>
         <Payment />
       </TabPanel>
     </Grid>

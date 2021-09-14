@@ -51,7 +51,10 @@ export const login = (email, password, dispatch) => async (onError) => {
           expiresIn: response.expires_in,
         })
       );
-      history.goBack();
+
+      if (history.location.pathname !== "/checkout") {
+        history.goBack();
+      }
     }
   } catch (error) {
     onError(error.message);

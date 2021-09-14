@@ -1,6 +1,5 @@
 import React from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -141,7 +140,6 @@ const CheckoutSummary = () => {
               <TableCell colSpan={2}>Total</TableCell>
               <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
             </TableRow>
-            
           </TableBody>
         </Table>
       </TableContainer>

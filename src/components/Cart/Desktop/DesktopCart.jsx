@@ -16,12 +16,7 @@ const useStyles = makeStyles((theme) => ({
 const DesktopCart = () => {
   const classes = useStyles();
 
-  const {
-    cartItems,
-    totalCartItems,
-    totalCartAmount,
-    dispatchCartActions
-  } = useContext(GlobalContext);
+  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } = useContext(GlobalContext);
 
   return (
     <React.Fragment>

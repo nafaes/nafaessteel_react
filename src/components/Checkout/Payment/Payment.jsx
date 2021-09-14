@@ -6,8 +6,6 @@ import Paper from "@material-ui/core/Paper";
 import { Button, Grid } from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
 
-// import Pickup from "./Pickup";
-// import Delivery from "./Delivery";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import RadioButton from "../../../common/RadioButton/RadioButton";
 
@@ -29,12 +27,11 @@ export const Payment = () => {
         borderRadius: "1em",
       }}
     >
-      <FormControl component="fieldset" fullWidth>
+      <FormControl component="fieldset" fullWidth={true}>
         <RadioGroup
           aria-label=""
           name="customized-radios"
           className={classes.radioContainer}
-          fullWidth
           onChange={handlePaymentType}
         >
           <FormControlLabel

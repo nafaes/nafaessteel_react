@@ -1,15 +1,11 @@
 import React from "react";
 import { Divider, Grid } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import clsx from "clsx";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Paper from "@material-ui/core/Paper";
 import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
-import { FormHelperText, Typography } from "@material-ui/core";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 
 const Delivery = () => {
@@ -19,8 +15,9 @@ const Delivery = () => {
   const handleChange = (event) => {
     setArea(event.target.value);
   };
+  
   return (
-    <Grid container justifyContent="center" sm={12}>
+    <Grid container justifyContent="center">
       <div elevation={12} style={{ width: "96%", margin: "0em auto" }}>
         <Grid item container>
           <Grid item sm={6}>
