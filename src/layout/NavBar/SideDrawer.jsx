@@ -26,20 +26,14 @@ const SideDrawer = (props) => {
   const { dynamicNavigation } = useNavigation();
 
   const navigation = useCallback(
-    ({ categoryId, categoryName, itemId, itemName, allItems }) => {
+    (allItems) => {
       toggleDrawer();
-      dynamicNavigation({
-        categoryId,
-        categoryName,
-        itemId,
-        itemName,
-        allItems,
-      });
+      dynamicNavigation(allItems);
     },
     [toggleDrawer, dynamicNavigation]
   );
 
-  const NestedTreeView = ({ menu, allItems }) => (
+  const NestedTreeView = React.forwardRef(({ menu, allItems }, ref) => (
     <TreeItem
       nodeId={menu.categoryId + menu.menuName}
       label={menu.menuName}
@@ -48,35 +42,36 @@ const SideDrawer = (props) => {
       {menu.items.map((item) =>
         item.items ? (
           <NestedTreeView
-            key={item.menuId}
+            ref={ref}
+            key={item.categoryId}
             menu={item}
             allItems={[
               ...allItems,
               {
-                categoryId: menu.categoryId,
-                itemId: item.menuId,
+                categoryId: item.categoryId,
                 name: item.menuName,
+                level: item.nextLevel,
               },
             ]}
           />
         ) : (
           <TreeItem
-            key={item.menuId}
-            nodeId={item.menuId}
+            key={item.categoryId}
+            nodeId={item.categoryId + item.menuName}
             label={item.menuName}
             style={{ color: "white" }}
-            onClick={navigation.bind(null, {
-              categoryId: menu.categoryId,
-              categoryName: menu.menuName,
-              itemId: item.menuId,
-              itemName: item.menuName,
-              allItems,
-            })}
+            onClick={navigation.bind(null, [
+              ...allItems,
+              {
+                categoryId: item.categoryId,
+                name: item.menuName,
+              },
+            ])}
           />
         )
       )}
     </TreeItem>
-  );
+  ));
 
   return (
     <React.Fragment>
@@ -114,20 +109,20 @@ const SideDrawer = (props) => {
             {menus.map((menu) =>
               menu.items ? (
                 <NestedTreeView
-                  key={menu.menuId}
+                  key={menu.categoryId}
                   menu={menu}
                   allItems={[
                     {
-                      categoryId: menu.menuId,
-                      itemId: "",
+                      categoryId: menu.categoryId,
                       name: menu.menuName,
+                      level: menu.nextLevel,
                     },
                   ]}
                 />
               ) : (
                 <TreeItem
-                  key={menu.menuId}
-                  nodeId="2"
+                  key={menu.categoryId}
+                  nodeId={menu.categoryId + menu.menuName}
                   label={menu.menuName}
                   style={{ color: "white" }}
                   onClick={() => {
@@ -135,8 +130,7 @@ const SideDrawer = (props) => {
                     history.push(ADDTOCART, {
                       items: [
                         {
-                          categoryId: menu.menuId,
-                          itemId: "",
+                          categoryId: menu.categoryId,
                           name: menu.menuName,
                         },
                       ],

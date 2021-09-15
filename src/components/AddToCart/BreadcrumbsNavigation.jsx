@@ -31,11 +31,10 @@ const BreadcrumbsNavigation = ({ historyItems, breadcrumbNavigation }) => {
           <Link color="inherit" component={RouterLink} to="/">
             All Categories
           </Link>
-          
+
           {historyItems &&
             historyItems.map((item, index) => {
               const last = index === historyItems.length - 1;
-              console.log(historyItems);  
               if (last) {
                 return (
                   <Typography key={item.categoryId} variant="h6">

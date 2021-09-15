@@ -62,92 +62,19 @@ const SubMenu = withStyles(submenuStyles)(
 );
 
 const Menus = React.forwardRef((props, ref) => {
-  // const { popupState, allMenus, history, location } = props;
   const { popupState, allMenus } = props;
-
   const englishMobileStyles = navbarEngMobile();
   let classes = englishMobileStyles;
 
   const { dynamicNavigation } = useNavigation();
 
   const navigation = useCallback(
-    ({ categoryId, categoryName, itemId, itemName, allItems }) => {
+    (allItems) => {
       popupState.close();
-      dynamicNavigation({
-        categoryId,
-        categoryName,
-        itemId,
-        itemName,
-        allItems,
-      });
+      dynamicNavigation(allItems);
     },
     [popupState, dynamicNavigation]
   );
-
-  // const dynamicNavigation = useCallback(
-  //   ({
-  //     categoryId,
-  //     categoryName,
-  //     itemId,
-  //     itemName,
-  //     allItems: historyItems,
-  //   }) => {
-  //     const historyAllItems = location?.state?.items;
-  //     const historyCategoryId =
-  //       historyAllItems?.[historyAllItems.length - 1]?.categoryId;
-  //     const historyItemId =
-  //       historyAllItems?.[historyAllItems.length - 1]?.itemId;
-
-  //     popupState.close();
-
-  //     let allItems = [];
-  //     if (historyAllItems) {
-  //       if (historyCategoryId && historyItemId) {
-  //         allItems = [
-  //           ...historyItems,
-  //           {
-  //             categoryId: categoryId,
-  //             itemId: itemId,
-  //             name: itemName,
-  //           },
-  //         ];
-  //       } else if (historyItemId === "") {
-  //         allItems = [
-  //           ...historyItems,
-  //           {
-  //             categoryId: categoryId,
-  //             itemId: "",
-  //             name: itemName,
-  //           },
-  //         ];
-  //       }
-  //     } else {
-  //       if (categoryId && itemId) {
-  //         allItems = [
-  //           ...historyItems,
-  //           {
-  //             categoryId: categoryId,
-  //             itemId: itemId,
-  //             name: itemName,
-  //           },
-  //         ];
-  //       } else if (categoryId) {
-  //         allItems = [
-  //           {
-  //             categoryId: categoryId,
-  //             itemId: "",
-  //             name: categoryName,
-  //           },
-  //         ];
-  //       }
-  //     }
-
-  //     history.push(ADDTOCART, {
-  //       items: allItems,
-  //     });
-  //   },
-  //   [popupState, history, location]
-  // );
 
   const RenderSubMenu = React.forwardRef(({ menu, allItems, props }, ref) => {
     return (
@@ -162,28 +89,28 @@ const Menus = React.forwardRef((props, ref) => {
           item.items ? (
             <RenderSubMenu
               ref={ref}
-              key={item.menuId}
+              key={item.categoryId}
               menu={item}
               allItems={[
                 ...allItems,
                 {
-                  categoryId: menu.categoryId,
-                  itemId: item.menuId,
+                  categoryId: item.categoryId,
                   name: item.menuName,
+                  level: item.nextLevel,
                 },
               ]}
             />
           ) : (
             <MenuItem
               ref={ref}
-              key={item.menuName}
-              onClick={navigation.bind(null, {
-                categoryId: menu.categoryId,
-                categoryName: menu.menuName,
-                itemId: item.menuId,
-                itemName: item.menuName,
-                allItems,
-              })}
+              key={item.categoryId}
+              onClick={navigation.bind(null, [
+                ...allItems,
+                {
+                  categoryId: item.categoryId,
+                  name: item.menuName,
+                },
+              ])}
             >
               {item.menuName}
             </MenuItem>
@@ -205,27 +132,26 @@ const Menus = React.forwardRef((props, ref) => {
       {allMenus.map((category) =>
         category.items ? (
           <RenderSubMenu
-            key={category.menuId}
+            key={category.categoryId}
             menu={category}
             allItems={[
               {
-                categoryId: category.menuId,
-                itemId: "",
+                categoryId: category.categoryId,
                 name: category.menuName,
+                level: category.nextLevel,
               },
             ]}
           />
         ) : (
           <MenuItem
-            key={category.menuId}
+            key={category.categoryId}
             component={Link}
             to={{
               pathname: ADDTOCART,
               state: {
                 items: [
                   {
-                    categoryId: category.menuId,
-                    itemId: "",
+                    categoryId: category.categoryId,
                     name: category.menuName,
                   },
                 ],

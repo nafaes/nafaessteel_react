@@ -631,82 +631,80 @@ export const allCategories = [
 
 export const allCategoryItems = [
   {
-    menuId: "category1",
     menuName: "Steel",
-    categoryId: "category1",
+    categoryId: 1,
+    nextLevel: 2,
     items: [
       {
-        menuId: "item1",
         menuName: "Kuwaiti Steel",
+        categoryId: 13,
       },
       {
-        menuId: "item2",
         menuName: "Omani Steel",
+        categoryId: 14,
       },
       {
-        menuId: "item3",
         menuName: "Allitefaq Steel KSA",
+        categoryId: 15,
       },
       {
-        menuId: "item4",
         menuName: "Iranian Steel",
+        categoryId: 16,
       },
       {
-        menuId: "item5",
         menuName: "Wood Nail",
+        categoryId: 17,
       },
     ],
   },
   {
     menuName: "Wood",
-    menuId: "category2",
-    categoryId: "category2",
+    categoryId: 4,
+    nextLevel: 2,
     items: [
       {
         menuName: "Board",
-        menuId: "woodItem1",
-        categoryId: "category2",
+        categoryId: 6,
+        nextLevel: 3,
         items: [
           {
             menuName: "Chinese Grd1",
-            menuId: "chinesegrd1",
+            categoryId: 8,
           },
           {
             menuName: "Chinese Grd2",
-            menuId: "chinesegrd2",
+            categoryId: 9,
           },
         ],
       },
       {
         menuName: "White",
-        menuId: "woodItem2",
-        categoryId: "category2",
+        categoryId: 7,
+        nextLevel: 3,
         items: [
           {
             menuName: "Austrian",
-            menuId: "austrian",
+            categoryId: 10,
           },
           {
             menuName: "Russian",
-            menuId: "russian",
+            categoryId: 11,
           },
           {
             menuName: "Croatian",
-            menuId: "croatian",
+            categoryId: 12,
           },
         ],
       },
     ],
   },
   {
-    menuId: "category3",
     menuName: "Cement",
-    categoryId: "category3",
+    categoryId: 2,
   },
   {
-    menuId: "category4",
     menuName: "Bricks",
-    categoryId: "category4",
+    categoryId: 3,
   },
 ];
 export const allOrderItems = [
@@ -715,33 +713,31 @@ export const allOrderItems = [
     Total: "KWD 90.00",
     ShipTo: "Nimeelya",
     itemName: "Kuwaiti Iron",
-    orderId:1,
-    image: "/brick.jpg"
+    orderId: 1,
+    image: "/brick.jpg",
   },
   {
     orderPlaced: "12 August 2021",
     Total: "KWD 110.00",
     ShipTo: "Korean",
     itemName: "Wood",
-    orderId:2,
-    image: "/brick.jpg"
+    orderId: 2,
+    image: "/brick.jpg",
   },
   {
     orderPlaced: "17 August 2021",
     Total: "KWD 70.00",
     ShipTo: "Japan",
     itemName: "Brick",
-    orderId:3,
-    image: "/brick.jpg"
-
+    orderId: 3,
+    image: "/brick.jpg",
   },
   {
     orderPlaced: "19 August 2021",
     Total: "KWD 80.00",
     ShipTo: "Afganisthan",
     itemName: "Cement",
-    orderId:4,
-    image: "/brick.jpg"
-
+    orderId: 4,
+    image: "/brick.jpg",
   },
 ];

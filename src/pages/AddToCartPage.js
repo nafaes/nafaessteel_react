@@ -38,11 +38,9 @@ const AddToCartPage = (props) => {
     },
   } = props;
 
-  const historyItem =
-    useMemo(() => {
-      return historyItems[historyItems.length - 1]
-    }, [historyItems]
-    );
+  const historyItem = useMemo(() => {
+    return historyItems[historyItems.length - 1];
+  }, [historyItems]);
 
   const getItemDetails = useCallback(async () => {
     const response = await getCatergoryItemDetails(2, historyItem.categoryId);
@@ -59,7 +57,6 @@ const AddToCartPage = (props) => {
           touched: false,
         };
         form[dropDown.name] = formDropDown;
-        console.log(form[dropDown.name])
       });
     }
     setAddToCartForm((addToCartForm) => {
@@ -94,11 +91,8 @@ const AddToCartPage = (props) => {
       let dropdown;
       if (name !== "quantity" && value !== "") {
         const selectedDropdown = item.selections.find(
-          ({ name: selectName }) => selectName === name,
-         
+          ({ name: selectName }) => selectName === name
         );
-        console.log(name)
-        console.log(selectedDropdown)
 
         const selectedItem = selectedDropdown?.types.find(
           ({ itemId }) => itemId === value
@@ -147,7 +141,8 @@ const AddToCartPage = (props) => {
       let formIsValid = true;
       for (let inputIdentifier in updatedAddToCartForm) {
         if (typeof updatedAddToCartForm[inputIdentifier] === "object") {
-          formIsValid = updatedAddToCartForm[inputIdentifier].valid && formIsValid; 
+          formIsValid =
+            updatedAddToCartForm[inputIdentifier].valid && formIsValid;
         }
       }
       setAddToCartForm({
