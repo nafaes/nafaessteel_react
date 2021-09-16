@@ -3,7 +3,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Paper from "@material-ui/core/Paper";
-import { Button, Grid } from "@material-ui/core";
+import { Button, FormHelperText, Grid, Typography } from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
 
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
@@ -47,6 +47,12 @@ export const Payment = () => {
             className={classes.paymentRadioBtns}
           />
         </RadioGroup>
+
+        {!paymentType && (
+          <FormHelperText error={true} component="h1" style={{ textAlign: "center" }}>
+            <Typography variant="body1">Select Payment Type</Typography>
+          </FormHelperText>
+        )}
       </FormControl>
 
       <Grid container justifyContent="center">

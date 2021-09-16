@@ -2,7 +2,7 @@ import React from "react";
 import { Divider, Grid } from "@material-ui/core";
 import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
 
-const Pickup = () => {
+const Pickup = ({ deliveryDate }) => {
   return (
     <Grid
       container
@@ -40,7 +40,7 @@ const Pickup = () => {
           color: "#333",
         }}
       >
-        12/10/2021
+        {deliveryDate}
       </Grid>
     </Grid>
   );

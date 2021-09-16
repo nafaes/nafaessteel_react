@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
@@ -8,8 +8,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { Typography } from "@material-ui/core";
 
-const Shipping_Charges = 0.07;
+import { GlobalContext } from "../../context/Provider";
+import { CheckoutContext } from "../../pages/CheckoutPage";
 
 const useStyles = makeStyles({
   // root: {
@@ -32,47 +34,12 @@ const useStyles = makeStyles({
 //   }))(TableRow);
 
 function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
+  return `${num.toFixed(3)}`;
 }
-
-function priceRow(qty, unit) {
-  return qty * unit;
-}
-
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, qty, unit, price };
-}
-
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-function totalQuantity(items) {
-  return items.map(({ qty }) => qty).reduce((sum, i) => sum + i, 0);
-}
-
-const rows = [
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-const totalQty = totalQuantity(rows);
-const invoiceTaxes = Shipping_Charges * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
 const CheckoutSummary = () => {
+  const { cartItems, totalCartItems, totalCartAmount } = useContext(GlobalContext);
+  const { shippingCharges } = useContext(CheckoutContext);
   const classes = useStyles();
 
   return (
@@ -103,7 +70,7 @@ const CheckoutSummary = () => {
                 Qty.
               </TableCell>
               <TableCell align="right" style={{ top: 57 }}>
-                Unit
+                Price
               </TableCell>
               <TableCell align="right" style={{ top: 57 }}>
                 Sum
@@ -111,34 +78,58 @@ const CheckoutSummary = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.desc}>
-                <TableCell>{row.desc}</TableCell>
-                <TableCell align="right">{row.qty}</TableCell>
-                <TableCell align="right">{row.unit}</TableCell>
-                <TableCell align="right">{ccyFormat(row.price)}</TableCell>
-              </TableRow>
-            ))}
+            {cartItems.map(
+              ({ itemId, itemName, quantity, price, selectedValues }) => (
+                <TableRow key={itemId}>
+                  <TableCell>
+                    {itemName}
+
+                    {selectedValues.map(({ name, item }, index) => (
+                      <Fragment key={index}>
+                        <Typography
+                          gutterBottom
+                          variant="subtitle2"
+                          color="textSecondary"
+                          className={classes.textContainer}
+                        >
+                          {item}
+                          {/* {`(${item})`} */}
+                        </Typography>
+                      </Fragment>
+                    ))}
+                  </TableCell>
+                  <TableCell align="right">{quantity}</TableCell>
+                  <TableCell align="right">{ccyFormat(price)}</TableCell>
+                  <TableCell align="right">
+                    {ccyFormat(quantity * price)}
+                  </TableCell>
+                </TableRow>
+              )
+            )}
 
             <TableRow>
               <TableCell>Total Quantity</TableCell>
-              <TableCell align="right">{totalQty}</TableCell>
+              <TableCell align="right">{totalCartItems}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell rowSpan={3} />
               <TableCell colSpan={2}>Subtotal</TableCell>
-              <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+              <TableCell align="right">{ccyFormat(totalCartAmount)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Shipping Charges</TableCell>
-              <TableCell align="right">{`${(Shipping_Charges * 100).toFixed(
+              {/* <TableCell align="right">{`${(Shipping_Charges * 100).toFixed(
                 0
-              )} %`}</TableCell>
-              <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+              )} %`}</TableCell> */}
+              <TableCell align="right" colSpan={2}>
+                {ccyFormat(shippingCharges)}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell colSpan={2}>Total</TableCell>
-              <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+              <TableCell align="right">
+                {ccyFormat(totalCartAmount + shippingCharges)}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

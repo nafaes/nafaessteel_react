@@ -16,7 +16,7 @@ export const VALIDATIONS = {
     PasswordMax: "Password is too long (Maximum {{ length }} characters allowed.)",
     PasswordMin: "Password is too short (Minimum {{ length }} characters needed.)",
     ConfirmPassword: "Confirm Password Required!",
-    PasswordNotMatched: "Password Not Matched",
+    PasswordNotMatched: "Confirm Password Not matched with password",
     MobileNumber: "Mobile Number Required!",
     NotValidMobileNumber: "Mobile Number Should not contain All Zeros",
     ValidMobileNumber: "Mobile Number must contain (8 digits.)"

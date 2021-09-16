@@ -20,12 +20,19 @@ import { signupEngMobile } from "../../assets/jss/viewStyles/signup/english";
 import { isInputNumber } from "../../utils/validations";
 
 const SignUp = (props) => {
-  const { signupForm, formChangeHandler, signupHandler, isDisplayImage, userCheckoutStyles } = props;
+  const {
+    signupForm,
+    formChangeHandler,
+    conformPasswordHandler,
+    signupHandler,
+    isDisplayImage,
+    userCheckoutStyles,
+  } = props;
   const { t } = useTranslation();
   const englishMobileStyles = signupEngMobile(userCheckoutStyles)();
   let classesExternal = signupEngDesk;
   let classes = englishMobileStyles;
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = useCallback(() => {
     setShowPassword(!showPassword);
@@ -104,8 +111,8 @@ const SignUp = (props) => {
                     helperText={
                       !signupForm.name.valid && signupForm.name.touched
                         ? t(signupForm.name.validation.validationMsg.msg, {
-                          length: signupForm.name.validation.validationMsg.length,
-                        })
+                            length: signupForm.name.validation.validationMsg.length,
+                          })
                         : null
                     }
                   />
@@ -137,8 +144,8 @@ const SignUp = (props) => {
                     helperText={
                       !signupForm.email.valid && signupForm.email.touched
                         ? t(signupForm.email.validation.validationMsg.msg, {
-                          length:signupForm.email.validation.validationMsg.length
-                        })
+                            length: signupForm.email.validation.validationMsg.length,
+                          })
                         : null
                     }
                   />
@@ -150,17 +157,21 @@ const SignUp = (props) => {
                       classesExternal.formTextfield
                     )}
                     label={t("SignIn.InputFields.Password")}
+                    required={true}
                     name="password"
                     id="password"
                     type={showPassword ? "text" : "password"}
                     onChange={formChangeHandler}
                     value={signupForm.password.value}
-                    error={!signupForm.password.valid && signupForm.password.touched}
+                    error={
+                      !signupForm.password.valid && signupForm.password.touched
+                    }
                     helperText={
                       !signupForm.password.valid && signupForm.password.touched
                         ? t(signupForm.password.validation.validationMsg.msg, {
-                          length:signupForm.password.validation.validationMsg.length
-                        })
+                            length:
+                              signupForm.password.validation.validationMsg.length,
+                          })
                         : null
                     }
                     variant="outlined"
@@ -202,12 +213,19 @@ const SignUp = (props) => {
                     name="confirmPassword"
                     id="confirmPassword"
                     type="password"
-                    onChange={formChangeHandler}
+                    required={true}
+                    onChange={conformPasswordHandler}
                     value={signupForm.confirmPassword.value}
-                    error={!signupForm.confirmPassword.valid && signupForm.confirmPassword.touched}
+                    error={
+                      !signupForm.confirmPassword.valid &&
+                      signupForm.confirmPassword.touched
+                    }
                     helperText={
-                      !signupForm.confirmPassword.valid && signupForm.confirmPassword.touched
-                        ? t(signupForm.confirmPassword.validation.validationMsg.msg)
+                      !signupForm.confirmPassword.valid &&
+                      signupForm.confirmPassword.touched
+                        ? t(
+                            signupForm.confirmPassword.validation.validationMsg.msg
+                          )
                         : null
                     }
                     variant="outlined"
@@ -239,10 +257,16 @@ const SignUp = (props) => {
                       isInputNumber(event, 8);
                     }}
                     value={signupForm.mobileNumber.value}
-                    error={!signupForm.mobileNumber.valid && signupForm.mobileNumber.touched}
+                    error={
+                      !signupForm.mobileNumber.valid &&
+                      signupForm.mobileNumber.touched
+                    }
                     helperText={
-                      !signupForm.mobileNumber.valid && signupForm.mobileNumber.touched
-                        ? t(signupForm.mobileNumber.validation.validationMsg.msg)
+                      !signupForm.mobileNumber.valid &&
+                      signupForm.mobileNumber.touched
+                        ? t(
+                            signupForm.mobileNumber.validation.validationMsg.msg
+                          )
                         : null
                     }
                     InputProps={{
@@ -258,8 +282,12 @@ const SignUp = (props) => {
                   />
                 </Grid>
                 <Grid item style={{ textAlign: "center", marginTop: "1em" }}>
-                  <Button className={clsx(classesExternal.formBtn)} onClick={signupHandler} disabled={!signupForm.formIsValid}>
-                  {t("SignIn.InputFields.SignUp")}
+                  <Button
+                    className={clsx(classesExternal.formBtn)}
+                    onClick={signupHandler}
+                    disabled={!signupForm.formIsValid}
+                  >
+                    {t("SignIn.InputFields.SignUp")}
                   </Button>
                 </Grid>
               </Grid>

@@ -16,7 +16,7 @@ export const VALIDATIONS = {
     PasswordMax: "كلمة المرور طويلة جدًا (الحد الأقصى المسموح به هو {{length}} حرفًا.)",
     PasswordMin: "كلمة المرور أقصر مما يجب (الحد الأدنى المطلوب هو {{length}} حرف.)",
     ConfirmPassword: "مطلوب تأكيد كلمة المرور!",
-    PasswordNotMatched: "كلمة المرور غير متطابقة",
+    PasswordNotMatched: "تأكيد كلمة المرور غير متطابق مع كلمة المرور",
     MobileNumber: "رقم الجوال مطلوب!",
     NotValidMobileNumber: "يجب ألا يحتوي رقم الهاتف المحمول على جميع الأصفار",
     ValidMobileNumber: "يجب أن يحتوي رقم الهاتف المتحرك على (8 أرقام)."

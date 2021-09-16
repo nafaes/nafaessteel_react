@@ -6,10 +6,10 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import ContactsIcon from "@material-ui/icons/Contacts";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PaymentIcon from "@material-ui/icons/Payment";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+// import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 import UserCheckout from "./UserCheckout/UserCheckout";
 import { Shipping } from "./Shipping/Shipping";
@@ -60,7 +60,6 @@ const ScrollableTabsButtonForce = () => {
     checkoutProcess: {
       isCheckoutDisabled,
       isShippingDisabled,
-      isOrderSummaryDisabled,
       isPaymentDisabled,
     },
   } = useContext(CheckoutContext);
@@ -89,16 +88,16 @@ const ScrollableTabsButtonForce = () => {
             {...a11yProps(1)}
             disabled={isShippingDisabled}
           />
-          <Tab
+          {/* <Tab
             label="Order Summary"
             icon={<ShoppingCartIcon />}
             {...a11yProps(2)}
             disabled={isOrderSummaryDisabled}
-          />
+          /> */}
           <Tab
             label="Payment Method"
             icon={<PaymentIcon />}
-            {...a11yProps(3)}
+            {...a11yProps(2)}
             disabled={isPaymentDisabled}
           />
         </Tabs>
@@ -111,11 +110,11 @@ const ScrollableTabsButtonForce = () => {
         <Shipping />
       </TabPanel>
 
-      <TabPanel value={tabValue} index={2}>
-        {/* <CheckoutSummary /> */}
-      </TabPanel>
+      {/* <TabPanel value={tabValue} index={2}>
+        <CheckoutSummary />
+      </TabPanel> */}
 
-      <TabPanel value={tabValue} index={3}>
+      <TabPanel value={tabValue} index={2}>
         <Payment />
       </TabPanel>
     </Grid>

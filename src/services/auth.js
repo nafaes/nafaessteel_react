@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "../helpers/axiosInstance";
 
 export const logIn = async (email, password) => {
   try {
@@ -22,5 +23,22 @@ export const logIn = async (email, password) => {
       throw new Error(err.response.data.error_description);
     }
     throw err;
+  }
+};
+
+export const signUp = async (newUser) => {
+  try {
+    const { data } = await axiosInstance.post("/createaccount", newUser);
+    if (data.code === 201) {
+      return data;
+    }
+  } catch (error) {
+    if (error.response) {
+      const { code } = error.response.data;
+      if (code === 409) {
+        throw new Error("Account is already exists");
+      }
+    }
+    throw error;
   }
 };

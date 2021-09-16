@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -12,23 +12,70 @@ import Delivery from "./Delivery";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import RadioButton from "../../../common/RadioButton/RadioButton";
 import { CheckoutContext } from "../../../pages/CheckoutPage";
+import { getDeliveryDate } from "../../../services/checkout";
 
 export const Shipping = () => {
-  const { handleTabChange, shippingType, handleShippingType } =
-    useContext(CheckoutContext);
+  const {
+    shippingType,
+    handleShippingType,
+    shippingForm,
+    setShippingForm,
+    handleTabChange,
+  } = useContext(CheckoutContext);
+  const [deliveryDate, setDeliveryDate] = useState();
   const classes = checkoutStyles();
 
-  const nextHandler = useCallback(() => {
+  const getDeliveryDateByShippingType = useCallback(async () => {
     if (shippingType !== "") {
-      handleTabChange(undefined, 3);
+      let deliveryType = 0;
+      if (shippingType === "delivery") deliveryType = 1;
+      const date = await getDeliveryDate(deliveryType);
+      setDeliveryDate(date);
     }
-  }, [shippingType, handleTabChange]);
+  }, [shippingType]);
+
+  useEffect(() => {
+    getDeliveryDateByShippingType();
+
+    return () => {
+      setDeliveryDate(null);
+    };
+  }, [getDeliveryDateByShippingType]);
+
+  const nextHandler = useCallback(() => {
+    if (shippingType === "pickup") {
+      handleTabChange(undefined, 2);
+    } else if (shippingType === "delivery" && shippingForm.formIsValid) {
+      handleTabChange(undefined, 2);
+    } else if (
+      shippingType === "delivery" &&
+      shippingForm.formIsValid === false
+    ) {
+      setShippingForm((previousShippingForm) => {
+        let updatedForm = { formIsValid: false };
+        for (let inputIdentifier in previousShippingForm) {
+          if (typeof previousShippingForm[inputIdentifier] === "object") {
+            updatedForm[inputIdentifier] = {
+              ...previousShippingForm[inputIdentifier],
+              valid: false,
+            };
+          }
+        }
+        return updatedForm;
+      });
+    }
+  }, [
+    shippingForm.formIsValid,
+    shippingType,
+    setShippingForm,
+    handleTabChange,
+  ]);
 
   let renderShippingType;
   if (shippingType === "pickup") {
-    renderShippingType = <Pickup />;
+    renderShippingType = <Pickup deliveryDate={deliveryDate} />;
   } else if (shippingType === "delivery") {
-    renderShippingType = <Delivery />;
+    renderShippingType = <Delivery deliveryDate={deliveryDate} />;
   }
 
   return (
@@ -62,10 +109,8 @@ export const Shipping = () => {
         </RadioGroup>
 
         {!shippingType && (
-          <FormHelperText style={{textAlign: "center"}}>
-            <Typography variant="body1">
-            Select Type
-            </Typography>
+          <FormHelperText error={true} component="h1" style={{ textAlign: "center" }}>
+            <Typography variant="body1">Select Delivery Type</Typography>
           </FormHelperText>
         )}
       </FormControl>

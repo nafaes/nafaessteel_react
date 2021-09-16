@@ -89,6 +89,33 @@ const guestFormInitialState = {
   formIsValid: false,
 };
 
+const shippingFormInitialState = {
+  area: {
+    value: "",
+    valid: true,
+    validationMsg: "Area required!",
+  },
+  shippingCharges: {
+    value: "",
+  },
+  block: {
+    value: "",
+    valid: true,
+    validationMsg: "Block required!",
+  },
+  street: {
+    value: "",
+    valid: true,
+    validationMsg: "Street required!",
+  },
+  plot: {
+    value: "",
+    valid: true,
+    validationMsg: "Plot required!",
+  },
+  formIsValid: false,
+};
+
 export const CheckoutContext = createContext();
 
 const CheckoutPage = () => {
@@ -102,7 +129,13 @@ const CheckoutPage = () => {
   );
 
   const [guestForm, setGuestForm] = useState(guestFormInitialState);
+  const [shippingForm, setShippingForm] = useState(shippingFormInitialState);
   const [shippingType, setShippingType] = useState("");
+  const [shippingCharges, setShippingCharges] = useState(0);
+
+  const handleShippingType = useCallback((event, newValue) => {
+    setShippingType(newValue);
+  }, []);
 
   const handleTabChange = useCallback((event, newValue) => {
     switch (newValue) {
@@ -110,22 +143,18 @@ const CheckoutPage = () => {
         dispatchCheckoutProcess({ type: SHIPPING });
         setTabValue(1);
         break;
+      // case 2:
+      //   dispatchCheckoutProcess({ type: ORDER_SUMMARY });
+      //   setTabValue(2);
+      //   break;
       case 2:
-        dispatchCheckoutProcess({ type: ORDER_SUMMARY });
-        setTabValue(2);
-        break;
-      case 3:
         dispatchCheckoutProcess({ type: PAYMENT });
-        setTabValue(3);
+        setTabValue(2);
         break;
       default:
         setTabValue(0);
     }
     setTabValue(newValue);
-  }, []);
-
-  const handleShippingType = useCallback((event, newValue) => {
-    setShippingType(newValue);
   }, []);
 
   useEffect(() => {
@@ -147,6 +176,10 @@ const CheckoutPage = () => {
     setGuestForm,
     shippingType,
     handleShippingType,
+    shippingForm,
+    setShippingForm,
+    shippingCharges,
+    setShippingCharges,
   };
 
   return (

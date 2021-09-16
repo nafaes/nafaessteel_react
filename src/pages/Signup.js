@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 
 import SignUp from "../components/SignUp/Signup";
+import { signUp } from "../services/auth";
+import Notification from "../common/Notification/Notification";
 import { updateObject } from "../utils/updateObject";
 import { checkValidity } from "../utils/validations";
 
@@ -44,10 +46,6 @@ const signupFormInitialState = {
   confirmPassword: {
     value: "",
     validation: {
-      required: true,
-      isConfirmPassword: true,
-      // minLength: 8,
-      // maxLength: 16,
       validationMsg: { msg: "SignUp.Validations.ConfirmPassword" },
     },
     valid: false,
@@ -68,33 +66,45 @@ const signupFormInitialState = {
 
 const SignupPage = (props) => {
   const [signupForm, setSignupForm] = useState(signupFormInitialState);
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
 
-  // const conformPasswordHandler = useCallback(
-  //   ({ target: { value, name } }) => {
-  //     let valid = true;
-  //     let validationMsg = "";
-  //     let formIsValid = true;
+  const conformPasswordHandler = useCallback(
+    ({ target: { value, name } }) => {
+      let valid = true;
+      let msg = "";
+      let formIsValid = true;
 
-  //     if (signupForm.password.value && signupForm.password.value !== value) {
-  //       valid = false;
-  //       validationMsg = "Not matched with password!";
-  //       formIsValid = false;
-  //     }
+      if (!value) {
+        valid = false;
+        formIsValid = false;
+        msg = "SignUp.Validations.ConfirmPassword";
+      } else if (
+        signupForm.password.value &&
+        signupForm.password.value !== value
+      ) {
+        valid = false;
+        formIsValid = false;
+        msg = "SignUp.Validations.PasswordNotMatched";
+      }
 
-  //     const updatedForm = updateObject(signupForm, {
-  //       [name]: updateObject(signupForm[name], {
-  //         value: value,
-  //         valid: valid,
-  //         validation: updateObject(signupForm[name].validation, {
-  //           validationMsg: validationMsg,
-  //         }),
-  //         touched: true,
-  //       }),
-  //     });
-  //     setSignupForm({ ...updatedForm, formIsValid: formIsValid });
-  //   },
-  //   [signupForm]
-  // );
+      const updatedForm = updateObject(signupForm, {
+        [name]: updateObject(signupForm[name], {
+          value: value,
+          valid: valid,
+          validation: updateObject(signupForm[name].validation, {
+            validationMsg: { msg },
+          }),
+          touched: true,
+        }),
+      });
+      setSignupForm({ ...updatedForm, formIsValid: formIsValid });
+    },
+    [signupForm]
+  );
 
   const formChangeHandler = ({ target: { value, name } }) => {
     const validation = checkValidity(value, signupForm[name].validation);
@@ -119,7 +129,7 @@ const SignupPage = (props) => {
     setSignupForm({ ...updatedSignupForm, formIsValid });
   };
 
-  const signupHandler = () => {
+  const signupHandler = async () => {
     if (signupForm.password.value !== signupForm.confirmPassword.value) {
       const updatedFormDetails = updateObject(signupForm, {
         confirmPassword: updateObject(signupForm.confirmPassword, {
@@ -131,21 +141,45 @@ const SignupPage = (props) => {
         }),
       });
       setSignupForm({ ...updatedFormDetails, formIsValid: false });
+    } else {
+      try {
+        const response = await signUp({
+          name: signupForm.name.value,
+          email: signupForm.email.value,
+          mobile: signupForm.mobileNumber.value,
+          password: signupForm.password.value,
+        });
+        setSignupForm(signupFormInitialState);
+        if (response) {
+          setNotify({
+            isOpen: true,
+            message: "Account is created successfully",
+            type: "success",
+          });
+        }
+      } catch (err) {
+        setSignupForm(signupFormInitialState);
+        setNotify({ isOpen: true, message: err.message, type: "error" });
+      }
     }
   };
 
   return (
-    <SignUp
-      isDisplayImage={
-        props?.isDisplayImage === false ? props.isDisplayImage : true
-      }
-      userCheckoutStyles={
-        props?.userCheckoutStyles ? props?.userCheckoutStyles : false
-      }
-      signupForm={signupForm}
-      formChangeHandler={formChangeHandler}
-      signupHandler={signupHandler}
-    />
+    <Fragment>
+      <SignUp
+        isDisplayImage={
+          props?.isDisplayImage === false ? props.isDisplayImage : true
+        }
+        userCheckoutStyles={
+          props?.userCheckoutStyles ? props?.userCheckoutStyles : false
+        }
+        signupForm={signupForm}
+        conformPasswordHandler={conformPasswordHandler}
+        formChangeHandler={formChangeHandler}
+        signupHandler={signupHandler}
+      />
+      {notify.isOpen && <Notification notify={notify} setNotify={setNotify} />}
+    </Fragment>
   );
 };
 

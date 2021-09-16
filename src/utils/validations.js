@@ -140,17 +140,4 @@ export const checkValidity = (value, rules) => {
       validationMsg,
     };
   }
-
-  if (rules.isConfirmPassword) {
-    let valid = true;
-    let validationMsg = rules.validationMsg;
-    if (!value) {
-      valid = false;
-      validationMsg = { msg: "SignUp.Validations.ConfirmPassword" };
-    }
-    return {
-      valid,
-      validationMsg,
-    };
-  }
 };
