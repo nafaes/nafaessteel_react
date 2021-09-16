@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import { Button, Grid, Typography } from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { useTranslation } from "react-i18next";
 
 import Pickup from "./Pickup";
 import Delivery from "./Delivery";
@@ -23,6 +24,7 @@ export const Shipping = () => {
     handleTabChange,
   } = useContext(CheckoutContext);
   const [deliveryDate, setDeliveryDate] = useState();
+  const { t } = useTranslation();
   const classes = checkoutStyles();
 
   const getDeliveryDateByShippingType = useCallback(async () => {
@@ -99,18 +101,24 @@ export const Shipping = () => {
           <FormControlLabel
             value="pickup"
             control={<RadioButton />}
-            label="Pickup"
+            label={t("Checkout.Pickup")}
           />
           <FormControlLabel
             value="delivery"
             control={<RadioButton />}
-            label="Delivery"
+            label={t("Checkout.Delivery")}
           />
         </RadioGroup>
 
         {!shippingType && (
-          <FormHelperText error={true} component="h1" style={{ textAlign: "center" }}>
-            <Typography variant="body1">Select Delivery Type</Typography>
+          <FormHelperText
+            error={true}
+            component="h1"
+            style={{ textAlign: "center" }}
+          >
+            <Typography variant="body1">
+              {t("Checkout.SelectDeliveryType")}
+            </Typography>
           </FormHelperText>
         )}
       </FormControl>
@@ -144,7 +152,7 @@ export const Shipping = () => {
               <NavigateNextOutlinedIcon style={{ fontSize: "1.5rem" }} />
             }
           >
-            Next
+            {t("Checkout.Next")}
           </Button>
         </Grid>
       </Grid>

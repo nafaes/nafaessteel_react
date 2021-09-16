@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CartSummary = ({ totalCartItems, totalCartAmount }) => {
+  const { t } = useTranslation();
   const classes = useStyles();
 
   return (
@@ -26,7 +28,7 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
       <Card className={classes.root} elevation={15}>
         <CardContent>
           <Typography variant="h6" component="div">
-            Cart Summary
+            {t("Cart.CartSummary")}
           </Typography>
           <Typography variant="subtitle2">
             <hr />
@@ -34,7 +36,7 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
           <Grid container>
             <Grid item md={6} lg={6}>
               <Typography variant="subtitle1" component="div">
-                Items
+                {t("Cart.Items")}
               </Typography>
             </Grid>
             <Grid item md={6} lg={6}>
@@ -50,7 +52,7 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
             </Grid>
             <Grid item md={6} lg={6}>
               <Typography variant="subtitle1" component="div">
-                Total Price
+                {t("Cart.TotalPrice")}
               </Typography>
             </Grid>
             <Grid item md={6} lg={6}>
@@ -61,7 +63,7 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
                   fontWeight: "bold",
                 }}
               >
-                {`KWD ${totalCartAmount.toLocaleString(undefined, {
+                {`${t("Cart.Kwd")} ${totalCartAmount.toLocaleString(undefined, {
                   minimumFractionDigits: 3,
                 })}`}
               </Typography>
@@ -71,7 +73,7 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
 
         <CardActions>
           <Grid container>
-            <Grid item md={12} lg={12} style={{textAlign: "center"}}>
+            <Grid item md={12} lg={12} style={{ textAlign: "center" }}>
               <Button
                 component={Link}
                 to="/checkout"
@@ -79,7 +81,7 @@ const CartSummary = ({ totalCartItems, totalCartAmount }) => {
                 color="primary"
                 style={{ margin: "6px", width: "20em" }}
               >
-                Place Order
+                {t("Cart.PlaceOrder")}
               </Button>
             </Grid>
           </Grid>

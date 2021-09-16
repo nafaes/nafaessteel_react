@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import { useTranslation } from "react-i18next";
 
 import { addItem, removeItem } from "../../../../context/actions/cartActions";
 
@@ -50,8 +51,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DesktopCartItems = (props) => {
-  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } = props;
+  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } =
+    props;
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Grid item xs={12} sm={12} md={8} lg={8}>
@@ -67,12 +70,12 @@ const DesktopCartItems = (props) => {
         >
           <Grid item>
             <Typography variant="h6" gutterBottom>
-              Items in your cart
+              {t("Cart.Text1")}
             </Typography>
           </Grid>
           <Grid item>
             <Typography variant="body1" color="textSecondary">
-              Price
+              {t("Cart.Price")}
             </Typography>
           </Grid>
         </Grid>
@@ -185,7 +188,7 @@ const DesktopCartItems = (props) => {
           }}
         >
           <Typography variant="subtitle1" gutterBottom>
-            {`Subtotal (${totalCartItems} items):`}
+            {`${t("Cart.Subtotal")} (${totalCartItems} ${t("Cart.Items")}):`}
           </Typography>
           <Typography
             variant="subtitle1"
@@ -194,7 +197,7 @@ const DesktopCartItems = (props) => {
               fontWeight: "bold",
             }}
           >
-            {`KWD ${totalCartAmount.toLocaleString(undefined, {
+            {`${t("Cart.Kwd")} ${totalCartAmount.toLocaleString(undefined, {
               minimumFractionDigits: 3,
             })}`}
             {/* {`KWD ${totalCartAmount.toFixed(3)}`} */}

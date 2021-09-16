@@ -5,11 +5,13 @@ import FormControl from "@material-ui/core/FormControl";
 import Paper from "@material-ui/core/Paper";
 import { Button, FormHelperText, Grid, Typography } from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
+import { useTranslation } from "react-i18next";
 
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import RadioButton from "../../../common/RadioButton/RadioButton";
 
 export const Payment = () => {
+  const { t } = useTranslation();
   const classes = checkoutStyles();
 
   const [paymentType, setPaymentType] = useState();
@@ -37,20 +39,26 @@ export const Payment = () => {
           <FormControlLabel
             value="ondelivery"
             control={<RadioButton />}
-            label="Payment On Delivery"
+            label={t("Checkout.PaymentOnDelivery")}
             className={classes.paymentRadioBtns}
           />
           <FormControlLabel
             value="knet"
             control={<RadioButton />}
-            label="Checkout Using KNET"
+            label={t("Checkout.CheckoutUsingKNET")}
             className={classes.paymentRadioBtns}
           />
         </RadioGroup>
 
         {!paymentType && (
-          <FormHelperText error={true} component="h1" style={{ textAlign: "center" }}>
-            <Typography variant="body1">Select Payment Type</Typography>
+          <FormHelperText
+            error={true}
+            component="h1"
+            style={{ textAlign: "center" }}
+          >
+            <Typography variant="body1">
+              {t("Checkout.SelectPaymentType")}
+            </Typography>
           </FormHelperText>
         )}
       </FormControl>
@@ -81,7 +89,7 @@ export const Payment = () => {
               <NavigateNextOutlinedIcon style={{ fontSize: "1.5rem" }} />
             }
           >
-            Next
+            {t("Checkout.Next")}
           </Button>
         </Grid>
       </Grid>

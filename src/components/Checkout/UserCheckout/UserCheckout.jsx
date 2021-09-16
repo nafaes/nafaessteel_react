@@ -5,6 +5,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Paper from "@material-ui/core/Paper";
 import { Grid } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import Guest from "./Guest";
 import RadioButton from "../../../common/RadioButton/RadioButton";
@@ -16,6 +17,7 @@ import { CheckoutContext } from "../../../pages/CheckoutPage";
 
 const UserCheckout = () => {
   const { handleTabChange, guestForm, setGuestForm } = useContext(CheckoutContext);
+  const { t } = useTranslation();
 
   const classes = checkoutStyles();
   const [userType, setUserType] = useState("guest");
@@ -76,17 +78,17 @@ const UserCheckout = () => {
           <FormControlLabel
             value="guest"
             control={<RadioButton />}
-            label="As Guest"
+            label={t("Checkout.AsGuest")}
           />
           <FormControlLabel
             value="member"
             control={<RadioButton />}
-            label="As Member"
+            label={t("Checkout.AsMember")}
           />
           <FormControlLabel
             value="register"
             control={<RadioButton />}
-            label="Register"
+            label={t("Checkout.Register")}
           />
         </RadioGroup>
       </FormControl>
@@ -99,7 +101,7 @@ const UserCheckout = () => {
           className={clsx(classes.checkNextButtonGridItem)}
           style={{ width: "40%", margin: "0px auto .5em auto" }}
         >
-          <CheckoutButton onClick={submitDetailsHandler} />
+          <CheckoutButton onClick={submitDetailsHandler} buttonText={t("Checkout.Next")} />
         </Grid>
       </Grid>
     </Paper>

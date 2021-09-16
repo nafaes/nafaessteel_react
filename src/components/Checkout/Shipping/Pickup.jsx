@@ -1,8 +1,11 @@
 import React from "react";
 import { Divider, Grid } from "@material-ui/core";
 import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
+import { useTranslation } from "react-i18next";
 
 const Pickup = ({ deliveryDate }) => {
+  const { t } = useTranslation();
+
   return (
     <Grid
       container
@@ -29,7 +32,7 @@ const Pickup = ({ deliveryDate }) => {
           color: "#333",
         }}
       >
-        Pickup Date:
+        {t("Checkout.PickupDate")}
       </Grid>
       <Divider style={{ width: "80%", backgroundColor: "#0086b3" }} />
       <Grid

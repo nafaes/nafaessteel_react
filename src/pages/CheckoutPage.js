@@ -93,7 +93,7 @@ const shippingFormInitialState = {
   area: {
     value: "",
     valid: true,
-    validationMsg: "Area required!",
+    validationMsg: "Shipping.Validations.Area",
   },
   shippingCharges: {
     value: "",
@@ -101,17 +101,17 @@ const shippingFormInitialState = {
   block: {
     value: "",
     valid: true,
-    validationMsg: "Block required!",
+    validationMsg: "Shipping.Validations.Block",
   },
   street: {
     value: "",
     valid: true,
-    validationMsg: "Street required!",
+    validationMsg: "Shipping.Validations.Street",
   },
   plot: {
     value: "",
     valid: true,
-    validationMsg: "Plot required!",
+    validationMsg: "Shipping.Validations.Plot",
   },
   formIsValid: false,
 };

@@ -9,6 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { GlobalContext } from "../../context/Provider";
 import { CheckoutContext } from "../../pages/CheckoutPage";
@@ -18,11 +19,11 @@ const useStyles = makeStyles({
   //   position: "sticky",
   //   top: "6.4rem",
   // },
-  tableRow: {
-    "&$selected, &$selected:hover": {
-      backgroundColor: "green",
-    },
-  },
+  // tableRow: {
+  //   "&$selected, &$selected:hover": {
+  //     backgroundColor: "green",
+  //   },
+  // },
 });
 
 // const TableRow = withStyles((theme) => ({
@@ -40,6 +41,7 @@ function ccyFormat(num) {
 const CheckoutSummary = () => {
   const { cartItems, totalCartItems, totalCartAmount } = useContext(GlobalContext);
   const { shippingCharges } = useContext(CheckoutContext);
+  const { t } = useTranslation();
   const classes = useStyles();
 
   return (
@@ -61,19 +63,19 @@ const CheckoutSummary = () => {
                 style={{ fontWeight: "600" }}
               >
                 {/* <Typography variant="h5">Order Summary</Typography> */}
-                Order Details
+                {t("Checkout.OrderDetails")}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell style={{ top: 57 }}>Items</TableCell>
+              <TableCell style={{ top: 57 }}>{t("Cart.Items")}</TableCell>
               <TableCell align="right" style={{ top: 57 }}>
-                Qty.
+                {t("Checkout.Qty")}
               </TableCell>
               <TableCell align="right" style={{ top: 57 }}>
-                Price
+                {t("Cart.Price")}
               </TableCell>
               <TableCell align="right" style={{ top: 57 }}>
-                Sum
+                {t("Checkout.Sum")}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -108,16 +110,16 @@ const CheckoutSummary = () => {
             )}
 
             <TableRow>
-              <TableCell>Total Quantity</TableCell>
+              <TableCell>{t("Checkout.TotalQuantity")}</TableCell>
               <TableCell align="right">{totalCartItems}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell rowSpan={3} />
-              <TableCell colSpan={2}>Subtotal</TableCell>
+              <TableCell colSpan={2}>{t("Cart.Subtotal")}</TableCell>
               <TableCell align="right">{ccyFormat(totalCartAmount)}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Shipping Charges</TableCell>
+              <TableCell>{t("Checkout.ShippingCharges")}</TableCell>
               {/* <TableCell align="right">{`${(Shipping_Charges * 100).toFixed(
                 0
               )} %`}</TableCell> */}
@@ -126,7 +128,7 @@ const CheckoutSummary = () => {
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell colSpan={2}>Total</TableCell>
+              <TableCell colSpan={2}>{t("Checkout.Total")}</TableCell>
               <TableCell align="right">
                 {ccyFormat(totalCartAmount + shippingCharges)}
               </TableCell>

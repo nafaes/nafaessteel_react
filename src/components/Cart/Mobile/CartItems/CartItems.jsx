@@ -13,6 +13,7 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 import { addItem, removeItem } from "../../../../context/actions/cartActions";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   headerContent: {
@@ -51,13 +52,14 @@ const useStyles = makeStyles((theme) => ({
 const CartItems = (props) => {
   const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } = props;
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     cartItems && (
       <Grid container style={{ marginTop: "2em" }}>
         <Grid item xs={12} sm={12} className={classes.headerContent}>
           <Typography variant="h6" gutterBottom>
-            Items in your cart
+            {t("Cart.Text1")}
           </Typography>
           <Divider variant="fullWidth" />
         </Grid>
@@ -169,7 +171,7 @@ const CartItems = (props) => {
         >
           <Grid item xs={6} sm={4}>
             <Typography variant="subtitle1" component="div">
-              {`Subtotal (${totalCartItems} items):`}
+              {`${t("Cart.Subtotal")} (${totalCartItems} ${t("Cart.Items")}):`}
             </Typography>
           </Grid>
           <Grid item xs={6} sm={4}>
@@ -180,7 +182,7 @@ const CartItems = (props) => {
                 fontWeight: "bold",
               }}
             >
-              {`KWD ${totalCartAmount.toLocaleString(undefined, {
+              {`${t("Cart.Kwd")} ${totalCartAmount.toLocaleString(undefined, {
                 minimumFractionDigits: 3,
               })}`}
             </Typography>
@@ -194,7 +196,7 @@ const CartItems = (props) => {
               color="primary"
               className={classes.placeOrderBtn}
             >
-              Place Order
+              {t("Cart.PlaceOrder")}
             </Button>
           </Grid>
         </Grid>

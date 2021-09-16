@@ -1,11 +1,11 @@
 import axiosInstance from "../helpers/axiosInstance";
 
-export const getAllCategories = async () => {
+export const getAllCategories = async (languageId) => {
   try {
     const response = await axiosInstance.post("/categories", {
       id: 0,
       level: 1,
-      lng: 2,
+      lng: languageId,
     });
 
     if (response.status === 200) {

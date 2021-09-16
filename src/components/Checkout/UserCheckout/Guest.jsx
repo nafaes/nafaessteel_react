@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 // import Paper from "@material-ui/core/Paper";
 
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
-import { checkValidity, isInputNumber } from "../../../utils/validations";
+import { checkValidity, limitMaxlength } from "../../../utils/validations";
 import { updateObject } from "../../../utils/updateObject";
 import { CheckoutContext } from "../../../pages/CheckoutPage";
 
@@ -51,7 +51,7 @@ const Guest = () => {
               classes.formTextfield
               // classesExternal.formTextfield
             )}
-            label="Name"
+            label={t("SignUp.InputFields.Name")}
             required={true}
             id="outlined-start-adornment"
             variant="outlined"
@@ -84,7 +84,7 @@ const Guest = () => {
               classes.formTextfield
               // classesExternal.formTextfield
             )}
-            label="Email"
+            label={t("SignIn.InputFields.Email")}
             required={true}
             id="outlined-start-adornment"
             variant="outlined"
@@ -117,14 +117,15 @@ const Guest = () => {
               classes.formTextfield
               // classesExternal.formTextfield
             )}
-            label="Mobile Number"
+            label={t("SignUp.InputFields.MobileNumber")}
             required={true}
-            id="outlined-start-adornment"
             variant="outlined"
             name="mobileNumber"
             onChange={formChangeHandler}
+            type="number"
+            autoComplete="off"
             onKeyPress={(event) => {
-              isInputNumber(event, 8);
+              limitMaxlength(event, 8);
             }}
             value={guestForm.mobileNumber.value}
             error={

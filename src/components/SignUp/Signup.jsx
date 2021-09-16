@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 import signupEngDesk from "../../assets/scss/user.module.scss";
 import { signupEngMobile } from "../../assets/jss/viewStyles/signup/english";
-import { isInputNumber } from "../../utils/validations";
+import { limitMaxlength } from "../../utils/validations";
 
 const SignUp = (props) => {
   const {
@@ -111,7 +111,8 @@ const SignUp = (props) => {
                     helperText={
                       !signupForm.name.valid && signupForm.name.touched
                         ? t(signupForm.name.validation.validationMsg.msg, {
-                            length: signupForm.name.validation.validationMsg.length,
+                            length:
+                              signupForm.name.validation.validationMsg.length,
                           })
                         : null
                     }
@@ -144,7 +145,8 @@ const SignUp = (props) => {
                     helperText={
                       !signupForm.email.valid && signupForm.email.touched
                         ? t(signupForm.email.validation.validationMsg.msg, {
-                            length: signupForm.email.validation.validationMsg.length,
+                            length:
+                              signupForm.email.validation.validationMsg.length,
                           })
                         : null
                     }
@@ -170,7 +172,8 @@ const SignUp = (props) => {
                       !signupForm.password.valid && signupForm.password.touched
                         ? t(signupForm.password.validation.validationMsg.msg, {
                             length:
-                              signupForm.password.validation.validationMsg.length,
+                              signupForm.password.validation.validationMsg
+                                .length,
                           })
                         : null
                     }
@@ -224,7 +227,8 @@ const SignUp = (props) => {
                       !signupForm.confirmPassword.valid &&
                       signupForm.confirmPassword.touched
                         ? t(
-                            signupForm.confirmPassword.validation.validationMsg.msg
+                            signupForm.confirmPassword.validation.validationMsg
+                              .msg
                           )
                         : null
                     }
@@ -253,8 +257,10 @@ const SignUp = (props) => {
                     variant="outlined"
                     required={true}
                     onChange={formChangeHandler}
+                    type="number"
+                    autoComplete="off"
                     onKeyPress={(event) => {
-                      isInputNumber(event, 8);
+                      limitMaxlength(event, 8);
                     }}
                     value={signupForm.mobileNumber.value}
                     error={

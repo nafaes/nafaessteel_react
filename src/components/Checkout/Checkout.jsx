@@ -9,6 +9,7 @@ import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import PaymentIcon from "@material-ui/icons/Payment";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import { useTranslation } from "react-i18next";
 // import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 import UserCheckout from "./UserCheckout/UserCheckout";
@@ -51,7 +52,8 @@ function a11yProps(index) {
   };
 }
 
-const ScrollableTabsButtonForce = () => {
+const Checkout = () => {
+  const { t } = useTranslation();
   const classes = checkoutStyles();
 
   const {
@@ -77,13 +79,13 @@ const ScrollableTabsButtonForce = () => {
           aria-label="scrollable force tabs example"
         >
           <Tab
-            label="CheckOut"
+            label={t("Checkout.Checkout")}
             icon={<ContactsIcon />}
             {...a11yProps(0)}
             disabled={isCheckoutDisabled}
           />
           <Tab
-            label="Shipping"
+            label={t("Checkout.Shipping")}
             icon={<LocalShippingIcon />}
             {...a11yProps(1)}
             disabled={isShippingDisabled}
@@ -95,7 +97,7 @@ const ScrollableTabsButtonForce = () => {
             disabled={isOrderSummaryDisabled}
           /> */}
           <Tab
-            label="Payment Method"
+            label={t("Checkout.PaymentMethod")}
             icon={<PaymentIcon />}
             {...a11yProps(2)}
             disabled={isPaymentDisabled}
@@ -121,4 +123,4 @@ const ScrollableTabsButtonForce = () => {
   );
 };
 
-export default ScrollableTabsButtonForce;
+export default Checkout;

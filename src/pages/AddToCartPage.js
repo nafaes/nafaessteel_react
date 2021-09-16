@@ -29,7 +29,7 @@ const AddToCartPage = (props) => {
   const [item, setItem] = useState();
   const [addToCartForm, setAddToCartForm] = useState(addToCartInitialState);
   const [itemSummary, setItemSummary] = useState();
-  const { dispatchCartActions } = useContext(GlobalContext);
+  const { languageId, dispatchCartActions } = useContext(GlobalContext);
 
   const {
     history,
@@ -43,7 +43,10 @@ const AddToCartPage = (props) => {
   }, [historyItems]);
 
   const getItemDetails = useCallback(async () => {
-    const response = await getCatergoryItemDetails(2, historyItem.categoryId);
+    const response = await getCatergoryItemDetails(
+      languageId,
+      historyItem.categoryId
+    );
     setItem(response);
 
     let form = {};
@@ -65,7 +68,7 @@ const AddToCartPage = (props) => {
         ...form,
       };
     });
-  }, [historyItem]);
+  }, [languageId, historyItem]);
 
   useEffect(() => {
     if (historyItem) {

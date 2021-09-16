@@ -188,7 +188,7 @@ const Navbar = (props) => {
         ></Tab>
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
-          label="Products"
+          label={t("Navbar.Products")}
           {...bindHover(popupState)}
         />
         <Tab

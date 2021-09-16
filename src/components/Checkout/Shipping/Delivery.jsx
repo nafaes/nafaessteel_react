@@ -6,6 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
+import { useTranslation } from "react-i18next";
 
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import { CheckoutContext } from "../../../pages/CheckoutPage";
@@ -14,6 +15,7 @@ import { getDeliveryAreas } from "../../../services/checkout";
 const Delivery = ({ deliveryDate }) => {
   const [deliveryAreas, setDeliveryAreas] = useState([]);
   const { shippingForm, setShippingForm, setShippingCharges } = useContext(CheckoutContext);
+  const { t } = useTranslation();
   const classes = checkoutStyles();
 
   const getAreas = useCallback(async () => {
@@ -73,7 +75,7 @@ const Delivery = ({ deliveryDate }) => {
               error={!shippingForm.area.valid && shippingForm.area.value === ""}
             >
               <InputLabel id="demo-simple-select-outlined-label">
-                Area
+                {t("Shipping.InputFields.Area")}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-outlined-label"
@@ -85,7 +87,7 @@ const Delivery = ({ deliveryDate }) => {
                 MenuProps={{ disableScrollLock: true }}
               >
                 <MenuItem value="">
-                  <em>Choose Area</em>
+                  <em>{t("Shipping.InputFields.ChooseArea")}</em>
                 </MenuItem>
 
                 {deliveryAreas.map(({ charagesId, cityName }) => (
@@ -101,7 +103,7 @@ const Delivery = ({ deliveryDate }) => {
                     !shippingForm.area.valid && shippingForm.area.value === ""
                   }
                 >
-                  {shippingForm.area.validationMsg}
+                  {t(shippingForm.area.validationMsg)}
                 </FormHelperText>
               ) : null}
             </FormControl>
@@ -109,10 +111,10 @@ const Delivery = ({ deliveryDate }) => {
           <Grid item sm={6}>
             <TextField
               id="outlined-read-only-input"
-              label="Shipping Charges"
+              label={t("Checkout.ShippingCharges")}
               value={
                 shippingForm.shippingCharges.value
-                  ? shippingForm.shippingCharges.value
+                  ? t(shippingForm.shippingCharges.value)
                   : ""
               }
               InputProps={{
@@ -127,7 +129,7 @@ const Delivery = ({ deliveryDate }) => {
           <Grid item sm={6}>
             <TextField
               id="outlined-helperText"
-              label="Block"
+              label={t("Shipping.InputFields.Block")}
               variant="outlined"
               name="block"
               value={shippingForm.block.value ? shippingForm.block.value : ""}
@@ -137,7 +139,7 @@ const Delivery = ({ deliveryDate }) => {
               }
               helperText={
                 !shippingForm.block.valid && shippingForm.block.value === ""
-                  ? shippingForm.block.validationMsg
+                  ? t(shippingForm.block.validationMsg)
                   : null
               }
               style={{ width: "90%", margin: "1em 5% 0px 5%" }}
@@ -146,7 +148,7 @@ const Delivery = ({ deliveryDate }) => {
           <Grid item sm={6}>
             <TextField
               id="outlined-helperText"
-              label="Street/Avenue"
+              label={t("Shipping.InputFields.Street")}
               variant="outlined"
               name="street"
               value={shippingForm.street.value ? shippingForm.street.value : ""}
@@ -156,7 +158,7 @@ const Delivery = ({ deliveryDate }) => {
               }
               helperText={
                 !shippingForm.street.valid && shippingForm.street.value === ""
-                  ? shippingForm.street.validationMsg
+                  ? t(shippingForm.street.validationMsg)
                   : null
               }
               style={{ width: "90%", margin: "1em 5% 0px 5%" }}
@@ -167,7 +169,7 @@ const Delivery = ({ deliveryDate }) => {
           <Grid item sm={6}>
             <TextField
               id="outlined-helperText"
-              label="Plot"
+              label={t("Shipping.InputFields.Plot")}
               variant="outlined"
               name="plot"
               value={shippingForm.plot.value ? shippingForm.plot.value : ""}
@@ -175,7 +177,7 @@ const Delivery = ({ deliveryDate }) => {
               error={!shippingForm.plot.valid && shippingForm.plot.value === ""}
               helperText={
                 !shippingForm.plot.valid && shippingForm.plot.value === ""
-                  ? shippingForm.plot.validationMsg
+                  ? t(shippingForm.plot.validationMsg)
                   : null
               }
               style={{ width: "90%", margin: "1em 5% 0px 5%" }}
@@ -208,7 +210,7 @@ const Delivery = ({ deliveryDate }) => {
                 color: "#333",
               }}
             >
-              Delivery Date:
+              {t("Checkout.DeliveryDate")}
             </Grid>
             <Divider style={{ width: "80%", backgroundColor: "#0086b3" }} />
             <Grid

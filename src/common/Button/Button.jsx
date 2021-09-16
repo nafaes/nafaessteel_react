@@ -1,9 +1,10 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
+
 import checkoutStyles from "../../assets/jss/viewStyles/checkout/checkout";
 
-const CheckoutButton = ({ onClick = () => {} }) => {
+const CheckoutButton = ({ buttonText, onClick = () => {} }) => {
   const classes = checkoutStyles();
   return (
     <Button
@@ -16,7 +17,7 @@ const CheckoutButton = ({ onClick = () => {} }) => {
       endIcon={<NavigateNextOutlinedIcon style={{ fontSize: "1.5rem" }} />}
       onClick={onClick}
     >
-      Next
+      {buttonText}
     </Button>
   );
 };

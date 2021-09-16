@@ -48,6 +48,12 @@ const GlobalProvider = ({ children }) => {
     }
   }, []);
 
+  const languageId = useMemo(() => {
+    let langId = 1;
+    if (direction === "ltr") langId = 2;
+    return langId;
+  }, [direction]);
+
   const totalCartItems = useMemo(() => {
     return cartState.items.reduce((totalQuantity, { quantity }) => {
       return totalQuantity + Number(quantity);
@@ -66,6 +72,7 @@ const GlobalProvider = ({ children }) => {
 
   const context = {
     direction,
+    languageId,
     languageChangeHandler,
     cartItems: cartState.items,
     totalCartItems,
