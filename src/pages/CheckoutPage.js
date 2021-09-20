@@ -11,8 +11,10 @@ import { GlobalContext } from "../context/Provider";
 
 const CHECKOUT = "CHECKOUT";
 const SHIPPING = "SHIPPING";
-const ORDER_SUMMARY = "ORDER_SUMMARY";
+// const ORDER_SUMMARY = "ORDER_SUMMARY";
 const PAYMENT = "PAYMENT";
+const LOGIN = "LOGIN";
+const LOGOUT = "LOGOUT";
 
 const checkoutProcessInitialState = {
   isCheckoutDisabled: false,
@@ -32,19 +34,34 @@ const checkoutProcessReducer = (state, { type, payload }) => {
     case SHIPPING:
       return {
         ...state,
-        isShippingDisabled: false,
+        isShippingDisabled: payload.isDisabled,
       };
 
-    case ORDER_SUMMARY:
-      return {
-        ...state,
-        isOrderSummaryDisabled: false,
-      };
+    // case ORDER_SUMMARY:
+    //   return {
+    //     ...state,
+    //     isOrderSummaryDisabled: false,
+    //   };
 
     case PAYMENT:
       return {
         ...state,
         isPaymentDisabled: false,
+      };
+
+    case LOGIN:
+      return {
+        ...state,
+        isCheckoutDisabled: true,
+        isShippingDisabled: false,
+      };
+
+    case LOGOUT:
+      return {
+        ...state,
+        isCheckoutDisabled: false,
+        isShippingDisabled: true,
+        isPaymentDisabled: true,
       };
 
     default:
@@ -140,7 +157,10 @@ const CheckoutPage = () => {
   const handleTabChange = useCallback((event, newValue) => {
     switch (newValue) {
       case 1:
-        dispatchCheckoutProcess({ type: SHIPPING });
+        dispatchCheckoutProcess({
+          type: SHIPPING,
+          payload: { isDisabled: false },
+        });
         setTabValue(1);
         break;
       // case 2:
@@ -159,12 +179,11 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatchCheckoutProcess({
-        type: CHECKOUT,
-        payload: { isDisabled: true },
-      });
-      dispatchCheckoutProcess({ type: SHIPPING });
+      dispatchCheckoutProcess({ type: LOGIN });
       setTabValue(1);
+    } else {
+      dispatchCheckoutProcess({ type: LOGOUT });
+      setTabValue(0);
     }
   }, [isAuthenticated]);
 

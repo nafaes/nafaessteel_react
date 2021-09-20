@@ -10,7 +10,7 @@ import ToolBar from "@material-ui/core/Toolbar";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import TranslateIcon from "@material-ui/icons/Translate";
@@ -33,8 +33,7 @@ import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
 import { useTranslation } from "react-i18next";
 
 import { userLogout } from "../../context/actions/authActions";
-import { CART, ORDERS } from "../../constants/routes";
-import { SIGNIN } from "../../constants/routes";
+import { ADDTOCART, CART, ITEMS, ORDERS, SIGNIN } from "../../constants/routes";
 import navbarEngDesk from "../../assets/scss/navbar.module.scss";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import { allCategoryItems } from "../../constants/data";
@@ -77,6 +76,7 @@ const Navbar = (props) => {
   });
 
   let history = useHistory();
+  const location = useLocation();
 
   const goToContactUs = useCallback(() => {
     history.push("/", {
@@ -130,47 +130,32 @@ const Navbar = (props) => {
   }, [openDrop]);
 
   useEffect(() => {
-    if (window.location.pathname === "/" && value !== 0) {
-      setValue(0);
-    } else if (window.location.pathname === "/category" && value !== 1) {
-      setValue(1);
-    } else if (window.location.pathname === "/trackorder" && value !== 2) {
-      setValue(2);
-    } else if (window.location.pathname === "/contactUs" && value !== 3) {
-      setValue(3);
-    }
-
-    switch (window.location.pathname) {
+    switch (location.pathname) {
       case "/":
-        if (value !== 0) {
-          setValue(0);
-        }
+        setValue(0);
         break;
-      case "/category":
-        if (value !== 1) {
-          setValue(1);
-        }
+      case ITEMS:
+      case ADDTOCART:
+        setValue(1);
         break;
-      case "/trackorder":
-        if (value !== 2) {
-          setValue(2);
-        }
-        break;
-      case "/contactus":
-        if (value !== 3) {
-          setValue(3);
-        }
+      case ORDERS:
+        setValue(2);
         break;
       default:
+        setValue(0);
         break;
     }
-  }, [value]);
+  }, [location]);
 
-  const logOutHandler = useCallback((event) => {
-    handleClose(event);
-    dispatchAuthActions(userLogout());
-    history.push(SIGNIN);
-  }, [dispatchAuthActions, history]);
+  const logOutHandler = useCallback(
+    (event) => {
+      handleClose(event);
+      dispatchAuthActions(userLogout());
+      history.push("/");
+      // history.push(SIGNIN);
+    },
+    [dispatchAuthActions, history]
+  );
 
   const tabs = (
     <React.Fragment>
@@ -185,24 +170,27 @@ const Navbar = (props) => {
           component={Link}
           to="/"
           label={t("Navbar.Home")}
-        ></Tab>
+          tabIndex={0}
+        />
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
           label={t("Navbar.Products")}
+          tabIndex={1}
           {...bindHover(popupState)}
         />
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
           component={Link}
           to={ORDERS}
+          tabIndex={2}
           label={t("Navbar.Orders")}
-        ></Tab>
+        />
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
           component={Button}
           onClick={goToContactUs.bind(null)}
           label={t("Navbar.ContactUS")}
-        ></Tab>
+        />
       </Tabs>
       <Menus popupState={popupState} allMenus={allCategoryItems} />
     </React.Fragment>

@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_USER,
 } from "../../constants/actionTypes/authConstants";
+import { CHECKOUT } from "../../constants/routes";
 
 export const loginLoading = () => {
   return {
@@ -52,7 +53,7 @@ export const login = (email, password, dispatch) => async (onError) => {
         })
       );
 
-      if (history.location.pathname !== "/checkout") {
+      if (history.location.pathname !== CHECKOUT) {
         history.goBack();
       }
     }

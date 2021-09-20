@@ -96,7 +96,7 @@ export const checkValidity = (value, rules) => {
       valid = false;
       validationMsg = { msg: "SignUp.Validations.Password", length: "" };
     } else {
-      if (rules?.isSignup) {
+      if (rules?.isSignup || rules?.isResetPassword) {
         var strongRegex = new RegExp(
           "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#%&])(?=.{8,})"
         );

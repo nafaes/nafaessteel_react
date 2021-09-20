@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Link, withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
@@ -28,45 +28,65 @@ const submenuStyles = (theme) => ({
 });
 
 const SubMenu = withStyles(submenuStyles)(
-  React.forwardRef(({ classes, title, popupId, children, ...props }, ref) => {
-    const parentPopupState = React.useContext(ParentPopupState);
-    const popupState = usePopupState({
-      popupId,
-      variant: "popover",
-      parentPopupState,
-      deferOpenClose: true,
-    });
-    return (
-      <ParentPopupState.Provider value={popupState}>
-        <MenuItem
-          {...bindHover(popupState)}
-          selected={popupState.isOpen}
-          ref={ref}
-        >
-          <span className={classes.title}>{title}</span>
-          <ChevronRight className={classes.moreArrow} />
-        </MenuItem>
-        <Menu
-          {...bindMenu(popupState)}
-          classes={{ paper: classes.menu }}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          transformOrigin={{ vertical: "top", horizontal: "left" }}
-          getContentAnchorEl={null}
-          {...props}
-        >
-          {children}
-        </Menu>
-      </ParentPopupState.Provider>
-    );
-  })
+  React.forwardRef(
+    ({ classes, title, popupId, selected, children, ...props }, ref) => {
+      const parentPopupState = React.useContext(ParentPopupState);
+      const popupState = usePopupState({
+        popupId,
+        variant: "popover",
+        parentPopupState,
+        deferOpenClose: true,
+      });
+      return (
+        <ParentPopupState.Provider value={popupState}>
+          <MenuItem
+            {...bindHover(popupState)}
+            selected={selected}
+            // selected={popupState.isOpen}
+            ref={ref}
+          >
+            <span className={classes.title}>{title}</span>
+            <ChevronRight className={classes.moreArrow} />
+          </MenuItem>
+          <Menu
+            {...bindMenu(popupState)}
+            classes={{ paper: classes.menu }}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            transformOrigin={{ vertical: "top", horizontal: "left" }}
+            getContentAnchorEl={null}
+            {...props}
+          >
+            {children}
+          </Menu>
+        </ParentPopupState.Provider>
+      );
+    }
+  )
 );
 
 const Menus = React.forwardRef((props, ref) => {
-  const { popupState, allMenus } = props;
+  const { popupState, allMenus, location } = props;
   const englishMobileStyles = navbarEngMobile();
   let classes = englishMobileStyles;
 
   const { dynamicNavigation } = useNavigation();
+
+  const historyItem = useMemo(() => {
+    if (location.state?.items) {
+      return location.state?.items[location.state?.items.length - 1];
+    }
+  }, [location.state]);
+
+  const getIsSubMenuSelected = useCallback(
+    (id) => {
+      const isActive = location.state?.items?.find(
+        ({ categoryId }) => categoryId === id
+      );
+      if (isActive) return true;
+      else return false;
+    },
+    [location.state?.items]
+  );
 
   const navigation = useCallback(
     (allItems) => {
@@ -76,49 +96,54 @@ const Menus = React.forwardRef((props, ref) => {
     [popupState, dynamicNavigation]
   );
 
-  const RenderSubMenu = React.forwardRef(({ menu, allItems, props }, ref) => {
-    return (
-      <SubMenu
-        ref={ref}
-        {...props}
-        popupId={menu.menuName}
-        title={menu.menuName}
-        className={classes.subMenu}
-      >
-        {menu.items.map((item) =>
-          item.items ? (
-            <RenderSubMenu
-              ref={ref}
-              key={item.categoryId}
-              menu={item}
-              allItems={[
-                ...allItems,
-                {
-                  categoryId: item.categoryId,
-                  name: item.menuName,
-                  level: item.nextLevel,
-                },
-              ]}
-            />
-          ) : (
-            <MenuItem
-              ref={ref}
-              key={item.categoryId}
-              onClick={navigation.bind(null, [
-                ...allItems,
-                {
-                  categoryId: item.categoryId,
-                  name: item.menuName,
-                },
-              ])}
-            >
-              {item.menuName}
-            </MenuItem>
-          )
-        )}
-      </SubMenu>
-    );
-  });
+  const RenderSubMenu = React.forwardRef(
+    ({ menu, selected, allItems, props }, ref) => {
+      return (
+        <SubMenu
+          ref={ref}
+          {...props}
+          popupId={menu.menuName}
+          title={menu.menuName}
+          selected={selected}
+          className={classes.subMenu}
+        >
+          {menu.items.map((item) =>
+            item.items ? (
+              <RenderSubMenu
+                ref={ref}
+                key={item.categoryId}
+                menu={item}
+                selected={getIsSubMenuSelected(item.categoryId)}
+                allItems={[
+                  ...allItems,
+                  {
+                    categoryId: item.categoryId,
+                    name: item.menuName,
+                    level: item.nextLevel,
+                  },
+                ]}
+              />
+            ) : (
+              <MenuItem
+                ref={ref}
+                key={item.categoryId}
+                selected={historyItem?.categoryId === item.categoryId}
+                onClick={navigation.bind(null, [
+                  ...allItems,
+                  {
+                    categoryId: item.categoryId,
+                    name: item.menuName,
+                  },
+                ])}
+              >
+                {item.menuName}
+              </MenuItem>
+            )
+          )}
+        </SubMenu>
+      );
+    }
+  );
 
   return (
     <Menu
@@ -134,6 +159,7 @@ const Menus = React.forwardRef((props, ref) => {
           <RenderSubMenu
             key={category.categoryId}
             menu={category}
+            selected={getIsSubMenuSelected(category.categoryId)}
             allItems={[
               {
                 categoryId: category.categoryId,
@@ -146,6 +172,7 @@ const Menus = React.forwardRef((props, ref) => {
           <MenuItem
             key={category.categoryId}
             component={Link}
+            selected={historyItem?.categoryId === category.categoryId}
             to={{
               pathname: ADDTOCART,
               state: {

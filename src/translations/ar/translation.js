@@ -76,4 +76,38 @@ export const TRANSLATIONS_AR = {
     },
     Validations: VALIDATIONS.Shipping,
   },
+  ForgotPassword: {
+    InputFields: {
+      ForgotPassword: "هل نسيت كلمة المرور",
+      EmailAddress: "عنوان البريد الالكترونى",
+      SendLink: "أرسل الرابط",
+    },
+    Validations: {
+      EmailRequired: "البريد الإلكتروني (مطلوب",
+    },
+    Alerts: {
+      Alert1: "تم إرسال البريد بنجاح!",
+      Alert2: "لم نعثر على حساب لعنوان البريد الإلكتروني هذا.",
+      Alert3: "بريد إلكتروني خاطئ تبوك",
+    },
+  },
+  ResetPassword: {
+    InputFields: {
+      NewPassword: "كلمة مرور جديدة",
+      ConfirmPassword: "تأكيد كلمة المرور",
+      ResetPassword: "إعادة تعيين كلمة المرور",
+    },
+    Validations: {
+      NewPassword: "مطلوب كلمة مرور جديدة!",
+      ConfirmPassword: "مطلوب تأكيد كلمة المرور!",
+    },
+    Alerts: {
+      Alert1: "تعذر العثور على رمز إعادة تعيين كلمة المرور",
+      Alert2:
+        "انتهت صلاحية إعادة تعيين البريد ، يرجى طلب إعادة تعيين كلمة مرور جديدة",
+      Alert3: "رمز إعادة تعيين كلمة المرور غير مطابق",
+      Alert4: "إعادة تعيين كلمة المرور لم يتم إرسال بريد ، لهذا البريد",
+      Alert5: "تم تعيين كلمة المرور بنجاح!",
+    },
+  },
 };

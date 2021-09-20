@@ -17,9 +17,8 @@ import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { SIGNUP } from "../../constants/routes";
+import { FORGOTPASSWORD, SIGNUP } from "../../constants/routes";
 import login from "../../assets/img/Login-illustration.svg";
-// import { limitMaxlength } from "../../utils/validations";
 
 const SignIn = (props) => {
   const {
@@ -100,14 +99,12 @@ const SignIn = (props) => {
                 }}
                 name="email"
                 onChange={formChangeHandler}
-                
                 value={signinForm.email.value}
                 error={!signinForm.email.valid && signinForm.email.touched}
                 helperText={
                   !signinForm.email.valid && signinForm.email.touched
                     ? t(signinForm.email.validation.validationMsg.msg, {
-                        length:
-                          signinForm.email.validation.validationMsg.length,
+                        length: signinForm.email.validation.validationMsg.length,
                       })
                     : null
                 }
@@ -152,23 +149,26 @@ const SignIn = (props) => {
                 }}
                 name="password"
                 onChange={formChangeHandler}
-                value={signinForm.password.value}       
+                value={signinForm.password.value}
                 error={
                   !signinForm.password.valid && signinForm.password.touched
                 }
                 helperText={
                   !signinForm.password.valid && signinForm.password.touched
                     ? t(signinForm.password.validation.validationMsg.msg, {
-                      length: signinForm.password.validation.validationMsg.length
-                    })
+                        length: signinForm.password.validation.validationMsg.length,
+                      })
                     : null
                 }
               />
             </Grid>
             <Grid item style={{ textAlign: "right" }}>
-              <Button style={{ textTransform: "none", marginBottom: "0.5em" }}>
-                {`${t("SignIn.InputFields.ForgotPassword")} ?`}
-              </Button>
+              <Link
+                to={FORGOTPASSWORD}
+                style={{ marginBottom: "0.5em", textDecoration: "none", color: "#0086b3" }}
+              >
+                {t("SignIn.InputFields.ForgotPassword")}
+              </Link>
             </Grid>
             <Grid item style={{ textAlign: "center" }}>
               <div className={classes.buttonWrapper}>
