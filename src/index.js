@@ -8,11 +8,11 @@ import "../src/translations/i18n";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <GlobalProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <GlobalProvider>
       <Layout />
-    </BrowserRouter>
-  </GlobalProvider>,
+    </GlobalProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
