@@ -8,7 +8,7 @@ import PasswordInput from "../../common/PasswordInput/PasswordInput";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // backgroundColor: "#fff",
+    backgroundColor: "#fff",
     borderRadius: "20px",
     // width: "100%",
     width: "60%",
@@ -55,8 +55,6 @@ const useStyles = makeStyles((theme) => ({
 const ResetPassword = (props) => {
   const {
     submit,
-    // notify,
-    // setNotify,
     resetPasswordForm,
     submitHandler,
     inputChangeHandler,

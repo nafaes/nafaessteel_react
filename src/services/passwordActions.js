@@ -2,15 +2,18 @@ import axiosInstance from "../helpers/axiosInstance";
 
 export const forgotPassword = async (userEmail) => {
   try {
-    const response = await axiosInstance.post("/forgotpassword", {
-      email: userEmail,
-    });
-    if (response) {
-      return response.data.status;
+    const {
+      data: { code, message },
+    } = await axiosInstance.get(`/forgotpasswordtext/${userEmail}`);
+    if (code === 200) {
+      return message;
     }
   } catch (error) {
     if (error.response) {
-      return error.response.data.status;
+      const { code, message } = error.response.data;
+      if (code === 417) {
+        throw new Error(message);
+      }
     }
     throw error;
   }
@@ -18,18 +21,18 @@ export const forgotPassword = async (userEmail) => {
 
 export const resetPassword = async (resetPasswordDetails) => {
   try {
-    const { password, confirmPassword, token, email } = resetPasswordDetails;
-    const { data } = await axiosInstance().post("/resetpassword", {
-      password: password,
-      confirmPassword: confirmPassword,
-      token: token,
-      email: email,
-    });
-    return data.status;
+    const {
+      data: { code, message },
+    } = await axiosInstance.post("/resetpassword", resetPasswordDetails);
+    if (code === 200) {
+      return message;
+    }
   } catch (error) {
     if (error.response) {
-      // return error.response.data.status;
-      throw new Error("Reset Password is failed!");
+      const { code, message } = error.response.data;
+      if (code === 417) {
+        throw new Error(message);
+      }
     }
     throw error;
   }

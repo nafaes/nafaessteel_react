@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 import { useParams } from "react-router";
+import Notification from "../common/Notification/Notification";
 
 import ResetPassword from "../components/ResetPassword/ResetPassword";
 import { resetPassword } from "../services/passwordActions";
@@ -149,75 +150,43 @@ const ResetPasswordPage = () => {
       }
 
       if (newPassword.value === confirmPassword.value) {
-        const resetPasswordDetails = {
-          password: newPassword.value,
-          confirmPassword: confirmPassword.value,
-          token,
-          email,
-        };
-        setSubmit(true);
-        const status = await resetPassword(resetPasswordDetails);
-        if (status === 606) {
-          setNotify({
-            isOpen: true,
-            message: "ResetPassword.Alerts.Alert1",
-            type: "error",
-          });
+        try {
+          const resetPasswordDetails = {
+            email,
+            text: token,
+            password: newPassword.value,
+          };
+          setSubmit(true);
+          const response = await resetPassword(resetPasswordDetails);
           setSubmit(false);
-        } else if (status === 607) {
-          setNotify({
-            isOpen: true,
-            message: "ResetPassword.Alerts.Alert2",
-            type: "error",
-          });
+          setNotify({ isOpen: true, message: response, type: "success" });
+        } catch (error) {
+          console.log(error.message);
           setSubmit(false);
-        } else if (status === 608) {
-          setNotify({
-            isOpen: true,
-            message: "ResetPassword.Alerts.Alert3",
-            type: "error",
-          });
-          setSubmit(false);
-        } else if (status === 609) {
-          setNotify({
-            isOpen: true,
-            message: "ResetPassword.Alerts.Alert4",
-            type: "error",
-          });
-          setSubmit(false);
-        } else if (status === 200) {
-          setNotify({
-            isOpen: true,
-            message: "ResetPassword.Alerts.Alert5",
-            type: "success",
-          });
-          setSubmit(false);
-          setResetPasswordForm(resetPasswordInitialState);
-          setShowNewPassword(false);
-          setShowConfirmPassword(false);
-          //   history.push("/signin", {
-          //     message: "ResetPassword.Alerts.Alert5",
-          //     type: "success",
-          //   });
+          setNotify({ isOpen: true, message: error.message, type: "error" });
         }
+        setResetPasswordForm(resetPasswordInitialState);
+        setShowNewPassword(false);
+        setShowConfirmPassword(false);
       }
     }
   };
 
   return (
-    <ResetPassword
-      notify={notify}
-      submit={submit}
-      setNotify={setNotify}
-      submitHandler={submitHandler}
-      resetPasswordForm={resetPasswordForm}
-      inputChangeHandler={inputChangeHandler}
-      confirmPasswordHandler={confirmPasswordHandler}
-      showNewPassword={showNewPassword}
-      showConfirmPassword={showConfirmPassword}
-      handleShowNewPassword={handleShowNewPassword}
-      handleShowConfirmPassword={handleShowConfirmPassword}
-    />
+    <Fragment>
+      <ResetPassword
+        submit={submit}
+        submitHandler={submitHandler}
+        resetPasswordForm={resetPasswordForm}
+        inputChangeHandler={inputChangeHandler}
+        confirmPasswordHandler={confirmPasswordHandler}
+        showNewPassword={showNewPassword}
+        showConfirmPassword={showConfirmPassword}
+        handleShowNewPassword={handleShowNewPassword}
+        handleShowConfirmPassword={handleShowConfirmPassword}
+      />
+      {notify.isOpen && <Notification notify={notify} setNotify={setNotify} />}
+    </Fragment>
   );
 };
 

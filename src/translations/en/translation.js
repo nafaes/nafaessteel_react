@@ -110,4 +110,10 @@ export const TRANSLATIONS_EN = {
       Alert5: "Password Set Successfuly!",
     },
   },
+  PageNotFound: {
+    Text1: "404: The page you are looking for isn’t here",
+    Text2:
+      "You either tried some shady route or you came here by mistake. Whichever it is, try using the navigation",
+    Button: "Go to Home Page",
+  },
 };

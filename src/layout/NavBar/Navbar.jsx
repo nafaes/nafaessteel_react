@@ -66,7 +66,7 @@ const Navbar = (props) => {
   const theme = useTheme();
   const matchesXs = useMediaQuery(theme.breakpoints.down("xs"));
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState();
   const [open, setOpen] = React.useState(false);
 
   const popupState = usePopupState({
@@ -75,7 +75,7 @@ const Navbar = (props) => {
     deferOpenClose: true,
   });
 
-  let history = useHistory();
+  const history = useHistory();
   const location = useLocation();
 
   const goToContactUs = useCallback(() => {
@@ -142,10 +142,10 @@ const Navbar = (props) => {
         setValue(2);
         break;
       default:
-        setValue(0);
+        setValue();
         break;
     }
-  }, [location]);
+  }, [location.pathname]);
 
   const logOutHandler = useCallback(
     (event) => {
@@ -163,7 +163,7 @@ const Navbar = (props) => {
         className={clsx(classes.tabContainer, classesExternal.tabContainer)}
         indicatorColor="secondary"
         onChange={handleChange}
-        value={value}
+        value={value ?? false}
       >
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}

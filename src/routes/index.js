@@ -24,6 +24,7 @@ import {
   ItemsPage,
   LandingPage,
   OrdersPage,
+  PageNotFound,
   PaymentFail,
   PaymentSuccess,
   ResetPasswordPage,
@@ -57,6 +58,7 @@ const Routes = () => {
         <Route exact={true} path={TRACKORDER} component={TrackOrdersPage} />
         <Route exact={true} path={PAYMENTSUCCESS} component={PaymentSuccess} />
         <Route exact={true} path={PAYMENTFAIL} component={PaymentFail} />
+        <Route component={PageNotFound} />
       </Switch>
     </Suspense>
   );

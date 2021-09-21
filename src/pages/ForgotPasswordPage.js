@@ -5,6 +5,21 @@ import ForgotPassword from "../components/ForgotPassword/ForgotPassword";
 import { forgotPassword } from "../services/passwordActions";
 import { checkValidity } from "../utils/validations";
 
+const emailInitialState = {
+  value: "",
+  validation: {
+    required: true,
+    isEmail: true,
+    maxLength: 32,
+    validationMsg: {
+      msg: "ForgotPassword.Validations.EmailRequired",
+      length: "",
+    },
+  },
+  valid: false,
+  touched: false,
+};
+
 const ForgotPasswordPage = () => {
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -12,20 +27,7 @@ const ForgotPasswordPage = () => {
     type: "",
   });
   const [submit, setSubmit] = useState(false);
-  const [email, setEmail] = useState({
-    value: "",
-    validation: {
-      required: true,
-      isEmail: true,
-      maxLength: 32,
-      validationMsg: {
-        msg: "ForgotPassword.Validations.EmailRequired",
-        length: "",
-      },
-    },
-    valid: false,
-    touched: false,
-  });
+  const [email, setEmail] = useState(emailInitialState);
 
   const inputChangeHandler = (event) => {
     const validation = checkValidity(event.target.value, email.validation);
@@ -46,26 +48,17 @@ const ForgotPasswordPage = () => {
     event.preventDefault();
     if (!email.valid) {
       setEmail({ ...email, touched: true });
-    }
-
-    if (email.valid) {
-      setSubmit(true);
-      const response = await forgotPassword(email.value);
-      if (response === 200) {
+    } else {
+      try {
+        setSubmit(true);
+        const response = await forgotPassword(email.value);
+        setEmail(emailInitialState);
         setSubmit(false);
-        setNotify({
-          isOpen: true,
-          message: "ForgotPassword.Alerts.Alert1",
-          type: "success",
-        });
-        setEmail({ ...email, value: "", valid: false, touched: false });
-      } else if (response === 404) {
+        setNotify({ isOpen: true, message: response, type: "success" });
+      } catch (err) {
         setSubmit(false);
-        setNotify({
-          isOpen: true,
-          message: "ForgotPassword.Alerts.Alert2",
-          type: "error",
-        });
+        setEmail(emailInitialState);
+        setNotify({ isOpen: true, message: err.message, type: "error" });
       }
     }
   };
