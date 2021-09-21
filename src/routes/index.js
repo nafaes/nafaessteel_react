@@ -9,12 +9,12 @@ import {
   CART,
   CHECKOUT,
   SIGNUP,
-  ORDERS,
-  TRACKORDER,
   PAYMENTSUCCESS,
   PAYMENTFAIL,
   FORGOTPASSWORD,
   RESETPASSWORD,
+  TRACKORDER,
+  ORDERS,
 } from "../constants/routes";
 import {
   AddToCartPage,
@@ -32,8 +32,9 @@ import {
   SignupPage,
   TrackOrdersPage,
 } from "../pages";
+import PrivateRoute from "./PrivateRoute";
 
-const Routes = () => {
+const Routes = ({ isAuthenticated }) => {
   return (
     <Suspense fallback="Loading">
       <Switch>
@@ -54,10 +55,14 @@ const Routes = () => {
         <Route exact={true} path={ADDTOCART} component={AddToCartPage} />
         <Route exact={true} path={CART} component={CartPage} />
         <Route exact={true} path={CHECKOUT} component={CheckoutPage} />
-        <Route exact={true} path={ORDERS} component={OrdersPage} />
-        <Route exact={true} path={TRACKORDER} component={TrackOrdersPage} />
         <Route exact={true} path={PAYMENTSUCCESS} component={PaymentSuccess} />
         <Route exact={true} path={PAYMENTFAIL} component={PaymentFail} />
+        <PrivateRoute exact={true} path={ORDERS} component={OrdersPage} />
+        <PrivateRoute
+          exact={true}
+          path={TRACKORDER}
+          component={TrackOrdersPage}
+        />
         <Route component={PageNotFound} />
       </Switch>
     </Suspense>

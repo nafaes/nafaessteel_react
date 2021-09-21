@@ -107,7 +107,6 @@ const Navbar = (props) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpenDrop(false);
   };
 
@@ -125,7 +124,6 @@ const Navbar = (props) => {
     if (prevOpen.current === true && openDrop === false) {
       anchorRef.current.focus();
     }
-
     prevOpen.current = openDrop;
   }, [openDrop]);
 
@@ -178,13 +176,16 @@ const Navbar = (props) => {
           tabIndex={1}
           {...bindHover(popupState)}
         />
-        <Tab
-          className={clsx(classes.tab, classesExternal.tab)}
-          component={Link}
-          to={ORDERS}
-          tabIndex={2}
-          label={t("Navbar.Orders")}
-        />
+
+        {isAuthenticated ? (
+          <Tab
+            className={clsx(classes.tab, classesExternal.tab)}
+            component={Link}
+            to={ORDERS}
+            tabIndex={2}
+            label={t("Navbar.Orders")}
+          />
+        ) : null}
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
           component={Button}
@@ -224,14 +225,16 @@ const Navbar = (props) => {
                   className={clsx(classes.subMenu, classesExternal.subMenu)}
                 >
                   {isAuthenticated ? (
-                    <MenuItem onClick={logOutHandler}>SignOut</MenuItem>
+                    <MenuItem onClick={logOutHandler}>
+                      {t("Navbar.SignOut")}
+                    </MenuItem>
                   ) : (
                     <MenuItem
                       onClick={handleClose}
                       component={Link}
                       to={SIGNIN}
                     >
-                      Sign In
+                      {t("SignIn.InputFields.SignIn")}
                     </MenuItem>
                   )}
                 </MenuList>
@@ -245,6 +248,7 @@ const Navbar = (props) => {
 
   const drawer = (
     <SideDrawer
+      goToContactUs={goToContactUs}
       openDrawer={openDrawer}
       toggleDrawer={toggleDrawer}
       value={value}
@@ -252,6 +256,7 @@ const Navbar = (props) => {
       open={open}
       handleClicklist={handleClicklist}
       menus={allCategoryItems}
+      isAuthenticated={isAuthenticated}
     />
   );
 

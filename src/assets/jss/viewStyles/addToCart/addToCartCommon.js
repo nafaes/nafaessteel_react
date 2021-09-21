@@ -5,12 +5,12 @@ const theme = createTheme(appTheme());
 
 export const addTocartMobCommon = {
   ContainerForm: {
-    [theme.breakpoints.down("md")]: {
-      width: "60%",
+    [theme.breakpoints.down("lg")]: {
+      width: "70%",
       padding: "0.50em",
     },
     [theme.breakpoints.down("xs")]: {
-      width: "96%",
+      width: "90%",
       padding: "0.50em",
     },
   },

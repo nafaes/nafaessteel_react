@@ -76,7 +76,8 @@ const SigninPage = (props) => {
     setSigninForm(updatedForm)
   };
 
-  const signinHandler = useCallback(async () => {
+  const signinHandler = useCallback(async (event) => {
+    event.preventDefault();
     if (!signinForm.email.valid || !signinForm.password.valid) {
       setSigninForm((signinForm) => {
         let updatedForm = {};

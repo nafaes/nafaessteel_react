@@ -5,8 +5,11 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { Link as RouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const BreadcrumbsNavigation = ({ historyItems, breadcrumbNavigation }) => {
+  const { t } = useTranslation();
+
   return (
     <Grid
       item
@@ -29,7 +32,7 @@ const BreadcrumbsNavigation = ({ historyItems, breadcrumbNavigation }) => {
           style={{ color: "#fff" }}
         >
           <Link color="inherit" component={RouterLink} to="/">
-            All Categories
+            {t("AddToCart.AllCategories")}
           </Link>
 
           {historyItems &&

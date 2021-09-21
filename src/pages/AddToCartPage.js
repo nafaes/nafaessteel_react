@@ -16,7 +16,7 @@ const addToCartInitialState = {
   quantity: {
     name: "quantity",
     value: "",
-    validationMsg: "Enter Quantity",
+    validationMsg: "AddToCart.Validations.EnterQuantity",
     valid: false,
     touched: false,
   },

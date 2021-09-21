@@ -6,6 +6,7 @@ export const TRANSLATIONS_AR = {
     Orders: "اتصل بنا",
     ContactUS: "اتصل بنا",
     Products: "منتجات",
+    SignOut: "خروج",
   },
   SignIn: {
     InputFields: {
@@ -32,6 +33,23 @@ export const TRANSLATIONS_AR = {
       SignUp: "اشتراك",
     },
     Validations: VALIDATIONS.SignUp,
+  },
+  AddToCart: {
+    AllCategories: "جميع الفئات",
+    AddToCart: "أضف إلى السلة",
+    Quantity: "كمية",
+    Price: "سعر",
+    Unit: "وحدة",
+    Item: "غرض",
+    Action: "عمل",
+    None: "لا أحد",
+    InputFields: {
+      Quantity: "أدخل الكمية",
+      GoToCart: "اذهب إلى عربة التسوق",
+    },
+    Validations: {
+      EnterQuantity: "أدخل الكمية",
+    },
   },
   Cart: {
     Text1: "الوحدات الموجودة فى سلة التسوق الخاصة بك",

@@ -9,6 +9,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { FormHelperText, Typography } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import { useTranslation } from "react-i18next";
 
 import { limitMaxlength } from "../../utils/validations";
 import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
@@ -16,6 +17,7 @@ import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
 
 const AddToCartForm = (props) => {
   const { item, addToCartForm, formChangeHandler, addToCartHandler } = props;
+  const { t } = useTranslation();
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
@@ -67,7 +69,7 @@ const AddToCartForm = (props) => {
                 MenuProps={{ disableScrollLock: true }}
               >
                 <MenuItem value="">
-                  <em>None</em>
+                  <em>{t("AddToCart.None")}</em>
                 </MenuItem>
                 {select.types.map(({ item, itemId }) => (
                   <MenuItem value={itemId} key={itemId}>
@@ -89,7 +91,7 @@ const AddToCartForm = (props) => {
           {addToCartForm.price && (
             <Grid item xs={6}>
               <Typography component="h1" variant="subtitle1">
-                Price: {addToCartForm.price}
+                {`${t("AddToCart.Price")}: ${addToCartForm.price}`}
               </Typography>
             </Grid>
           )}
@@ -97,14 +99,13 @@ const AddToCartForm = (props) => {
           {addToCartForm.unit && (
             <Grid item xs={6}>
               <Typography component="h1" variant="subtitle1">
-                Unit: {addToCartForm.unit}
+                {`${t("AddToCart.Unit")}: ${addToCartForm.unit}`}
               </Typography>
             </Grid>
           )}
         </Grid>
         <TextField
-          id="outlined-basic"
-          label="Enter Quantity"
+          label={t("AddToCart.InputFields.Quantity")}
           name="quantity"
           value={addToCartForm.quantity.value}
           onChange={formChangeHandler}
@@ -118,9 +119,12 @@ const AddToCartForm = (props) => {
           onKeyPress={(event) => {
             limitMaxlength(event, 2);
           }}
+          // error={
+          //   !addToCartForm.quantity.valid && addToCartForm.quantity.touched
+          // }
           helperText={
             !addToCartForm.quantity.valid && addToCartForm.quantity.touched
-              ? addToCartForm.quantity.validationMsg
+              ? t(addToCartForm.quantity.validationMsg)
               : null
           }
           style={{ width: "100%", marginBottom: "2em" }}
@@ -160,7 +164,7 @@ const AddToCartForm = (props) => {
                     <AddShoppingCartIcon style={{ fontSize: "1.5rem" }} />
                   }
                 >
-                  Add To Cart
+                  {t("AddToCart.AddToCart")}
                 </Button>
               </Grid>
             </Grid>

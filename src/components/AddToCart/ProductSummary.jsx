@@ -10,8 +10,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { ButtonGroup } from "@material-ui/core";
+import { ButtonGroup, IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
 import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
@@ -25,6 +26,7 @@ function ccyFormat(num) {
 
 const ProductSummary = (props) => {
   const { itemSummary } = props;
+  const { t } = useTranslation();
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
@@ -50,17 +52,18 @@ const ProductSummary = (props) => {
             className={clsx(
               classes.addCartTabHdrRow,
               classesExternal.addCartTabHdrRow
-            )} >
+            )}
+          >
             <TableRow>
-              <TableCell>Item</TableCell>
+              <TableCell>{t("AddToCart.Item")}</TableCell>
               {itemSummary.selectedValues.map((selectedValue, index) => (
                 <TableCell key={index} align="center">
                   {selectedValue.name}
                 </TableCell>
               ))}
-              <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Quantity</TableCell>
-              <TableCell align="right">Action</TableCell>
+              <TableCell align="center">{t("AddToCart.Price")}</TableCell>
+              <TableCell align="center">{t("AddToCart.Quantity")}</TableCell>
+              <TableCell align="right">{t("AddToCart.Action")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -102,7 +105,7 @@ const ProductSummary = (props) => {
                   </ButtonGroup>
                 </TableCell>
                 <TableCell align="right">
-                  <Button
+                  <IconButton
                     onClick={dispatchCartActions.bind(
                       null,
                       removeItem(cartItem.itemId, 0)
@@ -111,7 +114,7 @@ const ProductSummary = (props) => {
                     <DeleteForeverIcon
                       style={{ fontSize: "2rem", color: "#d9534f" }}
                     />
-                  </Button>
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
@@ -134,7 +137,7 @@ const ProductSummary = (props) => {
                   // color="primary"
                   // style={{ margin: "6px", width: "20em" }}
                 >
-                  Go to Cart
+                  {t("AddToCart.InputFields.GoToCart")}
                 </Button>
               </TableCell>
             </TableRow>

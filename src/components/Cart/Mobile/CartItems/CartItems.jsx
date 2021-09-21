@@ -4,6 +4,7 @@ import {
   ButtonGroup,
   Divider,
   Grid,
+  IconButton,
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
@@ -144,7 +145,7 @@ const CartItems = (props) => {
                   </Grid>
 
                   <Grid item xs={4}>
-                    <Button
+                    <IconButton
                       onClick={dispatchCartActions.bind(
                         null,
                         removeItem(item.itemId, 0)
@@ -153,7 +154,7 @@ const CartItems = (props) => {
                       <DeleteForeverIcon
                         style={{ fontSize: "2rem", color: "#d9534f" }}
                       />
-                    </Button>
+                    </IconButton>
                   </Grid>
                 </Grid>
               </Grid>

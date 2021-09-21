@@ -74,7 +74,7 @@ const SignIn = (props) => {
           classesExternal.loginContainForm
         )}
       >
-        <form>
+        <form onSubmit={signinHandler} noValidate>
           <Grid>
             <Grid item>
               <TextField
@@ -150,9 +150,7 @@ const SignIn = (props) => {
                 name="password"
                 onChange={formChangeHandler}
                 value={signinForm.password.value}
-                error={
-                  !signinForm.password.valid && signinForm.password.touched
-                }
+                error={!signinForm.password.valid && signinForm.password.touched}
                 helperText={
                   !signinForm.password.valid && signinForm.password.touched
                     ? t(signinForm.password.validation.validationMsg.msg, {
@@ -165,7 +163,11 @@ const SignIn = (props) => {
             <Grid item style={{ textAlign: "right" }}>
               <Link
                 to={FORGOTPASSWORD}
-                style={{ marginBottom: "0.5em", textDecoration: "none", color: "#0086b3" }}
+                style={{
+                  marginBottom: "0.5em",
+                  textDecoration: "none",
+                  color: "#0086b3",
+                }}
               >
                 {t("SignIn.InputFields.ForgotPassword")}
               </Link>
@@ -173,10 +175,11 @@ const SignIn = (props) => {
             <Grid item style={{ textAlign: "center" }}>
               <div className={classes.buttonWrapper}>
                 <Button
+                  type="submit"
                   variant="contained"
                   size="small"
                   className={classesExternal.formBtn}
-                  onClick={signinHandler}
+                  // onClick={signinHandler}
                   disabled={loginLoading}
                 >
                   {t("SignIn.InputFields.SignIn")}
@@ -190,7 +193,7 @@ const SignIn = (props) => {
               </div>
             </Grid>
 
-            {userCheckoutStyles === false && (
+            {userCheckoutStyles === false ? (
               <Grid item style={{ textAlign: "center" }}>
                 <label>{`${t("SignIn.InputFields.DontHaveAccount")} ?`}</label>
                 <Button
@@ -201,7 +204,7 @@ const SignIn = (props) => {
                   {t("SignIn.InputFields.SignUp")}
                 </Button>
               </Grid>
-            )}
+            ) : null}
           </Grid>
         </form>
       </Grid>

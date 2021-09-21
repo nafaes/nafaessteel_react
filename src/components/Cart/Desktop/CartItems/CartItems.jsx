@@ -6,6 +6,7 @@ import {
   Typography,
   ButtonGroup,
   Button,
+  IconButton,
 } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
@@ -152,7 +153,7 @@ const DesktopCartItems = (props) => {
                       </Button>
                     </ButtonGroup>
 
-                    <Button
+                    <IconButton
                       onClick={dispatchCartActions.bind(
                         null,
                         removeItem(item.itemId, 0)
@@ -161,7 +162,7 @@ const DesktopCartItems = (props) => {
                       <DeleteForeverIcon
                         style={{ fontSize: "2rem", color: "#d9534f" }}
                       />
-                    </Button>
+                    </IconButton>
                   </Grid>
                 </Grid>
                 <Grid item>

@@ -10,15 +10,25 @@ import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
+import { useTranslation } from "react-i18next";
 
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 import useNavigation from "../../hooks/useNavigation";
-import { ADDTOCART } from "../../constants/routes";
+import { ADDTOCART, LANDING, ORDERS } from "../../constants/routes";
 
 const SideDrawer = (props) => {
   const history = useHistory();
+  const { t } = useTranslation();
+  const {
+    goToContactUs,
+    openDrawer,
+    toggleDrawer,
+    value,
+    setValue,
+    menus,
+    isAuthenticated,
+  } = props;
 
-  const { openDrawer, toggleDrawer, value, setValue, menus } = props;
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const englishMobileStyles = navbarEngMobile();
   let classes = englishMobileStyles;
@@ -93,12 +103,12 @@ const SideDrawer = (props) => {
             divider
             button
             component={Link}
-            to="/"
+            to={LANDING}
             selected={value === 0}
             classes={{ selected: classes.drawerItemSelected }}
           >
             <ListItemText className={classes.drawerItem} disableTypography>
-              Home
+              {t("Navbar.Home")}
             </ListItemText>
           </ListItem>
 
@@ -141,36 +151,37 @@ const SideDrawer = (props) => {
             )}
           </TreeView>
 
+          {isAuthenticated ? (
+            <ListItem
+              onClick={() => {
+                toggleDrawer();
+                setValue(2);
+              }}
+              divider
+              button
+              component={Link}
+              to={ORDERS}
+              selected={value === 2}
+              classes={{ selected: classes.drawerItemSelected }}
+            >
+              <ListItemText className={classes.drawerItem} disableTypography>
+                {t("Navbar.Orders")}
+              </ListItemText>
+            </ListItem>
+          ) : null}
+
           <ListItem
             onClick={() => {
               toggleDrawer();
-              setValue(2);
+              goToContactUs();
             }}
             divider
             button
-            component={Link}
-            to="/trackorder"
-            selected={value === 2}
+            // selected={value === 0}
             classes={{ selected: classes.drawerItemSelected }}
           >
             <ListItemText className={classes.drawerItem} disableTypography>
-              Track Order
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            onClick={() => {
-              toggleDrawer();
-              setValue(3);
-            }}
-            divider
-            button
-            component={Link}
-            to="/contactUs"
-            selected={value === 3}
-            classes={{ selected: classes.drawerItemSelected }}
-          >
-            <ListItemText className={classes.drawerItem} disableTypography>
-              Contact Us
+              {t("Navbar.ContactUS")}
             </ListItemText>
           </ListItem>
         </List>

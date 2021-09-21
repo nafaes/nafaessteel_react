@@ -6,6 +6,7 @@ export const TRANSLATIONS_EN = {
     Orders: "Orders",
     ContactUS: "Contact Us",
     Products: "Products",
+    SignOut: "SignOut",
   },
   SignIn: {
     InputFields: {
@@ -32,6 +33,23 @@ export const TRANSLATIONS_EN = {
       SignUp: "Sign Up",
     },
     Validations: VALIDATIONS.SignUp,
+  },
+  AddToCart: {
+    AllCategories: "All Categories",
+    AddToCart: "Add To Cart",
+    Quantity: "Quantity",
+    Price: "Price",
+    Unit: "Unit",
+    Item: "Item",
+    Action: "Action",
+    None: "None",
+    InputFields: {
+      Quantity: "Enter Quantity",
+      GoToCart: "Go to Cart",
+    },
+    Validations: {
+      EnterQuantity: "Quantity Required",
+    },
   },
   Cart: {
     Text1: "Items in your cart",
