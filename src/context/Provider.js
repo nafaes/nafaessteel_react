@@ -77,7 +77,7 @@ const GlobalProvider = ({ children }) => {
     cartItems: cartState.items,
     totalCartItems,
     totalCartAmount,
-    dispatchCartActions: dispatchCartActions,
+    dispatchCartActions,
     userState,
     dispatchAuthActions,
   };

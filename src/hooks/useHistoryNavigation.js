@@ -5,30 +5,16 @@ import { ADDTOCART, ITEMS } from "../constants/routes";
 
 const useHistoryNavigation = () => {
   const history = useHistory();
-  const { state: locationState } = useLocation();
+  const { state } = useLocation();
 
   const navigate = useCallback(
     ({ isParent, categoryId, categoryName, nextLevel }) => {
-      let allItems;
-      if (locationState?.items) {
-        allItems = [
-          ...locationState.items,
-          {
-            categoryId: categoryId,
-            name: categoryName,
-            level: nextLevel,
-          },
-        ];
-      } else {
-        allItems = [
-          {
-            categoryId: categoryId,
-            name: categoryName,
-            level: nextLevel,
-          },
-        ];
-      }
-
+      const category = {
+        categoryId: categoryId,
+        name: categoryName,
+        level: nextLevel,
+      };
+      const allItems = state?.items ? [...state.items, category] : [category];
       if (isParent === true) {
         history.push(ITEMS, {
           items: allItems,
@@ -39,7 +25,7 @@ const useHistoryNavigation = () => {
         });
       }
     },
-    [history, locationState]
+    [history, state]
   );
 
   return navigate;
