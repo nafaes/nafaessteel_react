@@ -25,7 +25,7 @@ const signinFormInitialState = {
       required: true,
       minLength: 4,
       maxLength: 16,
-      validationMsg: { msg: "SignIn.Validations.Password", length: ""},
+      validationMsg: { msg: "SignIn.Validations.Password", length: "" },
     },
     valid: false,
     touched: false,
@@ -39,11 +39,7 @@ const SigninPage = (props) => {
   } = useContext(GlobalContext);
 
   const [signinForm, setSigninForm] = useState(signinFormInitialState);
-  const [notify, setNotify] = useState({
-    isOpen: false,
-    message: "",
-    type: "",
-  });
+  const [notify, setNotify] = useState({isOpen: false, message: "", type: ""});
 
   const formChangeHandler = (event) => {
     const { value, name } = event.target;
@@ -57,10 +53,10 @@ const SigninPage = (props) => {
         touched: true,
         validation: {
           ...signinForm[name].validation,
-          validationMsg: validation.validationMsg
-        }
-      }
-    }
+          validationMsg: validation.validationMsg,
+        },
+      },
+    };
 
     // const updatedForm = updateObject(signinForm, {
     //   [name]: updateObject(signinForm[name], {
@@ -73,52 +69,56 @@ const SigninPage = (props) => {
     //   }),
     // });
 
-    setSigninForm(updatedForm)
+    setSigninForm(updatedForm);
   };
 
-  const signinHandler = useCallback(async (event) => {
-    event.preventDefault();
-    if (!signinForm.email.valid || !signinForm.password.valid) {
-      setSigninForm((signinForm) => {
-        let updatedForm = {};
-        for (let inputIdentifier in signinForm) {
-          updatedForm[inputIdentifier] = {
-            ...signinForm[inputIdentifier],
-            touched: true,
-          };
-        }
-        return updatedForm;
-      });
-    }
+  const signinHandler = useCallback(
+    async (event) => {
+      event.preventDefault();
+      if (!signinForm.email.valid || !signinForm.password.valid) {
+        setSigninForm((signinForm) => {
+          let updatedForm = {};
+          for (let inputIdentifier in signinForm) {
+            updatedForm[inputIdentifier] = {
+              ...signinForm[inputIdentifier],
+              touched: true,
+            };
+          }
+          return updatedForm;
+        });
+      }
 
-    if (signinForm.email.valid && signinForm.password.valid) {
-      login(
-        signinForm.email.value,
-        signinForm.password.value,
-        dispatchAuthActions
-      )((errorMessage) => {
-        setNotify({ isOpen: true, message: errorMessage, type: "error" });
-      });
-      setSigninForm((signinForm) => {
-        let updatedForm = {};
-        for (let inputIdentifier in signinForm) {
-          updatedForm[inputIdentifier] = {
-            ...signinForm[inputIdentifier],
-            value: "",
-            valid: false,
-            touched: false,
-          };
-        }
-        return updatedForm;
-      });
-    }
-  }, [
-    signinForm.email.value,
-    signinForm.email.valid,
-    signinForm.password.value,
-    signinForm.password.valid,
-    dispatchAuthActions,
-  ]);
+      if (signinForm.email.valid && signinForm.password.valid) {
+        login(
+          signinForm.email.value,
+          signinForm.password.value,
+          dispatchAuthActions
+        )((errorMessage) => {
+          setNotify({ isOpen: true, message: errorMessage, type: "error" });
+        });
+
+        setSigninForm((signinForm) => {
+          let updatedForm = {};
+          for (let inputIdentifier in signinForm) {
+            updatedForm[inputIdentifier] = {
+              ...signinForm[inputIdentifier],
+              value: "",
+              valid: false,
+              touched: false,
+            };
+          }
+          return updatedForm;
+        });
+      }
+    },
+    [
+      signinForm.email.value,
+      signinForm.email.valid,
+      signinForm.password.value,
+      signinForm.password.valid,
+      dispatchAuthActions,
+    ]
+  );
 
   return (
     <Fragment>

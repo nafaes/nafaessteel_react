@@ -8,11 +8,14 @@ import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 import { Divider } from "@material-ui/core";
 
+import useHistoryNavigation from "../../hooks/useHistoryNavigation";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
 
 const Categories = (props) => {
-  const { allCategories, navigateToItems } = props;
+  const { allCategories } = props;
+  const navigate = useHistoryNavigation();
+
   const englishMobileStyles = landingMobEng();
   let classesExternal = landingEngDesk;
   let classes = englishMobileStyles;
@@ -50,7 +53,7 @@ const Categories = (props) => {
               raised
               elevation={12}
               className={clsx(classes.root, classesExternal.animateCard)}
-              onClick={navigateToItems.bind(null, category)}
+              onClick={navigate.bind(null, category)}
             >
               <CardActionArea>
                 <CardMedia

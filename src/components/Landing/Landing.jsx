@@ -17,7 +17,6 @@ import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
 const Landing = (props) => {
   const {
     allCategories,
-    navigateToItems,
     location: { state },
     history,
   } = props;
@@ -48,10 +47,7 @@ const Landing = (props) => {
 
   return (
     <Grid container direction="column">
-      <Categories
-        allCategories={allCategories}
-        navigateToItems={navigateToItems}
-      />
+      <Categories allCategories={allCategories} />
 
       <div ref={contactUs}>
         <Grid

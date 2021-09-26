@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import { CardHeader, Divider } from "@material-ui/core";
 import clsx from "clsx";
 
+import useHistoryNavigation from "../../hooks/useHistoryNavigation";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Items = (props) => {
-  const { items, navigate } = props;
+  const { items } = props;
+  const navigate = useHistoryNavigation();
   const classes = useStyles();
   let classesExternal = landingEngDesk;
 

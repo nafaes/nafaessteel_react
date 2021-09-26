@@ -8,12 +8,10 @@ import React, {
 
 import Items from "../components/Items/Items";
 import { GlobalContext } from "../context/Provider";
-import useHistoryNavigation from "../hooks/useHistoryNavigation";
 import { getAllCatergoryItems } from "../services/categories";
 
 const ItemsPage = (props) => {
   const [catergoryItems, setCategoryItems] = useState([]);
-  const navigate = useHistoryNavigation();
   const { languageId } = useContext(GlobalContext);
 
   const { location } = props;
@@ -42,7 +40,7 @@ const ItemsPage = (props) => {
     };
   }, [categoryId, getCatergoryItems]);
 
-  return <Items items={catergoryItems} navigate={navigate} />;
+  return <Items items={catergoryItems} />;
 };
 
 export default ItemsPage;
