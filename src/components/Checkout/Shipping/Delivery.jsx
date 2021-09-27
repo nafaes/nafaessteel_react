@@ -45,10 +45,17 @@ const Delivery = ({ deliveryDate }) => {
         const { price } = deliveryAreas.find(
           ({ charagesId }) => charagesId === value
         );
-        updatedForm["shippingCharges"].value = price;
+
+        updatedForm = {
+          ...updatedForm,
+          shippingCharges: {
+            value: Number(price),
+          },
+        };
+
         setShippingCharges(Number(price));
       } else {
-        updatedForm["shippingCharges"].value = "";
+        updatedForm["shippingCharges"].value = 0;
         setShippingCharges(0);
       }
     }
@@ -81,7 +88,11 @@ const Delivery = ({ deliveryDate }) => {
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
                 name="area"
-                value={shippingForm.area.value ? shippingForm.area.value : ""}
+                value={
+                  deliveryAreas.length !== 0 && shippingForm.area.value
+                    ? shippingForm.area.value
+                    : ""
+                }
                 onChange={formChangeHandler}
                 label="Area"
                 MenuProps={{ disableScrollLock: true }}
@@ -110,10 +121,9 @@ const Delivery = ({ deliveryDate }) => {
           </Grid>
           <Grid item sm={6}>
             <TextField
-              id="outlined-read-only-input"
               label={t("Checkout.ShippingCharges")}
               value={
-                shippingForm.shippingCharges.value
+                shippingForm.shippingCharges.value !== 0
                   ? t(shippingForm.shippingCharges.value)
                   : ""
               }
@@ -128,7 +138,6 @@ const Delivery = ({ deliveryDate }) => {
         <Grid item container>
           <Grid item sm={6}>
             <TextField
-              id="outlined-helperText"
               label={t("Shipping.InputFields.Block")}
               variant="outlined"
               name="block"
@@ -147,7 +156,6 @@ const Delivery = ({ deliveryDate }) => {
           </Grid>
           <Grid item sm={6}>
             <TextField
-              id="outlined-helperText"
               label={t("Shipping.InputFields.Street")}
               variant="outlined"
               name="street"
@@ -168,7 +176,6 @@ const Delivery = ({ deliveryDate }) => {
         <Grid item container>
           <Grid item sm={6}>
             <TextField
-              id="outlined-helperText"
               label={t("Shipping.InputFields.Plot")}
               variant="outlined"
               name="plot"

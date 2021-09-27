@@ -106,14 +106,14 @@ const guestFormInitialState = {
   formIsValid: false,
 };
 
-const shippingFormInitialState = {
+export const shippingFormInitialState = {
   area: {
     value: "",
     valid: true,
     validationMsg: "Shipping.Validations.Area",
   },
   shippingCharges: {
-    value: "",
+    value: 0,
   },
   block: {
     value: "",

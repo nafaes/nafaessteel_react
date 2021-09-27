@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -12,7 +18,10 @@ import Pickup from "./Pickup";
 import Delivery from "./Delivery";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import RadioButton from "../../../common/RadioButton/RadioButton";
-import { CheckoutContext } from "../../../pages/CheckoutPage";
+import {
+  CheckoutContext,
+  shippingFormInitialState,
+} from "../../../pages/CheckoutPage";
 import { getDeliveryDate } from "../../../services/checkout";
 
 export const Shipping = () => {
@@ -21,6 +30,7 @@ export const Shipping = () => {
     handleShippingType,
     shippingForm,
     setShippingForm,
+    setShippingCharges,
     handleTabChange,
   } = useContext(CheckoutContext);
   const [deliveryDate, setDeliveryDate] = useState();
@@ -39,10 +49,25 @@ export const Shipping = () => {
   useEffect(() => {
     getDeliveryDateByShippingType();
 
-    return () => {
-      setDeliveryDate(null);
-    };
+    // return () => {
+    //   setDeliveryDate(null);
+    // };
   }, [getDeliveryDateByShippingType]);
+
+  useEffect(() => {
+    if (shippingType === "pickup") {
+      setShippingForm({ ...shippingFormInitialState });
+      setShippingCharges(0);
+    }
+  }, [shippingType, setShippingForm, setShippingCharges]);
+
+  const renderShippingType = useMemo(() => {
+    if (shippingType === "pickup") {
+      return <Pickup deliveryDate={deliveryDate} />;
+    } else if (shippingType === "delivery") {
+      return <Delivery deliveryDate={deliveryDate} />;
+    }
+  }, [shippingType, deliveryDate]);
 
   const nextHandler = useCallback(() => {
     if (shippingType === "pickup") {
@@ -72,13 +97,6 @@ export const Shipping = () => {
     setShippingForm,
     handleTabChange,
   ]);
-
-  let renderShippingType;
-  if (shippingType === "pickup") {
-    renderShippingType = <Pickup deliveryDate={deliveryDate} />;
-  } else if (shippingType === "delivery") {
-    renderShippingType = <Delivery deliveryDate={deliveryDate} />;
-  }
 
   return (
     <Paper
