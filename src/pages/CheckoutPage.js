@@ -11,7 +11,6 @@ import { GlobalContext } from "../context/Provider";
 
 const CHECKOUT = "CHECKOUT";
 const SHIPPING = "SHIPPING";
-// const ORDER_SUMMARY = "ORDER_SUMMARY";
 const PAYMENT = "PAYMENT";
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
@@ -23,25 +22,19 @@ const checkoutProcessInitialState = {
   isPaymentDisabled: true,
 };
 
-const checkoutProcessReducer = (state, { type, payload }) => {
+const checkoutProcessReducer = (state, { type }) => {
   switch (type) {
     case CHECKOUT:
       return {
         ...state,
-        isCheckoutDisabled: payload.isDisabled,
+        isCheckoutDisabled: false,
       };
 
     case SHIPPING:
       return {
         ...state,
-        isShippingDisabled: payload.isDisabled,
+        isShippingDisabled: false,
       };
-
-    // case ORDER_SUMMARY:
-    //   return {
-    //     ...state,
-    //     isOrderSummaryDisabled: false,
-    //   };
 
     case PAYMENT:
       return {
@@ -137,7 +130,8 @@ export const CheckoutContext = createContext();
 
 const CheckoutPage = () => {
   const {
-    userState: { isAuthenticated },
+    userState: { isAuthenticated, userEmail },
+    cartItems,
   } = useContext(GlobalContext);
   const [tabValue, setTabValue] = useState(0);
   const [checkoutProcess, dispatchCheckoutProcess] = useReducer(
@@ -145,10 +139,14 @@ const CheckoutPage = () => {
     checkoutProcessInitialState
   );
 
+  const [userType, setUserType] = useState("guest");
   const [guestForm, setGuestForm] = useState(guestFormInitialState);
   const [shippingForm, setShippingForm] = useState(shippingFormInitialState);
   const [shippingType, setShippingType] = useState("");
-  const [shippingCharges, setShippingCharges] = useState(0);
+
+  const handleUserType = useCallback((event, newvalue) => {
+    setUserType(newvalue);
+  }, []);
 
   const handleShippingType = useCallback((event, newValue) => {
     setShippingType(newValue);
@@ -157,16 +155,9 @@ const CheckoutPage = () => {
   const handleTabChange = useCallback((event, newValue) => {
     switch (newValue) {
       case 1:
-        dispatchCheckoutProcess({
-          type: SHIPPING,
-          payload: { isDisabled: false },
-        });
+        dispatchCheckoutProcess({ type: SHIPPING });
         setTabValue(1);
         break;
-      // case 2:
-      //   dispatchCheckoutProcess({ type: ORDER_SUMMARY });
-      //   setTabValue(2);
-      //   break;
       case 2:
         dispatchCheckoutProcess({ type: PAYMENT });
         setTabValue(2);
@@ -174,7 +165,6 @@ const CheckoutPage = () => {
       default:
         setTabValue(0);
     }
-    setTabValue(newValue);
   }, []);
 
   useEffect(() => {
@@ -187,9 +177,108 @@ const CheckoutPage = () => {
     }
   }, [isAuthenticated]);
 
+  const checkoutHandler = useCallback(() => {
+    // Validations
+    let isCheckoutValid = true;
+    if (isAuthenticated === false) {
+      if (userType === "guest" && guestForm.formIsValid === false) {
+        isCheckoutValid = false;
+        setTabValue(0);
+        setGuestForm((guestForm) => {
+          let updatedForm = { formIsValid: false };
+          for (let inputIdentifier in guestForm) {
+            if (typeof guestForm[inputIdentifier] === "object") {
+              updatedForm[inputIdentifier] = {
+                ...guestForm[inputIdentifier],
+                touched: true,
+              };
+            }
+          }
+          return updatedForm;
+        });
+      } else if (userType !== "guest") {
+        setTabValue(0);
+        isCheckoutValid = false;
+      }
+    }
+
+    if (shippingType === "delivery" && shippingForm.formIsValid === false) {
+      isCheckoutValid = false;
+      setTabValue(1);
+      setShippingForm((previousShippingForm) => {
+        let updatedForm = { formIsValid: false };
+        for (let inputIdentifier in previousShippingForm) {
+          if (typeof previousShippingForm[inputIdentifier] === "object") {
+            updatedForm[inputIdentifier] = {
+              ...previousShippingForm[inputIdentifier],
+              valid: false,
+            };
+          }
+        }
+        return updatedForm;
+      });
+    }
+
+    if (isCheckoutValid) {
+      // Preparing the data
+      let userDetails;
+      if (isAuthenticated) {
+        userDetails = {
+          userType: "registered",
+          email: userEmail,
+        };
+      } else {
+        userDetails = {
+          userType: "guest",
+          name: guestForm.name.value,
+          email: guestForm.email.value,
+          mobile: guestForm.mobileNumber.value,
+        };
+      }
+
+      let shipping = { type: "pickup" };
+      if (shippingType === "delivery") {
+        shipping = {
+          type: "delivery",
+          cityId: shippingForm.area.value,
+          charges: shippingForm.shippingCharges.value,
+          block: shippingForm.block.value,
+          street: shippingForm.street.value,
+          plot: shippingForm.plot.value,
+        };
+      }
+
+      const items = cartItems.map(({ itemId, quantity, price }) => {
+        return {
+          id: itemId,
+          quantity,
+          price,
+        };
+      });
+
+      const checkoutDetails = {
+        user: userDetails,
+        shipping,
+        items,
+      };
+
+      console.log(checkoutDetails);
+    }
+  }, [
+    isAuthenticated,
+    cartItems,
+    guestForm,
+    shippingForm,
+    userType,
+    shippingType,
+    userEmail,
+  ]);
+
   const context = {
     tabValue,
     handleTabChange,
+    userType,
+    handleUserType,
     checkoutProcess,
     guestForm,
     setGuestForm,
@@ -197,8 +286,8 @@ const CheckoutPage = () => {
     handleShippingType,
     shippingForm,
     setShippingForm,
-    shippingCharges,
-    setShippingCharges,
+    shippingCharges: shippingForm.shippingCharges.value,
+    checkoutHandler,
   };
 
   return (

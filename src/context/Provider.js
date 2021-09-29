@@ -22,6 +22,8 @@ const authInitialState = {
   loading: false,
   token: null,
   expiresIn: null,
+  userId: "",
+  userEmail: "",
   isAuthenticated: false,
   errorMessage: null,
 };

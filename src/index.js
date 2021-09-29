@@ -1,18 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 
 import Layout from "./layout/Layout";
 import GlobalProvider from "./context/Provider";
+import history from "./helpers/history";
 import "../src/translations/i18n";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={history}>
     <GlobalProvider>
       <Layout />
     </GlobalProvider>
-  </BrowserRouter>,
+  </Router>,
   document.getElementById("root")
 );
 

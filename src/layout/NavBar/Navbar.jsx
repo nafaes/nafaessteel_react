@@ -32,15 +32,22 @@ import {
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
 import { useTranslation } from "react-i18next";
 
-import { userLogout } from "../../context/actions/authActions";
-import { ADDTOCART, CART, ITEMS, ORDERS, SIGNIN } from "../../constants/routes";
-import navbarEngDesk from "../../assets/scss/navbar.module.scss";
-import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
-import { allCategoryItems } from "../../constants/data";
-import { GlobalContext } from "../../context/Provider";
 import Menus from "./Menus";
 import SideDrawer from "./SideDrawer";
+import { allCategoryItems } from "../../constants/data";
+import { GlobalContext } from "../../context/Provider";
+import { userLogout } from "../../context/actions/authActions";
+import {
+  ADDTOCART,
+  CART,
+  ITEMS,
+  ORDERS,
+  SIGNIN,
+  SIGNUP,
+} from "../../constants/routes";
 import logo from "../../assets/img/Logo.png";
+import navbarEngDesk from "../../assets/scss/navbar.module.scss";
+import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -149,10 +156,8 @@ const Navbar = (props) => {
     (event) => {
       handleClose(event);
       dispatchAuthActions(userLogout());
-      history.push("/");
-      // history.push(SIGNIN);
     },
-    [dispatchAuthActions, history]
+    [dispatchAuthActions]
   );
 
   const tabs = (
@@ -229,13 +234,27 @@ const Navbar = (props) => {
                       {t("Navbar.SignOut")}
                     </MenuItem>
                   ) : (
-                    <MenuItem
-                      onClick={handleClose}
-                      component={Link}
-                      to={SIGNIN}
-                    >
-                      {t("SignIn.InputFields.SignIn")}
-                    </MenuItem>
+                    [
+                      <MenuItem
+                        key="SignIn"
+                        onClick={handleClose}
+                        component={Link}
+                        to={{
+                          pathname: SIGNIN,
+                          state: { previousPath: location.pathname },
+                        }}
+                      >
+                        {t("SignIn.InputFields.SignIn")}
+                      </MenuItem>,
+                      <MenuItem
+                        key="SignUp"
+                        onClick={handleClose}
+                        component={Link}
+                        to={SIGNUP}
+                      >
+                        {t("SignIn.InputFields.SignUp")}
+                      </MenuItem>,
+                    ]
                   )}
                 </MenuList>
               </ClickAwayListener>

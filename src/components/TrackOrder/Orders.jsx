@@ -348,6 +348,7 @@ const Orders = (props) => {
                     }}
                     component={Link}
                     to={TRACKORDER}
+                    target="_blank"
                   >
                     Track Order
                   </Button>

@@ -52,8 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DesktopCartItems = (props) => {
-  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } =
-    props;
+  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } = props;
   const classes = useStyles();
   const { t } = useTranslation();
 

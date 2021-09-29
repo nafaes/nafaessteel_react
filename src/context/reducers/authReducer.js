@@ -18,6 +18,7 @@ export const authReducer = (state, { type, payload }) => {
         ...state,
         loading: false,
         isAuthenticated: true,
+        userEmail: payload.email,
         token: payload.access_token,
         expiresIn: payload.expires_in,
       };

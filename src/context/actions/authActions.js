@@ -1,4 +1,3 @@
-import { createBrowserHistory } from "history";
 import { logIn } from "../../services/auth";
 import {
   LOGIN_FAILED,
@@ -6,7 +5,9 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_USER,
 } from "../../constants/actionTypes/authConstants";
-import { CHECKOUT } from "../../constants/routes";
+import { CHECKOUT, LANDING, SIGNIN, SIGNUP } from "../../constants/routes";
+
+import history from "../../helpers/history";
 
 export const loginLoading = () => {
   return {
@@ -37,31 +38,32 @@ export const userLogout = () => {
   };
 };
 
-export const login = (email, password, dispatch) => async (onError) => {
-  const history = createBrowserHistory();
-  dispatch(loginLoading());
+export const login = (email, password, dispatch, previousPath) => async (onError) => {
+    dispatch(loginLoading());
 
-  try {
-    const response = await logIn(email, password);
-    if (response) {
-      dispatch(loginSuccess(response));
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          token: response.access_token,
-          expiresIn: response.expires_in,
-        })
-      );
-
-      if (history.location.pathname !== CHECKOUT) {
-        history.goBack();
+    try {
+      const response = await logIn(email, password);
+      if (response) {
+        dispatch(loginSuccess({ ...response, email }));
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            token: response.access_token,
+            expiresIn: response.expires_in,
+            email,
+          })
+        );
+        if (previousPath === SIGNIN || previousPath === SIGNUP) {
+          history.push(LANDING);
+        } else if (history.location.pathname !== CHECKOUT) {
+          history.goBack();
+        }
       }
+    } catch (error) {
+      onError(error.message);
+      dispatch(loginFailed(error.message));
     }
-  } catch (error) {
-    onError(error.message);
-    dispatch(loginFailed(error.message));
-  }
-};
+  };
 
 export const authCheckState = (dispatch) => {
   try {

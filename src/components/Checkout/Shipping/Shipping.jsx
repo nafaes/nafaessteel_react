@@ -30,7 +30,6 @@ export const Shipping = () => {
     handleShippingType,
     shippingForm,
     setShippingForm,
-    setShippingCharges,
     handleTabChange,
   } = useContext(CheckoutContext);
   const [deliveryDate, setDeliveryDate] = useState();
@@ -56,10 +55,9 @@ export const Shipping = () => {
 
   useEffect(() => {
     if (shippingType === "pickup") {
-      setShippingForm({ ...shippingFormInitialState });
-      setShippingCharges(0);
+      setShippingForm(shippingFormInitialState);
     }
-  }, [shippingType, setShippingForm, setShippingCharges]);
+  }, [shippingType, setShippingForm]);
 
   const renderShippingType = useMemo(() => {
     if (shippingType === "pickup") {

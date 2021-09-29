@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext } from "react";
 import clsx from "clsx";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -16,33 +16,30 @@ import SignupPage from "../../../pages/Signup";
 import { CheckoutContext } from "../../../pages/CheckoutPage";
 
 const UserCheckout = () => {
-  const { handleTabChange, guestForm, setGuestForm } = useContext(CheckoutContext);
+  const { handleTabChange, guestForm, setGuestForm, userType, handleUserType } = useContext(CheckoutContext);
   const { t } = useTranslation();
-
   const classes = checkoutStyles();
-  const [userType, setUserType] = useState("guest");
-  const handleUserType = (event, newvalue) => {
-    setUserType(newvalue);
-  };
 
   const submitDetailsHandler = useCallback(() => {
-    if (!guestForm.formIsValid) {
-      setGuestForm((guestForm) => {
-        let updatedForm = { formIsValid: false };
-        for (let inputIdentifier in guestForm) {
-          if (typeof guestForm[inputIdentifier] === "object") {
-            updatedForm[inputIdentifier] = {
-              ...guestForm[inputIdentifier],
-              touched: true,
-            };
+    if (userType === "guest") {
+      if (!guestForm.formIsValid) {
+        setGuestForm((guestForm) => {
+          let updatedForm = { formIsValid: false };
+          for (let inputIdentifier in guestForm) {
+            if (typeof guestForm[inputIdentifier] === "object") {
+              updatedForm[inputIdentifier] = {
+                ...guestForm[inputIdentifier],
+                touched: true,
+              };
+            }
           }
-        }
-        return updatedForm;
-      });
-    } else {
-      handleTabChange(undefined, 1);
+          return updatedForm;
+        });
+      } else {
+        handleTabChange(undefined, 1);
+      }
     }
-  }, [guestForm.formIsValid, setGuestForm, handleTabChange]);
+  }, [userType, guestForm.formIsValid, setGuestForm, handleTabChange]);
 
   let renderUserType;
   if (userType === "guest") {
@@ -74,6 +71,7 @@ const UserCheckout = () => {
           name="customized-radios"
           className={classes.radioContainer}
           onChange={handleUserType}
+          value={userType}
         >
           <FormControlLabel
             value="guest"
@@ -101,7 +99,10 @@ const UserCheckout = () => {
           className={clsx(classes.checkNextButtonGridItem)}
           style={{ width: "40%", margin: "0px auto .5em auto" }}
         >
-          <CheckoutButton onClick={submitDetailsHandler} buttonText={t("Checkout.Next")} />
+          <CheckoutButton
+            onClick={submitDetailsHandler}
+            buttonText={t("Checkout.Next")}
+          />
         </Grid>
       </Grid>
     </Paper>

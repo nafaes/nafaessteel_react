@@ -14,7 +14,7 @@ import { getDeliveryAreas } from "../../../services/checkout";
 
 const Delivery = ({ deliveryDate }) => {
   const [deliveryAreas, setDeliveryAreas] = useState([]);
-  const { shippingForm, setShippingForm, setShippingCharges } = useContext(CheckoutContext);
+  const { shippingForm, setShippingForm } = useContext(CheckoutContext);
   const { t } = useTranslation();
   const classes = checkoutStyles();
 
@@ -45,18 +45,19 @@ const Delivery = ({ deliveryDate }) => {
         const { price } = deliveryAreas.find(
           ({ charagesId }) => charagesId === value
         );
-
         updatedForm = {
           ...updatedForm,
           shippingCharges: {
             value: Number(price),
           },
         };
-
-        setShippingCharges(Number(price));
       } else {
-        updatedForm["shippingCharges"].value = 0;
-        setShippingCharges(0);
+        updatedForm = {
+          ...updatedForm,
+          shippingCharges: {
+            value: 0,
+          },
+        };
       }
     }
 
@@ -66,7 +67,6 @@ const Delivery = ({ deliveryDate }) => {
         formIsValid = updatedForm[inputIdentifier].value !== "" && formIsValid;
       }
     }
-    // console.log(updatedForm);
     setShippingForm({ ...updatedForm, formIsValid });
   };
 

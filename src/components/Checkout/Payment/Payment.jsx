@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -7,10 +7,12 @@ import { Button, FormHelperText, Grid, Typography } from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
 import { useTranslation } from "react-i18next";
 
+import { CheckoutContext } from "../../../pages/CheckoutPage";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import RadioButton from "../../../common/RadioButton/RadioButton";
 
 export const Payment = () => {
+  const { checkoutHandler } = useContext(CheckoutContext);
   const { t } = useTranslation();
   const classes = checkoutStyles();
 
@@ -80,6 +82,8 @@ export const Payment = () => {
             fullWidth
             margin="dense"
             spacing={1}
+            onClick={checkoutHandler.bind(null)}
+            disabled={paymentType === undefined ? true : false}
             style={{
               fontSize: "0.95rem",
               fontWeight: "600",

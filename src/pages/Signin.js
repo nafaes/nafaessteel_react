@@ -37,9 +37,14 @@ const SigninPage = (props) => {
     dispatchAuthActions,
     userState: { loading: loginLoading },
   } = useContext(GlobalContext);
+  const previousPath = props.location?.state?.previousPath;
 
   const [signinForm, setSigninForm] = useState(signinFormInitialState);
-  const [notify, setNotify] = useState({isOpen: false, message: "", type: ""});
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
 
   const formChangeHandler = (event) => {
     const { value, name } = event.target;
@@ -92,7 +97,8 @@ const SigninPage = (props) => {
         login(
           signinForm.email.value,
           signinForm.password.value,
-          dispatchAuthActions
+          dispatchAuthActions,
+          previousPath
         )((errorMessage) => {
           setNotify({ isOpen: true, message: errorMessage, type: "error" });
         });
@@ -117,6 +123,7 @@ const SigninPage = (props) => {
       signinForm.password.value,
       signinForm.password.valid,
       dispatchAuthActions,
+      previousPath,
     ]
   );
 
