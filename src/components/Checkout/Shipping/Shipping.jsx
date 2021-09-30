@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useCallback, useContext, useEffect, useMemo } from "react";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -31,8 +25,9 @@ export const Shipping = () => {
     shippingForm,
     setShippingForm,
     handleTabChange,
+    deliveryDate,
+    setDeliveryDate,
   } = useContext(CheckoutContext);
-  const [deliveryDate, setDeliveryDate] = useState();
   const { t } = useTranslation();
   const classes = checkoutStyles();
 
@@ -43,14 +38,10 @@ export const Shipping = () => {
       const date = await getDeliveryDate(deliveryType);
       setDeliveryDate(date);
     }
-  }, [shippingType]);
+  }, [shippingType, setDeliveryDate]);
 
   useEffect(() => {
     getDeliveryDateByShippingType();
-
-    // return () => {
-    //   setDeliveryDate(null);
-    // };
   }, [getDeliveryDateByShippingType]);
 
   useEffect(() => {

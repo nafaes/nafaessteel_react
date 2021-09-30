@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -12,11 +12,10 @@ import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import RadioButton from "../../../common/RadioButton/RadioButton";
 
 export const Payment = () => {
-  const { checkoutHandler } = useContext(CheckoutContext);
+  const { checkoutHandler, paymentType, setPaymentType } = useContext(CheckoutContext);
   const { t } = useTranslation();
   const classes = checkoutStyles();
 
-  const [paymentType, setPaymentType] = useState();
   const handlePaymentType = (event, newValue) => {
     setPaymentType(newValue);
   };
@@ -36,6 +35,7 @@ export const Payment = () => {
           aria-label=""
           name="customized-radios"
           className={classes.radioContainer}
+          value={paymentType}
           onChange={handlePaymentType}
         >
           <FormControlLabel
@@ -45,7 +45,7 @@ export const Payment = () => {
             className={classes.paymentRadioBtns}
           />
           <FormControlLabel
-            value="knet"
+            value="KNET"
             control={<RadioButton />}
             label={t("Checkout.CheckoutUsingKNET")}
             className={classes.paymentRadioBtns}

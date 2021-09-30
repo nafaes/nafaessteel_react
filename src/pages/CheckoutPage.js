@@ -143,6 +143,8 @@ const CheckoutPage = () => {
   const [guestForm, setGuestForm] = useState(guestFormInitialState);
   const [shippingForm, setShippingForm] = useState(shippingFormInitialState);
   const [shippingType, setShippingType] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState();
+  const [paymentType, setPaymentType] = useState("");
 
   const handleUserType = useCallback((event, newvalue) => {
     setUserType(newvalue);
@@ -236,10 +238,11 @@ const CheckoutPage = () => {
         };
       }
 
-      let shipping = { type: "pickup" };
+      let shipping = { type: "pickup", deliveryDate };
       if (shippingType === "delivery") {
         shipping = {
           type: "delivery",
+          deliveryDate,
           cityId: shippingForm.area.value,
           charges: shippingForm.shippingCharges.value,
           block: shippingForm.block.value,
@@ -247,6 +250,11 @@ const CheckoutPage = () => {
           plot: shippingForm.plot.value,
         };
       }
+
+      const payment = {
+        paymentType,
+        referenceNo: "",
+      };
 
       const items = cartItems.map(({ itemId, quantity, price }) => {
         return {
@@ -260,6 +268,7 @@ const CheckoutPage = () => {
         user: userDetails,
         shipping,
         items,
+        payment,
       };
 
       console.log(checkoutDetails);
@@ -272,6 +281,8 @@ const CheckoutPage = () => {
     userType,
     shippingType,
     userEmail,
+    deliveryDate,
+    paymentType,
   ]);
 
   const context = {
@@ -287,6 +298,10 @@ const CheckoutPage = () => {
     shippingForm,
     setShippingForm,
     shippingCharges: shippingForm.shippingCharges.value,
+    deliveryDate,
+    setDeliveryDate,
+    paymentType,
+    setPaymentType,
     checkoutHandler,
   };
 
