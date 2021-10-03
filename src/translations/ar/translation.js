@@ -6,6 +6,7 @@ export const TRANSLATIONS_AR = {
     Orders: "اتصل بنا",
     ContactUS: "اتصل بنا",
     Products: "منتجات",
+    TrackOrder: "ترتيب المسار",
     SignOut: "خروج",
   },
   SignIn: {
@@ -133,5 +134,28 @@ export const TRANSLATIONS_AR = {
     Text2:
       "إما أنك جربت طريقًا مظللًا أو أتيت إلى هنا عن طريق الخطأ. أيهما ، حاول استخدام الملاحة",
     Button: "اذهب إلى الصفحة الرئيسية",
+  },
+  TrackOrder: {
+    Text: "ترتيب المسار",
+    InputFields: {
+      OrderTrackId: "معرف مسار الطلب",
+      Submit: "يقدم",
+    },
+    Validations: {
+      OrderTrackId: "مطلوب معرف مسار الطلب!",
+    },
+  },
+  PaymentFailed: {
+    PaymentDetails: "بيانات الدفع",
+    Status: "حالة",
+    PaymentId: "معرف الدفع",
+    ReferenceNumber: "رقم المرجع",
+    Amount: "كمية",
+  },
+  PaymentSuccess: {
+    OrderId: "رقم التعريف الخاص بالطلب",
+    OderDate: "تاريخ أودر",
+    TrackId: "رقم الحافلة",
+    PaymentType: "نوع الدفع",
   },
 };

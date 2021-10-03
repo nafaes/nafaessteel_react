@@ -6,8 +6,10 @@ import React, {
   useReducer,
   useState,
 } from "react";
+
 import CheckoutContainer from "../components/Checkout/CheckoutContainer";
 import { GlobalContext } from "../context/Provider";
+import { getPaymentURL, saveOrder } from "../services/checkout";
 
 const CHECKOUT = "CHECKOUT";
 const SHIPPING = "SHIPPING";
@@ -132,6 +134,7 @@ const CheckoutPage = () => {
   const {
     userState: { isAuthenticated, userEmail },
     cartItems,
+    totalCartAmount,
   } = useContext(GlobalContext);
   const [tabValue, setTabValue] = useState(0);
   const [checkoutProcess, dispatchCheckoutProcess] = useReducer(
@@ -179,7 +182,7 @@ const CheckoutPage = () => {
     }
   }, [isAuthenticated]);
 
-  const checkoutHandler = useCallback(() => {
+  const checkoutHandler = useCallback(async () => {
     // Validations
     let isCheckoutValid = true;
     if (isAuthenticated === false) {
@@ -226,12 +229,12 @@ const CheckoutPage = () => {
       let userDetails;
       if (isAuthenticated) {
         userDetails = {
-          userType: "registered",
+          type: "registered",
           email: userEmail,
         };
       } else {
         userDetails = {
-          userType: "guest",
+          type: "guest",
           name: guestForm.name.value,
           email: guestForm.email.value,
           mobile: guestForm.mobileNumber.value,
@@ -251,11 +254,6 @@ const CheckoutPage = () => {
         };
       }
 
-      const payment = {
-        paymentType,
-        referenceNo: "",
-      };
-
       const items = cartItems.map(({ itemId, quantity, price }) => {
         return {
           id: itemId,
@@ -264,14 +262,28 @@ const CheckoutPage = () => {
         };
       });
 
-      const checkoutDetails = {
+      const response = await getPaymentURL({
+        amount: totalCartAmount,
+        lng: "EN",
+        email: userDetails.email,
+        paymentType: paymentType,
+      });
+
+      const saveResponse = await saveOrder({
         user: userDetails,
         shipping,
         items,
-        payment,
-      };
+        payment: {
+          referenceNo: response.referenceno,
+          paymentType: response.paymentmode,
+        },
+      });
 
-      console.log(checkoutDetails);
+      if (saveResponse?.url) {
+        window.location = saveResponse.url;
+      } else {
+        window.location = response.paymenturl;
+      }
     }
   }, [
     isAuthenticated,
@@ -283,6 +295,7 @@ const CheckoutPage = () => {
     userEmail,
     deliveryDate,
     paymentType,
+    totalCartAmount,
   ]);
 
   const context = {

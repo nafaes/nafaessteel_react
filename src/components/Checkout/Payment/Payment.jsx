@@ -12,13 +12,28 @@ import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import RadioButton from "../../../common/RadioButton/RadioButton";
 
 export const Payment = () => {
-  const { checkoutHandler, paymentType, setPaymentType } = useContext(CheckoutContext);
+  const { checkoutHandler, paymentType, setPaymentType } =
+    useContext(CheckoutContext);
   const { t } = useTranslation();
   const classes = checkoutStyles();
 
   const handlePaymentType = (event, newValue) => {
     setPaymentType(newValue);
   };
+
+  // const handlePayment = async () => {
+  //   if (paymentType === "KNET") {
+  //     const { paymenturl } = await getPaymentURL({
+  //       amount: 990,
+  //       lng: "EN",
+  //       email: "harinath@nafaes.com",
+  //       paymentType: "KNET",
+  //     });
+  //     window.location = paymenturl;
+  //   } else {
+
+  //   }
+  // };
 
   return (
     <Paper
@@ -39,7 +54,7 @@ export const Payment = () => {
           onChange={handlePaymentType}
         >
           <FormControlLabel
-            value="ondelivery"
+            value="PAYMENTONDELIVERY"
             control={<RadioButton />}
             label={t("Checkout.PaymentOnDelivery")}
             className={classes.paymentRadioBtns}
@@ -83,6 +98,7 @@ export const Payment = () => {
             margin="dense"
             spacing={1}
             onClick={checkoutHandler.bind(null)}
+            // onClick={handlePayment.bind(null)}
             disabled={paymentType === undefined ? true : false}
             style={{
               fontSize: "0.95rem",
@@ -93,7 +109,8 @@ export const Payment = () => {
               <NavigateNextOutlinedIcon style={{ fontSize: "1.5rem" }} />
             }
           >
-            {t("Checkout.Next")}
+            {/* {t("Checkout.Next")} */}
+            Pay
           </Button>
         </Grid>
       </Grid>

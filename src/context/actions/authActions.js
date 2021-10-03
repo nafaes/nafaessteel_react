@@ -5,7 +5,13 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_USER,
 } from "../../constants/actionTypes/authConstants";
-import { CHECKOUT, LANDING, SIGNIN, SIGNUP } from "../../constants/routes";
+import {
+  CHECKOUT,
+  GUESTTRACKORDER,
+  LANDING,
+  SIGNIN,
+  SIGNUP,
+} from "../../constants/routes";
 
 import history from "../../helpers/history";
 
@@ -38,7 +44,9 @@ export const userLogout = () => {
   };
 };
 
-export const login = (email, password, dispatch, previousPath) => async (onError) => {
+export const login =
+  (email, password, dispatch, previousPath = "") =>
+  async (onError) => {
     dispatch(loginLoading());
 
     try {
@@ -53,7 +61,11 @@ export const login = (email, password, dispatch, previousPath) => async (onError
             email,
           })
         );
-        if (previousPath === SIGNIN || previousPath === SIGNUP) {
+        if (
+          previousPath === SIGNIN ||
+          previousPath === SIGNUP ||
+          previousPath === GUESTTRACKORDER
+        ) {
           history.push(LANDING);
         } else if (history.location.pathname !== CHECKOUT) {
           history.goBack();

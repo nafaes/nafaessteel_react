@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#fff",
     borderRadius: "20px",
-    // width: "100%",
     width: "60%",
     maxWidth: "calc(100% + 16px)",
     margin: "3rem auto 0 auto",
@@ -36,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "2rem",
   },
   wrapper: {
-    // width: "100%",
     margin: theme.spacing(1),
     position: "relative",
   },
@@ -53,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: "50%",
     left: "50%",
-    marginTop: -14,
+    marginTop: -11,
     marginLeft: -12,
   },
 }));

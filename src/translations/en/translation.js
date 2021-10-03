@@ -6,6 +6,7 @@ export const TRANSLATIONS_EN = {
     Orders: "Orders",
     ContactUS: "Contact Us",
     Products: "Products",
+    TrackOrder: "Track Order",
     SignOut: "SignOut",
   },
   SignIn: {
@@ -133,5 +134,28 @@ export const TRANSLATIONS_EN = {
     Text2:
       "You either tried some shady route or you came here by mistake. Whichever it is, try using the navigation",
     Button: "Go to Home Page",
+  },
+  TrackOrder: {
+    Text: "Track Order",
+    InputFields: {
+      OrderTrackId: "Order Track Id",
+      Submit: "Submit",
+    },
+    Validations: {
+      OrderTrackId: "Order Track Id Required!",
+    },
+  },
+  PaymentFailed: {
+    PaymentDetails: "Payment Details",
+    Status: "Status",
+    PaymentId: "Payment Id",
+    ReferenceNumber: "Reference Number",
+    Amount: "Amount",
+  },
+  PaymentSuccess: {
+    OrderId: "Order Id",
+    OderDate: "Oder Date",
+    TrackId: "Track Id",
+    PaymentType: "Payment Type",
   },
 };

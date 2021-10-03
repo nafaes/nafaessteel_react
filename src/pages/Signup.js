@@ -1,10 +1,12 @@
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useContext, useState } from "react";
 
 import SignUp from "../components/SignUp/Signup";
 import { signUp } from "../services/auth";
 import Notification from "../common/Notification/Notification";
 import { updateObject } from "../utils/updateObject";
 import { checkValidity } from "../utils/validations";
+import { login } from "../context/actions/authActions";
+import { GlobalContext } from "../context/Provider";
 
 const signupFormInitialState = {
   name: {
@@ -71,6 +73,8 @@ const SignupPage = (props) => {
     message: "",
     type: "",
   });
+
+  const { dispatchAuthActions } = useContext(GlobalContext);
 
   const conformPasswordHandler = useCallback(
     ({ target: { value, name } }) => {
@@ -149,13 +153,21 @@ const SignupPage = (props) => {
           mobile: signupForm.mobileNumber.value,
           password: signupForm.password.value,
         });
-        setSignupForm(signupFormInitialState);
         if (response) {
           setNotify({
             isOpen: true,
             message: "Account is created successfully",
             type: "success",
           });
+          setTimeout(() => {
+            login(
+              signupForm.email.value,
+              signupForm.password.value,
+              dispatchAuthActions
+            )((errorMessage) => {
+              setNotify({ isOpen: true, message: errorMessage, type: "error" });
+            });
+          }, 2000);
         }
       } catch (err) {
         setSignupForm(signupFormInitialState);

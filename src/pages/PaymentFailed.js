@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useParams } from "react-router";
 import {
   Card,
   CardContent,
@@ -7,7 +8,6 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "20px",
   },
   title: {
-    color: "#009933",
+    color: "#ff0000",
   },
 
   cardHeader: {
@@ -38,14 +38,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PaymentSuccess = () => {
-  const { paymentId, orderId, oderDate, trackId, paymentType } = useParams();
+const PaymentFailed = () => {
+  const { status, paymentId, referenceNo, amount } = useParams();
   const { t } = useTranslation();
   const classes = useStyles();
-
-  useEffect(() => {
-    localStorage.removeItem("cart");
-  }, []);
 
   return (
     <Grid
@@ -57,12 +53,21 @@ const PaymentSuccess = () => {
       <Grid item>
         <Card>
           <CardHeader
-            title="Order Success"
+            title={t("PaymentFailed.PaymentDetails")}
+            // subheader="subheader"
             titleTypographyProps={{ align: "center" }}
             subheaderTypographyProps={{ align: "center" }}
             className={classes.cardHeader}
           />
           <CardContent>
+            <div className={classes.cardPricing}>
+              <Typography component="h4" variant="h6" color="textPrimary">
+                {t("PaymentFailed.Status")}
+              </Typography>
+              <Typography variant="subtitle1" color="textSecondary">
+                {status}
+              </Typography>
+            </div>
             <div className={classes.cardPricing}>
               <Typography component="h4" variant="h6" color="textPrimary">
                 {t("PaymentFailed.PaymentId")}
@@ -73,38 +78,20 @@ const PaymentSuccess = () => {
             </div>
             <div className={classes.cardPricing}>
               <Typography component="h4" variant="h6" color="textPrimary">
-                {t("PaymentSuccess.OrderId")}
+                {t("PaymentFailed.ReferenceNumber")}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {orderId}
+                {referenceNo}
               </Typography>
             </div>
             <div className={classes.cardPricing}>
               <Typography component="h4" variant="h6" color="textPrimary">
-                {t("PaymentSuccess.OderDate")}
+                {t("PaymentFailed.Amount")}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {oderDate}
+                {amount}
               </Typography>
             </div>
-            <div className={classes.cardPricing}>
-              <Typography component="h4" variant="h6" color="textPrimary">
-                {t("PaymentSuccess.PaymentType")}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {trackId}
-              </Typography>
-            </div>
-            {paymentType !== "NOTAPPLICABLE" ? (
-              <div className={classes.cardPricing}>
-                <Typography component="h4" variant="h6" color="textPrimary">
-                  {t("PaymentSuccess.TrackId")}
-                </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                  {paymentType}
-                </Typography>
-              </div>
-            ) : null}
           </CardContent>
         </Card>
       </Grid>
@@ -112,4 +99,4 @@ const PaymentSuccess = () => {
   );
 };
 
-export default PaymentSuccess;
+export default PaymentFailed;

@@ -17,7 +17,10 @@ export const GlobalContext = createContext();
 const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
 const cartInitilState = {
   items: cartFromLocalStorage ? cartFromLocalStorage : [],
+  totalCartItems: 0,
+  totalCartAmount: 0,
 };
+
 const authInitialState = {
   loading: false,
   token: null,

@@ -49,7 +49,6 @@ const SigninPage = (props) => {
   const formChangeHandler = (event) => {
     const { value, name } = event.target;
     const validation = checkValidity(value, signinForm[name].validation);
-
     const updatedForm = {
       ...signinForm,
       [name]: {
@@ -62,17 +61,6 @@ const SigninPage = (props) => {
         },
       },
     };
-
-    // const updatedForm = updateObject(signinForm, {
-    //   [name]: updateObject(signinForm[name], {
-    //     value: value,
-    //     valid: validation.valid,
-    //     validation: updateObject(signinForm[name].validation, {
-    //       validationMsg: validation.validationMsg,
-    //     }),
-    //     touched: true,
-    //   }),
-    // });
 
     setSigninForm(updatedForm);
   };
@@ -101,19 +89,18 @@ const SigninPage = (props) => {
           previousPath
         )((errorMessage) => {
           setNotify({ isOpen: true, message: errorMessage, type: "error" });
-        });
-
-        setSigninForm((signinForm) => {
-          let updatedForm = {};
-          for (let inputIdentifier in signinForm) {
-            updatedForm[inputIdentifier] = {
-              ...signinForm[inputIdentifier],
-              value: "",
-              valid: false,
-              touched: false,
-            };
-          }
-          return updatedForm;
+          setSigninForm((signinForm) => {
+            let updatedForm = {};
+            for (let inputIdentifier in signinForm) {
+              updatedForm[inputIdentifier] = {
+                ...signinForm[inputIdentifier],
+                value: "",
+                valid: false,
+                touched: false,
+              };
+            }
+            return updatedForm;
+          });
         });
       }
     },

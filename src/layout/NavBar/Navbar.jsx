@@ -40,6 +40,7 @@ import { userLogout } from "../../context/actions/authActions";
 import {
   ADDTOCART,
   CART,
+  GUESTTRACKORDER,
   ITEMS,
   ORDERS,
   SIGNIN,
@@ -143,6 +144,7 @@ const Navbar = (props) => {
       case ADDTOCART:
         setValue(1);
         break;
+      case GUESTTRACKORDER:
       case ORDERS:
         setValue(2);
         break;
@@ -190,7 +192,15 @@ const Navbar = (props) => {
             tabIndex={2}
             label={t("Navbar.Orders")}
           />
-        ) : null}
+        ) : (
+          <Tab
+            className={clsx(classes.tab, classesExternal.tab)}
+            component={Link}
+            to={GUESTTRACKORDER}
+            tabIndex={2}
+            label={t("Navbar.TrackOrder")}
+          />
+        )}
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
           component={Button}
