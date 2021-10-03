@@ -39,7 +39,9 @@ function ccyFormat(num) {
 }
 
 const CheckoutSummary = () => {
-  const { cartItems, totalCartItems, totalCartAmount } = useContext(GlobalContext);
+  const {
+    cartState: { items: cartItems, totalItems, totalAmount },
+  } = useContext(GlobalContext);
   const { shippingCharges } = useContext(CheckoutContext);
   const { t } = useTranslation();
   const classes = useStyles();
@@ -111,12 +113,12 @@ const CheckoutSummary = () => {
 
             <TableRow>
               <TableCell>{t("Checkout.TotalQuantity")}</TableCell>
-              <TableCell align="right">{totalCartItems}</TableCell>
+              <TableCell align="right">{totalItems}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell rowSpan={3} />
               <TableCell colSpan={2}>{t("Cart.Subtotal")}</TableCell>
-              <TableCell align="right">{ccyFormat(totalCartAmount)}</TableCell>
+              <TableCell align="right">{ccyFormat(totalAmount)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>{t("Checkout.ShippingCharges")}</TableCell>
@@ -130,7 +132,7 @@ const CheckoutSummary = () => {
             <TableRow>
               <TableCell colSpan={2}>{t("Checkout.Total")}</TableCell>
               <TableCell align="right">
-                {ccyFormat(totalCartAmount + shippingCharges)}
+                {ccyFormat(totalAmount + shippingCharges)}
               </TableCell>
             </TableRow>
           </TableBody>

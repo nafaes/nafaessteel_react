@@ -187,10 +187,7 @@ const AddToCartPage = (props) => {
       let selectedValues = [];
       let itemId;
       for (let inputIdentifier in addToCartForm) {
-        if (
-          typeof addToCartForm[inputIdentifier] === "object" &&
-          addToCartForm[inputIdentifier].name !== "quantity"
-        ) {
+        if (typeof addToCartForm[inputIdentifier] === "object" && addToCartForm[inputIdentifier].name !== "quantity") {
           selectedValues.push({
             name: addToCartForm[inputIdentifier].name,
             item: addToCartForm[inputIdentifier].item,

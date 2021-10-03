@@ -84,6 +84,7 @@ export const TRANSLATIONS_EN = {
     TotalQuantity: "Total Quantity",
     ShippingCharges: "Shipping Charges",
     Total: "Total",
+    Pay: "Pay",
   },
   Shipping: {
     InputFields: {

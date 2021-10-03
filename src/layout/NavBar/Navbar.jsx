@@ -68,7 +68,10 @@ const Navbar = (props) => {
   const englishMobileStyles = navbarEngMobile();
   let classesExternal = navbarEngDesk;
   let classes = englishMobileStyles;
-  const { languageChangeHandler, totalCartItems } = useContext(GlobalContext);
+  const {
+    cartState: { totalItems },
+    languageChangeHandler,
+  } = useContext(GlobalContext);
   const { t } = useTranslation();
 
   const theme = useTheme();
@@ -336,7 +339,7 @@ const Navbar = (props) => {
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  badgeContent={totalCartItems}
+                  badgeContent={totalItems}
                   // badgeContent={0}
                   showZero={true}
                   // invisible={false}

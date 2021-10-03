@@ -1,5 +1,6 @@
 import {
   ADD_ITEM_TO_CART,
+  CLEAR_CART,
   REMOVE_ITEM_FROM_CART,
 } from "../../constants/actionTypes/cartConstants";
 
@@ -11,5 +12,12 @@ export const removeItem = (itemId, quantity) => {
   return {
     type: REMOVE_ITEM_FROM_CART,
     payload: { itemId, quantity: quantity ? quantity : 0 },
+  };
+};
+
+export const clearCart = () => {
+  return {
+    type: CLEAR_CART,
+    payload: {},
   };
 };

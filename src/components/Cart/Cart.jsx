@@ -7,11 +7,11 @@ import { GlobalContext } from "../../context/Provider";
 import EmptyCart from "./EmptyCart";
 
 const CartComponent = () => {
-  const { totalCartItems } = useContext(GlobalContext);
+  const { cartState: { totalItems } } = useContext(GlobalContext);
 
   let cartItems = <EmptyCart />;
 
-  if (totalCartItems > 0) {
+  if (totalItems > 0) {
     cartItems = (
       <React.Fragment>
         <Hidden smDown>

@@ -3,7 +3,13 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Paper from "@material-ui/core/Paper";
-import { Button, FormHelperText, Grid, Typography } from "@material-ui/core";
+import {
+  Button,
+  CircularProgress,
+  FormHelperText,
+  Grid,
+  Typography,
+} from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
 import { useTranslation } from "react-i18next";
 
@@ -12,28 +18,13 @@ import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import RadioButton from "../../../common/RadioButton/RadioButton";
 
 export const Payment = () => {
-  const { checkoutHandler, paymentType, setPaymentType } =
-    useContext(CheckoutContext);
+  const { checkoutHandler, paymentType, setPaymentType, paymentLoading } = useContext(CheckoutContext);
   const { t } = useTranslation();
   const classes = checkoutStyles();
 
   const handlePaymentType = (event, newValue) => {
     setPaymentType(newValue);
   };
-
-  // const handlePayment = async () => {
-  //   if (paymentType === "KNET") {
-  //     const { paymenturl } = await getPaymentURL({
-  //       amount: 990,
-  //       lng: "EN",
-  //       email: "harinath@nafaes.com",
-  //       paymentType: "KNET",
-  //     });
-  //     window.location = paymenturl;
-  //   } else {
-
-  //   }
-  // };
 
   return (
     <Paper
@@ -85,33 +76,38 @@ export const Payment = () => {
           item
           style={{
             marginTop: "1em",
-            borderRadius: "1em",
             width: "50%",
             padding: ".1em 0px",
-            background: "rgba(0, 134, 179, 0.8)",
+            // borderRadius: "1em",
+            // background: "rgba(0, 134, 179, 0.8)",
           }}
         >
-          <Button
-            type="submit"
-            size="small"
-            fullWidth
-            margin="dense"
-            spacing={1}
-            onClick={checkoutHandler.bind(null)}
-            // onClick={handlePayment.bind(null)}
-            disabled={paymentType === undefined ? true : false}
-            style={{
-              fontSize: "0.95rem",
-              fontWeight: "600",
-              color: "#fff",
-            }}
-            endIcon={
-              <NavigateNextOutlinedIcon style={{ fontSize: "1.5rem" }} />
-            }
-          >
-            {/* {t("Checkout.Next")} */}
-            Pay
-          </Button>
+          <div className={classes.buttonWrapper}>
+            <Button
+              size="small"
+              fullWidth
+              margin="dense"
+              spacing={1}
+              color="primary"
+              variant="contained"
+              onClick={checkoutHandler.bind(null)}
+              disabled={paymentType === "" ? true : false || paymentLoading}
+              style={{
+                fontSize: "0.95rem",
+                fontWeight: "600",
+                color: "#fff",
+                borderRadius: "1em",
+              }}
+              endIcon={
+                <NavigateNextOutlinedIcon style={{ fontSize: "1.5rem" }} />
+              }
+            >
+              {t("Checkout.Pay")}
+            </Button>
+            {paymentLoading && (
+              <CircularProgress size={28} className={classes.buttonProgress} />
+            )}
+          </div>
         </Grid>
       </Grid>
     </Paper>

@@ -84,6 +84,7 @@ export const TRANSLATIONS_AR = {
     TotalQuantity: "الكمية الإجمالية",
     ShippingCharges: "رسوم الشحن",
     Total: "المجموع",
+    Pay: "يدفع",
   },
   Shipping: {
     InputFields: {

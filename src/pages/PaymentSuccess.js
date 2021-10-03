@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -9,6 +9,9 @@ import {
 } from "@material-ui/core";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
+
+import { GlobalContext } from "../context/Provider";
+import { clearCart } from "../context/actions/cartActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,12 +43,14 @@ const useStyles = makeStyles((theme) => ({
 
 const PaymentSuccess = () => {
   const { paymentId, orderId, oderDate, trackId, paymentType } = useParams();
+  const { dispatchCartActions } = useContext(GlobalContext);
   const { t } = useTranslation();
   const classes = useStyles();
 
   useEffect(() => {
     localStorage.removeItem("cart");
-  }, []);
+    dispatchCartActions(clearCart());
+  }, [dispatchCartActions]);
 
   return (
     <Grid
