@@ -154,7 +154,7 @@ export const TRANSLATIONS_AR = {
   },
   PaymentSuccess: {
     OrderId: "رقم التعريف الخاص بالطلب",
-    OderDate: "تاريخ أودر",
+    OrderDate: "تاريخ أودر",
     TrackId: "رقم الحافلة",
     PaymentType: "نوع الدفع",
   },

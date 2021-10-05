@@ -1,45 +1,25 @@
 import React, { useEffect } from "react";
 import {
-  Card,
-  CardContent,
-  CardHeader,
   Grid,
   makeStyles,
   Typography,
 } from "@material-ui/core";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
+import paySuccess from "../assets/img/tick.png"
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    // backgroundColor: theme.palette.primary.light,
-    backgroundColor: "#fff",
-    borderRadius: "20px",
-    height: "100%",
-    minHeight: "100vh",
-    // width: "100%",
-    width: "60%",
-    maxWidth: "calc(100% + 16px)",
-    margin: "3rem auto 0 auto",
-    paddingTop: "20px",
-  },
-  title: {
-    color: "#009933",
-  },
-
-  cardHeader: {
-    backgroundColor: theme.palette.grey[200],
-  },
-  cardPricing: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "baseline",
-    marginBottom: theme.spacing(2),
-  },
+  avatar: {
+    margin:" 0px auto",
+    width: "4em !important",
+    height: "4em !important",
+    position: "relative",
+    top: "-2em",
+  }
 }));
 
 const PaymentSuccess = () => {
-  const { paymentId, orderId, oderDate, trackId, paymentType } = useParams();
+  const { paymentId, orderId, orderDate, trackId, paymentType } = useParams();
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -48,67 +28,124 @@ const PaymentSuccess = () => {
   }, []);
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems="flex-start"
-      className={classes.root}
-    >
-      <Grid item>
-        <Card>
-          <CardHeader
-            title="Order Success"
-            titleTypographyProps={{ align: "center" }}
-            subheaderTypographyProps={{ align: "center" }}
-            className={classes.cardHeader}
-          />
-          <CardContent>
-            <div className={classes.cardPricing}>
-              <Typography component="h4" variant="h6" color="textPrimary">
-                {t("PaymentFailed.PaymentId")}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {paymentId}
-              </Typography>
-            </div>
-            <div className={classes.cardPricing}>
-              <Typography component="h4" variant="h6" color="textPrimary">
-                {t("PaymentSuccess.OrderId")}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {orderId}
-              </Typography>
-            </div>
-            <div className={classes.cardPricing}>
-              <Typography component="h4" variant="h6" color="textPrimary">
-                {t("PaymentSuccess.OderDate")}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {oderDate}
-              </Typography>
-            </div>
-            <div className={classes.cardPricing}>
-              <Typography component="h4" variant="h6" color="textPrimary">
+    <Grid container  style={{margin: "5em auto", width: "45%"}}>
+        <Grid item container justifyContent="center">
+            <Grid item>
+            <img
+              src={paySuccess}
+              alt="bg"
+              className={classes.avatar}
+            />
+            </Grid>        
+        </Grid>
+        <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            style={{ color: "white", borderRadius: "5px", textAlign: "center" , marginTop: "-1em" }}
+          >
+            <Grid item >
+                <Typography variant="h6" color="textPrimary" style={{color: "#0086af"}}>
+                    Payment Successfull!!
+                </Typography>
+            </Grid>
+            <Grid item>
+                <Typography variant="h6" color="textPrimary" style={{fontSize: "1.05rem",marginTop: "0.5em"}}>
+                    We are processing your request and you will notified via email.
+                </Typography>
+            </Grid>
+         </Grid>
+         <Grid container style={{width: "75%" , margin: "0px 4em"}}>
+         <Grid item container   
+              style={{
+                padding: "0.5em",
+                marginTop: "2em",
+                backgroundColor: "rgba(211, 211, 211,0.9)"
+              }}>
+              <Grid item lg={6}>
+                <Typography  variant="h6" color="textPrimary" style={{fontSize: "1.15rem"}}>
+                  {t("PaymentFailed.PaymentId")}
+                </Typography>
+              </Grid>
+              <Grid item lg={6} style={{textAlign: "right"}}>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {paymentId}
+                </Typography>
+              </Grid>    
+         </Grid>
+         <Grid item container   
+              style={{
+                padding: "0.5em",
+                backgroundColor: "rgba(211, 211, 211,0.7)"
+              }}>
+              <Grid item lg={6}>
+                <Typography  variant="h6" color="textPrimary" style={{fontSize: "1.15rem"}}>
+                  {t("PaymentSuccess.OrderId")}
+                </Typography>
+              </Grid>
+              <Grid item lg={6} style={{textAlign: "right"}}>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {orderId}
+                </Typography> 
+              </Grid>                
+         </Grid>
+         <Grid item container   
+              style={{
+                padding: "0.5em",
+                backgroundColor: "rgba(211, 211, 211,0.9)"
+              }}>
+              <Grid item lg={6}>
+                <Typography  variant="h6" color="textPrimary" style={{fontSize: "1.15rem"}}>
+                  {t("PaymentSuccess.OrderDate")}
+                </Typography>
+              </Grid>
+              <Grid item lg={6} style={{textAlign: "right"}}>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {orderDate}
+                </Typography>
+              </Grid>    
+         </Grid>            
+         <Grid item container   
+              style={{
+                padding: "0.5em",
+                backgroundColor: "rgba(211, 211, 211,0.7)"
+              }}>
+              <Grid item lg={6}>
+              <Typography  variant="h6" color="textPrimary" style={{fontSize: "1.15rem"}}>
                 {t("PaymentSuccess.PaymentType")}
               </Typography>
+              </Grid>
+              <Grid item lg={6} style={{textAlign: "right"}}>
               <Typography variant="subtitle1" color="textSecondary">
                 {trackId}
               </Typography>
-            </div>
-            {paymentType !== "NOTAPPLICABLE" ? (
-              <div className={classes.cardPricing}>
-                <Typography component="h4" variant="h6" color="textPrimary">
+              </Grid>    
+         </Grid>
+         {paymentType !== "NOTAPPLICABLE" ? (
+              <Grid item container   
+              style={{
+                padding: "0.5em",
+                backgroundColor: "rgba(211, 211, 211,0.9)"
+              }}>
+              <Grid item lg={6}>
+                <Typography component="h4" variant="h6" color="textPrimary" style={{fontSize: "1.15rem"}}>
                   {t("PaymentSuccess.TrackId")}
                 </Typography>
+              </Grid>
+              <Grid item lg={6} style={{textAlign: "right"}}>
                 <Typography variant="subtitle1" color="textSecondary">
                   {paymentType}
                 </Typography>
-              </div>
+              </Grid>    
+         </Grid>
             ) : null}
-          </CardContent>
-        </Card>
-      </Grid>
+        
+       
+         </Grid>
+       
     </Grid>
+
+
   );
 };
 

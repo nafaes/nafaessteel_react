@@ -154,7 +154,7 @@ export const TRANSLATIONS_EN = {
   },
   PaymentSuccess: {
     OrderId: "Order Id",
-    OderDate: "Oder Date",
+    OrderDate: "Order Date",
     TrackId: "Track Id",
     PaymentType: "Payment Type",
   },
