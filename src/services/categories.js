@@ -38,9 +38,7 @@ export const getAllCatergoryItems = async (id, level, lng) => {
 
 export const getCatergoryItemDetails = async (lng, categoryId) => {
   try {
-    const response = await axiosInstance.get(
-      `/categories/${lng}/${categoryId}`
-    );
+    const response = await axiosInstance.get(`/categories/${lng}/${categoryId}`);
     if (response.status === 200) {
       return response.data;
     } else {

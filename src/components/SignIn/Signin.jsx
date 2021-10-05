@@ -179,7 +179,6 @@ const SignIn = (props) => {
                   variant="contained"
                   size="small"
                   className={classesExternal.formBtn}
-                  // onClick={signinHandler}
                   disabled={loginLoading}
                 >
                   {t("SignIn.InputFields.SignIn")}

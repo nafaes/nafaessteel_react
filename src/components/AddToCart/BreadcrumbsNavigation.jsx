@@ -49,12 +49,7 @@ const BreadcrumbsNavigation = ({ historyItems, breadcrumbNavigation }) => {
                   <Link
                     color="inherit"
                     key={item.categoryId}
-                    onClick={breadcrumbNavigation.bind(
-                      null,
-                      item.categoryId,
-                      item.name,
-                      item.level
-                    )}
+                    onClick={breadcrumbNavigation.bind(null, item.categoryId)}
                   >
                     {item.name}
                   </Link>

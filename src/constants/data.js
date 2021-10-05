@@ -707,6 +707,7 @@ export const allCategoryItems = [
     categoryId: 3,
   },
 ];
+
 export const allOrderItems = [
   {
     orderPlaced: "10 August 2021",

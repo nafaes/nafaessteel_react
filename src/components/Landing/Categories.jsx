@@ -38,50 +38,53 @@ const Categories = (props) => {
         justifyContent="flex-start"
         spacing={6}
       >
-        {allCategories.map((category, index) => (
-          <Grid
-            item
-            container
-            lg={4}
-            md={4}
-            sm={6}
-            xs={12}
-            key={category.categoryId}
-            style={{ textDecoration: "none" }}
-          >
-            <Card
-              raised
-              elevation={12}
-              className={clsx(classes.root, classesExternal.animateCard)}
-              onClick={navigate.bind(null, category)}
-            >
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  alt="Contemplative Reptile"
-                  height="250"
-                  image={
-                    require(`../../assets/img/${category.picturePath}`).default
-                  }
-                  title={category.categoryName}
-                />
-                <Divider />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {category.categoryName}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    Description
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
+        {allCategories
+          ? allCategories.map((category, index) => (
+              <Grid
+                item
+                container
+                lg={4}
+                md={4}
+                sm={6}
+                xs={12}
+                key={category.categoryId}
+                style={{ textDecoration: "none" }}
+              >
+                <Card
+                  raised
+                  elevation={12}
+                  className={clsx(classes.root, classesExternal.animateCard)}
+                  onClick={navigate.bind(null, category)}
+                >
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      alt="Contemplative Reptile"
+                      height="250"
+                      image={
+                        require(`../../assets/img/${category.picturePath}`)
+                          .default
+                      }
+                      title={category.categoryName}
+                    />
+                    <Divider />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {category.categoryName}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        Description
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))
+          : null}
       </Grid>
     </Grid>
   );

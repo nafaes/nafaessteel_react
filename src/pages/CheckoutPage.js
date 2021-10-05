@@ -133,8 +133,7 @@ export const CheckoutContext = createContext();
 const CheckoutPage = () => {
   const {
     userState: { isAuthenticated, userEmail },
-    cartItems,
-    totalCartAmount,
+    cartState: { items: cartItems, totalAmount },
   } = useContext(GlobalContext);
   const [tabValue, setTabValue] = useState(0);
   const [checkoutProcess, dispatchCheckoutProcess] = useReducer(
@@ -148,6 +147,7 @@ const CheckoutPage = () => {
   const [shippingType, setShippingType] = useState("");
   const [deliveryDate, setDeliveryDate] = useState();
   const [paymentType, setPaymentType] = useState("");
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   const handleUserType = useCallback((event, newvalue) => {
     setUserType(newvalue);
@@ -209,6 +209,7 @@ const CheckoutPage = () => {
 
     if (shippingType === "delivery" && shippingForm.formIsValid === false) {
       isCheckoutValid = false;
+      setPaymentLoading(false);
       setTabValue(1);
       setShippingForm((previousShippingForm) => {
         let updatedForm = { formIsValid: false };
@@ -225,6 +226,7 @@ const CheckoutPage = () => {
     }
 
     if (isCheckoutValid) {
+      setPaymentLoading(true);
       // Preparing the data
       let userDetails;
       if (isAuthenticated) {
@@ -263,7 +265,7 @@ const CheckoutPage = () => {
       });
 
       const response = await getPaymentURL({
-        amount: totalCartAmount,
+        amount: totalAmount,
         lng: "EN",
         email: userDetails.email,
         paymentType: paymentType,
@@ -279,6 +281,7 @@ const CheckoutPage = () => {
         },
       });
 
+      // If user selects KNET payment
       if (saveResponse?.url) {
         window.location = saveResponse.url;
       } else {
@@ -295,7 +298,7 @@ const CheckoutPage = () => {
     userEmail,
     deliveryDate,
     paymentType,
-    totalCartAmount,
+    totalAmount,
   ]);
 
   const context = {
@@ -316,6 +319,7 @@ const CheckoutPage = () => {
     paymentType,
     setPaymentType,
     checkoutHandler,
+    paymentLoading
   };
 
   return (
