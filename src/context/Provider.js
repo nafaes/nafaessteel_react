@@ -29,6 +29,7 @@ const authInitialState = {
   expiresIn: null,
   userId: "",
   userEmail: "",
+  userName: "",
   isAuthenticated: false,
   errorMessage: null,
 };

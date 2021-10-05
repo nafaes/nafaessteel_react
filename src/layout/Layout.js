@@ -16,11 +16,7 @@ import { authCheckState } from "../context/actions/authActions";
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 const Layout = () => {
-  const {
-    direction,
-    userState: { isAuthenticated },
-    dispatchAuthActions,
-  } = useContext(GlobalContext);
+  const { direction, dispatchAuthActions } = useContext(GlobalContext);
   const theme = createTheme(appTheme(direction));
 
   useEffect(() => {
@@ -31,10 +27,7 @@ const Layout = () => {
     <DirectionProvider direction={direction}>
       <StylesProvider jss={jss}>
         <ThemeProvider theme={theme}>
-          <Navbar
-            isAuthenticated={isAuthenticated}
-            dispatchAuthActions={dispatchAuthActions}
-          />
+          <Navbar />
           <ScrollProgress />
           <Routes />
           <Footer />

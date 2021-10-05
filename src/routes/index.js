@@ -34,7 +34,7 @@ import {
   SignupPage,
   TrackOrdersPage,
 } from "../pages";
-import PrivateRoute from "./PrivateRoute";
+// import PrivateRoute from "./PrivateRoute";
 
 const Routes = () => {
   return (
@@ -64,12 +64,8 @@ const Routes = () => {
         />
         <Route exact={true} path={PAYMENTSUCCESS} component={PaymentSuccess} />
         <Route exact={true} path={PAYMENTFAILED} component={PaymentFailed} />
-        <PrivateRoute exact={true} path={ORDERS} component={OrdersPage} />
-        <PrivateRoute
-          exact={true}
-          path={TRACKORDER}
-          component={TrackOrdersPage}
-        />
+        <Route exact={true} path={ORDERS} component={OrdersPage} />
+        <Route exact={true} path={TRACKORDER} component={TrackOrdersPage} />
         <Route component={PageNotFound} />
       </Switch>
     </Suspense>

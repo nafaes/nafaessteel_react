@@ -42,3 +42,24 @@ export const signUp = async (newUser) => {
     throw error;
   }
 };
+
+export const getUserDetails = async (emailId, token) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_OAUTH_API_URL}/user/${emailId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.data.code === 200) {
+      return response.data;
+    } else {
+      throw new Error("Some Thing Went Wrong!");
+    }
+  } catch (err) {
+    throw err;
+  }
+};

@@ -17,10 +17,13 @@ export const authReducer = (state, { type, payload }) => {
       return {
         ...state,
         loading: false,
+        errorMessage: null,
         isAuthenticated: true,
+        userId: payload.userid,
+        userName: payload.name,
         userEmail: payload.email,
-        token: payload.access_token,
-        expiresIn: payload.expires_in,
+        token: payload.token,
+        expiresIn: payload.expiresIn,
       };
 
     case LOGIN_FAILED:

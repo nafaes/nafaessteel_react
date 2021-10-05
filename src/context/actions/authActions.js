@@ -1,4 +1,4 @@
-import { logIn } from "../../services/auth";
+import { getUserDetails, logIn } from "../../services/auth";
 import {
   LOGIN_FAILED,
   LOGIN_LOADING,
@@ -9,10 +9,10 @@ import {
   CHECKOUT,
   GUESTTRACKORDER,
   LANDING,
+  ORDERS,
   SIGNIN,
   SIGNUP,
 } from "../../constants/routes";
-
 import history from "../../helpers/history";
 
 export const loginLoading = () => {
@@ -44,28 +44,35 @@ export const userLogout = () => {
   };
 };
 
-export const login =
-  (email, password, dispatch, previousPath = "") =>
-  async (onError) => {
+export const login = (email, password, dispatch, previousPath = "") => async (onError) => {
     dispatch(loginLoading());
-
     try {
       const response = await logIn(email, password);
       if (response) {
-        dispatch(loginSuccess({ ...response, email }));
+        const { userid, name } = await getUserDetails(
+          email,
+          response.access_token
+        );
+        dispatch(
+          loginSuccess({
+            token: response.access_token,
+            expiresIn: response.expires_in,
+            email,
+            userid,
+            name,
+          })
+        );
         localStorage.setItem(
           "user",
           JSON.stringify({
             token: response.access_token,
             expiresIn: response.expires_in,
             email,
+            userid,
+            name,
           })
         );
-        if (
-          previousPath === SIGNIN ||
-          previousPath === SIGNUP ||
-          previousPath === GUESTTRACKORDER
-        ) {
+        if (previousPath === SIGNIN || previousPath === SIGNUP || previousPath === GUESTTRACKORDER || previousPath === ORDERS) {
           history.push(LANDING);
         } else if (history.location.pathname !== CHECKOUT) {
           history.goBack();
@@ -75,7 +82,7 @@ export const login =
       onError(error.message);
       dispatch(loginFailed(error.message));
     }
-  };
+};
 
 export const authCheckState = (dispatch) => {
   try {

@@ -81,27 +81,19 @@ const AddToCartPage = (props) => {
 
   const formChangeHandler = useCallback(
     ({ target: { name, value }, ...values }) => {
-      let valid;
       let price = addToCartForm.price ? addToCartForm.price : "";
       let unit = addToCartForm.unit ? addToCartForm.unit : "";
 
-      if (value) {
-        valid = true;
-      } else {
-        valid = false;
-      }
-
-      let dropdown;
+      let dropdownProperties;
       if (name !== "quantity" && value !== "") {
         const selectedDropdown = item.selections.find(
           ({ name: selectName }) => selectName === name
         );
-
         const selectedItem = selectedDropdown?.types.find(
           ({ itemId }) => itemId === value
         );
 
-        dropdown = {
+        dropdownProperties = {
           item: selectedItem.item,
           itemId: selectedItem.itemId,
         };
@@ -109,20 +101,11 @@ const AddToCartPage = (props) => {
         if (selectedItem && selectedItem.hasOwnProperty("price")) {
           unit = selectedDropdown.unit;
           price = selectedItem.price;
-
-          dropdown = {
-            item: selectedItem.item,
-            itemId: selectedItem.itemId,
-            price: selectedItem.price,
-          };
+          dropdownProperties["price"] = selectedItem.price;
         }
       }
 
-      if (
-        name !== "quantity" &&
-        value === "" &&
-        values.hasOwnProperty("price")
-      ) {
+      if (name !== "quantity" && value === "" && values.hasOwnProperty("price")) {
         unit = "";
         price = "";
       }
@@ -131,11 +114,10 @@ const AddToCartPage = (props) => {
         ...addToCartForm,
         [name]: {
           ...addToCartForm?.[name],
-          name,
           value,
-          valid: valid,
+          valid: value ? true : false,
           touched: true,
-          ...dropdown,
+          ...dropdownProperties,
         },
         price,
         unit,
@@ -187,7 +169,10 @@ const AddToCartPage = (props) => {
       let selectedValues = [];
       let itemId;
       for (let inputIdentifier in addToCartForm) {
-        if (typeof addToCartForm[inputIdentifier] === "object" && addToCartForm[inputIdentifier].name !== "quantity") {
+        if (
+          typeof addToCartForm[inputIdentifier] === "object" &&
+          addToCartForm[inputIdentifier].name !== "quantity"
+        ) {
           selectedValues.push({
             name: addToCartForm[inputIdentifier].name,
             item: addToCartForm[inputIdentifier].item,
