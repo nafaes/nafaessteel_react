@@ -53,7 +53,7 @@ const Orders = (props) => {
   const handleClose = useCallback(() => {
     setOpenDialog(false);
   }, []);
-  
+
   const classes = useStyles();
 
   const DividerLine = ({ children }) => {
@@ -178,6 +178,8 @@ const Orders = (props) => {
                     >
                       <Grid item>
                         <Button
+                          color="primary"
+                          variant="text"
                           style={{
                             textTransform: "none",
                             fontWeight: "600",

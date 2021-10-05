@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Button,
-  CircularProgress,
   Grid,
   InputAdornment,
   makeStyles,
@@ -50,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GuestTrackOrder = (props) => {
-  const { trackOrderForm, formChangeHandler, submit, submitHandler } = props;
+  const { trackOrderForm, formChangeHandler, submitHandler } = props;
   const { t } = useTranslation();
   const classes = { ...checkoutStyles(), ...useStyles() };
 
@@ -110,7 +109,8 @@ const GuestTrackOrder = (props) => {
             helperText={
               !trackOrderForm.email.valid
                 ? t(trackOrderForm.email.validation.validationMsg.msg, {
-                    length: trackOrderForm.email.validation.validationMsg.length,
+                    length:
+                      trackOrderForm.email.validation.validationMsg.length,
                   })
                 : null
             }
@@ -128,21 +128,15 @@ const GuestTrackOrder = (props) => {
         </Grid>
 
         <Grid item lg={12} md={12} xs={12}>
-          <div className={classes.wrapper}>
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={submit}
-              margin="dense"
-              onClick={submitHandler.bind(null)}
-              className={classes.submit}
-            >
-              {t("TrackOrder.InputFields.Submit")}
-            </Button>
-            {submit && (
-              <CircularProgress size={28} className={classes.buttonProgress} />
-            )}
-          </div>
+          <Button
+            variant="contained"
+            color="primary"
+            margin="dense"
+            onClick={submitHandler.bind(null)}
+            className={classes.submit}
+          >
+            {t("TrackOrder.InputFields.Submit")}
+          </Button>
         </Grid>
       </div>
     </Grid>

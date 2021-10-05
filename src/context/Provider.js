@@ -57,9 +57,7 @@ const GlobalProvider = ({ children }) => {
   }, []);
 
   const languageId = useMemo(() => {
-    let langId = 1;
-    if (direction === "ltr") langId = 2;
-    return langId;
+    return direction === "ltr" ? 2 : 1;
   }, [direction]);
 
   useEffect(() => {
