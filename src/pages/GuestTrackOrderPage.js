@@ -25,7 +25,6 @@ const trackOrderInitialState = {
 
 const GuestTrackOrderPage = (props) => {
   const [trackOrderForm, setTrackOrderForm] = useState(trackOrderInitialState);
-  const [submit, setSubmit] = useState(false);
 
   const formChangeHandler = useCallback(
     ({ target: { value, name } }) => {
@@ -86,7 +85,6 @@ const GuestTrackOrderPage = (props) => {
         return updatedForm;
       });
     } else {
-      setSubmit(true);
       props.history.push(ORDERS, {
         orderId: trackOrderForm.trackOrderId.value,
         userEmail: trackOrderForm.email.value,
@@ -104,7 +102,6 @@ const GuestTrackOrderPage = (props) => {
       trackOrderForm={trackOrderForm}
       formChangeHandler={formChangeHandler}
       submitHandler={submitHandler}
-      submit={submit}
     />
   );
 };

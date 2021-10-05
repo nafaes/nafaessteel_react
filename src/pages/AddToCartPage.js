@@ -76,6 +76,8 @@ const AddToCartPage = (props) => {
     }
     return () => {
       setItem(null);
+      setItemSummary();
+      setAddToCartForm(addToCartInitialState);
     };
   }, [historyItem, getItemDetails]);
 
@@ -105,7 +107,11 @@ const AddToCartPage = (props) => {
         }
       }
 
-      if (name !== "quantity" && value === "" && values.hasOwnProperty("price")) {
+      if (
+        name !== "quantity" &&
+        value === "" &&
+        values.hasOwnProperty("price")
+      ) {
         unit = "";
         price = "";
       }

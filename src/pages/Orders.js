@@ -3,13 +3,10 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 import Orders from "../components/TrackOrder/Orders";
-import {
-  getAllOrders,
-  getOrderDetails,
-  trackOrder,
-} from "../services/trackOrder";
+import { getOrderDetails } from "../services/trackOrder";
 import { GlobalContext } from "../context/Provider";
 import { LANDING } from "../constants/routes";
+import axiosInstance from "../helpers/axiosInstance";
 
 const allOrders = [
   {
@@ -47,6 +44,28 @@ const OrdersPage = (props) => {
     allOrders: [],
     totalAmount: 0,
   });
+
+  const getAllOrders = async (userId) => {
+    try {
+      const { data } = await axiosInstance.get(`/allorders/${userId}/2`);
+      if (data) {
+        return data;
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const trackOrder = async (orderId, userEmail) => {
+    try {
+      const { data } = await axiosInstance.get(`/trackorder/${orderId}/${userEmail}`);
+      if (data) {
+        return data;
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
 
   const getOrders = useCallback(async () => {
     if (location?.state === undefined && isAuthenticated === false) {
