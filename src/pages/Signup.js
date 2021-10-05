@@ -73,6 +73,7 @@ const SignupPage = (props) => {
     message: "",
     type: "",
   });
+  const [submit, setSubmit] = useState(false);
 
   const { dispatchAuthActions } = useContext(GlobalContext);
 
@@ -80,18 +81,15 @@ const SignupPage = (props) => {
     ({ target: { value, name } }) => {
       let valid = true;
       let msg = "";
-      let formIsValid = true;
 
       if (!value) {
         valid = false;
-        formIsValid = false;
         msg = "SignUp.Validations.ConfirmPassword";
       } else if (
         signupForm.password.value &&
         signupForm.password.value !== value
       ) {
         valid = false;
-        formIsValid = false;
         msg = "SignUp.Validations.PasswordNotMatched";
       }
 
@@ -105,6 +103,14 @@ const SignupPage = (props) => {
           touched: true,
         }),
       });
+
+      let formIsValid = true;
+      for (let inputIdentifier in updatedForm) {
+        if (typeof updatedForm[inputIdentifier] === "object") {
+          formIsValid = updatedForm[inputIdentifier].valid && formIsValid;
+        }
+      }
+
       setSignupForm({ ...updatedForm, formIsValid: formIsValid });
     },
     [signupForm]
@@ -134,6 +140,7 @@ const SignupPage = (props) => {
   };
 
   const signupHandler = async () => {
+    setSubmit(true);
     if (signupForm.password.value !== signupForm.confirmPassword.value) {
       const updatedFormDetails = updateObject(signupForm, {
         confirmPassword: updateObject(signupForm.confirmPassword, {
@@ -145,6 +152,7 @@ const SignupPage = (props) => {
         }),
       });
       setSignupForm({ ...updatedFormDetails, formIsValid: false });
+      setSubmit(false);
     } else {
       try {
         const response = await signUp({
@@ -154,6 +162,7 @@ const SignupPage = (props) => {
           password: signupForm.password.value,
         });
         if (response) {
+          setSignupForm(signupFormInitialState);
           setNotify({
             isOpen: true,
             message: "Account is created successfully",
@@ -167,10 +176,11 @@ const SignupPage = (props) => {
             )((errorMessage) => {
               setNotify({ isOpen: true, message: errorMessage, type: "error" });
             });
-          }, 2000);
+          }, 1000);
         }
       } catch (err) {
         setSignupForm(signupFormInitialState);
+        setSubmit(false);
         setNotify({ isOpen: true, message: err.message, type: "error" });
       }
     }
@@ -189,6 +199,7 @@ const SignupPage = (props) => {
         conformPasswordHandler={conformPasswordHandler}
         formChangeHandler={formChangeHandler}
         signupHandler={signupHandler}
+        submit={submit}
       />
       {notify.isOpen && <Notification notify={notify} setNotify={setNotify} />}
     </Fragment>

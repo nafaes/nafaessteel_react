@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import login from "../../assets/img/Login-illustration.svg";
 import {
   Button,
+  CircularProgress,
   IconButton,
   InputAdornment,
   TextField,
@@ -27,6 +28,7 @@ const SignUp = (props) => {
     signupHandler,
     isDisplayImage,
     userCheckoutStyles,
+    submit,
   } = props;
   const { t } = useTranslation();
   const englishMobileStyles = signupEngMobile(userCheckoutStyles)();
@@ -288,13 +290,40 @@ const SignUp = (props) => {
                   />
                 </Grid>
                 <Grid item style={{ textAlign: "center", marginTop: "1em" }}>
-                  <Button
+                  <div className={classes.buttonWrapper}>
+                    <Button
+                      size="small"
+                      fullWidth
+                      margin="dense"
+                      spacing={1}
+                      color="primary"
+                      variant="contained"
+                      onClick={signupHandler.bind(null)}
+                      disabled={!signupForm.formIsValid || submit}
+                      style={{
+                        fontSize: "0.95rem",
+                        fontWeight: "600",
+                        color: "#fff",
+                        borderRadius: "1em",
+                      }}
+                    >
+                      {t("SignIn.InputFields.SignUp")}
+                    </Button>
+                    {submit && (
+                      <CircularProgress
+                        size={28}
+                        className={classes.buttonProgress}
+                      />
+                    )}
+                  </div>
+
+                  {/* <Button
                     className={clsx(classesExternal.formBtn)}
                     onClick={signupHandler}
                     disabled={!signupForm.formIsValid}
                   >
                     {t("SignIn.InputFields.SignUp")}
-                  </Button>
+                  </Button> */}
                 </Grid>
               </Grid>
             </form>

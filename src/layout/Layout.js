@@ -18,8 +18,8 @@ const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 const Layout = () => {
   const {
     direction,
-    userState: { isAuthenticated },
     dispatchAuthActions,
+    userState: { isAuthenticated },
   } = useContext(GlobalContext);
   const theme = createTheme(appTheme(direction));
 
@@ -31,12 +31,9 @@ const Layout = () => {
     <DirectionProvider direction={direction}>
       <StylesProvider jss={jss}>
         <ThemeProvider theme={theme}>
-          <Navbar
-            isAuthenticated={isAuthenticated}
-            dispatchAuthActions={dispatchAuthActions}
-          />
+          <Navbar />
           <ScrollProgress />
-          <Routes />
+          <Routes isAuthenticated={isAuthenticated} />
           <Footer />
         </ThemeProvider>
       </StylesProvider>

@@ -3,13 +3,16 @@ import { GlobalContext } from "../../../context/Provider";
 import CartItems from "./CartItems/CartItems";
 
 const MobileCart = () => {
-  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } = useContext(GlobalContext);
+  const {
+    cartState: { totalItems, items, totalAmount },
+    dispatchCartActions,
+  } = useContext(GlobalContext);
 
   return (
     <CartItems
-      cartItems={cartItems}
-      totalCartItems={totalCartItems}
-      totalCartAmount={totalCartAmount}
+      cartItems={items}
+      totalCartItems={totalItems}
+      totalCartAmount={totalAmount}
       dispatchCartActions={dispatchCartActions}
     />
   );

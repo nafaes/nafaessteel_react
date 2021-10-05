@@ -14,9 +14,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DesktopCart = () => {
-  const classes = useStyles();
+  const {
+    cartState: { totalItems, items, totalAmount },
+    dispatchCartActions,
+  } = useContext(GlobalContext);
 
-  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } = useContext(GlobalContext);
+  const classes = useStyles();
 
   return (
     <React.Fragment>
@@ -24,14 +27,14 @@ const DesktopCart = () => {
       <Container fixed>
         <Grid container spacing={3} className={classes.mainGrid}>
           <DesktopCartItems
-            cartItems={cartItems}
-            totalCartItems={totalCartItems}
-            totalCartAmount={totalCartAmount}
+            cartItems={items}
+            totalCartItems={totalItems}
+            totalCartAmount={totalAmount}
             dispatchCartActions={dispatchCartActions}
           />
           <CartSummary
-            totalCartItems={totalCartItems}
-            totalCartAmount={totalCartAmount}
+            totalCartItems={totalItems}
+            totalCartAmount={totalAmount}
           />
         </Grid>
       </Container>

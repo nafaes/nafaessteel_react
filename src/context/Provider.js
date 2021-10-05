@@ -15,11 +15,13 @@ import { authReducer } from "./reducers/authReducer";
 export const GlobalContext = createContext();
 
 const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
-const cartInitilState = {
-  items: cartFromLocalStorage ? cartFromLocalStorage : [],
-  totalCartItems: 0,
-  totalCartAmount: 0,
-};
+const cartInitilState = cartFromLocalStorage
+  ? cartFromLocalStorage
+  : {
+      items: [],
+      totalItems: 0,
+      totalAmount: 0,
+    };
 
 const authInitialState = {
   loading: false,
@@ -27,6 +29,7 @@ const authInitialState = {
   expiresIn: null,
   userId: "",
   userEmail: "",
+  userName: "",
   isAuthenticated: false,
   errorMessage: null,
 };
@@ -54,34 +57,18 @@ const GlobalProvider = ({ children }) => {
   }, []);
 
   const languageId = useMemo(() => {
-    let langId = 1;
-    if (direction === "ltr") langId = 2;
-    return langId;
+    return direction === "ltr" ? 2 : 1;
   }, [direction]);
 
-  const totalCartItems = useMemo(() => {
-    return cartState.items.reduce((totalQuantity, { quantity }) => {
-      return totalQuantity + Number(quantity);
-    }, 0);
-  }, [cartState]);
-
-  const totalCartAmount = useMemo(() => {
-    return cartState.items.reduce((total, { quantity, price }) => {
-      return total + quantity * price;
-    }, 0);
-  }, [cartState]);
-
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartState.items));
+    localStorage.setItem("cart", JSON.stringify(cartState));
   }, [cartState]);
 
   const context = {
     direction,
     languageId,
     languageChangeHandler,
-    cartItems: cartState.items,
-    totalCartItems,
-    totalCartAmount,
+    cartState,
     dispatchCartActions,
     userState,
     dispatchAuthActions,

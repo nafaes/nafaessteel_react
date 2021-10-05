@@ -28,6 +28,7 @@ import {
   ClickAwayListener,
   MenuList,
   Badge,
+  Typography,
 } from "@material-ui/core";
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
 import { useTranslation } from "react-i18next";
@@ -63,12 +64,16 @@ function ElevationScroll(props) {
   });
 }
 
-const Navbar = (props) => {
-  const { isAuthenticated, dispatchAuthActions } = props;
+const Navbar = () => {
   const englishMobileStyles = navbarEngMobile();
   let classesExternal = navbarEngDesk;
   let classes = englishMobileStyles;
-  const { languageChangeHandler, totalCartItems } = useContext(GlobalContext);
+  const {
+    userState: { isAuthenticated, userName },
+    cartState: { totalItems },
+    languageChangeHandler,
+    dispatchAuthActions,
+  } = useContext(GlobalContext);
   const { t } = useTranslation();
 
   const theme = useTheme();
@@ -313,6 +318,9 @@ const Navbar = (props) => {
               />
             </Button>
             {matchesXs ? drawer : tabs}
+            {userName ? (
+              <Typography variant="subtitle1">{userName}</Typography>
+            ) : null}
             <IconButton
               className={clsx(classes.iconButton, classesExternal.iconButton)}
               color="inherit"
@@ -336,7 +344,7 @@ const Navbar = (props) => {
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  badgeContent={totalCartItems}
+                  badgeContent={totalItems}
                   // badgeContent={0}
                   showZero={true}
                   // invisible={false}

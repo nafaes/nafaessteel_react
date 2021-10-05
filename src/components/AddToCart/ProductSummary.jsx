@@ -31,13 +31,14 @@ const ProductSummary = (props) => {
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
 
-  const { cartItems, dispatchCartActions } = useContext(GlobalContext);
+  const {
+    cartState: { items: cartItems },
+    dispatchCartActions,
+  } = useContext(GlobalContext);
 
   let items;
   if (cartItems) {
-    items = cartItems.filter(
-      ({ categoryId }) => categoryId === itemSummary.itemId
-    );
+    items = cartItems.filter(({ categoryId }) => categoryId === itemSummary.itemId);
   }
 
   return items ? (

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Grid,
   makeStyles,
@@ -7,6 +7,9 @@ import {
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import paySuccess from "../assets/img/tick.png"
+
+import { GlobalContext } from "../context/Provider";
+import { clearCart } from "../context/actions/cartActions";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -25,7 +28,8 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     localStorage.removeItem("cart");
-  }, []);
+    dispatchCartActions(clearCart());
+  }, [dispatchCartActions]);
 
   return (
     <Grid container  style={{margin: "5em auto", width: "45%"}}>
