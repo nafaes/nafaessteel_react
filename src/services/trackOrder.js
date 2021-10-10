@@ -32,9 +32,12 @@ export const getAllOrders = async (userId, languageId) => {
     throw error;
   }
 };
-export const downloadPDF = async (orderId,lng) => {
+
+export const downloadPDF = async (orderId, lng) => {
   try {
-    const { data } = await axiosInstance.get(`/print/${orderId}/${lng}`,{ responseType: 'blob' });
+    const { data } = await axiosInstance.get(`/print/${orderId}/${lng}`, {
+      responseType: "blob",
+    });
     if (data) {
       return data;
     }
