@@ -75,7 +75,7 @@ const SignupPage = (props) => {
   });
   const [submit, setSubmit] = useState(false);
 
-  const { dispatchAuthActions } = useContext(GlobalContext);
+  const { dispatchAuthActions, languageId } = useContext(GlobalContext);
 
   const conformPasswordHandler = useCallback(
     ({ target: { value, name } }) => {
@@ -139,7 +139,7 @@ const SignupPage = (props) => {
     setSignupForm({ ...updatedSignupForm, formIsValid });
   };
 
-  const signupHandler = async () => {
+  const signupHandler = useCallback(async () => {
     setSubmit(true);
     if (signupForm.password.value !== signupForm.confirmPassword.value) {
       const updatedFormDetails = updateObject(signupForm, {
@@ -155,12 +155,15 @@ const SignupPage = (props) => {
       setSubmit(false);
     } else {
       try {
-        const response = await signUp({
-          name: signupForm.name.value,
-          email: signupForm.email.value,
-          mobile: signupForm.mobileNumber.value,
-          password: signupForm.password.value,
-        });
+        const response = await signUp(
+          {
+            name: signupForm.name.value,
+            email: signupForm.email.value,
+            mobile: signupForm.mobileNumber.value,
+            password: signupForm.password.value,
+          },
+          languageId
+        );
         if (response) {
           setSignupForm(signupFormInitialState);
           setNotify({
@@ -184,7 +187,7 @@ const SignupPage = (props) => {
         setNotify({ isOpen: true, message: err.message, type: "error" });
       }
     }
-  };
+  }, [dispatchAuthActions, languageId, signupForm]);
 
   return (
     <Fragment>

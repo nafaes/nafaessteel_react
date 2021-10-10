@@ -15,9 +15,7 @@ export const getDeliveryAreas = async () => {
 
 export const getDeliveryDate = async (deliveryType) => {
   try {
-    const response = await axiosInstance.get(
-      `/deliverydate/${deliveryType}/0/0`
-    );
+    const response = await axiosInstance.get(`/deliverydate/${deliveryType}/0/0`);
     if (response.data) {
       return response.data.deliverydate;
     }
@@ -26,9 +24,9 @@ export const getDeliveryDate = async (deliveryType) => {
   }
 };
 
-export const getPaymentURL = async (paymentDetails) => {
+export const getPaymentURL = async (paymentDetails, languageId) => {
   try {
-    const { data } = await axiosInstance.post("/payment", paymentDetails);
+    const { data } = await axiosInstance.post(`/payment/${languageId}`, paymentDetails);
     if (data.code === 200) {
       return data;
     }
@@ -43,9 +41,9 @@ export const getPaymentURL = async (paymentDetails) => {
   }
 };
 
-export const saveOrder = async (orderDetails) => {
+export const saveOrder = async (orderDetails, languageId) => {
   try {
-    const { data } = await axiosInstance.post("/saveorder", orderDetails);
+    const { data } = await axiosInstance.post(`/saveorder/${languageId}`, orderDetails);
     if (data.code === 201) {
       return data;
     }

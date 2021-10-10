@@ -132,6 +132,7 @@ export const CheckoutContext = createContext();
 
 const CheckoutPage = () => {
   const {
+    languageId,
     userState: { isAuthenticated, userEmail },
     cartState: { items: cartItems, totalAmount },
   } = useContext(GlobalContext);
@@ -269,7 +270,7 @@ const CheckoutPage = () => {
         lng: "EN",
         email: userDetails.email,
         paymentType: paymentType,
-      });
+      }, languageId);
 
       const saveResponse = await saveOrder({
         user: userDetails,
@@ -279,7 +280,7 @@ const CheckoutPage = () => {
           referenceNo: response.referenceno,
           paymentType: response.paymentmode,
         },
-      });
+      }, languageId);
 
       // If user selects KNET payment
       if (saveResponse?.url) {
@@ -289,6 +290,7 @@ const CheckoutPage = () => {
       }
     }
   }, [
+    languageId,
     isAuthenticated,
     cartItems,
     guestForm,
@@ -319,7 +321,7 @@ const CheckoutPage = () => {
     paymentType,
     setPaymentType,
     checkoutHandler,
-    paymentLoading
+    paymentLoading,
   };
 
   return (

@@ -15,7 +15,6 @@ export const authReducer = (state, { type, payload }) => {
 
     case LOGIN_SUCCESS:
       return {
-        ...state,
         loading: false,
         errorMessage: null,
         isAuthenticated: true,
@@ -40,6 +39,9 @@ export const authReducer = (state, { type, payload }) => {
         expiresIn: null,
         isAuthenticated: false,
         errorMessage: null,
+        userId: "",
+        userName: "",
+        userEmail: "",
       };
     default:
       return state;

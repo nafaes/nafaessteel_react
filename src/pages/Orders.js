@@ -1,43 +1,26 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import Orders from "../components/TrackOrder/Orders";
-import { getOrderDetails ,downloadPDF} from "../services/trackOrder";
 import { GlobalContext } from "../context/Provider";
 import { LANDING } from "../constants/routes";
-import axiosInstance from "../helpers/axiosInstance";
-import { saveAs } from 'file-saver';
+import { saveAs } from "file-saver";
+import {
+  getAllOrders,
+  getOrderDetails,
+  trackOrder,
+  downloadPDF,
+} from "../services/trackOrder";
 
 const OrdersPage = (props) => {
   const { location, history } = props;
   const {
-    userState: { isAuthenticated, userId },languageId
+    userState: { isAuthenticated, userId },
+    languageId,
   } = useContext(GlobalContext);
   const [orders, setOrders] = useState([]);
   const [orderDetails, setOrderDetails] = useState({
     allOrders: [],
     totalAmount: 0,
   });
-
-  const getAllOrders = async (userId) => {
-    try {
-      const { data } = await axiosInstance.get(`/allorders/${userId}/2`);
-      if (data) {
-        return data;
-      }
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const trackOrder = async (orderId, userEmail) => {
-    try {
-      const { data } = await axiosInstance.get(`/trackorder/${orderId}/${userEmail}`);
-      if (data) {
-        return data;
-      }
-    } catch (error) {
-      throw error;
-    }
-  };
 
   const getOrders = useCallback(async () => {
     if (location?.state === undefined && isAuthenticated === false) {
@@ -46,15 +29,15 @@ const OrdersPage = (props) => {
 
     if (location?.state && isAuthenticated === false) {
       const { orderId, userEmail } = location.state;
-      const response = await trackOrder(orderId, userEmail);
+      const response = await trackOrder(orderId, userEmail, languageId);
       setOrders(response);
     }
 
     if (isAuthenticated) {
-      const response = await getAllOrders(userId);
+      const response = await getAllOrders(userId, languageId);
       setOrders(response);
     }
-  }, [isAuthenticated, userId, location?.state, history]);
+  }, [languageId, isAuthenticated, userId, location?.state, history]);
 
   useEffect(() => {
     getOrders();
@@ -68,23 +51,29 @@ const OrdersPage = (props) => {
     };
   }, [getOrders]);
 
-  const getOrderDetailsHandler = useCallback(async (orderId, totalAmount) => {
-    const response = await getOrderDetails(orderId);
-    setOrderDetails({ allOrders: response, totalAmount });
-  }, []);
+  const getOrderDetailsHandler = useCallback(
+    async (orderId, totalAmount) => {
+      const response = await getOrderDetails(orderId, languageId);
+      setOrderDetails({ allOrders: response, totalAmount });
+    },
+    [languageId]
+  );
 
-  const downloadPdf =  useCallback(async (orderId) => {
-     const response = await downloadPDF(orderId,languageId);
-     const file = new Blob([response], {
-      type: 'application/pdf',
-    });
-     saveAs(file, 'Order');
-    // const file = new Blob([response], {
-    //   type: 'application/pdf',
-    // });
-    //   const fileURL = URL.createObjectURL(file);
-    //   window.open(fileURL);
-   },[languageId]);
+  const downloadPdf = useCallback(
+    async (orderId) => {
+      const response = await downloadPDF(orderId, languageId);
+      const file = new Blob([response], {
+        type: "application/pdf",
+      });
+      saveAs(file, "Order");
+      // const file = new Blob([response], {
+      //   type: 'application/pdf',
+      // });
+      //   const fileURL = URL.createObjectURL(file);
+      //   window.open(fileURL);
+    },
+    [languageId]
+  );
 
   return (
     <Orders
