@@ -177,12 +177,13 @@ const Orders = (props) => {
                     >
                       <Grid item>
                         <Button
-                          color="primary"
                           variant="text"
                           style={{
                             textTransform: "none",
                             fontWeight: "600",
                             fontSize: "0.93em",
+                            backgroundColor: "#0086b3",
+                            color: "white",
                           }}
                           onClick={handleClickOpen.bind(
                             null,
@@ -190,7 +191,7 @@ const Orders = (props) => {
                             order.amount
                           )}
                         >
-                          View OrderDetails
+                          View Order
                         </Button>
                       </Grid>
                     </Grid>
@@ -208,6 +209,8 @@ const Orders = (props) => {
                             textTransform: "none",
                             fontWeight: "600",
                             fontSize: "0.93em",
+                            backgroundColor: "#0086b3",
+                            color: "white",
                           }}
                         >
                           Print
