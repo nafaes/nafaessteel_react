@@ -1,43 +1,15 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
-
 import Orders from "../components/TrackOrder/Orders";
-import { getOrderDetails } from "../services/trackOrder";
+import { getOrderDetails ,downloadPDF} from "../services/trackOrder";
 import { GlobalContext } from "../context/Provider";
 import { LANDING } from "../constants/routes";
 import axiosInstance from "../helpers/axiosInstance";
-
-const allOrders = [
-  {
-    orderId: 1,
-    itemName: "Kuwaiti Iron",
-    orderPlaced: "10 August 2021",
-    total: "KWD 90.00",
-    shipTo: "Kuwait",
-    image: "/brick.jpg",
-  },
-  {
-    orderId: 2,
-    itemName: "Wood",
-    orderPlaced: "12 August 2021",
-    total: "KWD 110.00",
-    shipTo: "Japan",
-    image: "/brick.jpg",
-  },
-];
-
-const columns = [
-  { title: "Item Name", field: "itemName" },
-  { title: "Order Placed", field: "orderPlaced" },
-  { title: "Shiped To", field: "shipTo" },
-  { title: "Total", field: "total", type: "currency" },
-];
+import { saveAs } from 'file-saver';
 
 const OrdersPage = (props) => {
   const { location, history } = props;
   const {
-    userState: { isAuthenticated, userId },
+    userState: { isAuthenticated, userId },languageId
   } = useContext(GlobalContext);
   const [orders, setOrders] = useState([]);
   const [orderDetails, setOrderDetails] = useState({
@@ -101,21 +73,18 @@ const OrdersPage = (props) => {
     setOrderDetails({ allOrders: response, totalAmount });
   }, []);
 
-  const downloadPdf = () => {
-    const doc = new jsPDF();
-    doc.text("Order Details", 20, 10);
-    doc.autoTable({
-      theme: "grid",
-      columns: columns.map((col) => ({ ...col, dataKey: col.field })),
-      body: allOrders,
-      startY: doc.autoTable() + 70,
-
-      margin: { horizontal: 10 },
-      styles: { overflow: "linebreak" },
-      bodyStyles: { valign: "top" },
+  const downloadPdf =  useCallback(async (orderId) => {
+     const response = await downloadPDF(orderId,languageId);
+     const file = new Blob([response], {
+      type: 'application/pdf',
     });
-    doc.save("orders.pdf");
-  };
+     saveAs(file, 'Order');
+    // const file = new Blob([response], {
+    //   type: 'application/pdf',
+    // });
+    //   const fileURL = URL.createObjectURL(file);
+    //   window.open(fileURL);
+   },[languageId]);
 
   return (
     <Orders

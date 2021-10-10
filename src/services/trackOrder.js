@@ -10,3 +10,13 @@ export const getOrderDetails = async (orderId) => {
     throw error;
   }
 };
+export const downloadPDF = async (orderId,lng) => {
+  try {
+    const { data } = await axiosInstance.get(`/print/${orderId}/${lng}`,{ responseType: 'blob' });
+    if (data) {
+      return data;
+    }
+  } catch (error) {
+    throw error;
+  }
+};

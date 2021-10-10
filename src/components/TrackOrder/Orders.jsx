@@ -49,7 +49,6 @@ const Orders = (props) => {
     setOpenDialog(true);
     getOrderDetails(orderId, totalAmount);
   };
-
   const handleClose = useCallback(() => {
     setOpenDialog(false);
   }, []);
@@ -204,7 +203,7 @@ const Orders = (props) => {
                     >
                       <Grid item>
                         <Button
-                          onClick={downloadPdf}
+                          onClick={() => downloadPdf(order.exchangeOrderId)}
                           style={{
                             textTransform: "none",
                             fontWeight: "600",
