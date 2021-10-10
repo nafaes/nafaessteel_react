@@ -26,9 +26,9 @@ export const logIn = async (email, password) => {
   }
 };
 
-export const signUp = async (newUser) => {
+export const signUp = async (newUser, languageId) => {
   try {
-    const { data } = await axiosInstance.post("/createaccount", newUser);
+    const { data } = await axiosInstance.post(`/createaccount/${languageId}`, newUser);
     if (data.code === 201) {
       return data;
     }
