@@ -21,6 +21,7 @@ const cartInitilState = cartFromLocalStorage
       items: [],
       totalItems: 0,
       totalAmount: 0,
+      totalPrice: 0,
     };
 
 const authInitialState = {

@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import emptyCart from '../../assets/img/emptycart.png';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,7 +27,7 @@ const EmptyCart = () => {
         alignItems: "center",
       }}
     >
-      <Paper className={classes.paper} style={{width: "80%", height: "120px",}}>
+      <Paper className={classes.paper} style={{width: "50%"}}>
         <Grid
           container
           style={{
@@ -36,10 +37,18 @@ const EmptyCart = () => {
             alignItems: "center",
           }}
         >
+          <Grid item style={{textAlign:"center"}}>
+            <img src={emptyCart} alt="EmptyCart" style={{width:"70%"}}/>
+          </Grid>
           <Grid item>
-            <Typography variant="h6" gutterBottom>
-              Empty Cart
-            </Typography>
+              <Typography style={{fontSize: "1.1rem", fontWeight: "600"}} variant="h6">
+                  Hey, it feels so light!
+              </Typography>
+          </Grid>
+          <Grid item style={{textAlign:"center"}}>
+              <Typography style={{fontSize: "0.9rem"}} variant="h6">
+                  There is nothing in your bag .Let's add some items
+              </Typography>
           </Grid>
           <Grid item>
             <Button

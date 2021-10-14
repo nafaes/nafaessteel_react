@@ -38,7 +38,7 @@ import {
 
 const Routes = ({ isAuthenticated }) => {
   return (
-    <Suspense fallback="Loading">
+    <Suspense fallback="">
       <Switch>
         <Route exact={true} path={LANDING} component={LandingPage} />
         <Route exact={true} path={ITEMS} component={ItemsPage} />

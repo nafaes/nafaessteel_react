@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DesktopCart = () => {
   const {
-    cartState: { totalItems, items, totalAmount },
+    cartState: { totalItems, items, totalAmount,totalPrice },
     dispatchCartActions,
   } = useContext(GlobalContext);
 

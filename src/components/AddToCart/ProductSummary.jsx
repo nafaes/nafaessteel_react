@@ -10,7 +10,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { ButtonGroup, IconButton } from "@material-ui/core";
+import { ButtonGroup, IconButton, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -19,6 +19,7 @@ import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
 import { GlobalContext } from "../../context/Provider";
 import { addItem, removeItem } from "../../context/actions/cartActions";
 import { CART } from "../../constants/routes";
+import EmptyCart from "../Cart/EmptyCart";
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -40,8 +41,15 @@ const ProductSummary = (props) => {
   if (cartItems) {
     items = cartItems.filter(({ categoryId }) => categoryId === itemSummary.itemId);
   }
+    console.log("length",items)
+  if (items.length === 0){
+      return null;
+  }
 
-  return items ? (
+  // return items ? ProductSummary : null
+
+  return (
+    <React.Fragment>
     <Grid container justifyContent="center" style={{ marginTop: "2em" }}>
       <TableContainer component={Paper}>
         <Table
@@ -56,15 +64,16 @@ const ProductSummary = (props) => {
             )}
           >
             <TableRow>
-              <TableCell>{t("AddToCart.Item")}</TableCell>
-              {itemSummary.selectedValues.map((selectedValue, index) => (
-                <TableCell key={index} align="center">
-                  {selectedValue.name}
-                </TableCell>
-              ))}
-              <TableCell align="center">{t("AddToCart.Price")}</TableCell>
-              <TableCell align="center">{t("AddToCart.Quantity")}</TableCell>
-              <TableCell align="right">{t("AddToCart.Action")}</TableCell>
+                <TableCell>{t("AddToCart.Item")}</TableCell>
+                {itemSummary.selectedValues.map((selectedValue, index) => (
+                  <TableCell key={index} align="center">
+                    {selectedValue.name}
+                  </TableCell>
+                ))}
+                <TableCell align="center">{t("AddToCart.Quantity")}</TableCell>
+                <TableCell align="center">{t("AddToCart.Price")}</TableCell>
+                <TableCell align="center">{t("Checkout.Total")}</TableCell>
+                <TableCell align="right">{t("AddToCart.Action")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -77,15 +86,10 @@ const ProductSummary = (props) => {
                   </TableCell>
                 ))}
                 <TableCell align="center">
-                  {ccyFormat(cartItem.price)}
-                </TableCell>
-
-                <TableCell align="center">
                   <ButtonGroup
                     variant="contained"
                     color="primary"
-                    aria-label="contained primary button group"
-                  >
+                    aria-label="contained primary button group">
                     <Button
                       onClick={dispatchCartActions.bind(
                         null,
@@ -104,6 +108,12 @@ const ProductSummary = (props) => {
                       +
                     </Button>
                   </ButtonGroup>
+                </TableCell>
+                <TableCell align="center">
+                  {ccyFormat(cartItem.price)}
+                </TableCell>
+                <TableCell align="center">
+                  {ccyFormat((cartItem.price) * (cartItem.quantity))}
                 </TableCell>
                 <TableCell align="right">
                   <IconButton
@@ -130,13 +140,12 @@ const ProductSummary = (props) => {
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
+              <TableCell></TableCell>
               <TableCell align="right">
                 <Button
                   component={Link}
                   to={CART}
                   variant="contained"
-                  // color="primary"
-                  // style={{ margin: "6px", width: "20em" }}
                 >
                   {t("AddToCart.InputFields.GoToCart")}
                 </Button>
@@ -146,7 +155,9 @@ const ProductSummary = (props) => {
         </Table>
       </TableContainer>
     </Grid>
-  ) : null;
+  </React.Fragment>
+  )
+
 };
 
 export default ProductSummary;

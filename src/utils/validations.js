@@ -18,6 +18,7 @@ export const limitMaxlength = (event, maxLength) => {
 };
 
 export const checkValidity = (value, rules) => {
+  console.log("rules",rules);
   if (rules.isUserName) {
     let valid = true;
     let validationMsg = rules.validationMsg;

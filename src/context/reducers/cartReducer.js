@@ -10,10 +10,12 @@ const cartReducer = (state, { type, payload: item }) => {
       const currentItemIndex = state.items.findIndex(({ itemId }) => itemId === item.itemId);
       if (currentItemIndex >= 0) {
         const currentItem = state.items[currentItemIndex];
+        console.log("currentItem",currentItem);
         const updatedItem = {
           ...currentItem,
           quantity: Number(currentItem.quantity) + Number(item.quantity),
         };
+       
         const items = state.items;
         items[currentItemIndex] = updatedItem;
         return {
@@ -26,6 +28,7 @@ const cartReducer = (state, { type, payload: item }) => {
           items: [...state.items, item],
           totalItems: state.totalItems + Number(item.quantity),
           totalAmount: state.totalAmount + (Number(item.quantity) * Number(item.price)),
+
         };
       }
 
@@ -43,6 +46,7 @@ const cartReducer = (state, { type, payload: item }) => {
           items: items,
           totalItems: Number(state.totalItems) - Number(item.quantity),
           totalAmount: state.totalAmount - (Number(currentItem.price) * Number(item.quantity)),
+
         };
       } else {
         const currentItem = state.items.find(({ itemId }) => itemId === item.itemId);
@@ -59,6 +63,7 @@ const cartReducer = (state, { type, payload: item }) => {
         items: [],
         totalItems: 0,
         totalAmount: 0,
+        totalPrice: 0,
       };
 
     default:

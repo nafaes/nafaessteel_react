@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "flex-start",
     padding: 20,
-    // flexGrow: 1,
   },
   itemContainer: {
     paddingTop: 12,
     marginBottom: 12,
+    flexWrap: "noWrap"
   },
   itemText: {
     whiteSpace: "nowrap",
@@ -33,29 +33,28 @@ const useStyles = makeStyles((theme) => ({
   textContainer: {
     overflow: "hidden",
     textOverflow: "ellipsis",
-    width: "56%",
+    // width: "56%",
+    paddingTop: "3px",
   },
   image: {
     width: 110,
     height: 110,
-    // marginRight: 20,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-end",
   },
-  img: {
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
-  },
+  orderImage: {
+    borderRadius: "50%",
+    width: 115,
+    height: 115,
+  }
+
 }));
 
 const DesktopCartItems = (props) => {
-  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions } = props;
+  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions, totalQuantityPrice} = props;
   const classes = useStyles();
   const { t } = useTranslation();
-
+   
   return (
     <Grid item xs={12} sm={12} md={8} lg={8}>
       <Paper className={classes.paper}>
@@ -66,119 +65,121 @@ const DesktopCartItems = (props) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "flex-end",
+            marginBottom: "0.5em"
           }}
         >
           <Grid item>
-            <Typography variant="h6" gutterBottom>
-              {t("Cart.Text1")}
+            <Typography variant="h6" >
+              Shopping Cart
             </Typography>
           </Grid>
           <Grid item>
-            <Typography variant="body1" color="textSecondary">
-              {t("Cart.Price")}
+            <Typography variant="h6">
+              {`${totalCartItems} ${t("Cart.Items")}`}
             </Typography>
           </Grid>
         </Grid>
 
         <Divider variant="fullWidth" />
 
+        <Grid container xs={12} lg={12} sm={12} md={12} justifyContent="flex-start">
+          <Grid item xs={5} lg={5} sm={5} md={5} >
+            <Typography variant="body1" color="textSecondary">
+              Product Details
+            </Typography>
+          </Grid>
+          <Grid item xs={3} lg={3} sm={3} md={3}>
+            <Typography variant="body1" color="textSecondary" >
+              Quantity
+            </Typography>
+          </Grid>
+          <Grid item xs={2} lg={2} sm={2} md={2}>
+            <Typography variant="body1" color="textSecondary" >
+              price
+            </Typography>
+          </Grid>
+          <Grid item xs={2} lg={2} sm={2} md={2}>
+            <Typography variant="body1" color="textSecondary" >
+              Total
+            </Typography>
+          </Grid>
+        </Grid>
+
         {cartItems.map((item, index) => (
           <Fragment key={item.itemId}>
-            <Grid
-              container
-              justifyContent="flex-start"
-              className={classes.itemContainer}
-            >
-              <Grid item xs={4} sm={4} md={3} lg={4} className={classes.image}>
-                <img
-                  className={classes.img}
-                  alt={item.itemName}
-                  src={
-                    require(`../../../../assets/img/${item.itemImage}`).default
-                  }
-                />
-              </Grid>
-              <Grid item xs={8} sm={8} md={8} lg={8} container>
-                <Grid
-                  item
-                  xs
-                  container
-                  direction="column"
-                  spacing={2}
-                  className={classes.itemText}
-                >
-                  <Grid item>
-                    <Typography
-                      gutterBottom
-                      variant="subtitle1"
-                      className={classes.textContainer}
-                    >
-                      {item.itemName}
-                    </Typography>
-                    {item.selectedValues.map(({ name, item }, index) => (
-                      <Fragment key={index}>
-                        <Typography
-                          gutterBottom
-                          variant="subtitle2"
-                          color="textSecondary"
-                          className={classes.textContainer}
-                        >
-                          {item}
-                        </Typography>
-                      </Fragment>
-                    ))}
-
-                    <ButtonGroup
-                      variant="contained"
-                      color="primary"
-                      aria-label="contained primary button group"
-                    >
-                      <Button
-                        onClick={dispatchCartActions.bind(
-                          null,
-                          removeItem(item.itemId, 1)
-                        )}
-                      >
-                        -
-                      </Button>
-                      <Button>{item.quantity}</Button>
-                      <Button
-                        onClick={dispatchCartActions.bind(
-                          null,
-                          addItem({ itemId: item.itemId, quantity: 1 })
-                        )}
-                      >
-                        +
-                      </Button>
-                    </ButtonGroup>
-
-                    <IconButton
-                      onClick={dispatchCartActions.bind(
-                        null,
-                        removeItem(item.itemId, 0)
-                      )}
-                    >
-                      <DeleteForeverIcon
-                        style={{ fontSize: "2rem", color: "#d9534f" }}
-                      />
-                    </IconButton>
+            <Grid container xs={12} lg={12} sm={12} md={12} className={classes.itemContainer}>
+              <Grid container xs={5} lg={5} sm={5} md={5} style={{flexWrap: "noWrap"}}>
+                  <Grid item className={classes.image}>
+                     <img alt={item.itemName} className={classes.orderImage}
+                        src={require(`../../../../assets/img/${item.itemImage}`).default} />
                   </Grid>
+                  <Grid item container direction="column" style={{ margin: "0.2em 0px 0px 1em" }}>
+                      <Grid item>
+                        <Typography gutterBottom variant="subtitle1" className={classes.textContainer}>
+                          {item.itemName}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        {item.selectedValues.map(({ name, item }, index) => (
+                          <Fragment key={index}>
+                            <Typography
+                              variant="subtitle2"
+                              color="textSecondary"
+                              className={classes.textContainer}
+                            >
+                              {item}
+                            </Typography>
+                          </Fragment>
+                        ))}
+                      </Grid>
+                      <Grid item>
+                        <Button style={{ border: "1px solid red", color: "red" , marginTop: "3px" , padding:"2px 3px"}}  
+                                startIcon={<DeleteForeverIcon style={{ color: "#d9534f",marginTop: "0px"}} />} 
+                                onClick={dispatchCartActions.bind(null, removeItem(item.itemId, 0))}>
+                        REMOVE
+                        </Button>
+                      </Grid>
                 </Grid>
+              </Grid>
+              <Grid container xs={3} lg={3} sm={3} md={3}>
+                <Grid item>
+                  <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+                    <Button onClick={dispatchCartActions.bind(null, removeItem(item.itemId, 1))}>
+                      -
+                    </Button>
+                    <Button>{item.quantity}</Button>
+                    <Button onClick={dispatchCartActions.bind(null, addItem({ itemId: item.itemId, quantity: 1 }))}>
+                      +
+                    </Button>
+                  </ButtonGroup>
+                </Grid>
+              </Grid>
+              <Grid container xs={2} lg={2} sm={2} md={2}>
                 <Grid item>
                   <Typography
                     variant="subtitle1"
                     color="textPrimary"
-                    style={{ fontWeight: "bold" }}
-                  >
+                    style={{ fontWeight: "bold" }} >
                     {item.price.toFixed(3)}
                   </Typography>
                 </Grid>
               </Grid>
+              <Grid container xs={2} lg={2} sm={2} md={2}>
+                <Grid item>
+                  <Typography
+                    variant="subtitle1"
+                    color="textPrimary"
+                    style={{ fontWeight: "bold" }} >
+                        {/* {(Number(item.quantity) * Number(item.price)).toFixed(3)} */}
+                        {`${(Number(item.quantity) * Number(item.price)).toFixed(3)} ${t("Cart.Kwd")}`}
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
-            <Divider />
           </Fragment>
         ))}
 
+        <Divider />
         <Grid
           item
           style={{

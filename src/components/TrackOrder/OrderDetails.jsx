@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) => ({
       width: "40%",
     },
   },
+  textHeader: {
+    fontSize: "0.75em",
+    fontWeight: "600",
+  },
 }));
 
 const OrderDetails = (props) => {
@@ -27,21 +31,21 @@ const OrderDetails = (props) => {
     >
       <DialogTitle
         id="alert-dialog-title"
-        style={{ backgroundColor: "#cccccc", padding: "0.5em" }}
+        style={{ backgroundColor: "#cccccc", padding: "0.5em",margin: "1px" }}
       >
         <Grid item container direction="row" style={{ textAlign: "center" }}>
           <Grid item lg={4}>
-            <Typography>Item</Typography>
+            <Typography variant="h6" className={classes.textHeader}>ITEM</Typography>
           </Grid>
           <Grid item lg={4}>
-            <Typography>Quantity</Typography>
+            <Typography variant="h6" className={classes.textHeader}>QUANTITY</Typography>
           </Grid>
           <Grid item lg={4}>
-            <Typography>Amount</Typography>
+            <Typography variant="h6" className={classes.textHeader}>AMOUNT</Typography>
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent style={{padding: "2px 1px"}}>
         {orderDetails.allOrders
           ? orderDetails.allOrders.map((order) => (
               <Grid
