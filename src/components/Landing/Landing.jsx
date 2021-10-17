@@ -9,7 +9,6 @@ import clsx from "clsx";
 import { withRouter } from "react-router-dom";
 import { Divider } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { CircularProgress } from '@material-ui/core/CircularProgress'
 
 import Categories from "./Categories";
 import landingEngDesk from "../../assets/scss/landing.module.scss";

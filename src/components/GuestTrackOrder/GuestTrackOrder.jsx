@@ -105,9 +105,11 @@ const GuestTrackOrder = (props) => {
             name="email"
             onChange={formChangeHandler}
             value={trackOrderForm.email.value}
-            error={!trackOrderForm.email.valid}
+            error={
+              !trackOrderForm.email.valid && trackOrderForm.email.value === ""
+            }
             helperText={
-              !trackOrderForm.email.valid
+              !trackOrderForm.email.valid && trackOrderForm.email.value === ""
                 ? t(trackOrderForm.email.validation.validationMsg.msg, {
                     length:
                       trackOrderForm.email.validation.validationMsg.length,

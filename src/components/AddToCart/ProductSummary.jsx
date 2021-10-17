@@ -10,7 +10,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { ButtonGroup, IconButton, Typography } from "@material-ui/core";
+import { ButtonGroup, IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -19,7 +19,6 @@ import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
 import { GlobalContext } from "../../context/Provider";
 import { addItem, removeItem } from "../../context/actions/cartActions";
 import { CART } from "../../constants/routes";
-import EmptyCart from "../Cart/EmptyCart";
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -39,31 +38,30 @@ const ProductSummary = (props) => {
 
   let items;
   if (cartItems) {
-    items = cartItems.filter(({ categoryId }) => categoryId === itemSummary.itemId);
+    items = cartItems.filter(
+      ({ categoryId }) => categoryId === itemSummary.itemId
+    );
   }
-    console.log("length",items)
-  if (items.length === 0){
-      return null;
+  if (items.length === 0) {
+    return null;
   }
-
-  // return items ? ProductSummary : null
 
   return (
     <React.Fragment>
-    <Grid container justifyContent="center" style={{ marginTop: "2em" }}>
-      <TableContainer component={Paper}>
-        <Table
-          className={classes.table}
-          aria-label="spanning table"
-          size="small"
-        >
-          <TableHead
-            className={clsx(
-              classes.addCartTabHdrRow,
-              classesExternal.addCartTabHdrRow
-            )}
+      <Grid container justifyContent="center" style={{ marginTop: "2em" }}>
+        <TableContainer component={Paper}>
+          <Table
+            className={classes.table}
+            aria-label="spanning table"
+            size="small"
           >
-            <TableRow>
+            <TableHead
+              className={clsx(
+                classes.addCartTabHdrRow,
+                classesExternal.addCartTabHdrRow
+              )}
+            >
+              <TableRow>
                 <TableCell>{t("AddToCart.Item")}</TableCell>
                 {itemSummary.selectedValues.map((selectedValue, index) => (
                   <TableCell key={index} align="center">
@@ -74,90 +72,86 @@ const ProductSummary = (props) => {
                 <TableCell align="center">{t("AddToCart.Price")}</TableCell>
                 <TableCell align="center">{t("Checkout.Total")}</TableCell>
                 <TableCell align="right">{t("AddToCart.Action")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {items.map((cartItem, index) => (
-              <TableRow key={index}>
-                <TableCell>{cartItem.itemName}</TableCell>
-                {cartItem.selectedValues.map((selectedValue, index) => (
-                  <TableCell key={index} align="center">
-                    {selectedValue.item}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {items.map((cartItem, index) => (
+                <TableRow key={index}>
+                  <TableCell>{cartItem.itemName}</TableCell>
+                  {cartItem.selectedValues.map((selectedValue, index) => (
+                    <TableCell key={index} align="center">
+                      {selectedValue.item}
+                    </TableCell>
+                  ))}
+                  <TableCell align="center">
+                    <ButtonGroup
+                      variant="contained"
+                      color="primary"
+                      aria-label="contained primary button group"
+                    >
+                      <Button
+                        onClick={dispatchCartActions.bind(
+                          null,
+                          removeItem(cartItem.itemId, 1)
+                        )}
+                      >
+                        -
+                      </Button>
+                      <Button>{cartItem.quantity}</Button>
+                      <Button
+                        onClick={dispatchCartActions.bind(
+                          null,
+                          addItem({ itemId: cartItem.itemId, quantity: 1 })
+                        )}
+                      >
+                        +
+                      </Button>
+                    </ButtonGroup>
                   </TableCell>
-                ))}
-                <TableCell align="center">
-                  <ButtonGroup
-                    variant="contained"
-                    color="primary"
-                    aria-label="contained primary button group">
-                    <Button
+                  <TableCell align="center">
+                    {ccyFormat(cartItem.price)}
+                  </TableCell>
+                  <TableCell align="center">
+                    {ccyFormat(cartItem.price * cartItem.quantity)}
+                  </TableCell>
+                  <TableCell align="right">
+                    <IconButton
                       onClick={dispatchCartActions.bind(
                         null,
-                        removeItem(cartItem.itemId, 1)
+                        removeItem(cartItem.itemId, 0)
                       )}
                     >
-                      -
-                    </Button>
-                    <Button>{cartItem.quantity}</Button>
-                    <Button
-                      onClick={dispatchCartActions.bind(
-                        null,
-                        addItem({ itemId: cartItem.itemId, quantity: 1 })
-                      )}
-                    >
-                      +
-                    </Button>
-                  </ButtonGroup>
-                </TableCell>
-                <TableCell align="center">
-                  {ccyFormat(cartItem.price)}
-                </TableCell>
-                <TableCell align="center">
-                  {ccyFormat((cartItem.price) * (cartItem.quantity))}
-                </TableCell>
+                      <DeleteForeverIcon
+                        style={{ fontSize: "2rem", color: "#d9534f" }}
+                      />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+
+              <TableRow
+                className={clsx(
+                  classes.addCartTabFtrRow,
+                  classesExternal.addCartTabFtrRow
+                )}
+              >
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
                 <TableCell align="right">
-                  <IconButton
-                    onClick={dispatchCartActions.bind(
-                      null,
-                      removeItem(cartItem.itemId, 0)
-                    )}
-                  >
-                    <DeleteForeverIcon
-                      style={{ fontSize: "2rem", color: "#d9534f" }}
-                    />
-                  </IconButton>
+                  <Button component={Link} to={CART} variant="contained">
+                    {t("AddToCart.InputFields.GoToCart")}
+                  </Button>
                 </TableCell>
               </TableRow>
-            ))}
-
-            <TableRow
-              className={clsx(
-                classes.addCartTabFtrRow,
-                classesExternal.addCartTabFtrRow
-              )}
-            >
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell align="right">
-                <Button
-                  component={Link}
-                  to={CART}
-                  variant="contained"
-                >
-                  {t("AddToCart.InputFields.GoToCart")}
-                </Button>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Grid>
-  </React.Fragment>
-  )
-
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+    </React.Fragment>
+  );
 };
 
 export default ProductSummary;

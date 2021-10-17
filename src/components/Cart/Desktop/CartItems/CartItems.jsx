@@ -6,7 +6,6 @@ import {
   Typography,
   ButtonGroup,
   Button,
-  IconButton,
 } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DesktopCartItems = (props) => {
-  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions, totalQuantityPrice} = props;
+  const { cartItems, totalCartItems, totalCartAmount, dispatchCartActions} = props;
   const classes = useStyles();
   const { t } = useTranslation();
    
