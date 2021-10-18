@@ -8,6 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 import { Divider } from "@material-ui/core";
 import { CircularProgress } from '@material-ui/core';
+import loader from '../../assets/img/loader.gif'
+
 import useHistoryNavigation from "../../hooks/useHistoryNavigation";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
@@ -53,6 +55,8 @@ const Categories = (props) => {
       </Grid>
     </React.Fragment>
   )
+
+
 
   return (
     loading === true ? <CircularProgress color="primary"/> : allCatergory
