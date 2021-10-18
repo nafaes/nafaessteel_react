@@ -7,7 +7,9 @@ import { GlobalContext } from "../../context/Provider";
 import EmptyCart from "./EmptyCart";
 
 const CartComponent = () => {
-  const { cartState: { totalItems } } = useContext(GlobalContext);
+  const {
+    cartState: { totalItems },
+  } = useContext(GlobalContext);
 
   let cartItems = <EmptyCart />;
 

@@ -2,6 +2,7 @@ import {
   ADD_ITEM_TO_CART,
   CLEAR_CART,
   REMOVE_ITEM_FROM_CART,
+  UPDATE_ITEMS_PRICE,
 } from "../../constants/actionTypes/cartConstants";
 
 const cartReducer = (state, { type, payload: item }) => {
@@ -10,18 +11,18 @@ const cartReducer = (state, { type, payload: item }) => {
       const currentItemIndex = state.items.findIndex(({ itemId }) => itemId === item.itemId);
       if (currentItemIndex >= 0) {
         const currentItem = state.items[currentItemIndex];
-        console.log("currentItem",currentItem);
         const updatedItem = {
           ...currentItem,
-          quantity: Number(currentItem.quantity) + Number(item.quantity),
+          quantity: currentItem.quantity + item.quantity,
+          // quantity: Number(currentItem.quantity) + Number(item.quantity),
         };
        
         const items = state.items;
         items[currentItemIndex] = updatedItem;
         return {
           items: items,
-          totalItems: state.totalItems + Number(item.quantity),
-          totalAmount: state.totalAmount + (Number(item.quantity) * Number(currentItem.price)),
+          totalItems: state.totalItems + item.quantity,
+          totalAmount: state.totalAmount + (item.quantity * currentItem.price),
         };
       } else {
         return {
@@ -62,9 +63,33 @@ const cartReducer = (state, { type, payload: item }) => {
       return {
         items: [],
         totalItems: 0,
-        totalAmount: 0,
-        totalPrice: 0,
+        totalAmount: 0
       };
+
+    case UPDATE_ITEMS_PRICE: {
+      const priceUpdatedItems = item;
+      const updatedItems = state.items.map((item) => {
+        const isPriceUpdatedItem = priceUpdatedItems.find((priceUpdatedItem) => priceUpdatedItem.id === item.itemId);
+        if(isPriceUpdatedItem) {
+          return {
+            ...item,
+            price: isPriceUpdatedItem.newPrice
+          }
+        } else {
+          return item;
+        }
+      })
+
+      const updatedTotalAmount = updatedItems.reduce((totalAmount, item) => {
+        return totalAmount + (item.quantity * item.price);
+      }, 0);
+
+      return {
+        ...state,
+        items: updatedItems,
+        totalAmount: updatedTotalAmount,
+      }
+    }
 
     default:
       return state;

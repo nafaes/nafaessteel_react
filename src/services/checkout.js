@@ -31,12 +31,6 @@ export const getPaymentURL = async (paymentDetails, languageId) => {
       return data;
     }
   } catch (error) {
-    // if (error.response) {
-    //   const { code } = error.response.data;
-    //   if (code === 409) {
-    //     throw new Error("Account is already exists");
-    //   }
-    // }
     throw error;
   }
 };
@@ -48,12 +42,6 @@ export const saveOrder = async (orderDetails, languageId) => {
       return data;
     }
   } catch (error) {
-    // if (error.response) {
-    //   const { code } = error.response.data;
-    //   if (code === 409) {
-    //     throw new Error("Account is already exists");
-    //   }
-    // }
     throw error;
   }
 };

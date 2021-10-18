@@ -1,4 +1,5 @@
 import React, {
+  Fragment,
   useCallback,
   useContext,
   useEffect,
@@ -7,6 +8,7 @@ import React, {
 } from "react";
 
 import AddToCart from "../components/AddToCart/AddToCart";
+import Notification from "../common/Notification/Notification";
 import { ITEMS } from "../constants/routes";
 import { addItem } from "../context/actions/cartActions";
 import { GlobalContext } from "../context/Provider";
@@ -20,6 +22,7 @@ const addToCartInitialState = {
     valid: false,
     touched: false,
   },
+  availableQuantity: 0,
   unit: "",
   price: "",
   formIsValid: false,
@@ -30,6 +33,7 @@ const AddToCartPage = (props) => {
   const [addToCartForm, setAddToCartForm] = useState(addToCartInitialState);
   const [itemSummary, setItemSummary] = useState();
   const { languageId, dispatchCartActions } = useContext(GlobalContext);
+  const [notify, setNotify] = useState({ isOpen: false, message: "", type: "" });
 
   const {
     history,
@@ -78,11 +82,15 @@ const AddToCartPage = (props) => {
       setItem(null);
       setItemSummary();
       setAddToCartForm(addToCartInitialState);
+      setNotify({ isOpen: false, message: "", type: "" });
     };
   }, [historyItem, getItemDetails]);
 
   const formChangeHandler = useCallback(
     ({ target: { name, value }, ...values }) => {
+      let availableQuantity = addToCartForm.availableQuantity
+        ? addToCartForm.availableQuantity
+        : 0;
       let price = addToCartForm.price ? addToCartForm.price : "";
       let unit = addToCartForm.unit ? addToCartForm.unit : "";
 
@@ -104,6 +112,10 @@ const AddToCartPage = (props) => {
           unit = selectedDropdown.unit;
           price = selectedItem.price;
           dropdownProperties["price"] = selectedItem.price;
+        }
+
+        if (selectedItem && selectedItem.hasOwnProperty("availableStock")) {
+          availableQuantity = selectedItem.availableStock;
         }
       }
 
@@ -127,6 +139,7 @@ const AddToCartPage = (props) => {
         },
         price,
         unit,
+        availableQuantity,
       };
 
       let formIsValid = true;
@@ -171,13 +184,19 @@ const AddToCartPage = (props) => {
       setAddToCartForm((addToCartForm) => {
         return { ...addToCartForm, ...updatedForm };
       });
+    } else if (addToCartForm.quantity.value > addToCartForm.availableQuantity) {
+      setNotify({
+        isOpen: true,
+        message: `Entered Quantity ${addToCartForm.quantity.value} not available. Available Quantity is ${addToCartForm.availableQuantity}.`,
+        type: "error",
+      });
     } else {
       let selectedValues = [];
       let itemId;
-      for (let inputIdentifier in addToCartForm) {
+      for (const inputIdentifier in addToCartForm) {
         if (
           typeof addToCartForm[inputIdentifier] === "object" &&
-          addToCartForm[inputIdentifier].name !== "quantity"
+          inputIdentifier !== "quantity"
         ) {
           selectedValues.push({
             name: addToCartForm[inputIdentifier].name,
@@ -198,7 +217,7 @@ const AddToCartPage = (props) => {
           itemName: historyItem.name,
           itemImage: item.image,
           selectedValues,
-          quantity: addToCartForm.quantity.value,
+          quantity: Math.abs(addToCartForm.quantity.value),
           price: addToCartForm.price,
         })
       );
@@ -230,15 +249,18 @@ const AddToCartPage = (props) => {
   ]);
 
   return (
-    <AddToCart
-      item={item}
-      addToCartForm={addToCartForm}
-      formChangeHandler={formChangeHandler}
-      historyItems={historyItems}
-      breadcrumbNavigation={breadcrumbNavigation}
-      addToCartHandler={addToCartHandler}
-      itemSummary={itemSummary}
-    />
+    <Fragment>
+      <AddToCart
+        item={item}
+        addToCartForm={addToCartForm}
+        formChangeHandler={formChangeHandler}
+        historyItems={historyItems}
+        breadcrumbNavigation={breadcrumbNavigation}
+        addToCartHandler={addToCartHandler}
+        itemSummary={itemSummary}
+      />
+      {notify.isOpen && <Notification notify={notify} setNotify={setNotify} />}
+    </Fragment>
   );
 };
 
