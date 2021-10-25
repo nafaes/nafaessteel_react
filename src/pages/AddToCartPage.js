@@ -218,7 +218,7 @@ const AddToCartPage = (props) => {
     else if (addToCartForm.quantity.value <= 0) {
       setNotify({
         isOpen: true,
-        message: `Quantity Should be Greater than zero`,
+        message: `Quantity Should be less than zero`,
         type: "error",
       });
       clearForm();
