@@ -178,6 +178,21 @@ const AddToCartPage = (props) => {
     [historyItems, history]
   );
 
+  const clearForm = () =>{
+    let updatedForm = { formIsValid: false };
+    for (let inputIdentifier in addToCartForm) {
+      if (typeof addToCartForm[inputIdentifier] === "object") {
+        updatedForm[inputIdentifier] = {
+          ...addToCartForm[inputIdentifier],
+          value: "",
+          valid: false,
+          touched: false,
+        };
+      }
+    }
+    setAddToCartForm(updatedForm); 
+  }
+    
   const addToCartHandler = useCallback(() => {
     if (addToCartForm.formIsValid === false) {
       let updatedForm = {};
@@ -198,7 +213,17 @@ const AddToCartPage = (props) => {
         message: `Entered Quantity ${addToCartForm.quantity.value} not available. Available Quantity is ${addToCartForm.availableQuantity}.`,
         type: "error",
       });
-    } else {
+      clearForm();
+    }
+    else if (addToCartForm.quantity.value <= 0) {
+      setNotify({
+        isOpen: true,
+        message: `Quantity Should be Greater than zero`,
+        type: "error",
+      });
+      clearForm();
+    } 
+    else {
       let selectedValues = [];
       let itemId;
       for (const inputIdentifier in addToCartForm) {
