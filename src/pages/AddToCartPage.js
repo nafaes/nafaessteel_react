@@ -178,7 +178,7 @@ const AddToCartPage = (props) => {
     [historyItems, history]
   );
 
-  const clearForm = () =>{
+  const clearForm = useCallback(() => {
     let updatedForm = { formIsValid: false };
     for (let inputIdentifier in addToCartForm) {
       if (typeof addToCartForm[inputIdentifier] === "object") {
@@ -191,7 +191,7 @@ const AddToCartPage = (props) => {
       }
     }
     setAddToCartForm(updatedForm); 
-  }
+  },[addToCartForm,])
     
   const addToCartHandler = useCallback(() => {
     if (addToCartForm.formIsValid === false) {
@@ -279,6 +279,7 @@ const AddToCartPage = (props) => {
     item?.image,
     addToCartForm,
     dispatchCartActions,
+    clearForm,
   ]);
 
   return (
