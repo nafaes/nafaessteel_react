@@ -10,6 +10,9 @@ import clsx from "clsx";
 
 import useHistoryNavigation from "../../hooks/useHistoryNavigation";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
+// import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
+
+import LoaderImg from "../LoaderImg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,37 +29,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Items = (props) => {
-  const { items } = props;
+  const { items , loading } = props;
   const navigate = useHistoryNavigation();
   const classes = useStyles();
+
+  //  const englishMobileStyles = landingMobEng();
   let classesExternal = landingEngDesk;
-
-  let itemsCart = <p>Loading</p>;
-
-  if (items) {
-    itemsCart = (
-      <Grid
-        container
-        style={{ marginTop: "3em" }}
-        justifyContent="center"
-        spacing={2}
-      >
+  // let classesName = englishMobileStyles;
+  let itemsCart = <LoaderImg/>
+  const itemsGrid = (
+    <Grid container style={{ marginTop: "3em" }}  justifyContent="center" spacing={2}>
         {items.map((item, index) => (
-          <Grid
-            item
-            lg={3}
-            md={4}
-            sm={6}
-            xs={12}
-            key={index}
-            style={{ columnGap: "12px" }}
-          >
-            <Card
-              raised
-              elevation={12}
-              className={classes.root}
-              onClick={navigate.bind(null, item)}
-            >
+          <Grid item lg={3} md={4} sm={6} xs={12} key={index}
+            style={{ columnGap: "12px" }}>
+            <Card raised elevation={12}className={clsx(classes.root, classesExternal.animateCard)}
+              onClick={navigate.bind(null, item)} >
               <CardHeader
                 title={item.categoryName}
                 titleTypographyProps={{ variant: "h6" }}
@@ -66,9 +53,6 @@ const Items = (props) => {
               <CardMedia
                 component="img"
                 alt="Contemplative Reptile"
-                // height="200px"
-                // image={Cement}
-                // src={item.image}
                 src={require(`../../assets/img/${item.picturePath}`).default}
                 title={item.categoryName}
                 style={{ height: "13em ", width: "13em", margin: "auto" }}
@@ -90,10 +74,11 @@ const Items = (props) => {
           </Grid>
         ))}
       </Grid>
-    );
-  }
+  )
 
-  return itemsCart;
+  return (
+    loading === true ?  itemsCart : itemsGrid 
+  );
 };
 
 export default Items;

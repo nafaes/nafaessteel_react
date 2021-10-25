@@ -13,6 +13,7 @@ import { getAllCatergoryItems } from "../services/categories";
 const ItemsPage = (props) => {
   const [catergoryItems, setCategoryItems] = useState([]);
   const { languageId } = useContext(GlobalContext);
+  const [loading, setIsLoading] = useState(false);
 
   const { location } = props;
   const { categoryId, level } = useMemo(() => {
@@ -27,8 +28,15 @@ const ItemsPage = (props) => {
   }, [location.state]);
 
   const getCatergoryItems = useCallback(async () => {
-    const response = await getAllCatergoryItems(categoryId, level, languageId);
-    setCategoryItems(response);
+    try{
+      setIsLoading(true);
+      const response = await getAllCatergoryItems(categoryId, level, languageId);
+      setCategoryItems(response);
+      setIsLoading(false);
+    }
+    catch (err) {
+      setIsLoading(false);
+    }
   }, [categoryId, level, languageId]);
 
   useEffect(() => {
@@ -40,7 +48,7 @@ const ItemsPage = (props) => {
     };
   }, [categoryId, getCatergoryItems]);
 
-  return <Items items={catergoryItems} />;
+  return <Items items={catergoryItems} loading={loading}/>;
 };
 
 export default ItemsPage;

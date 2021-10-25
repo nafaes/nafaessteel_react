@@ -1,10 +1,9 @@
 import React, { Fragment, useCallback, useState } from "react";
 import { Button, Chip, Divider, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { Link } from "react-router-dom";
 
 import OrderDetails from "./OrderDetails";
-import { TRACKORDER } from "../../constants/routes";
+import TrackOrder from "./TrackOrder";
 
 // const imageList = ["iron", "wood", "bricks", "cement"];
 
@@ -45,13 +44,24 @@ const useStyles = makeStyles((theme) => ({
 const Orders = (props) => {
   const { orders, getOrderDetails, orderDetails, downloadPdf } = props;
   const [openDialog, setOpenDialog] = useState(false);
+  const [openTrackOrder, setOpenTrackOrder] = useState(false);
+
   const handleClickOpen = (orderId, totalAmount) => {
     setOpenDialog(true);
     getOrderDetails(orderId, totalAmount);
   };
+  const handleClickOpenTrack = () => {
+    setOpenTrackOrder(true);
+  };
   const handleClose = useCallback(() => {
     setOpenDialog(false);
   }, []);
+
+
+  const handleCloseTrackOrder = useCallback(() => {
+    setOpenTrackOrder(false);
+  }, []);
+
 
   const classes = useStyles();
 
@@ -69,12 +79,8 @@ const Orders = (props) => {
     <Fragment>
       <Grid container direction="row" style={{ marginTop: "3em", backgroundColor: "white" }}>
         <DividerLine>
-          <Chip
-            variant="outlined"
-            color="primary"
-            label="Your Orders"
-            style={{ padding: "0px 25px", fontSize: "0.85em" }}
-          />
+          <Chip variant="outlined" color="primary" label="Your Orders"
+            style={{ padding: "0px 25px", fontSize: "0.85em" }} />
         </DividerLine>
         {orders ? orders.map((order, index) => (
           <Grid key={order.exchangeOrderId} item container style={{ margin: "0em auto 1.5em", width: "85%" }}>
@@ -142,63 +148,47 @@ const Orders = (props) => {
                 style={{ flexWrap: "nowrap", textAlign: "center" }}>
                 <Grid item container direction="column" justifyContent="center">
                   <Grid item>
-                    <Button
-                      variant="text"
+                    <Button variant="text" onClick={handleClickOpen.bind(null,
+                      order.exchangeOrderId,
+                      order.amount
+                    )}
                       style={{
                         textTransform: "none",
                         fontWeight: "600",
                         fontSize: "0.93em",
                         backgroundColor: "#0086b3",
                         color: "white",
-                      }}
-                      onClick={handleClickOpen.bind(
-                        null,
-                        order.exchangeOrderId,
-                        order.amount
-                      )}>
+                      }}>
                       View Order
                     </Button>
                   </Grid>
                 </Grid>
                 <Divider orientation="vertical" />
-                <Grid
-                  item
-                  container
-                  direction="column"
-                  justifyContent="center">
+                <Grid item container direction="column" justifyContent="center">
                   <Grid item>
-                    <Button
-                      onClick={() => downloadPdf(order.exchangeOrderId)}
+                    <Button onClick={() => downloadPdf(order.exchangeOrderId)}
                       style={{
                         textTransform: "none",
                         fontWeight: "600",
                         fontSize: "0.93em",
                         backgroundColor: "#0086b3",
-                        color: "white",
-                      }}
-                    >
+                        color: "white"
+                      }}>
                       Print
                     </Button>
                   </Grid>
                 </Grid>
                 <Divider orientation="vertical" />
-                <Grid
-                  item
-                  container
-                  direction="column"
-                  justifyContent="center">
+                <Grid item container direction="column" justifyContent="center">
                   <Grid item>
-                    <Button  component={Link}
-                    to={TRACKORDER}
-                    target="_blank"
+                    <Button  onClick={handleClickOpenTrack}
                       style={{
                         textTransform: "none",
                         fontWeight: "600",
                         fontSize: "0.93em",
                         backgroundColor: "#0086b3",
                         color: "white",
-                      }}
-                    >
+                      }}>
                       Track Order
                     </Button>
                   </Grid>
@@ -215,6 +205,9 @@ const Orders = (props) => {
         handleClose={handleClose}
         orderDetails={orderDetails}
       />
+      <TrackOrder 
+          openTrackOrder={openTrackOrder}
+          handleCloseTrackOrder={handleCloseTrackOrder}/>
     </Fragment>
   );
 };

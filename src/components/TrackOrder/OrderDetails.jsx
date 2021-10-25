@@ -48,16 +48,12 @@ const OrderDetails = (props) => {
       <DialogContent style={{padding: "2px 1px"}}>
         {orderDetails.allOrders
           ? orderDetails.allOrders.map((order) => (
-              <Grid
-                key={order.itemName}
-                container
-                direction="row"
+              <Grid key={order.itemName} container direction="row"
                 style={{
                   textAlign: "center",
                   padding: "0.5em",
                   color: "initial",
-                }}
-              >
+                }}>
                 <Grid item lg={4}>
                   <Typography variant="subtitle2">{order.itemName}</Typography>
                 </Grid>
@@ -71,19 +67,13 @@ const OrderDetails = (props) => {
             ))
           : null}
 
-        <Grid
-          container
-          direction="row"
-          style={{ color: "white", borderRadius: "5px", textAlign: "center" }}
-        >
-          <Grid
-            item
-            container
+        <Grid container direction="row"
+          style={{ color: "white", borderRadius: "5px", textAlign: "center" }}>
+          <Grid item container
             style={{
               backgroundColor: "rgba(0, 134, 179,.7)",
               padding: "0.5em",
-            }}
-          >
+            }}>
             <Grid item lg={6}>
               <Typography variant="subtitle2">Cart Items</Typography>
             </Grid>
@@ -93,14 +83,10 @@ const OrderDetails = (props) => {
               </Typography>
             </Grid>
           </Grid>
-          <Grid
-            item
-            container
+          <Grid item container
             style={{
               backgroundColor: "rgba(0, 134, 179,.8)",
-              padding: "0.5em",
-            }}
-          >
+              padding: "0.5em"}}>
             <Grid item lg={6}>
               <Typography variant="subtitle2">Shipping Charges</Typography>
             </Grid>
@@ -113,11 +99,8 @@ const OrderDetails = (props) => {
               </Typography>
             </Grid>
           </Grid>
-          <Grid
-            item
-            container
-            style={{ backgroundColor: "rgb(0, 134, 179)", padding: "0.5em" }}
-          >
+          <Grid item container
+            style={{ backgroundColor: "rgb(0, 134, 179)", padding: "0.5em" }}>
             <Grid item lg={6}>
               <Typography variant="subtitle2">Total Amount</Typography>
             </Grid>

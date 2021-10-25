@@ -10,5 +10,6 @@ export const CHECKOUT = "/checkout";
 export const TRACKORDER = "/trackorder";
 export const ORDERS = "/orders";
 export const GUESTTRACKORDER = "/guesttrackorder";
+export const LOADER = "/loader";
 export const PAYMENTSUCCESS ="/orderconfirm/:paymentId/:orderId/:orderDate/:trackId/:paymentType";
 export const PAYMENTFAILED ="/paymentfailed/:status/:paymentId/:referenceNo/:amount";

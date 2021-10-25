@@ -31,6 +31,7 @@ const addToCartInitialState = {
 const AddToCartPage = (props) => {
   const [item, setItem] = useState();
   const [addToCartForm, setAddToCartForm] = useState(addToCartInitialState);
+  const [loading, setIsLoading] = useState(false);
   const [itemSummary, setItemSummary] = useState();
   const { languageId, dispatchCartActions } = useContext(GlobalContext);
   const [notify, setNotify] = useState({ isOpen: false, message: "", type: "" });
@@ -47,31 +48,38 @@ const AddToCartPage = (props) => {
   }, [historyItems]);
 
   const getItemDetails = useCallback(async () => {
-    const response = await getCatergoryItemDetails(
-      languageId,
-      historyItem.categoryId
-    );
-    setItem(response);
-
-    let form = {};
-    if (response?.selections) {
-      response.selections.forEach((dropDown) => {
-        const formDropDown = {
-          name: dropDown.name,
-          value: "",
-          validationMsg: `Select ${dropDown.name}`,
-          valid: false,
-          touched: false,
+    try{
+      setIsLoading(true);
+      const response = await getCatergoryItemDetails(
+        languageId,
+        historyItem.categoryId
+      );
+      setItem(response);
+      let form = {};
+      if (response?.selections) {
+        response.selections.forEach((dropDown) => {
+          const formDropDown = {
+            name: dropDown.name,
+            value: "",
+            validationMsg: `Select ${dropDown.name}`,
+            valid: false,
+            touched: false,
+          };
+          form[dropDown.name] = formDropDown;
+        });
+      }
+      setAddToCartForm((addToCartForm) => {
+        return {
+          ...addToCartForm,
+          ...form,
         };
-        form[dropDown.name] = formDropDown;
       });
+      setIsLoading(false);
     }
-    setAddToCartForm((addToCartForm) => {
-      return {
-        ...addToCartForm,
-        ...form,
-      };
-    });
+    catch (err)
+    {
+      setIsLoading(false);
+    }
   }, [languageId, historyItem]);
 
   useEffect(() => {
@@ -93,7 +101,7 @@ const AddToCartPage = (props) => {
         : 0;
       let price = addToCartForm.price ? addToCartForm.price : "";
       let unit = addToCartForm.unit ? addToCartForm.unit : "";
-
+      console.log("AvailableQuantity96",availableQuantity)
       let dropdownProperties;
       if (name !== "quantity" && value !== "") {
         const selectedDropdown = item.selections.find(
@@ -258,6 +266,7 @@ const AddToCartPage = (props) => {
         breadcrumbNavigation={breadcrumbNavigation}
         addToCartHandler={addToCartHandler}
         itemSummary={itemSummary}
+        loding = {loading}
       />
       {notify.isOpen && <Notification notify={notify} setNotify={setNotify} />}
     </Fragment>

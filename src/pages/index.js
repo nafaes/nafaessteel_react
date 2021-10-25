@@ -11,6 +11,7 @@ export const CartPage = React.lazy(() => import("./CartPage"));
 export const CheckoutPage = React.lazy(() => import("./CheckoutPage"));
 export const OrdersPage = React.lazy(() => import("./Orders"));
 export const TrackOrdersPage = React.lazy(() => import("./TrackOrder"));
+export const LoadingPage = React.lazy(() => import("./Loader"));
 export const GuestTrackOrderPage = React.lazy(() =>import("./GuestTrackOrderPage"));
 export const PaymentSuccess = React.lazy(() => import("./PaymentSuccess"));
 export const PaymentFailed = React.lazy(() => import("./PaymentFailed"));

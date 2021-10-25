@@ -8,6 +8,7 @@ import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
 import BreadcrumbsNavigation from "./BreadcrumbsNavigation";
 import AddToCartForm from "./AddToCartForm";
 import ProductSummary from "./ProductSummary";
+import LoaderImg from "../LoaderImg";
 
 const AddToCart = (props) => {
   const {
@@ -18,12 +19,12 @@ const AddToCart = (props) => {
     breadcrumbNavigation,
     addToCartHandler,
     itemSummary,
+    loading
   } = props;
 
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
-
   return (
     <Fragment>
       <div className={clsx(classes.ContainerForm, classesExternal.ContainerForm)}>
@@ -44,6 +45,7 @@ const AddToCart = (props) => {
                 <BreadcrumbsNavigation
                   historyItems={historyItems}
                   breadcrumbNavigation={breadcrumbNavigation}
+                  loading = {loading}
                 />
                 <AddToCartForm
                   item={item}
@@ -54,8 +56,8 @@ const AddToCart = (props) => {
               </Grid>
             </Grid>
         </Grid>
-        </Grid>
-        {itemSummary ? <ProductSummary itemSummary={itemSummary} /> : null}
+        </Grid> 
+        {loading === true ? <LoaderImg/> : itemSummary ? <ProductSummary itemSummary={itemSummary} /> : null}
       </div>
     </Fragment>
   );

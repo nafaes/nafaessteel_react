@@ -6,35 +6,31 @@ import Link from "@material-ui/core/Link";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import LoaderImg from "../LoaderImg";
 
-const BreadcrumbsNavigation = ({ historyItems, breadcrumbNavigation }) => {
+const BreadcrumbsNavigation = ({ historyItems, breadcrumbNavigation , loading }) => {
   const { t } = useTranslation();
 
+
   return (
-    <Grid
-      item
-      container
-      direction="row"
-      justifyContent="space-between"
+    loading === true ? <LoaderImg/> :
+    <Grid item container direction="row" justifyContent="space-between"
       style={{
         color: "#fff",
         background: "rgba(0, 134, 179, 0.8)",
         padding: ".6em",
         borderRadius: "1em",
         width: "80%",
-        margin: "0px auto",
-      }}
-    >
+        margin: "0px auto"
+      }}>
       <Grid item style={{ color: "#fff" }}>
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
-          style={{ color: "#fff" }}
-        >
+          style={{ color: "#fff" }}>
           <Link color="inherit" component={RouterLink} to="/">
             {t("AddToCart.AllCategories")}
           </Link>
-
           {historyItems &&
             historyItems.map((item, index) => {
               const last = index === historyItems.length - 1;
@@ -46,11 +42,8 @@ const BreadcrumbsNavigation = ({ historyItems, breadcrumbNavigation }) => {
                 );
               } else {
                 return (
-                  <Link
-                    color="inherit"
-                    key={item.categoryId}
-                    onClick={breadcrumbNavigation.bind(null, item.categoryId)}
-                  >
+                  <Link color="inherit" key={item.categoryId}
+                    onClick={breadcrumbNavigation.bind(null, item.categoryId)}>
                     {item.name}
                   </Link>
                 );

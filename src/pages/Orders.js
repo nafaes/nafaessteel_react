@@ -23,25 +23,30 @@ const OrdersPage = (props) => {
   });
 
   const getOrders = useCallback(async () => {
-    if (location?.state === undefined && isAuthenticated === false) {
-      history.push(LANDING);
-    }
 
-    if (location?.state && isAuthenticated === false) {
-      const { orderId, userEmail } = location.state;
-      const response = await trackOrder(orderId, userEmail, languageId);
-      setOrders(response);
-    }
-
-    if (isAuthenticated) {
-      const response = await getAllOrders(userId, languageId);
-      setOrders(response);
+    try{
+      if (location?.state === undefined && isAuthenticated === false) {
+        history.push(LANDING);
+      }
+      if (location?.state && isAuthenticated === false) {
+        const { orderId, userEmail } = location.state;
+        const response = await trackOrder(orderId, userEmail, languageId);
+        setOrders(response);
+      }
+      if (isAuthenticated) {
+        console.log(isAuthenticated)
+        const response = await getAllOrders(userId, languageId);
+        console.log(response);
+        setOrders(response);
+        
+      }
+    }catch(error){
+      throw error;
     }
   }, [languageId, isAuthenticated, userId, location?.state, history]);
 
   useEffect(() => {
     getOrders();
-
     return () => {
       setOrders([]);
       setOrderDetails({
@@ -51,26 +56,19 @@ const OrdersPage = (props) => {
     };
   }, [getOrders]);
 
-  const getOrderDetailsHandler = useCallback(
-    async (orderId, totalAmount) => {
+  const getOrderDetailsHandler = useCallback(async (orderId, totalAmount) => {
       const response = await getOrderDetails(orderId, languageId);
       setOrderDetails({ allOrders: response, totalAmount });
     },
     [languageId]
   );
 
-  const downloadPdf = useCallback(
-    async (orderId) => {
+  const downloadPdf = useCallback(async (orderId) => {
       const response = await downloadPDF(orderId, languageId);
       const file = new Blob([response], {
         type: "application/pdf",
       });
       saveAs(file, "Order");
-      // const file = new Blob([response], {
-      //   type: 'application/pdf',
-      // });
-      //   const fileURL = URL.createObjectURL(file);
-      //   window.open(fileURL);
     },
     [languageId]
   );

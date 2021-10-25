@@ -7,8 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 import { Divider } from "@material-ui/core";
-import { CircularProgress } from '@material-ui/core';
-import loader from '../../assets/img/loader.gif'
+import LoaderImg from '../LoaderImg';
 
 import useHistoryNavigation from "../../hooks/useHistoryNavigation";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
@@ -56,10 +55,8 @@ const Categories = (props) => {
     </React.Fragment>
   )
 
-
-
   return (
-    loading === true ? <CircularProgress color="primary"/> : allCatergory
+    loading === true ? <LoaderImg /> :  allCatergory 
   );
   
 };

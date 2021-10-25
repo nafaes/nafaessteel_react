@@ -25,10 +25,12 @@ export const trackOrder = async (orderId, userEmail, languageId) => {
 export const getAllOrders = async (userId, languageId) => {
   try {
     const { data } = await axiosInstance.get(`/allorders/${userId}/2/${languageId}`);
+    console.log(userId)
     if (data) {
       return data;
     }
   } catch (error) {
+    console.log(error)
     throw error;
   }
 };
