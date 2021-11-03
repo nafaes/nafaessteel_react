@@ -263,6 +263,9 @@ const SignUp = (props) => {
                     autoComplete="off"
                     onKeyPress={(event) => {
                       limitMaxlength(event, 8);
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
                     }}
                     value={signupForm.mobileNumber.value}
                     error={

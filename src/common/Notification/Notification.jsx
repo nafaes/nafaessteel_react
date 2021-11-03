@@ -14,10 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Notification = (props) => {
-  const {
-    notify: { isOpen, message, type },
-    setNotify,
-  } = props;
+  const { notify: { isOpen, message, type }, setNotify } = props;
   const classes = useStyles();
 
   const [notifyDirection] = useState({

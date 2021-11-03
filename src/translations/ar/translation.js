@@ -61,6 +61,11 @@ export const TRANSLATIONS_AR = {
     CartSummary: "ملخص العربة",
     TotalPrice: "السعر الكلي",
     PlaceOrder: "مكان الامر",
+    ProductDetails: "تفاصيل المنتج",
+    Remove: "يزيل",
+    ShoppingCart: "عربة التسوق",
+    OrderSummary: "ملخص الطلب",
+
   },
   Checkout: {
     Checkout: "الدفع",
@@ -75,7 +80,7 @@ export const TRANSLATIONS_AR = {
     PickupDate: "اختر تاريخا:",
     DeliveryDate: "تاريخ التسليم او الوصول:",
     PaymentOnDelivery: "دفع على تسليم",
-    CheckoutUsingKNET: "الخروج عن طريق كي نت",
+    CheckoutUsingKNET: "ادفع بواسطة كي نت",
     SelectPaymentType: "اختر طريقة الدفع",
     Next: "التالي",
     OrderDetails: "تفاصيل الطلب",

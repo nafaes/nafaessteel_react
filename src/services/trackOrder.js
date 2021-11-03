@@ -2,7 +2,7 @@ import axiosInstance from "../helpers/axiosInstance";
 
 export const getOrderDetails = async (orderId, languageId) => {
   try {
-    const { data } = await axiosInstance.get(`/orderdetails/${orderId}/${languageId}`);
+    const { data } = await axiosInstance().get(`/orderdetails/${orderId}/${languageId}`);
     if (data) {
       return data;
     }
@@ -13,7 +13,7 @@ export const getOrderDetails = async (orderId, languageId) => {
 
 export const trackOrder = async (orderId, userEmail, languageId) => {
   try {
-    const { data } = await axiosInstance.get(`/trackorder/${orderId}/${userEmail}/${languageId}`);
+    const { data } = await axiosInstance().get(`/trackorder/${orderId}/${userEmail}/${languageId}`);
     if (data) {
       return data;
     }
@@ -24,8 +24,9 @@ export const trackOrder = async (orderId, userEmail, languageId) => {
 
 export const getAllOrders = async (userId, languageId) => {
   try {
-    const { data } = await axiosInstance.get(`/allorders/${userId}/2/${languageId}`);
     console.log(userId)
+    const { data } = await axiosInstance().get(`/allorders/${userId}/2/${languageId}`);
+   
     if (data) {
       return data;
     }
@@ -37,7 +38,7 @@ export const getAllOrders = async (userId, languageId) => {
 
 export const downloadPDF = async (orderId, lng) => {
   try {
-    const { data } = await axiosInstance.get(`/print/${orderId}/${lng}`, {
+    const { data } = await axiosInstance().get(`/print/${orderId}/${lng}`, {
       responseType: "blob",
     });
     if (data) {

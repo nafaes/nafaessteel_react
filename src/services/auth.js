@@ -28,7 +28,7 @@ export const logIn = async (email, password) => {
 
 export const signUp = async (newUser, languageId) => {
   try {
-    const { data } = await axiosInstance.post(`/createaccount/${languageId}`, newUser);
+    const { data } = await axiosInstance().post(`/createaccount/${languageId}`, newUser);
     if (data.code === 201) {
       return data;
     }
@@ -43,17 +43,9 @@ export const signUp = async (newUser, languageId) => {
   }
 };
 
-export const getUserDetails = async (emailId, token) => {
+export const getUserDetails = async (emailId) => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_OAUTH_API_URL}/user/${emailId}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axiosInstance().get(`/user/${emailId}`);
     if (response.data.code === 200) {
       return response.data;
     } else {

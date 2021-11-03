@@ -67,7 +67,7 @@ const Checkout = () => {
   } = useContext(CheckoutContext);
 
   return (
-    <Grid item xs={12} sm={12} md={7} lg={7} className={classes.checkoutRoot}>
+    <Grid item xs={12} sm={12} md={6} lg={6} className={classes.checkoutRoot}>
       <AppBar position="static" color="default">
         <Tabs
           value={tabValue}

@@ -7,10 +7,7 @@ const Pickup = ({ deliveryDate }) => {
   const { t } = useTranslation();
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      spacing={1}
+    <Grid container justifyContent="center" spacing={1}
       style={{
         border: "1px solid #0086b3",
         width: "50%",
@@ -19,30 +16,25 @@ const Pickup = ({ deliveryDate }) => {
         verticalAlign: "bottom",
         borderRadius: "1em",
         backgroundColor: "#f2f2f2",
-      }}
-    >
+      }}>
       <Grid item>
         <DateRangeOutlinedIcon style={{ color: "#0086b3" }} />
       </Grid>
-      <Grid
-        item
+      <Grid item
         style={{
           fontSize: "0.95rem",
           fontWeight: "600",
           color: "#333",
-        }}
-      >
+        }}>
         {t("Checkout.PickupDate")}
       </Grid>
       <Divider style={{ width: "80%", backgroundColor: "#0086b3" }} />
-      <Grid
-        item
+      <Grid item
         style={{
           fontSize: "0.95rem",
           fontWeight: "600",
           color: "#333",
-        }}
-      >
+        }}>
         {deliveryDate}
       </Grid>
     </Grid>

@@ -69,7 +69,7 @@ const DesktopCartItems = (props) => {
         >
           <Grid item>
             <Typography variant="h6" >
-              Shopping Cart
+            {t("Cart.ShoppingCart")}
             </Typography>
           </Grid>
           <Grid item>
@@ -84,22 +84,22 @@ const DesktopCartItems = (props) => {
         <Grid container xs={12} lg={12} sm={12} md={12} justifyContent="flex-start">
           <Grid item xs={5} lg={5} sm={5} md={5} >
             <Typography variant="body1" color="textSecondary">
-              Product Details
+            {t("Cart.ProductDetails")}
             </Typography>
           </Grid>
           <Grid item xs={3} lg={3} sm={3} md={3}>
             <Typography variant="body1" color="textSecondary" >
-              Quantity
+            {t("AddToCart.Quantity")}
             </Typography>
           </Grid>
           <Grid item xs={2} lg={2} sm={2} md={2}>
             <Typography variant="body1" color="textSecondary" >
-              price
+            {t("AddToCart.Price")}
             </Typography>
           </Grid>
           <Grid item xs={2} lg={2} sm={2} md={2}>
             <Typography variant="body1" color="textSecondary" >
-              Total
+            {t("Checkout.Total")}
             </Typography>
           </Grid>
         </Grid>
@@ -112,7 +112,7 @@ const DesktopCartItems = (props) => {
                      <img alt={item.itemName} className={classes.orderImage}
                         src={require(`../../../../assets/img/${item.itemImage}`).default} />
                   </Grid>
-                  <Grid item container direction="column" style={{ margin: "0.2em 0px 0px 1em" }}>
+                  <Grid item container direction="column" style={{ margin: "0.2em 1em 0px 1em" }}>
                       <Grid item>
                         <Typography gutterBottom variant="subtitle1" className={classes.textContainer}>
                           {item.itemName}
@@ -135,7 +135,7 @@ const DesktopCartItems = (props) => {
                         <Button style={{ border: "1px solid red", color: "red" , marginTop: "3px" , padding:"2px 3px"}}  
                                 startIcon={<DeleteForeverIcon style={{ color: "#d9534f",marginTop: "0px"}} />} 
                                 onClick={dispatchCartActions.bind(null, removeItem(item.itemId, 0))}>
-                        REMOVE
+                        {t("Cart.Remove")}
                         </Button>
                       </Grid>
                 </Grid>

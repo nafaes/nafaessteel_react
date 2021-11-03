@@ -1,11 +1,10 @@
-import React, { useCallback, useContext, useEffect, useMemo } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Paper from "@material-ui/core/Paper";
 import { Button, Grid, Typography } from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import { useTranslation } from "react-i18next";
 
 import Pickup from "./Pickup";
@@ -30,6 +29,8 @@ export const Shipping = () => {
   } = useContext(CheckoutContext);
   const { t } = useTranslation();
   const classes = checkoutStyles();
+
+  const [errorVisible, setErrorVisible] = useState(false);
 
   const getDeliveryDateByShippingType = useCallback(async () => {
     if (shippingType !== "") {
@@ -59,7 +60,10 @@ export const Shipping = () => {
   }, [shippingType, deliveryDate]);
 
   const nextHandler = useCallback(() => {
-    if (shippingType === "pickup") {
+    if(shippingType === ""){
+      setErrorVisible(true);
+    }
+    else if (shippingType === "pickup") {
       handleTabChange(undefined, 2);
     } else if (shippingType === "delivery" && shippingForm.formIsValid) {
       handleTabChange(undefined, 2);
@@ -91,7 +95,7 @@ export const Shipping = () => {
     <Paper
       elevation={12}
       style={{
-        width: "80%",
+        width: "100%",
         margin: "0px auto",
         padding: "1em 0px 1em 0px",
         borderRadius: "1em",
@@ -116,22 +120,20 @@ export const Shipping = () => {
             label={t("Checkout.Delivery")}
           />
         </RadioGroup>
-
-        {!shippingType && (
-          <FormHelperText
-            error={true}
-            component="h1"
-            style={{ textAlign: "center" }}
-          >
-            <Typography variant="body1">
-              {t("Checkout.SelectDeliveryType")}
-            </Typography>
-          </FormHelperText>
-        )}
+       
       </FormControl>
 
       {renderShippingType}
-
+       
+        {!shippingType && errorVisible &&
+          <Grid container justifyContent="center">
+              <Grid item>
+                <Typography variant="body1" style={{color: "red"}}>
+                  {t("Checkout.SelectDeliveryType")}
+                </Typography>
+              </Grid>
+          </Grid>} 
+       
       <Grid container justifyContent="center">
         <Grid
           item
@@ -141,8 +143,7 @@ export const Shipping = () => {
             width: "50%",
             padding: ".1em 0px",
             background: "rgba(0, 134, 179, 1)",
-          }}
-        >
+          }}>
           <Button
             type="submit"
             size="small"

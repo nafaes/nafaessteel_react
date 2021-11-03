@@ -17,32 +17,46 @@ const OrdersPage = (props) => {
     languageId,
   } = useContext(GlobalContext);
   const [orders, setOrders] = useState([]);
+  const [loading, setIsLoading] = useState(false)
   const [orderDetails, setOrderDetails] = useState({
     allOrders: [],
     totalAmount: 0,
   });
 
   const getOrders = useCallback(async () => {
+    console.log(isAuthenticated,"27")
 
-    try{
       if (location?.state === undefined && isAuthenticated === false) {
         history.push(LANDING);
       }
       if (location?.state && isAuthenticated === false) {
         const { orderId, userEmail } = location.state;
-        const response = await trackOrder(orderId, userEmail, languageId);
-        setOrders(response);
+        try{
+          setIsLoading(true)
+          const response = await trackOrder(orderId, userEmail, languageId);
+          setOrders(response);
+          setIsLoading(false);
+        }
+        catch(error){
+          setIsLoading(false);
+          throw error;
+        }
       }
       if (isAuthenticated) {
-        console.log(isAuthenticated)
-        const response = await getAllOrders(userId, languageId);
-        console.log(response);
-        setOrders(response);
-        
+        console.log(isAuthenticated,"42")
+        try{
+          setIsLoading(true)
+          const response = await getAllOrders(userId, languageId);
+          console.log(response);
+          setOrders(response);
+          setIsLoading(false);
+        }
+        catch(error){
+          setIsLoading(false);
+          throw error;
+        }
       }
-    }catch(error){
-      throw error;
-    }
+   
   }, [languageId, isAuthenticated, userId, location?.state, history]);
 
   useEffect(() => {
@@ -79,6 +93,7 @@ const OrdersPage = (props) => {
       downloadPdf={downloadPdf}
       getOrderDetails={getOrderDetailsHandler}
       orderDetails={orderDetails}
+      loading={loading}
     />
   );
 };

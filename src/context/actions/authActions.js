@@ -48,11 +48,16 @@ export const login = (email, password, dispatch, previousPath = "") => async (on
     dispatch(loginLoading());
     try {
       const response = await logIn(email, password);
-      if (response) {
-        const { userid, name } = await getUserDetails(
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          token: response.access_token,
+          expiresIn: response.expires_in,
           email,
-          response.access_token
-        );
+        })
+      );
+      if (response) {
+        const { userid, name } = await getUserDetails(email);
         dispatch(
           loginSuccess({
             token: response.access_token,
@@ -72,6 +77,7 @@ export const login = (email, password, dispatch, previousPath = "") => async (on
             name,
           })
         );
+        console.log(localStorage.getItem("user"));
         if (previousPath === SIGNIN || previousPath === SIGNUP || previousPath === GUESTTRACKORDER || previousPath === ORDERS) {
           history.push(LANDING);
         } else if (history.location.pathname !== CHECKOUT) {

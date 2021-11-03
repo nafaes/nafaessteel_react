@@ -29,6 +29,9 @@ import {
   MenuList,
   Badge,
   Typography,
+  Fade,
+  ListItemIcon,
+  ListItemText,
 } from "@material-ui/core";
 import { usePopupState, bindHover } from "material-ui-popup-state/hooks";
 import { useTranslation } from "react-i18next";
@@ -38,6 +41,8 @@ import SideDrawer from "./SideDrawer";
 import { allCategoryItems } from "../../constants/data";
 import { GlobalContext } from "../../context/Provider";
 import { userLogout } from "../../context/actions/authActions";
+import LoginIcon from '@material-ui/icons/ExitToApp';
+import LogoutIcon from '@material-ui/icons/Lock';
 import {
   ADDTOCART,
   CART,
@@ -219,6 +224,10 @@ const Navbar = () => {
 
   const popper = (
     <React.Fragment>
+         <ClickAwayListener
+                   onClickAway={handleClose}>
+
+          {/* // onClickAway={(event) => handleClose.bind(null, event)} > */}
       <Popper
         open={openDrop}
         anchorEl={anchorRef.current}
@@ -227,56 +236,48 @@ const Navbar = () => {
         disablePortal
       >
         {({ TransitionProps, placement }) => (
+         
           <Grow
             {...TransitionProps}
             style={{
               transformOrigin:
                 placement === "bottom" ? "center top" : "center bottom",
-            }}
-          >
+            }}>
             <Paper className={clsx(classes.menudrop, classesExternal.menudrop)}>
-              <ClickAwayListener
-                onClickAway={(event) => handleClose.bind(null, event)}
-              >
-                <MenuList
-                  autoFocusItem={openDrop}
-                  id="menu-list-grow"
+              
+                <MenuList autoFocusItem={openDrop} id="menu-list-grow"
                   onKeyDown={handleListKeyDown}
-                  className={clsx(classes.subMenu, classesExternal.subMenu)}
+                  className={clsx(classes.menuPopper, classesExternal.menuPopper)}
                 >
                   {isAuthenticated ? (
                     <MenuItem onClick={logOutHandler}>
-                      {t("Navbar.SignOut")}
+                      <ListItemIcon style={{minWidth: "35px"}}>
+                          <LogoutIcon color="secondary"/>
+                        </ListItemIcon>
+                      <ListItemText>{t("Navbar.SignOut")}</ListItemText>
                     </MenuItem>
                   ) : (
                     [
-                      <MenuItem
-                        key="SignIn"
-                        onClick={handleClose}
-                        component={Link}
+                      <MenuItem key="SignIn" onClick={handleClose} component={Link}
                         to={{
                           pathname: SIGNIN,
                           state: { previousPath: location.pathname },
-                        }}
-                      >
-                        {t("SignIn.InputFields.SignIn")}
+                        }}>
+                          <ListItemIcon style={{minWidth: "35px"}}>
+                            <LoginIcon color="secondary"/>
+                          </ListItemIcon>
+                        <ListItemText>{t("SignIn.InputFields.SignIn")}</ListItemText>
                       </MenuItem>,
-                      <MenuItem
-                        key="SignUp"
-                        onClick={handleClose}
-                        component={Link}
-                        to={SIGNUP}
-                      >
-                        {t("SignIn.InputFields.SignUp")}
-                      </MenuItem>,
+                     
                     ]
                   )}
                 </MenuList>
-              </ClickAwayListener>
             </Paper>
           </Grow>
+             
         )}
       </Popper>
+    </ClickAwayListener>
     </React.Fragment>
   );
 

@@ -149,12 +149,15 @@ const CheckoutPage = () => {
   const [deliveryDate, setDeliveryDate] = useState();
   const [paymentType, setPaymentType] = useState("");
   const [paymentLoading, setPaymentLoading] = useState(false);
+  const [errorVisible, setErrorVisible] = useState(false)
+
 
   const handleUserType = useCallback((event, newvalue) => {
     setUserType(newvalue);
   }, []);
 
   const handleShippingType = useCallback((event, newValue) => {
+    console.log(newValue);
     setShippingType(newValue);
   }, []);
 
@@ -186,6 +189,7 @@ const CheckoutPage = () => {
   const checkoutHandler = useCallback(async () => {
     // Validations
     let isCheckoutValid = true;
+    setErrorVisible(true);
     if (isAuthenticated === false) {
       if (userType === "guest" && guestForm.formIsValid === false) {
         isCheckoutValid = false;
@@ -226,6 +230,7 @@ const CheckoutPage = () => {
       });
     }
 
+   
     if (isCheckoutValid) {
       setPaymentLoading(true);
       // Preparing the data
@@ -281,7 +286,8 @@ const CheckoutPage = () => {
           paymentType: response.paymentmode,
         },
       }, languageId);
-
+   
+   
       // If user selects KNET payment
       if (saveResponse?.url) {
         window.location = saveResponse.url;
@@ -289,6 +295,9 @@ const CheckoutPage = () => {
         window.location = response.paymenturl;
       }
     }
+
+   
+    
   }, [
     languageId,
     isAuthenticated,
@@ -322,6 +331,7 @@ const CheckoutPage = () => {
     setPaymentType,
     checkoutHandler,
     paymentLoading,
+    errorVisible,
   };
 
   return (

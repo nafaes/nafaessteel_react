@@ -98,10 +98,11 @@ const AddToCartPage = (props) => {
     ({ target: { name, value }, ...values }) => {
       let availableQuantity = addToCartForm.availableQuantity
         ? addToCartForm.availableQuantity
-        : 0;
+        : 0;      
+
       let price = addToCartForm.price ? addToCartForm.price : "";
       let unit = addToCartForm.unit ? addToCartForm.unit : "";
-      console.log("AvailableQuantity96",availableQuantity)
+
       let dropdownProperties;
       if (name !== "quantity" && value !== "") {
         const selectedDropdown = item.selections.find(
@@ -110,7 +111,7 @@ const AddToCartPage = (props) => {
         const selectedItem = selectedDropdown?.types.find(
           ({ itemId }) => itemId === value
         );
-
+         
         dropdownProperties = {
           item: selectedItem.item,
           itemId: selectedItem.itemId,
@@ -120,19 +121,21 @@ const AddToCartPage = (props) => {
           unit = selectedDropdown.unit;
           price = selectedItem.price;
           dropdownProperties["price"] = selectedItem.price;
+         
         }
 
         if (selectedItem && selectedItem.hasOwnProperty("availableStock")) {
           availableQuantity = selectedItem.availableStock;
         }
       }
-
-      if (
-        name !== "quantity" &&
-        value === "" &&
-        values.hasOwnProperty("price")
-      ) {
+     
+      if (name !== "quantity" && value === "" && values.hasOwnProperty("price"))
+      {
         unit = "";
+        price = "";
+      }
+
+      if (price === 0){
         price = "";
       }
 
@@ -149,7 +152,6 @@ const AddToCartPage = (props) => {
         unit,
         availableQuantity,
       };
-
       let formIsValid = true;
       for (let inputIdentifier in updatedAddToCartForm) {
         if (typeof updatedAddToCartForm[inputIdentifier] === "object") {
@@ -218,7 +220,7 @@ const AddToCartPage = (props) => {
     else if (addToCartForm.quantity.value <= 0) {
       setNotify({
         isOpen: true,
-        message: `Quantity Should be less than zero`,
+        message: `Quantity Should be greater than zero`,
         type: "error",
       });
       clearForm();

@@ -67,6 +67,12 @@ export const navbarMobCommon = {
         backgroundColor: theme.palette.common.blue,
         color: "white"
       },
+      menuPopper: {
+        "& .MuiListItem-root": {
+          padding: "2px 15px",
+        },
+       
+      },
       subMenu: {
         "&:hover": {
           opacity: 1, 
@@ -80,7 +86,7 @@ export const navbarMobCommon = {
         },
         "& .MuiListItem-root": {
           padding: "8px 30px",
-      },
+        },
         "& .MuiListItem-root.Mui-selected, .MuiListItem-root.Mui-selected:hover":{
           color: "yellow",
         }

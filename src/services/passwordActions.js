@@ -4,7 +4,7 @@ export const forgotPassword = async (userEmail, languageId) => {
   try {
     const {
       data: { code, message },
-    } = await axiosInstance.get(`/forgotpasswordtext/${userEmail}/${languageId}`);
+    } = await axiosInstance().get(`/forgotpasswordtext/${userEmail}/${languageId}`);
     if (code === 200) {
       return message;
     }
@@ -23,7 +23,7 @@ export const resetPassword = async (resetPasswordDetails, languageId) => {
   try {
     const {
       data: { code, message },
-    } = await axiosInstance.post(`/resetpassword/${languageId}`, resetPasswordDetails);
+    } = await axiosInstance().post(`/resetpassword/${languageId}`, resetPasswordDetails);
     if (code === 200) {
       return message;
     }

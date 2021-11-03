@@ -75,6 +75,8 @@ const SignupPage = (props) => {
   });
   const [submit, setSubmit] = useState(false);
 
+  const previousPath = props.location?.state?.previousPath;
+
   const { dispatchAuthActions, languageId } = useContext(GlobalContext);
 
   const conformPasswordHandler = useCallback(
@@ -175,7 +177,8 @@ const SignupPage = (props) => {
             login(
               signupForm.email.value,
               signupForm.password.value,
-              dispatchAuthActions
+              dispatchAuthActions,
+              previousPath
             )((errorMessage) => {
               setNotify({ isOpen: true, message: errorMessage, type: "error" });
             });
@@ -187,7 +190,7 @@ const SignupPage = (props) => {
         setNotify({ isOpen: true, message: err.message, type: "error" });
       }
     }
-  }, [dispatchAuthActions, languageId, signupForm]);
+  }, [dispatchAuthActions, languageId, signupForm,previousPath]);
 
   return (
     <Fragment>

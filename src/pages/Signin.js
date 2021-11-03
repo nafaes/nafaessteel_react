@@ -65,29 +65,26 @@ const SigninPage = (props) => {
     setSigninForm(updatedForm);
   };
 
-  const signinHandler = useCallback(
-    async (event) => {
-      event.preventDefault();
-      if (!signinForm.email.valid || !signinForm.password.valid) {
-        setSigninForm((signinForm) => {
-          let updatedForm = {};
-          for (let inputIdentifier in signinForm) {
-            updatedForm[inputIdentifier] = {
-              ...signinForm[inputIdentifier],
-              touched: true,
-            };
-          }
-          return updatedForm;
-        });
-      }
+  const signinHandler = useCallback(async (event) => {
+    event.preventDefault();
+    if (!signinForm.email.valid || !signinForm.password.valid) {
+      console.log(signinForm.email.valid, "NOTVALID");
+      setSigninForm((signinForm) => {
+        let updatedForm = {};
+        for (let inputIdentifier in signinForm) {
+          updatedForm[inputIdentifier] = {
+            ...signinForm[inputIdentifier],
+            touched: true,
+          };
+        }
+        return updatedForm;
+      });
+    }
 
-      if (signinForm.email.valid && signinForm.password.valid) {
-        login(
-          signinForm.email.value,
-          signinForm.password.value,
-          dispatchAuthActions,
-          previousPath
-        )((errorMessage) => {
+    if (signinForm.email.valid && signinForm.password.valid) {
+      console.log(signinForm.email.valid, "VALID");
+      login(signinForm.email.value, signinForm.password.value, dispatchAuthActions, previousPath)
+        ((errorMessage) => {
           setNotify({ isOpen: true, message: errorMessage, type: "error" });
           setSigninForm((signinForm) => {
             let updatedForm = {};
@@ -102,13 +99,10 @@ const SigninPage = (props) => {
             return updatedForm;
           });
         });
-      }
-    },
+    }
+  },
     [
-      signinForm.email.value,
-      signinForm.email.valid,
-      signinForm.password.value,
-      signinForm.password.valid,
+      signinForm.email.value, signinForm.email.valid, signinForm.password.value, signinForm.password.valid,
       dispatchAuthActions,
       previousPath,
     ]

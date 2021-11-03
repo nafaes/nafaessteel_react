@@ -106,7 +106,7 @@ function getSteps() {
 const TrackOrder = (props) => {
   const { openTrackOrder, handleCloseTrackOrder } = props;
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(1);
+  // const [activeStep, setActiveStep] = React.useState(1);
   const steps = getSteps();
 
   return (

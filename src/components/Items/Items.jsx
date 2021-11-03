@@ -10,8 +10,6 @@ import clsx from "clsx";
 
 import useHistoryNavigation from "../../hooks/useHistoryNavigation";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
-// import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
-
 import LoaderImg from "../LoaderImg";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,27 +30,17 @@ const Items = (props) => {
   const { items , loading } = props;
   const navigate = useHistoryNavigation();
   const classes = useStyles();
-
-  //  const englishMobileStyles = landingMobEng();
   let classesExternal = landingEngDesk;
-  // let classesName = englishMobileStyles;
-  let itemsCart = <LoaderImg/>
-  const itemsGrid = (
-    <Grid container style={{ marginTop: "3em" }}  justifyContent="center" spacing={2}>
-        {items.map((item, index) => (
-          <Grid item lg={3} md={4} sm={6} xs={12} key={index}
-            style={{ columnGap: "12px" }}>
-            <Card raised elevation={12}className={clsx(classes.root, classesExternal.animateCard)}
-              onClick={navigate.bind(null, item)} >
-              <CardHeader
-                title={item.categoryName}
-                titleTypographyProps={{ variant: "h6" }}
-                className={classes.cardStyles}
-              />
+
+   const itemsCart = (
+      <Grid container style={{ marginTop: "3em" }} justifyContent="center" spacing={2}>
+        {items ? items.map((item, index) => (
+          <Grid item lg={3} md={4} sm={6} xs={12} key={index} style={{ columnGap: "12px" }}>
+            <Card raised elevation={12} className={classes.root}  onClick={navigate.bind(null, item)}>
+              <CardHeader title={item.categoryName} titleTypographyProps={{ variant: "h6" }} 
+                        className={classes.cardStyles}/>
               <Divider />
-              <CardMedia
-                component="img"
-                alt="Contemplative Reptile"
+              <CardMedia component="img" alt="Contemplative Reptile"
                 src={require(`../../assets/img/${item.picturePath}`).default}
                 title={item.categoryName}
                 style={{ height: "13em ", width: "13em", margin: "auto" }}
@@ -72,12 +60,13 @@ const Items = (props) => {
               </CardContent>
             </Card>
           </Grid>
-        ))}
+        )) : null}
       </Grid>
-  )
+    );
+
 
   return (
-    loading === true ?  itemsCart : itemsGrid 
+    loading === true ?  <LoaderImg /> : itemsCart 
   );
 };
 

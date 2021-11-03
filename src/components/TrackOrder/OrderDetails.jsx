@@ -7,7 +7,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 const useStyles = makeStyles((theme) => ({
   DialogWidth: {
     " & .MuiDialog-paper": {
-      width: "40%",
+      width: "50%",
     },
   },
   textHeader: {
@@ -15,6 +15,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "600",
   },
 }));
+
+
+function ccyFormat(num) {
+  return `${num.toFixed(3)}`;
+}
+
 
 const OrderDetails = (props) => {
   const { openDialog, orderDetails, handleClose } = props;
@@ -34,14 +40,17 @@ const OrderDetails = (props) => {
         style={{ backgroundColor: "#cccccc", padding: "0.5em",margin: "1px" }}
       >
         <Grid item container direction="row" style={{ textAlign: "center" }}>
-          <Grid item lg={4}>
+          <Grid item lg={3}>
             <Typography variant="h6" className={classes.textHeader}>ITEM</Typography>
           </Grid>
-          <Grid item lg={4}>
+          <Grid item lg={3}>
             <Typography variant="h6" className={classes.textHeader}>QUANTITY</Typography>
           </Grid>
-          <Grid item lg={4}>
-            <Typography variant="h6" className={classes.textHeader}>AMOUNT</Typography>
+          <Grid item lg={3}>
+            <Typography variant="h6" className={classes.textHeader}>PRICE</Typography>
+          </Grid>
+          <Grid item lg={3}>
+            <Typography variant="h6" className={classes.textHeader}>TOTAL</Typography>
           </Grid>
         </Grid>
       </DialogTitle>
@@ -54,14 +63,17 @@ const OrderDetails = (props) => {
                   padding: "0.5em",
                   color: "initial",
                 }}>
-                <Grid item lg={4}>
-                  <Typography variant="subtitle2">{order.itemName}</Typography>
+                <Grid item lg={3}>
+                  <Typography variant="subtitle2"> {order.itemName}</Typography>
                 </Grid>
-                <Grid item lg={4}>
-                  <Typography variant="subtitle2">{order.quantity}</Typography>
+                <Grid item lg={3}>
+                  <Typography variant="subtitle2">{ccyFormat(order.quantity)}</Typography>
                 </Grid>
-                <Grid item lg={4}>
-                  <Typography variant="subtitle2">{order.unitPrice}</Typography>
+                <Grid item lg={3}>
+                  <Typography variant="subtitle2">{ccyFormat(order.unitPrice)}</Typography>
+                </Grid>
+                <Grid item lg={3}>
+                  <Typography variant="subtitle2">{ccyFormat(order.unitPrice)}</Typography>
                 </Grid>
               </Grid>
             ))
@@ -94,7 +106,7 @@ const OrderDetails = (props) => {
               <Typography variant="subtitle2">
                 KWD{" "}
                 {orderDetails.allOrders.length > 0
-                  ? orderDetails.allOrders[0]?.shippingAmount
+                  ? ccyFormat(orderDetails.allOrders[0]?.shippingAmount)
                   : null}
               </Typography>
             </Grid>
@@ -107,8 +119,8 @@ const OrderDetails = (props) => {
             <Grid item lg={6}>
               <Typography variant="subtitle2">
                 KWD{" "}
-                {Number(orderDetails.allOrders[0]?.shippingAmount) +
-                  Number(orderDetails.totalAmount)}
+                {ccyFormat(Number(orderDetails.allOrders[0]?.shippingAmount) +
+                  Number(orderDetails.totalAmount)) }
               </Typography>
             </Grid>
           </Grid>

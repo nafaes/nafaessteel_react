@@ -2,6 +2,7 @@ import axios from "axios";
 
 const axiosInstance = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   let axiosInst;
   if (user) {
     axiosInst = axios.create({
@@ -12,6 +13,7 @@ const axiosInstance = () => {
       },
     });
   } else {
+    console.log("User")
     axiosInst = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
@@ -28,6 +30,7 @@ const axiosInstance = () => {
         resolve(response);
       }),
     async (error) => {
+      console.log(error.response,"error")
       if (!error.response) {
         return new Promise((resolve, reject) => {
           reject(error);
@@ -53,4 +56,4 @@ const axiosInstance = () => {
   return axiosInst;
 };
 
-export default axiosInstance();
+export default axiosInstance;

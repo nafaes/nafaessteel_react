@@ -2,7 +2,7 @@ import axiosInstance from "../helpers/axiosInstance";
 
 export const validateOrder = async (orderDetails, languageId) => {
   try {
-    const { data } = await axiosInstance.post(`/ordervalidation/${languageId}`, orderDetails);
+    const { data } = await axiosInstance().post(`/ordervalidation/${languageId}`, orderDetails);
     if (data.code === 200) {
       return data;
     }

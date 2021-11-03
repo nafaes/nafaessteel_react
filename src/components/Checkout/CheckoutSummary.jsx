@@ -26,13 +26,6 @@ const useStyles = makeStyles({
   // },
 });
 
-// const TableRow = withStyles((theme) => ({
-//     root: {
-//       '&:nth-of-type(odd)': {
-//         backgroundColor: "#f2f2f2",
-//       },
-//     },
-//   }))(TableRow);
 
 function ccyFormat(num) {
   return `${num.toFixed(3)}`;
@@ -47,7 +40,7 @@ const CheckoutSummary = () => {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} sm={12} md={5} lg={5} style={{ marginTop: "1.2em" }}>
+    <Grid item xs={12} sm={12} md={6} lg={6} style={{ marginTop: "1.2em" }}>
       <TableContainer
         component={Paper}
         style={{ height: "32em", overflowY: "auto", clear: "both" }}
@@ -65,7 +58,7 @@ const CheckoutSummary = () => {
                 style={{ fontWeight: "600" }}
               >
                 {/* <Typography variant="h5">Order Summary</Typography> */}
-                {t("Checkout.OrderDetails")}
+                {t("Cart.OrderSummary")}
               </TableCell>
             </TableRow>
             <TableRow>

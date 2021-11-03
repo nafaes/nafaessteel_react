@@ -64,12 +64,13 @@ const checkoutStyles = makeStyles((theme) => ({
   },
 
   paymentRadioBtns: {
-    background: "#0086b3",
+    background: 'linear-gradient(45deg, #0086b3 30%, #51a8c4 90%)',
     color: "#fff",
     padding: "0px .8em",
     borderRadius: "1em",
     marginLeft: ".5em",
   },
+  
 
   checkNextButtonGridItem: {
     margin: "1em auto",
