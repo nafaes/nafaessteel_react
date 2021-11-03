@@ -17,7 +17,7 @@ const BreadcrumbsNavigation = ({ historyItems, breadcrumbNavigation , loading })
     <Grid item container direction="row" justifyContent="space-between"
       style={{
         color: "#fff",
-        background: "rgba(0, 134, 179, 0.8)",
+        background: 'linear-gradient(45deg,  #3397b8 40%,#2b86a6 90%)',  
         padding: ".6em",
         borderRadius: "1em",
         width: "80%",
@@ -36,7 +36,7 @@ const BreadcrumbsNavigation = ({ historyItems, breadcrumbNavigation , loading })
               const last = index === historyItems.length - 1;
               if (last) {
                 return (
-                  <Typography key={item.categoryId} variant="h6">
+                  <Typography key={item.categoryId} style={{fontSize:"1rem"}} variant="h6">
                     {item.name}
                   </Typography>
                 );

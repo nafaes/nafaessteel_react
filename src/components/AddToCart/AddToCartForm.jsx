@@ -78,7 +78,7 @@ const AddToCartForm = (props) => {
 
         <Grid container item xs={12} style={{ marginBottom: 16 }}>
            {addToCartForm.price && (
-             <Grid item xs={6}>
+             <Grid item lg={6} md={6} sm={6} xs={6}>
                 <ButtonGroup variant="contained" color="secondary" disabled aria-label="outlined primary button group">
                   <Button>{`${t("AddToCart.Price")}`}:</Button>
                   <Button>{`${addToCartForm.price}`}</Button>
@@ -86,7 +86,7 @@ const AddToCartForm = (props) => {
              </Grid>
           )}
            {addToCartForm.unit && (
-             <Grid item xs={6}>
+             <Grid item lg={6} md={6} sm={6} xs={6}>
                 <ButtonGroup variant="contained" color="secondary" disabled aria-label="outlined primary button group">
                   <Button>{`${t("AddToCart.Unit")}`}:</Button>
                   <Button>{`${addToCartForm.unit}`}</Button>
@@ -119,7 +119,7 @@ const AddToCartForm = (props) => {
 
         <Grid item container direction="row" justifyContent="center"
           style={{ color: "#fff", marginTop: "1em" }}>
-          <Grid item lg={9} md={9} xs={10}>
+          <Grid item lg={10} md={10} xs={10}>
             <Grid item container
               className={clsx(
                 classes.addCartSubBtnContainer,

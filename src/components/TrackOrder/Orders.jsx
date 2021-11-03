@@ -7,6 +7,8 @@ import TrackOrder from "./TrackOrder";
 
 import EmptyOrders from "./EmptyOrders";
 import LoaderImg from "../LoaderImg";
+import { useTranslation } from "react-i18next";
+
 
 // const imageList = ["iron", "wood", "bricks", "cement"];
 
@@ -45,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Orders = (props) => {
+  const { t } = useTranslation();
+
   const { orders, getOrderDetails, orderDetails, downloadPdf ,loading } = props;
   const [openDialog, setOpenDialog] = useState(false);
   const [openTrackOrder, setOpenTrackOrder] = useState(false);
@@ -85,7 +89,7 @@ const Orders = (props) => {
       <React.Fragment>
         <Grid container direction="row" style={{ marginTop: "3em", backgroundColor: "white" }}>
           <DividerLine>
-            <Chip variant="outlined" color="primary" label="Your Orders"
+            <Chip variant="outlined" color="primary" label= {t("Orders.YourOrders")}
               style={{ padding: "0px 25px", fontSize: "0.85em" }} />
           </DividerLine>
           {orders ? orders.map((order, index) => (
@@ -101,7 +105,7 @@ const Orders = (props) => {
                   <Grid item container direction="column">
                     <Grid item>
                       <Typography variant="h6" className={classes.textHeader}>
-                        ORDER PLACED
+                      {t("Orders.OrderPlaced")}
                       </Typography>
                     </Grid>
                     <Grid item>
@@ -113,7 +117,7 @@ const Orders = (props) => {
                   <Grid item container direction="column">
                     <Grid item>
                       <Typography variant="h6" className={classes.textHeader}>
-                        AMOUNT
+                      {t("PaymentFailed.Amount")}
                       </Typography>
                     </Grid>
                     <Grid item>
@@ -125,7 +129,7 @@ const Orders = (props) => {
                   <Grid item container direction="column">
                     <Grid item>
                       <Typography variant="h6" className={classes.textHeader}>
-                        SHIP TO
+                      {t("Orders.shipTo")}
                       </Typography>
                     </Grid>
                     <Grid item>
@@ -137,7 +141,7 @@ const Orders = (props) => {
                   <Grid item container direction="column">
                     <Grid item>
                       <Typography variant="h6" className={classes.textHeader}>
-                        DELIVERY DATE
+                      {t("Checkout.DeliveryDate")}
                       </Typography>
                     </Grid>
                     <Grid item>
@@ -165,7 +169,7 @@ const Orders = (props) => {
                           backgroundColor: "#0086b3",
                           color: "white",
                         }}>
-                        View Order
+                         {t("Orders.ViewOrder")}
                       </Button>
                     </Grid>
                   </Grid>
@@ -180,7 +184,7 @@ const Orders = (props) => {
                           backgroundColor: "#0086b3",
                           color: "white"
                         }}>
-                        Print
+                        {t("Orders.Print")}
                       </Button>
                     </Grid>
                   </Grid>
@@ -195,7 +199,7 @@ const Orders = (props) => {
                           backgroundColor: "#0086b3",
                           color: "white",
                         }}>
-                        Track Order
+                        {t("Navbar.TrackOrder")}
                       </Button>
                     </Grid>
                   </Grid>

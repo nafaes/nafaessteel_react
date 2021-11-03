@@ -67,6 +67,13 @@ export const TRANSLATIONS_AR = {
     OrderSummary: "ملخص الطلب",
 
   },
+  Orders: {
+    OrderPlaced: "تم الطلب",
+    shipTo: "سافر على متن سفينة ل",
+    ViewOrder: "مشاهدة الطلب",
+    YourOrders: "طلبك",
+    Print:"مطبعة",
+  },
   Checkout: {
     Checkout: "الدفع",
     Shipping: "شحن",

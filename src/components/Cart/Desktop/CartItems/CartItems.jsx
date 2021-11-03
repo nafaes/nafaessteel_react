@@ -55,6 +55,7 @@ const DesktopCartItems = (props) => {
   const { t } = useTranslation();
    
   return (
+    
     <Grid item xs={12} sm={12} md={8} lg={8}>
       <Paper className={classes.paper}>
         <Grid

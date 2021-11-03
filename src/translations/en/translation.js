@@ -66,6 +66,13 @@ export const TRANSLATIONS_EN = {
     ShoppingCart: "ShoppingCart",
     OrderSummary: "Order Summary",
   },
+  Orders:{
+    OrderPlaced: "Order Placed",
+    ShipTo: "Ship To",
+    YourOrders: "Your Orders",
+    ViewOrder: "View Order",
+    Print:"Print",
+  },
   Checkout: {
     Checkout: "Checkout",
     Shipping: "Shipping",

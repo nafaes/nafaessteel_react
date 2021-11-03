@@ -19,6 +19,7 @@ import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
 import { GlobalContext } from "../../context/Provider";
 import { addItem, removeItem } from "../../context/actions/cartActions";
 import { CART } from "../../constants/routes";
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -141,9 +142,28 @@ const ProductSummary = (props) => {
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell align="right">
-                  <Button component={Link} to={CART} variant="contained">
+                <Button
+                  type="submit"
+                  component={Link}
+                  variant="contained"
+                  size="small"
+                  to={CART}
+                  className={clsx(
+                    classes.addCartSubBtn,
+                    classesExternal.addCartSubBtn
+                  )}
+                  // fullWidth
+                  // margin="dense"
+                  style={{ fontSize: ".95rem" }}
+                  startIcon={
+                    <ShoppingCart style={{ fontSize: "1.5rem" }} />
+                  }
+                >
+                  {t("AddToCart.InputFields.GoToCart")}
+                </Button>
+                  {/* <Button component={Link} to={CART} variant="contained">
                     {t("AddToCart.InputFields.GoToCart")}
-                  </Button>
+                  </Button> */}
                 </TableCell>
               </TableRow>
             </TableBody>
