@@ -59,7 +59,6 @@ const Orders = (props) => {
     getOrderDetails(orderId, totalAmount);
   };
   const handleClickOpenTrack = (orderId,activeStep) => {
-  alert(activeStep)
     setActiveState(activeStep);
     setOpenTrackOrder(true);
   };
