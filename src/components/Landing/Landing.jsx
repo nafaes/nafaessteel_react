@@ -9,17 +9,12 @@ import clsx from "clsx";
 import { withRouter } from "react-router-dom";
 import { Divider } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-// import Fab from '@material-ui/core/Fab';
-// import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-// import Zoom from '@material-ui/core/useScrollTrigger';
-// import Box from '@material-ui/core/useScrollTrigger';
-
-
 import Categories from "./Categories";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
 import LoaderImg from "../LoaderImg";
+import { useTranslation } from "react-i18next";
+
 
 const Landing = (props) => {
   const {
@@ -30,6 +25,8 @@ const Landing = (props) => {
   } = props;
 
   const englishMobileStyles = landingMobEng();
+  const { t } = useTranslation();
+
   let classesExternal = landingEngDesk;
   let classes = englishMobileStyles;
   const largeScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
@@ -37,7 +34,7 @@ const Landing = (props) => {
 
   useEffect(() => {
     let timeOut;
-    console.log(contactUs)
+  
     if (state?.message === "from contactus" && contactUs.current) {
       contactUs.current.scrollIntoView({
         behavior: "smooth",
@@ -54,44 +51,7 @@ const Landing = (props) => {
     };
   });
 
-  // function ScrollTop(props) {
-  //   const { children, window } = props;
-  //   // Note that you normally won't need to set the window ref as useScrollTrigger
-  //   // will default to window.
-  //   // This is only being set here because the demo is in an iframe.
-  //   const trigger = useScrollTrigger({
-  //     target: window ? window() : undefined,
-  //     disableHysteresis: true,
-  //     threshold: 100,
-  //   });
-  
-  //   const handleClick = (event) => {
-  //     const anchor = (event.target.ownerDocument || document).querySelector(
-  //       '#back-to-top-anchor',
-  //     );
-  
-  //     if (anchor) {
-  //       anchor.scrollIntoView({
-  //         behavior: 'smooth',
-  //         block: 'center',
-  //       });
-  //     }
-  //   };
-  
-  //   return (
-  //     <Zoom in={trigger}>
-  //       <Box
-  //         onClick={handleClick}
-  //         role="presentation"
-  //         sx={{ position: 'fixed', bottom: 16, right: 16 }}
-  //       >
-  //         {children}
-  //       </Box>
-  //     </Zoom>
-  //   );
-  // }
-
-  const landing = (
+   const landing = (
     <Fragment>
       <Grid container direction="column">
         <Categories allCategories={allCategories} loading={loading} />
@@ -104,7 +64,7 @@ const Landing = (props) => {
                   classes.contactHeader,
                   classesExternal.contactHeader
                 )}>
-                GET IN TOUCH
+                {t("Landing.GetInTouch")}
               </Typography>
             </Grid>
             <Grid item container direction={largeScreen ? "row" : "column"} justifyContent="center" alignItems="center"
@@ -163,8 +123,7 @@ const Landing = (props) => {
                   <Grid item>
                     <Typography variant="h6" gutterBottom
                       className={clsx(classes.info, classesExternal.info)}>
-                      Kuwait, East, Khalid Bin Walid Street, Dhow Tower, 14th
-                      floor
+                      {t("Landing.Address")}
                     </Typography>
                   </Grid>
                 </Grid>

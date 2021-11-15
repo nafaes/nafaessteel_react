@@ -29,7 +29,6 @@ import {
   MenuList,
   Badge,
   Typography,
-  Fade,
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
@@ -50,7 +49,6 @@ import {
   ITEMS,
   ORDERS,
   SIGNIN,
-  SIGNUP,
 } from "../../constants/routes";
 import logo from "../../assets/img/Logo.png";
 import navbarEngDesk from "../../assets/scss/navbar.module.scss";

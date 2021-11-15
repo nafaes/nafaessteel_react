@@ -6,7 +6,7 @@ const theme = createTheme(appTheme());
 export const addTocartMobCommon = {
   ContainerForm: {
     [theme.breakpoints.down("lg")]: {
-      width: "53%",
+      width: "54%",
       padding: "0.50em",
     },
     [theme.breakpoints.down("xs")]: {
@@ -31,6 +31,9 @@ export const addTocartMobCommon = {
     "& .MuiOutlinedInput-input": {
         padding:"15px",
     },
+   "& .MuiFormHelperText-root":{
+    color:"rgba(255,0,0,1)"
+   }
    
   },
 

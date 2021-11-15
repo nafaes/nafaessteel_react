@@ -9,6 +9,10 @@ export const TRANSLATIONS_EN = {
     TrackOrder: "Track Order",
     SignOut: "SignOut",
   },
+  Landing: {
+    GetInTouch: "Get In Touch",
+    Address: "Kuwait, East, Khalid Bin Walid Street, Dhow Tower, 14th floor",
+  },
   SignIn: {
     InputFields: {
       Email: "Email",
@@ -51,6 +55,7 @@ export const TRANSLATIONS_EN = {
     Validations: {
       EnterQuantity: "Quantity Required",
     },
+    Select: "Select",
   },
   Cart: {
     Text1: "Items in your cart",

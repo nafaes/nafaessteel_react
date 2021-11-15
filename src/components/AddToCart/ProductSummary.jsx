@@ -146,7 +146,6 @@ const ProductSummary = (props) => {
                   type="submit"
                   component={Link}
                   variant="contained"
-                  size="small"
                   to={CART}
                   className={clsx(
                     classes.addCartSubBtn,

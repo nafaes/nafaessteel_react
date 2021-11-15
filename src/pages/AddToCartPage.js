@@ -13,6 +13,7 @@ import { ITEMS } from "../constants/routes";
 import { addItem } from "../context/actions/cartActions";
 import { GlobalContext } from "../context/Provider";
 import { getCatergoryItemDetails } from "../services/categories";
+import { useTranslation } from "react-i18next";
 
 const addToCartInitialState = {
   quantity: {
@@ -35,6 +36,7 @@ const AddToCartPage = (props) => {
   const [itemSummary, setItemSummary] = useState();
   const { languageId, dispatchCartActions } = useContext(GlobalContext);
   const [notify, setNotify] = useState({ isOpen: false, message: "", type: "" });
+  const { t } = useTranslation();
 
   const {
     history,
@@ -61,7 +63,7 @@ const AddToCartPage = (props) => {
           const formDropDown = {
             name: dropDown.name,
             value: "",
-            validationMsg: `Select ${dropDown.name}`,
+            validationMsg: `${t("AddToCart.Select")} ${dropDown.name}`,
             valid: false,
             touched: false,
           };
@@ -80,7 +82,7 @@ const AddToCartPage = (props) => {
     {
       setIsLoading(false);
     }
-  }, [languageId, historyItem]);
+  }, [languageId, historyItem,t]);
 
   useEffect(() => {
     if (historyItem) {

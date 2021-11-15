@@ -1,5 +1,5 @@
 import axios from "axios";
-import axiosInstance from "../helpers/axiosInstance";
+import {axiosInstance} from "../helpers/axiosInstance";
 
 export const logIn = async (email, password) => {
   try {
@@ -12,7 +12,7 @@ export const logIn = async (email, password) => {
         "content-type": "application/x-www-form-urlencoded",
       },
     });
-
+    console.log(response);
     if (response?.data?.access_token) {
       return response.data;
     } else {

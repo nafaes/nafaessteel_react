@@ -1,5 +1,6 @@
 export const LANDING = "/";
 export const SIGNIN = "/signin";
+
 export const SIGNUP = "/signup";
 export const FORGOTPASSWORD = "/forgotpassword";
 export const RESETPASSWORD = "/resetpassword/:token/:email";

@@ -68,7 +68,7 @@ const AddToCartForm = (props) => {
               </Select>
               {!addToCartForm[select.name]?.valid &&
               addToCartForm[select.name]?.touched ? (
-                <FormHelperText id="dynamic-select">
+                <FormHelperText id="dynamic-select" style={{color:"rgba(255,0,0,1)"}}>
                   {addToCartForm[select.name].validationMsg}
                 </FormHelperText>
               ) : null}

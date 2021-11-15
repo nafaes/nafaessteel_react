@@ -1,4 +1,4 @@
-import axiosInstance from "../helpers/axiosInstance";
+import {axiosInstance} from "../helpers/axiosInstance";
 
 export const validateOrder = async (orderDetails, languageId) => {
   try {

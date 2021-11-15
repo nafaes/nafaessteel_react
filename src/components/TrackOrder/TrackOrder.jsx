@@ -104,11 +104,10 @@ function getSteps() {
 }
 
 const TrackOrder = (props) => {
-  const { openTrackOrder, handleCloseTrackOrder } = props;
+  const { openTrackOrder, handleCloseTrackOrder, orders,activeState } = props;
   const classes = useStyles();
-  // const [activeStep, setActiveStep] = React.useState(1);
   const steps = getSteps();
-
+ console.log(orders)
   return (
     <Dialog
       open={openTrackOrder}
@@ -131,8 +130,8 @@ const TrackOrder = (props) => {
       </DialogTitle>
       <Divider/>
       <DialogContent style={{ padding: "2px 1px" }}>
-        <Stepper alternativeLabel
-          activeStep={2}
+          <Stepper  alternativeLabel
+          activeStep={activeState}
           connector={<ColorlibConnector />}>
           {steps.map((label) => (
             <Step key={label}>

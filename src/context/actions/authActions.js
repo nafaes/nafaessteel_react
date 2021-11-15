@@ -15,6 +15,8 @@ import {
 } from "../../constants/routes";
 import history from "../../helpers/history";
 
+const CryptoJS = require("crypto-js");
+
 export const loginLoading = () => {
   return {
     type: LOGIN_LOADING,
@@ -48,12 +50,16 @@ export const login = (email, password, dispatch, previousPath = "") => async (on
     dispatch(loginLoading());
     try {
       const response = await logIn(email, password);
-      localStorage.setItem(
-        "user",
+      //ENCRYPT
+      const userPassword = CryptoJS.AES.encrypt(JSON.stringify(password), 'my-secret-key@123').toString();
+      console.log(userPassword);
+
+      localStorage.setItem("user",
         JSON.stringify({
           token: response.access_token,
           expiresIn: response.expires_in,
           email,
+          userPass:userPassword,
         })
       );
       if (response) {
@@ -75,6 +81,7 @@ export const login = (email, password, dispatch, previousPath = "") => async (on
             email,
             userid,
             name,
+            userPassword:userPassword,
           })
         );
         console.log(localStorage.getItem("user"));
@@ -85,6 +92,7 @@ export const login = (email, password, dispatch, previousPath = "") => async (on
         }
       }
     } catch (error) {
+      console.log(error);
       onError(error.message);
       dispatch(loginFailed(error.message));
     }

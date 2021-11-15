@@ -25,7 +25,7 @@ export const footerMobCommon = {
         },
     },
     footerIcons:{
-        fontSize: "2em",
+        fontSize: "1.5em",
         [theme.breakpoints.down("xs")]: {
             fontSize: "1em",
             marginTop: ".3em"

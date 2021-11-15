@@ -9,6 +9,10 @@ export const TRANSLATIONS_AR = {
     TrackOrder: "ترتيب المسار",
     SignOut: "خروج",
   },
+  Landing: {
+    GetInTouch: "ابقى على تواصل",
+    Address: "الكويت، شرق، شارع خالد بن الوليد، برج الداو، الدور الرابع عشر",
+  },
   SignIn: {
     InputFields: {
       Email: "بريد الالكتروني",
@@ -51,6 +55,7 @@ export const TRANSLATIONS_AR = {
     Validations: {
       EnterQuantity: "أدخل الكمية",
     },
+    Select: "يختار",
   },
   Cart: {
     Text1: "الوحدات الموجودة فى سلة التسوق الخاصة بك",
@@ -69,7 +74,7 @@ export const TRANSLATIONS_AR = {
   },
   Orders: {
     OrderPlaced: "تم الطلب",
-    shipTo: "سافر على متن سفينة ل",
+    ShipTo: "سافر على متن سفينة ل",
     ViewOrder: "مشاهدة الطلب",
     YourOrders: "طلبك",
     Print:"مطبعة",

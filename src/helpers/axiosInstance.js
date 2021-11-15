@@ -1,10 +1,18 @@
+// import React, {useContext} from "react";
 import axios from "axios";
+import { logIn } from "../services/auth";
 
-const axiosInstance = () => {
+const CryptoJS = require("crypto-js");
+
+export const axiosInstance = (props) => {
+
   const user = JSON.parse(localStorage.getItem("user"));
   console.log(user);
+
+
   let axiosInst;
   if (user) {
+
     axiosInst = axios.create({
       baseURL: process.env.REACT_APP_OAUTH_API_URL,
       headers: {
@@ -30,17 +38,28 @@ const axiosInstance = () => {
         resolve(response);
       }),
     async (error) => {
-      console.log(error.response,"error")
+      console.log(error.response, "error")
+
+
       if (!error.response) {
         return new Promise((resolve, reject) => {
           reject(error);
         });
       }
-
       if (error.response.status === 401) {
         if (error.response.data.error === "invalid_token") {
-
-          console.log(error.response.data)
+          console.log(error.response.data);
+          const user = JSON.parse(localStorage.getItem("user"));
+          const email = user.email;
+          const encrpytPassword = user.userPassword;
+          const bytes = CryptoJS.AES.decrypt(encrpytPassword, 'my-secret-key@123');
+          const password = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+          const response = await logIn(email, password);
+          console.log(response);
+          user.token = response.access_token;
+          user.expiresIn = response.expires_in;
+          localStorage.setItem('user', JSON.stringify(user));
+          console.log(user);   
           return new Promise((resolve, reject) => {
             reject(error);
           });
@@ -56,4 +75,5 @@ const axiosInstance = () => {
   return axiosInst;
 };
 
-export default axiosInstance;
+
+

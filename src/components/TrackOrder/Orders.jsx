@@ -52,23 +52,23 @@ const Orders = (props) => {
   const { orders, getOrderDetails, orderDetails, downloadPdf ,loading } = props;
   const [openDialog, setOpenDialog] = useState(false);
   const [openTrackOrder, setOpenTrackOrder] = useState(false);
+  const [activeState,setActiveState] = useState(0);
 
   const handleClickOpen = (orderId, totalAmount) => {
     setOpenDialog(true);
     getOrderDetails(orderId, totalAmount);
   };
-  const handleClickOpenTrack = () => {
+  const handleClickOpenTrack = (orderId,activeStep) => {
+  alert(activeStep)
+    setActiveState(activeStep);
     setOpenTrackOrder(true);
   };
   const handleClose = useCallback(() => {
     setOpenDialog(false);
   }, []);
-
-
   const handleCloseTrackOrder = useCallback(() => {
     setOpenTrackOrder(false);
   }, []);
-
 
   const classes = useStyles();
 
@@ -129,7 +129,7 @@ const Orders = (props) => {
                   <Grid item container direction="column">
                     <Grid item>
                       <Typography variant="h6" className={classes.textHeader}>
-                      {t("Orders.shipTo")}
+                      {t("Orders.ShipTo")}
                       </Typography>
                     </Grid>
                     <Grid item>
@@ -191,16 +191,17 @@ const Orders = (props) => {
                   <Divider orientation="vertical" />
                   <Grid item container direction="column" justifyContent="center">
                     <Grid item>
-                      <Button onClick={handleClickOpenTrack}
+                      <Button onClick={handleClickOpenTrack.bind(null,order.exchangeOrderId,order.activeStep)}
                         style={{
                           textTransform: "none",
                           fontWeight: "600",
                           fontSize: "0.93em",
                           backgroundColor: "#0086b3",
                           color: "white",
-                        }}>
+                        }}>                  
                         {t("Navbar.TrackOrder")}
                       </Button>
+                      
                     </Grid>
                   </Grid>
                 </Grid>
@@ -228,8 +229,10 @@ const Orders = (props) => {
         orderDetails={orderDetails}
       />
       <TrackOrder
+        activeState={activeState}
         openTrackOrder={openTrackOrder}
-        handleCloseTrackOrder={handleCloseTrackOrder} />
+        handleCloseTrackOrder={handleCloseTrackOrder}  
+      />
     </Fragment>
   );
 };

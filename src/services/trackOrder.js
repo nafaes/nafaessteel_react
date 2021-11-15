@@ -1,4 +1,4 @@
-import axiosInstance from "../helpers/axiosInstance";
+import {axiosInstance} from "../helpers/axiosInstance";
 
 export const getOrderDetails = async (orderId, languageId) => {
   try {
@@ -10,6 +10,7 @@ export const getOrderDetails = async (orderId, languageId) => {
     throw error;
   }
 };
+
 
 export const trackOrder = async (orderId, userEmail, languageId) => {
   try {
@@ -24,7 +25,7 @@ export const trackOrder = async (orderId, userEmail, languageId) => {
 
 export const getAllOrders = async (userId, languageId) => {
   try {
-    console.log(userId)
+    
     const { data } = await axiosInstance().get(`/allorders/${userId}/2/${languageId}`);
    
     if (data) {
