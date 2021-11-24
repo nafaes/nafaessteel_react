@@ -9,7 +9,7 @@ import "../src/translations/i18n";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <Router history={history}>
+  <Router history={history} basename="{IRON}">
     <GlobalProvider>
       <Layout />
     </GlobalProvider>

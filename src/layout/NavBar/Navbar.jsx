@@ -50,7 +50,7 @@ import {
   ORDERS,
   SIGNIN,
 } from "../../constants/routes";
-import logo from "../../assets/img/Logo.png";
+import logo from "../../assets/img/Nafaeslogonew.png";
 import navbarEngDesk from "../../assets/scss/navbar.module.scss";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
 

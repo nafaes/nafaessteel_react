@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import Grid from "@material-ui/core/Grid";
-import logoIcon from "../../assets/img/Logo.png";
+import logoIcon from "../../assets/img/Nafaeslogonew.png";
 import Facebook from "@material-ui/icons/Facebook";
 import Twitter from "@material-ui/icons/Twitter";
 import Instagram from "@material-ui/icons/Instagram";
@@ -36,7 +36,7 @@ const Footer = (props) => {
             <Grid item>
               <p className={clsx(classes.footerTxt, classesExternal.footerTxt)}>
                 {" "}
-                © 2020 nafaesgate.com <br />
+                © 2021 nafaessteel.com <br />
                 All copy rights are reserved.
               </p>
             </Grid>

@@ -36,7 +36,7 @@ const Items = (props) => {
       <Grid container style={{ marginTop: "3em" }} justifyContent="center" spacing={2}>
         {items ? items.map((item, index) => (
           <Grid item lg={3} md={4} sm={6} xs={12} key={index} style={{ columnGap: "12px" }}>
-            <Card raised elevation={12} className={classes.root}  onClick={navigate.bind(null, item)}>
+            <Card raised elevation={12} className={clsx(classes.root, classesExternal.animateCard)}  onClick={navigate.bind(null, item)}>
               <CardHeader title={item.categoryName} titleTypographyProps={{ variant: "h6" }} 
                         className={classes.cardStyles}/>
               <Divider />
@@ -44,7 +44,7 @@ const Items = (props) => {
                 src={require(`../../assets/img/${item.picturePath}`).default}
                 title={item.categoryName}
                 style={{ height: "13em ", width: "13em", margin: "auto" }}
-                className={clsx(classes.ironsCard, classesExternal.ironsCard)}
+               
               />
               <Divider />
               <CardContent
