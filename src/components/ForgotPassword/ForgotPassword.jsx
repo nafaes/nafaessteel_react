@@ -14,13 +14,12 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#fff",
+    backgroundColor: "#f2f2f2",
     borderRadius: "20px",
-    width: "60%",
+    width: "30%",
     maxWidth: "calc(100% + 16px)",
     margin: "3rem auto 0 auto",
     paddingTop: "20px",
-
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
@@ -32,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     borderRadius: "16px",
     width: "100%",
-    padding: "2rem",
   },
   wrapper: {
     margin: theme.spacing(1),

@@ -19,9 +19,10 @@ export const signinMobCommon = {
       height: "22em",
       borderLeft: "none",
     },
-    height: "26em",
+    // height: "26em",
     borderLeft: "1px solid  rgba(0, 134, 179,0.7)",
     borderLeftStyle: "dotted",
+    // backgroundImage: 'url("assets/img/Login-illustration.svg")',
   },
   loginImage: {
     [theme.breakpoints.down("xs")]: {

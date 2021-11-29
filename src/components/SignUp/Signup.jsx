@@ -34,7 +34,7 @@ const SignUp = (props) => {
   const englishMobileStyles = signupEngMobile(userCheckoutStyles)();
   let classesExternal = signupEngDesk;
   let classes = englishMobileStyles;
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = useCallback(() => {
     setShowPassword(!showPassword);
@@ -59,6 +59,12 @@ const SignUp = (props) => {
               lg={6}
               justifyContent="center"
               alignItems="center"
+              style={{
+                background:
+                  "linear-gradient(to bottom, #9199a1 0%, #e3e6e8 80%)",
+                borderTopLeftRadius: "5%",
+                borderBottomLeftRadius: "5%",
+              }}
             >
               <Grid item>
                 <img
@@ -83,6 +89,12 @@ const SignUp = (props) => {
               classes.signupContainForm,
               classesExternal.signupContainForm
             )}
+            style={{
+              background: "linear-gradient(to bottom,#f1f2f3 40%, #c8ccd0 80%)",
+              borderTopRightRadius: "5%",
+              borderBottomRightRadius: "5%",
+              padding: "1.2em 0px",
+            }}
           >
             <form>
               <Grid>
