@@ -16,9 +16,9 @@ import checkoutStyles from "../../assets/jss/viewStyles/checkout/checkout";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#fff",
+    backgroundColor: "#f2f2f2",
     borderRadius: "16px",
-    width: "60%",
+    width: "30%",
     maxWidth: "calc(100% + 16px)",
     margin: "3rem auto 0 auto",
     paddingTop: "20px",
@@ -129,7 +129,7 @@ const GuestTrackOrder = (props) => {
           />
         </Grid>
 
-        <Grid item lg={12} md={12} xs={12}>
+        <Grid item>
           <Button
             variant="contained"
             color="primary"

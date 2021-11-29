@@ -15,11 +15,10 @@ export const appTheme = (direction) => {
       secondary: {
         main: `${arcGrey}`,
       },
-      action:{
+      action: {
         disabledBackground: "white",
-        disabled: "black"
-
-      }
+        disabled: "black",
+      },
     },
     typography: {
       tab: {
@@ -27,6 +26,7 @@ export const appTheme = (direction) => {
         fontWeight: 100,
         fontSize: "1rem",
         color: "white",
+        opacity: 1,
       },
     },
   };
