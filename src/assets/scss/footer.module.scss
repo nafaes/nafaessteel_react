@@ -1,30 +1,29 @@
-
 .footerContainer {
-    // background-color: "blue";
-    width: 100%;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 1302, // to do not drawer-menu overlapping by footer
+  // background-color: "blue";
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  // z-index: 1302, // to do not drawer-menu overlapping by footer
 }
 .footerlogo {
-    width: 6em;
-    vertical-align: bottom;
-    padding: .50em;
-    padding-left: 0.5em;
+  width: 6em;
+  vertical-align: bottom;
+  padding: 0.5em;
+  padding-left: 0.5em;
 }
 .footerTxt {
-    font-size: 2em;
-    padding-left: 2em;
-    color: white;
+  font-size: 2em;
+  padding-left: 2em;
+  color: white;
 }
 
 .footerIconsContainer {
-    text-align: right;
+  text-align: right;
 }
-.footerIcons{
-    // font-size: 3rem;
-    padding: 0px;
-    margin: 0px;
+.footerIcons {
+  // font-size: 3rem;
+  padding: 0px;
+  margin: 0px;
 }
