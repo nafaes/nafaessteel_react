@@ -34,7 +34,7 @@ const SignUp = (props) => {
   const englishMobileStyles = signupEngMobile(userCheckoutStyles)();
   let classesExternal = signupEngDesk;
   let classes = englishMobileStyles;
-
+  
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = useCallback(() => {
     setShowPassword(!showPassword);

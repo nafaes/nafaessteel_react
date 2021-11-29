@@ -296,7 +296,7 @@ const Navbar = () => {
   return (
     <Fragment>
       <ElevationScroll>
-        <AppBar
+        <AppBar style={{backgroundColor: "rgb(145, 153 ,161)"}}
           position="fixed"
           className={matchesXs ? classes.appbar : "undefined"}
         >

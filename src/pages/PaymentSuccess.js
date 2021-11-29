@@ -29,16 +29,13 @@ const PaymentSuccess = () => {
   }, [dispatchCartActions]);
 
   return (
-    <Grid container style={{ margin: "5em auto", width: "45%" }}>
+    <Grid container style={{ margin: "5em auto", width: "45%", backgroundColor:"white"}}> 
       <Grid item container justifyContent="center">
         <Grid item>
           <img src={paySuccess} alt="bg" className={classes.avatar} />
         </Grid>
       </Grid>
-      <Grid
-        container
-        direction="column"
-        justifyContent="center"
+      <Grid container direction="column" justifyContent="center"
         style={{
           color: "white",
           borderRadius: "5px",
@@ -47,28 +44,21 @@ const PaymentSuccess = () => {
         }}
       >
         <Grid item>
-          <Typography
-            variant="h6"
-            color="textPrimary"
-            style={{ color: "#0086af" }}
-          >
+          <Typography variant="h6" color="textPrimary"
+            style={{ color: "#0086af" }}>
             Payment Successfull!!
           </Typography>
         </Grid>
         <Grid item>
           <Typography
-            variant="h6"
-            color="textPrimary"
-            style={{ fontSize: "1.05rem", marginTop: "0.5em" }}
-          >
+            variant="h6" color="textPrimary"
+            style={{ fontSize: "1.05rem", marginTop: "0.5em" }}>
             We are processing your request and you will notified via email.
           </Typography>
         </Grid>
       </Grid>
-      <Grid container style={{ width: "75%", margin: "0px 4em" }}>
-        <Grid
-          item
-          container
+      <Grid container style={{margin: "0px 4em 4em " }}>
+        <Grid item container
           style={{
             padding: "0.5em",
             marginTop: "2em",
@@ -76,11 +66,8 @@ const PaymentSuccess = () => {
           }}
         >
           <Grid item lg={6}>
-            <Typography
-              variant="h6"
-              color="textPrimary"
-              style={{ fontSize: "1.15rem" }}
-            >
+            <Typography variant="h6" color="textPrimary"
+              style={{ fontSize: "1.15rem" }}>
               {t("PaymentFailed.PaymentId")}
             </Typography>
           </Grid>
@@ -90,20 +77,15 @@ const PaymentSuccess = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid
-          item
-          container
+        <Grid item container
           style={{
             padding: "0.5em",
             backgroundColor: "rgba(211, 211, 211,0.7)",
           }}
         >
           <Grid item lg={6}>
-            <Typography
-              variant="h6"
-              color="textPrimary"
-              style={{ fontSize: "1.15rem" }}
-            >
+            <Typography variant="h6" color="textPrimary"
+              style={{ fontSize: "1.15rem" }}>
               {t("PaymentSuccess.OrderId")}
             </Typography>
           </Grid>
@@ -113,20 +95,14 @@ const PaymentSuccess = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid
-          item
-          container
+        <Grid item container
           style={{
             padding: "0.5em",
             backgroundColor: "rgba(211, 211, 211,0.9)",
-          }}
-        >
+          }}>
           <Grid item lg={6}>
-            <Typography
-              variant="h6"
-              color="textPrimary"
-              style={{ fontSize: "1.15rem" }}
-            >
+            <Typography  variant="h6" color="textPrimary"
+              style={{ fontSize: "1.15rem" }}>
               {t("PaymentSuccess.OrderDate")}
             </Typography>
           </Grid>
@@ -136,20 +112,15 @@ const PaymentSuccess = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid
-          item
-          container
+        <Grid item  container
           style={{
             padding: "0.5em",
             backgroundColor: "rgba(211, 211, 211,0.7)",
           }}
         >
           <Grid item lg={6}>
-            <Typography
-              variant="h6"
-              color="textPrimary"
-              style={{ fontSize: "1.15rem" }}
-            >
+            <Typography variant="h6" color="textPrimary"
+              style={{ fontSize: "1.15rem" }}>
               {t("PaymentSuccess.PaymentType")}
             </Typography>
           </Grid>
@@ -160,21 +131,14 @@ const PaymentSuccess = () => {
           </Grid>
         </Grid>
         {paymentType !== "NOTAPPLICABLE" ? (
-          <Grid
-            item
-            container
+          <Grid item container
             style={{
               padding: "0.5em",
               backgroundColor: "rgba(211, 211, 211,0.9)",
-            }}
-          >
+            }}>
             <Grid item lg={6}>
-              <Typography
-                component="h4"
-                variant="h6"
-                color="textPrimary"
-                style={{ fontSize: "1.15rem" }}
-              >
+              <Typography component="h4" variant="h6" color="textPrimary"
+                style={{ fontSize: "1.15rem" }}>
                 {t("PaymentSuccess.TrackId")}
               </Typography>
             </Grid>

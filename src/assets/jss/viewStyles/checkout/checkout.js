@@ -62,6 +62,13 @@ const checkoutStyles = makeStyles((theme) => ({
       height: "8px",
     },
   },
+  inputStyle: {
+  width: "1.5rem !important",
+  height: "1.5rem",
+  fontSize: "0.85rem",
+  borderRadius: "4px",
+  border: "0.8px solid rgba(0, 0, 0, 1)",
+ },
 
   paymentRadioBtns: {
     background: 'linear-gradient(45deg, #0086b3 30%, #51a8c4 90%)',

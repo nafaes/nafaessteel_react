@@ -3,6 +3,7 @@ import {
   LOGIN_LOADING,
   LOGIN_SUCCESS,
   LOGOUT_USER,
+  ACCOUNT_VERIFY,
 } from "../../constants/actionTypes/authConstants";
 
 export const authReducer = (state, { type, payload }) => {
@@ -23,6 +24,7 @@ export const authReducer = (state, { type, payload }) => {
         userEmail: payload.email,
         token: payload.token,
         expiresIn: payload.expiresIn,
+        isVerified: payload.isverified
       };
 
     case LOGIN_FAILED:
@@ -32,6 +34,13 @@ export const authReducer = (state, { type, payload }) => {
         errorMessage: payload.message,
       };
 
+    case ACCOUNT_VERIFY:
+        return {
+          ...state,
+          loading: false,
+          errorMessage: "",
+    };
+  
     case LOGOUT_USER:
       return {
         loading: false,

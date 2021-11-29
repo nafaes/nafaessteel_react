@@ -35,6 +35,17 @@ export const getPaymentURL = async (paymentDetails, languageId) => {
   }
 };
 
+export const getOtp = async (email, languageId) => {
+  try {
+    const { data } = await axiosInstance().get(`/paymentdelivaryotp/${email}/${languageId}` );
+    if (data.code === 200) {
+      return data;  
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const saveOrder = async (orderDetails, languageId) => {
   try {
     const { data } = await axiosInstance().post(`/saveorder/${languageId}`, orderDetails);

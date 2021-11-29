@@ -1,5 +1,6 @@
 import { getUserDetails, logIn } from "../../services/auth";
 import {
+  ACCOUNT_VERIFY,
   LOGIN_FAILED,
   LOGIN_LOADING,
   LOGIN_SUCCESS,
@@ -39,6 +40,13 @@ export const loginFailed = (message) => {
   };
 };
 
+export const accountVerify = (message) => {
+  return {
+    type: ACCOUNT_VERIFY,
+    payload: message,
+  };
+};
+
 export const userLogout = () => {
   localStorage.removeItem("user");
   return {
@@ -50,47 +58,63 @@ export const login = (email, password, dispatch, previousPath = "") => async (on
     dispatch(loginLoading());
     try {
       const response = await logIn(email, password);
-      //ENCRYPT
-      const userPassword = CryptoJS.AES.encrypt(JSON.stringify(password), 'my-secret-key@123').toString();
-      console.log(userPassword);
+      console.log(response,"loginDetails")
+    
+      if (response.isverified === false){
+         
+          onError("Account Is not verified");
+          dispatch(accountVerify("Account Is not verified"));
+      }
 
-      localStorage.setItem("user",
-        JSON.stringify({
-          token: response.access_token,
-          expiresIn: response.expires_in,
-          email,
-          userPass:userPassword,
-        })
-      );
-      if (response) {
-        const { userid, name } = await getUserDetails(email);
-        dispatch(
-          loginSuccess({
-            token: response.access_token,
-            expiresIn: response.expires_in,
-            email,
-            userid,
-            name,
-          })
-        );
-        localStorage.setItem(
-          "user",
+      else{
+
+        const userPassword = CryptoJS.AES.encrypt(JSON.stringify(password), 'my-secret-key@123').toString();
+        console.log(userPassword);
+  
+        localStorage.setItem("user",
           JSON.stringify({
             token: response.access_token,
             expiresIn: response.expires_in,
             email,
-            userid,
-            name,
-            userPassword:userPassword,
+            userPass:userPassword,
+            isVerified: response.isverified,
           })
         );
-        console.log(localStorage.getItem("user"));
-        if (previousPath === SIGNIN || previousPath === SIGNUP || previousPath === GUESTTRACKORDER || previousPath === ORDERS) {
-          history.push(LANDING);
-        } else if (history.location.pathname !== CHECKOUT) {
-          history.goBack();
+        
+        if (response) {
+          const { userid, name } = await getUserDetails(email);
+          dispatch(
+            loginSuccess({
+              token: response.access_token,
+              expiresIn: response.expires_in,
+              email,
+              userid,
+              name,
+              isVerified: response.isverified,
+            })
+          );
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              token: response.access_token,
+              expiresIn: response.expires_in,
+              email,
+              userid,
+              name,
+              userPassword:userPassword,
+              isVerified: response.isverified,
+            })
+          );
+        
+          if (previousPath === SIGNIN || previousPath === SIGNUP || previousPath === GUESTTRACKORDER || previousPath === ORDERS) {
+            history.push(LANDING);
+          } else if (history.location.pathname !== CHECKOUT) {
+            history.goBack();
+          }
         }
       }
+      //ENCRYPT
+     
     } catch (error) {
       console.log(error);
       onError(error.message);

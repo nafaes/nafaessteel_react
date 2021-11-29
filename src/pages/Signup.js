@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useContext, useState } from "react";
+import React, { Fragment, useCallback, useContext, useEffect, useState } from "react";
 
 import SignUp from "../components/SignUp/Signup";
 import { signUp } from "../services/auth";
@@ -74,11 +74,11 @@ const SignupPage = (props) => {
     type: "",
   });
   const [submit, setSubmit] = useState(false);
-
   const previousPath = props.location?.state?.previousPath;
 
   const { dispatchAuthActions, languageId } = useContext(GlobalContext);
 
+  
   const conformPasswordHandler = useCallback(
     ({ target: { value, name } }) => {
       let valid = true;

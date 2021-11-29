@@ -9,7 +9,7 @@ import React, {
 
 import CheckoutContainer from "../components/Checkout/CheckoutContainer";
 import { GlobalContext } from "../context/Provider";
-import { getPaymentURL, saveOrder } from "../services/checkout";
+import { getOtp, getPaymentURL, saveOrder } from "../services/checkout";
 
 const CHECKOUT = "CHECKOUT";
 const SHIPPING = "SHIPPING";
@@ -128,6 +128,16 @@ export const shippingFormInitialState = {
   formIsValid: false,
 };
 
+ const otpFormState = {
+  otp: {
+    value: "",
+    valid: true,
+    validationMsg: "Please enter OTP",
+  },
+  formIsValid: false,
+};
+
+
 export const CheckoutContext = createContext();
 
 const CheckoutPage = () => {
@@ -149,8 +159,10 @@ const CheckoutPage = () => {
   const [deliveryDate, setDeliveryDate] = useState();
   const [paymentType, setPaymentType] = useState("");
   const [paymentLoading, setPaymentLoading] = useState(false);
-  const [errorVisible, setErrorVisible] = useState(false)
-
+  const [errorVisible, setErrorVisible] = useState(false);
+  // const [OtpValid, setOtpValid] = useState('');
+ 
+  // const [nameTouched, setNameTouched] = useState(false);
 
   const handleUserType = useCallback((event, newvalue) => {
     setUserType(newvalue);
@@ -230,8 +242,10 @@ const CheckoutPage = () => {
       });
     }
 
-   
+    
+
     if (isCheckoutValid) {
+      console.log(isCheckoutValid)
       setPaymentLoading(true);
       // Preparing the data
       let userDetails;
@@ -270,12 +284,16 @@ const CheckoutPage = () => {
         };
       });
 
+      let totalShipping = totalAmount + shippingForm.shippingCharges.value
+      console.log(totalShipping)
+
       const response = await getPaymentURL({
-        amount: totalAmount,
+        amount: totalShipping,
         lng: "EN",
         email: userDetails.email,
         paymentType: paymentType,
-      }, languageId);
+      }, languageId); 
+
 
       const saveResponse = await saveOrder({
         user: userDetails,
@@ -284,10 +302,10 @@ const CheckoutPage = () => {
         payment: {
           referenceNo: response.referenceno,
           paymentType: response.paymentmode,
+          // otp: Otpform.otp.value,
         },
       }, languageId);
-   
-   
+      
       // If user selects KNET payment
       if (saveResponse?.url) {
         window.location = saveResponse.url;
@@ -332,6 +350,8 @@ const CheckoutPage = () => {
     checkoutHandler,
     paymentLoading,
     errorVisible,
+    // Otpform,
+    // setOtpform,
   };
 
   return (

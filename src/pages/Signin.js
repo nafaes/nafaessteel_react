@@ -1,10 +1,10 @@
-import React, { Fragment, useCallback, useContext, useState } from "react";
+import React, { Fragment, useCallback, useContext, useEffect, useState } from "react";
 
 import SignIn from "../components/SignIn/Signin";
 import Notification from "../common/Notification/Notification";
 import { checkValidity } from "../utils/validations";
 import { GlobalContext } from "../context/Provider";
-import { login } from "../context/actions/authActions";
+import { accountVerify, login } from "../context/actions/authActions";
 
 const signinFormInitialState = {
   email: {
@@ -35,10 +35,9 @@ const signinFormInitialState = {
 const SigninPage = (props) => {
   const {
     dispatchAuthActions,
-    userState: { loading: loginLoading },
+    userState: { loading: loginLoading},
   } = useContext(GlobalContext);
   const previousPath = props.location?.state?.previousPath;
-
   const [signinForm, setSigninForm] = useState(signinFormInitialState);
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -65,8 +64,10 @@ const SigninPage = (props) => {
     setSigninForm(updatedForm);
   };
 
+ 
   const signinHandler = useCallback(async (event) => {
     event.preventDefault();
+  
     if (!signinForm.email.valid || !signinForm.password.valid) {
       console.log(signinForm.email.valid, "NOTVALID");
       setSigninForm((signinForm) => {
@@ -81,12 +82,14 @@ const SigninPage = (props) => {
       });
     }
 
+
     if (signinForm.email.valid && signinForm.password.valid) {
-      console.log(signinForm.email.valid, "VALID");
+      console.log(signinForm.email.valid, "VALID");   
       login(signinForm.email.value, signinForm.password.value, dispatchAuthActions, previousPath)
+           
         ((errorMessage) => {
           setNotify({ isOpen: true, message: errorMessage, type: "error" });
-          setSigninForm((signinForm) => {
+            setSigninForm((signinForm) => {
             let updatedForm = {};
             for (let inputIdentifier in signinForm) {
               updatedForm[inputIdentifier] = {
@@ -99,7 +102,8 @@ const SigninPage = (props) => {
             return updatedForm;
           });
         });
-    }
+    } 
+
   },
     [
       signinForm.email.value, signinForm.email.valid, signinForm.password.value, signinForm.password.valid,

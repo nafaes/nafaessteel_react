@@ -4,12 +4,12 @@ export const landingMobCommon = {
         padding: "25px 0px"
       },
       contactContainer: {
-        background: "linear-gradient(90deg, rgba(0, 134, 179,.7), rgba(0, 134, 179,.7))",
+        background: "linear-gradient(90deg, rgba(103, 128, 148,.8), rgba(103, 128, 148,.8))",
          marginBottom: "3em",
          borderRadius: "2em",
       },
       aboutContainer: {
-        background: "linear-gradient(90deg, rgba(0, 134, 179,.7), rgba(0, 134, 179,.7))",
+        background: "linear-gradient(90deg, rgba(103, 128, 148,.8), rgba(103, 128, 148,.8))",
         marginBottom: "6em",
         borderRadius: "2em",
       },

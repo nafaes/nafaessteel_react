@@ -16,9 +16,8 @@ export const appTheme = (direction) => {
         main: `${arcGrey}`,
       },
       action:{
-        disabledBackground: "white",
+        disabledBackground: "lightGray",
         disabled: "black"
-
       }
     },
     typography: {
