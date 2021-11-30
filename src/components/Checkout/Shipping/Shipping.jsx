@@ -60,6 +60,7 @@ export const Shipping = () => {
   }, [shippingType, deliveryDate]);
 
   const nextHandler = useCallback(() => {
+    console.log(shippingForm.formIsValid,"nextClicked")
     if(shippingType === ""){
       setErrorVisible(true);
     }

@@ -7,6 +7,7 @@ import {
   Button,
   CircularProgress,
   Grid,
+  TextField,
   Typography,
   
 } from "@material-ui/core";
@@ -22,7 +23,7 @@ import { GlobalContext } from "../../../context/Provider";
 
 
 export const Payment = (props) => {
-  const { checkoutHandler, paymentType, setPaymentType, paymentLoading, errorVisible,Otpform } = useContext(CheckoutContext);
+  const { checkoutHandler, paymentType, setPaymentType, paymentLoading, errorVisible,otpForm,setOtpForm ,errorMessage} = useContext(CheckoutContext);
   const { languageId, userState: { userEmail }} = useContext(GlobalContext);
   const { t } = useTranslation();
   const classes = checkoutStyles();
@@ -32,32 +33,41 @@ export const Payment = (props) => {
   const handlePaymentType = async(event, newValue) => {
     console.log(newValue);
     setPaymentType(newValue);
-    // const otpVerify = await getOtp(userEmail,languageId);
-    // setOtpVerify(otpVerify);
+    if (newValue === "PAYMENTONDELIVERY") {
+      const otpVerify = await getOtp(userEmail,languageId);
+      setOtpVerify(otpVerify);
+    }
+   
   };
-
-  const otpChange = (OTP) => {
-      setOTP(OTP);
-  };
+  const otpFormChangeHandler = ({ target: { value, name } }) => {
+    let updatedForm = {
+      ...otpForm,
+      [name]: {
+        ...otpForm[name],
+        value: value,
+      },
+    };
+   
+    let formIsValid = true;
+    for (let inputIdentifier in updatedForm) {
+      if (typeof updatedForm[inputIdentifier] === "object") {
+        formIsValid = updatedForm[inputIdentifier].value !== "" && formIsValid;
+      }
+    }
+    setOtpForm({ ...updatedForm, formIsValid });
+    
+  }
   
    return (
     <Paper
       elevation={12}
-      style={{
-        width: "100%",
-        margin: "0px auto",
-        padding: "1em 0px 1em 0px",
-        borderRadius: "1em",
-      }}
-    >
+      style={{width: "100%", margin: "0px auto",padding: "1em 0px 1em 0px",borderRadius: "1em"}}>
       <FormControl component="fieldset" fullWidth={true}>
-        <RadioGroup
-          aria-label=""
+        <RadioGroup aria-label=""
           name="customized-radios"
           className={classes.radioContainer}
           value={paymentType}
-          onChange={handlePaymentType}
-        >
+          onChange={handlePaymentType}>
           <FormControlLabel
             value="PAYMENTONDELIVERY"
             control={<RadioButton/>}
@@ -83,35 +93,30 @@ export const Payment = (props) => {
               </Grid>
           </Grid>} 
       
-      {/* {paymentType === "PAYMENTONDELIVERY" && 
+      {paymentType === "PAYMENTONDELIVERY" && 
           (<Grid item container style={{display: "block"}}>
               <Grid item style={{textAlign: "center"}}>
-                <Typography variant="body1" style={{fontSize:"0.85rem",margin: "1em 0px 0px"}}> */}
-                    {/* {`${OtpVerify.message}`} */}
-                {/* </Typography>
-              </Grid>
-              <Grid item style={{width:"25%",margin: "0px auto",padding:"0.8em 0 0.3em"}}>
-                  <OtpInput value={OTP}
-                  onChange={otpChange}
-                  inputStyle={classes.inputStyle}
-                  numInputs={5} */}
-                
-                  {/* separator={<span>-</span>} {...props} />
-              </Grid>
-          </Grid>
-      )}  */}
-
-       {/* {Otpform.formIsValid === true && errorVisible &&
-       <Grid container justifyContent="center">
-              <Grid item>
-                <Typography variant="body1" style={{color: "red"}}>
-                {t(Otpform.otp.validationMsg)}
+                <Typography variant="body1" style={{fontSize:"0.85rem",margin: "1em 0px 0px"}}> 
+                    {`${OtpVerify.message}`}
                 </Typography>
               </Grid>
+              <Grid item className={classes.otpInput}>  
+              
+                 <TextField variant="standard" name="otp"
+                    onChange={otpFormChangeHandler}
+                    value={otpForm.otp.value ? otpForm.otp.value : ""}
+                    error={errorMessage ? errorMessage : !otpForm.otp.valid && otpForm.otp.value === ""}
+                    helperText={
+                      errorMessage ? errorMessage : 
+                      !otpForm.otp.valid && otpForm.otp.value === ""
+                        ? t(otpForm.otp.validationMsg)
+                        : null
+                    }  
+                   
+                 />
+              </Grid>
           </Grid>
-        }  */}
-  
-
+      )} 
       <Grid container justifyContent="center">
         <Grid
           item

@@ -62,6 +62,13 @@ const checkoutStyles = makeStyles((theme) => ({
       height: "8px",
     },
   },
+  otpInput:{
+    width: "20%",
+    margin:"0px auto",
+    "& .MuiInputBase-input":{
+      textAlign:"center",
+    }
+  },
   inputStyle: {
   width: "1.5rem !important",
   height: "1.5rem",

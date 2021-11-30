@@ -67,7 +67,9 @@ const Delivery = ({ deliveryDate }) => {
         formIsValid = updatedForm[inputIdentifier].value !== "" && formIsValid;
       }
     }
-    setShippingForm({ ...updatedForm, formIsValid });
+    setShippingForm({ ...updatedForm, formIsValid});
+    console.log(updatedForm);
+   
   };
 
   return (

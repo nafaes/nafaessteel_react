@@ -128,7 +128,7 @@ export const shippingFormInitialState = {
   formIsValid: false,
 };
 
- const otpFormState = {
+export const otpFormState = {
   otp: {
     value: "",
     valid: true,
@@ -155,14 +155,14 @@ const CheckoutPage = () => {
   const [userType, setUserType] = useState("guest");
   const [guestForm, setGuestForm] = useState(guestFormInitialState);
   const [shippingForm, setShippingForm] = useState(shippingFormInitialState);
+  const [otpForm, setOtpForm] = useState(otpFormState);
   const [shippingType, setShippingType] = useState("");
   const [deliveryDate, setDeliveryDate] = useState();
   const [paymentType, setPaymentType] = useState("");
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
-  // const [OtpValid, setOtpValid] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
  
-  // const [nameTouched, setNameTouched] = useState(false);
 
   const handleUserType = useCallback((event, newvalue) => {
     setUserType(newvalue);
@@ -223,14 +223,14 @@ const CheckoutPage = () => {
         isCheckoutValid = false;
       }
     }
-
+    // console.log(shippingForm,"shippingForm")
     if (shippingType === "delivery" && shippingForm.formIsValid === false) {
       isCheckoutValid = false;
       setPaymentLoading(false);
       setTabValue(1);
-      setShippingForm((previousShippingForm) => {
+      setShippingForm((previousShippingForm) => {      
         let updatedForm = { formIsValid: false };
-        for (let inputIdentifier in previousShippingForm) {
+        for (let inputIdentifier in previousShippingForm) {      
           if (typeof previousShippingForm[inputIdentifier] === "object") {
             updatedForm[inputIdentifier] = {
               ...previousShippingForm[inputIdentifier],
@@ -240,9 +240,25 @@ const CheckoutPage = () => {
         }
         return updatedForm;
       });
+    }    
+    console.log(otpForm,"otpForm")
+    if (paymentType === "PAYMENTONDELIVERY" && otpForm.formIsValid === false) {
+      isCheckoutValid = false;
+      setPaymentLoading(false);
+      setOtpForm((previousOtpForm) => {          
+        let updatedForm = { formIsValid: false };
+        for (let inputIdentifier in previousOtpForm) {      
+          if (typeof previousOtpForm[inputIdentifier] === "object") {        
+            updatedForm[inputIdentifier] = {
+              ...previousOtpForm[inputIdentifier],
+              valid: false,            
+            };
+          }
+        }
+        return updatedForm;
+      });
     }
-
-    
+  
 
     if (isCheckoutValid) {
       console.log(isCheckoutValid)
@@ -287,6 +303,9 @@ const CheckoutPage = () => {
       let totalShipping = totalAmount + shippingForm.shippingCharges.value
       console.log(totalShipping)
 
+
+      console.log(otpForm.otp.value,"line312")
+
       const response = await getPaymentURL({
         amount: totalShipping,
         lng: "EN",
@@ -294,17 +313,31 @@ const CheckoutPage = () => {
         paymentType: paymentType,
       }, languageId); 
 
+     
+      let saveResponse; 
 
-      const saveResponse = await saveOrder({
-        user: userDetails,
-        shipping,
-        items,
-        payment: {
-          referenceNo: response.referenceno,
-          paymentType: response.paymentmode,
-          // otp: Otpform.otp.value,
-        },
-      }, languageId);
+      try{
+        saveResponse = await saveOrder({
+          user: userDetails,
+          shipping,
+          items,
+          payment: {
+            referenceNo: response.referenceno,
+            paymentType: response.paymentmode,
+            otp: otpForm.otp.value,
+          },
+        }, languageId);
+      }
+      catch(error){
+          if (error.response) {
+          const { code, message } = error.response.data;
+          if (code === 417) {
+            setErrorMessage(message);
+            console.log(message);
+            throw error;
+          }
+        }
+      }
       
       // If user selects KNET payment
       if (saveResponse?.url) {
@@ -322,6 +355,7 @@ const CheckoutPage = () => {
     cartItems,
     guestForm,
     shippingForm,
+    otpForm,
     userType,
     shippingType,
     userEmail,
@@ -350,8 +384,9 @@ const CheckoutPage = () => {
     checkoutHandler,
     paymentLoading,
     errorVisible,
-    // Otpform,
-    // setOtpform,
+    otpForm,
+    setOtpForm,
+    errorMessage,
   };
 
   return (
