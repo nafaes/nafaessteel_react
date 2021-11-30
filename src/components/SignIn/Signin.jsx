@@ -51,7 +51,18 @@ const SignIn = (props) => {
       className={clsx(classes.formContainer, classesExternal.formContainer)}
     >
       {isDisplayImage ? (
-        <Grid item container lg={6} justifyContent="center" alignItems="center">
+        <Grid
+          item
+          container
+          lg={6}
+          justifyContent="center"
+          alignItems="center"
+          style={{
+            background: "linear-gradient(to bottom, #9199a1 0%, #e3e6e8 80%)",
+            borderTopLeftRadius: "5%",
+            borderBottomLeftRadius: "5%",
+          }}
+        >
           <Grid item>
             <img
               src={login}
@@ -73,6 +84,11 @@ const SignIn = (props) => {
           classes.loginContainForm,
           classesExternal.loginContainForm
         )}
+        style={{
+          background: "linear-gradient(to bottom,#f1f2f3 10%, #c8ccd0 100%)",
+          borderTopRightRadius: "5%",
+          borderBottomRightRadius: "5%",
+        }}
       >
         <form onSubmit={signinHandler} noValidate>
           <Grid>
@@ -104,7 +120,8 @@ const SignIn = (props) => {
                 helperText={
                   !signinForm.email.valid && signinForm.email.touched
                     ? t(signinForm.email.validation.validationMsg.msg, {
-                        length: signinForm.email.validation.validationMsg.length,
+                        length:
+                          signinForm.email.validation.validationMsg.length,
                       })
                     : null
                 }
@@ -150,11 +167,14 @@ const SignIn = (props) => {
                 name="password"
                 onChange={formChangeHandler}
                 value={signinForm.password.value}
-                error={!signinForm.password.valid && signinForm.password.touched}
+                error={
+                  !signinForm.password.valid && signinForm.password.touched
+                }
                 helperText={
                   !signinForm.password.valid && signinForm.password.touched
                     ? t(signinForm.password.validation.validationMsg.msg, {
-                        length: signinForm.password.validation.validationMsg.length,
+                        length:
+                          signinForm.password.validation.validationMsg.length,
                       })
                     : null
                 }

@@ -1,7 +1,7 @@
-@use '../sass/partials/forward-file' as filePaths;
+@use "../sass/partials/forward-file" as filePaths;
 
-.formContainer{
-    @extend %userContainer;
+.formContainer {
+  @extend %userContainer;
 }
 // .loginContainForm {
 //     // height: 26em;
@@ -11,12 +11,34 @@
 //     //  height: 18em;
 //     // @extend %userContainForm;
 // }
-.loginImage{
-    @extend %loginImage;
+.loginImage {
+  @extend %loginImage;
 }
-.formBtn{
-    @extend %userBtn;
+.formBtn {
+  @extend %userBtn;
 }
-.formTextfield{
-    @extend %userTextfield;
+.formTextfield {
+  @extend %userTextfield;
 }
+// .loginContainForm {
+//   background: url("../img//Login-illustration.svg");
+// }
+// .loginContainForm {
+//   position: relative;
+//   //   height: 100vh;
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+// .loginContainForm::before {
+//   background: url("../img/login_background.jpg");
+//   content: "";
+//   background-size: cover;
+//   position: absolute;
+//   top: 0px;
+//   right: 0px;
+//   bottom: 0px;
+//   left: 0px;
+//   opacity: 0.75;
+// }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -7,12 +7,19 @@ import SettingsIcon from "@material-ui/icons/AddShoppingCart";
 import GroupAddIcon from "@material-ui/icons/LocalShipping";
 import StepConnector from "@material-ui/core/StepConnector";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
 import clsx from "clsx";
 
-
-import { Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, Typography } from '@material-ui/core';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   DialogWidth: {
@@ -84,7 +91,7 @@ function ColorlibStepIcon(props) {
     1: <SettingsIcon />,
     2: <GroupAddIcon />,
     3: <DirectionsRunIcon />,
-    4: <CheckCircleIcon />
+    4: <CheckCircleIcon />,
   };
 
   return (
@@ -104,10 +111,10 @@ function getSteps() {
 }
 
 const TrackOrder = (props) => {
-  const { openTrackOrder, handleCloseTrackOrder, orders,activeState } = props;
+  const { openTrackOrder, handleCloseTrackOrder, orders, activeState } = props;
   const classes = useStyles();
   const steps = getSteps();
- console.log(orders)
+  console.log(orders);
   return (
     <Dialog
       open={openTrackOrder}
@@ -115,34 +122,53 @@ const TrackOrder = (props) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       disableScrollLock={true}
-      className={classes.DialogWidth}>
-      <DialogTitle className={classes.DialogHeader}>
+      className={classes.DialogWidth}
+    >
+      <DialogTitle
+        className={classes.DialogHeader}
+        style={{
+          backgroundColor: "#cccccc",
+          padding: "0.1em",
+          borderBottom: "1px solid #bfbfbf",
+        }}
+      >
         <Grid item container direction="row" justifyContent="space-between">
-          <Grid item lg={4} style={{padding: "8px 1em"}}>
-            <Typography variant="h6" className={classes.textHeader}>Track Item</Typography>
+          <Grid
+            item
+            lg={4}
+            style={{ padding: "1px 1em", position: "relative", top: "0.3rem" }}
+          >
+            <Typography variant="h6" className={classes.textHeader}>
+              Track Item
+            </Typography>
           </Grid>
-          <Grid item >
-              <IconButton onClick={handleCloseTrackOrder}>
-                <CloseIcon/>
+          <Grid item>
+            <IconButton
+              onClick={handleCloseTrackOrder}
+              style={{ padding: "0px" }}
+            >
+              <CloseIcon />
             </IconButton>
           </Grid>
         </Grid>
       </DialogTitle>
-      <Divider/>
+      <Divider />
       <DialogContent style={{ padding: "2px 1px" }}>
-          <Stepper  alternativeLabel
+        <Stepper
+          alternativeLabel
           activeStep={activeState}
-          connector={<ColorlibConnector />}>
+          connector={<ColorlibConnector />}
+        >
           {steps.map((label) => (
             <Step key={label}>
-              <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+              <StepLabel StepIconComponent={ColorlibStepIcon}>
+                {label}
+              </StepLabel>
             </Step>
           ))}
-        </Stepper> 
+        </Stepper>
       </DialogContent>
     </Dialog>
- 
-  )
-
-}
+  );
+};
 export default TrackOrder;

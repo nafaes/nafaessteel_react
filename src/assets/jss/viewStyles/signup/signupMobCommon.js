@@ -15,10 +15,10 @@ export const signupMobCommon = {
     [theme.breakpoints.down("xs")]: {
       borderTop: "1px solid  rgba(0, 134, 179,0.7) ",
       borderTopStyle: "dotted",
-      height: "22em",
+      // height: "22em",
       borderLeft: "none",
     },
-    height: "38em",
+    // height: "18em",
     borderLeft: "1px solid  rgba(0, 134, 179,0.7)",
     borderLeftStyle: "dotted",
   },
