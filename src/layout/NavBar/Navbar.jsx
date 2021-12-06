@@ -164,6 +164,7 @@ const Navbar = () => {
 
   const logOutHandler = useCallback(
     (event) => {
+      console.log("userLogout");
       handleClose(event);
       dispatchAuthActions(userLogout());
     },
@@ -296,7 +297,7 @@ const Navbar = () => {
   return (
     <Fragment>
       <ElevationScroll>
-        <AppBar style={{backgroundColor: "rgb(145, 153 ,161)"}}
+        <AppBar
           position="fixed"
           className={matchesXs ? classes.appbar : "undefined"}
         >

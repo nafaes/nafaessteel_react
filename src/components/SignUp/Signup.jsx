@@ -28,9 +28,10 @@ const SignUp = (props) => {
     signupHandler,
     isDisplayImage,
     userCheckoutStyles,
-    submit,
+    submit,   
   } = props;
   const { t } = useTranslation();
+ 
   const englishMobileStyles = signupEngMobile(userCheckoutStyles)();
   let classesExternal = signupEngDesk;
   let classes = englishMobileStyles;
@@ -45,8 +46,8 @@ const SignUp = (props) => {
   }, []);
 
   return (
-    <Fragment>
       <Fragment>
+       
         <Grid
           container
           direction="row"
@@ -314,6 +315,7 @@ const SignUp = (props) => {
                       color="primary"
                       variant="contained"
                       onClick={signupHandler.bind(null)}
+                      // onClick={signupHandler.bind(null) && gotSuccess === true ? handleClickOpen.bind(null) : null}
                       disabled={!signupForm.formIsValid || submit}
                       style={{
                         fontSize: "0.95rem",
@@ -343,8 +345,7 @@ const SignUp = (props) => {
               </Grid>
             </form>
           </Grid>
-        </Grid>
-      </Fragment>
+        </Grid>   
     </Fragment>
   );
 };

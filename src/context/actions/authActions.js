@@ -1,3 +1,5 @@
+import { matchPath } from "react-router";
+
 import { getUserDetails, logIn } from "../../services/auth";
 import {
   ACCOUNT_VERIFY,
@@ -7,6 +9,7 @@ import {
   LOGOUT_USER,
 } from "../../constants/actionTypes/authConstants";
 import {
+
   CHECKOUT,
   GUESTTRACKORDER,
   LANDING,
@@ -48,7 +51,17 @@ export const accountVerify = (message) => {
 };
 
 export const userLogout = () => {
+  console.log("removeUser")
   localStorage.removeItem("user");
+  if(matchPath(history.location.pathname, {
+    path: CHECKOUT,
+    exact: true,
+  })) {
+    history.push(CHECKOUT[1])
+  }
+
+  // history.push(LANDING)
+
   return {
     type: LOGOUT_USER,
   };
@@ -60,8 +73,7 @@ export const login = (email, password, dispatch, previousPath = "") => async (on
       const response = await logIn(email, password);
       console.log(response,"loginDetails")
     
-      if (response.isverified === false){
-         
+      if (response.isverified === false){   
           onError("Account Is not verified");
           dispatch(accountVerify("Account Is not verified"));
       }
@@ -105,18 +117,18 @@ export const login = (email, password, dispatch, previousPath = "") => async (on
               isVerified: response.isverified,
             })
           );
-        
-          if (previousPath === SIGNIN || previousPath === SIGNUP || previousPath === GUESTTRACKORDER || previousPath === ORDERS) {
+          console.log(previousPath)
+          console.log(history.location.pathname)
+          if (previousPath === SIGNIN || previousPath === SIGNUP || previousPath === GUESTTRACKORDER || previousPath === ORDERS || previousPath === "" ) {
+            console.log(previousPath,"110")
             history.push(LANDING);
           } else if (history.location.pathname !== CHECKOUT) {
             history.goBack();
           }
+        
         }
       }
-      //ENCRYPT
-     
     } catch (error) {
-      console.log(error);
       onError(error.message);
       dispatch(loginFailed(error.message));
     }
@@ -128,6 +140,10 @@ export const authCheckState = (dispatch) => {
     if (user) {
       const userDetails = JSON.parse(user);
       dispatch(loginSuccess(userDetails));
+    } else if(matchPath(history.location.pathname, {
+      path: CHECKOUT,
+      exact: true})) {
+      return;
     } else {
       dispatch(userLogout());
     }

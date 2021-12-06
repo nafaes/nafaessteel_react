@@ -47,7 +47,7 @@ const CartPage = ({ history }) => {
         setOpenDialog(true);
         setValidationItems(response.items);
       } else if (response.code === 200) {
-        history.push(CHECKOUT);
+        history.push(CHECKOUT[1]);
       }
     } catch (err) {
       setNotify({ isOpen: true, message: err.message, type: "error" });

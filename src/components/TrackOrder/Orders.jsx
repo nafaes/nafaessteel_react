@@ -105,184 +105,184 @@ const Orders = (props) => {
           </DividerLine>
           {orders
             ? orders.map((order, index) => (
+              <Grid
+                key={order.exchangeOrderId}
+                item
+                container
+                style={{
+                  margin: "0em auto 1.5em",
+                  width: "98%",
+                }}
+              >
                 <Grid
-                  key={order.exchangeOrderId}
                   item
                   container
                   style={{
-                    margin: "0em auto 1.5em",
-                    width: "98%",
+                    backgroundColor: "#f2f2f2",
+                    padding: "1em",
+                    borderRadius: "0.8em",
                   }}
                 >
                   <Grid
                     item
                     container
-                    style={{
-                      backgroundColor: "#f2f2f2",
-                      padding: "1em",
-                      borderRadius: "0.8em",
-                    }}
+                    direction="row"
+                    lg={6}
+                    style={{ flexWrap: "nowrap", textAlign: "center" }}
+                  >
+                    <Grid item container direction="column">
+                      <Grid item>
+                        <Typography
+                          variant="h6"
+                          className={classes.textHeader}
+                        >
+                          {t("Orders.OrderPlaced")}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="subtitle2">
+                          {order.orderDate}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid item container direction="column">
+                      <Grid item>
+                        <Typography
+                          variant="h6"
+                          className={classes.textHeader}
+                        >
+                          {t("PaymentFailed.Amount")}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="subtitle2">
+                          {order.amount}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid item container direction="column">
+                      <Grid item>
+                        <Typography
+                          variant="h6"
+                          className={classes.textHeader}
+                        >
+                          {t("Orders.ShipTo")}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="subtitle2">
+                          {order.customerName}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid item container direction="column">
+                      <Grid item>
+                        <Typography
+                          variant="h6"
+                          className={classes.textHeader}
+                        >
+                          {t("Checkout.DeliveryDate")}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="subtitle2">
+                          {order.deliveryDate}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    direction="row"
+                    lg={2}
+                    style={{ flexWrap: "nowrap" }}
+                  ></Grid>
+                  <Grid
+                    item
+                    container
+                    direction="row"
+                    lg={4}
+                    style={{ flexWrap: "nowrap", textAlign: "center" }}
                   >
                     <Grid
                       item
                       container
-                      direction="row"
-                      lg={6}
-                      style={{ flexWrap: "nowrap", textAlign: "center" }}
+                      direction="column"
+                      justifyContent="center"
                     >
-                      <Grid item container direction="column">
-                        <Grid item>
-                          <Typography
-                            variant="h6"
-                            className={classes.textHeader}
-                          >
-                            {t("Orders.OrderPlaced")}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="subtitle2">
-                            {order.orderDate}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Grid item container direction="column">
-                        <Grid item>
-                          <Typography
-                            variant="h6"
-                            className={classes.textHeader}
-                          >
-                            {t("PaymentFailed.Amount")}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="subtitle2">
-                            {order.amount}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Grid item container direction="column">
-                        <Grid item>
-                          <Typography
-                            variant="h6"
-                            className={classes.textHeader}
-                          >
-                            {t("Orders.ShipTo")}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="subtitle2">
-                            {order.customerName}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Grid item container direction="column">
-                        <Grid item>
-                          <Typography
-                            variant="h6"
-                            className={classes.textHeader}
-                          >
-                            {t("Checkout.DeliveryDate")}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="subtitle2">
-                            {order.deliveryDate}
-                          </Typography>
-                        </Grid>
+                      <Grid item>
+                        <Button
+                          variant="text"
+                          onClick={handleClickOpen.bind(
+                            null,
+                            order.exchangeOrderId,
+                            order.amount
+                          )}
+                          style={{
+                            textTransform: "none",
+                            fontWeight: "600",
+                            fontSize: "0.85em",
+                            backgroundColor: "#0086b3",
+                            color: "white",
+                          }}
+                        >
+                          {t("Orders.ViewOrder")}
+                        </Button>
                       </Grid>
                     </Grid>
+                    <Divider orientation="vertical" />
                     <Grid
                       item
                       container
-                      direction="row"
-                      lg={2}
-                      style={{ flexWrap: "nowrap" }}
-                    ></Grid>
-                    <Grid
-                      item
-                      container
-                      direction="row"
-                      lg={4}
-                      style={{ flexWrap: "nowrap", textAlign: "center" }}
+                      direction="column"
+                      justifyContent="center"
                     >
-                      <Grid
-                        item
-                        container
-                        direction="column"
-                        justifyContent="center"
-                      >
-                        <Grid item>
-                          <Button
-                            variant="text"
-                            onClick={handleClickOpen.bind(
-                              null,
-                              order.exchangeOrderId,
-                              order.amount
-                            )}
-                            style={{
-                              textTransform: "none",
-                              fontWeight: "600",
-                              fontSize: "0.85em",
-                              backgroundColor: "#0086b3",
-                              color: "white",
-                            }}
-                          >
-                            {t("Orders.ViewOrder")}
-                          </Button>
-                        </Grid>
+                      <Grid item>
+                        <Button
+                          onClick={() => downloadPdf(order.exchangeOrderId)}
+                          style={{
+                            textTransform: "none",
+                            fontWeight: "600",
+                            fontSize: "0.85em",
+                            backgroundColor: "#0086b3",
+                            color: "white",
+                          }}
+                        >
+                          {t("Orders.Print")}
+                        </Button>
                       </Grid>
-                      <Divider orientation="vertical" />
-                      <Grid
-                        item
-                        container
-                        direction="column"
-                        justifyContent="center"
-                      >
-                        <Grid item>
-                          <Button
-                            onClick={() => downloadPdf(order.exchangeOrderId)}
-                            style={{
-                              textTransform: "none",
-                              fontWeight: "600",
-                              fontSize: "0.85em",
-                              backgroundColor: "#0086b3",
-                              color: "white",
-                            }}
-                          >
-                            {t("Orders.Print")}
-                          </Button>
-                        </Grid>
-                      </Grid>
-                      <Divider orientation="vertical" />
-                      <Grid
-                        item
-                        container
-                        direction="column"
-                        justifyContent="center"
-                      >
-                        <Grid item>
-                          <Button
-                            onClick={handleClickOpenTrack.bind(
-                              null,
-                              order.exchangeOrderId,
-                              order.activeStep
-                            )}
-                            style={{
-                              textTransform: "none",
-                              fontWeight: "600",
-                              fontSize: "0.85em",
-                              backgroundColor: "#0086b3",
-                              color: "white",
-                            }}
-                          >
-                            {t("Navbar.TrackOrder")}
-                          </Button>
-                        </Grid>
+                    </Grid>
+                    <Divider orientation="vertical" />
+                    <Grid
+                      item
+                      container
+                      direction="column"
+                      justifyContent="center"
+                    >
+                      <Grid item>
+                        <Button
+                          onClick={handleClickOpenTrack.bind(
+                            null,
+                            order.exchangeOrderId,
+                            order.activeStep
+                          )}
+                          style={{
+                            textTransform: "none",
+                            fontWeight: "600",
+                            fontSize: "0.85em",
+                            backgroundColor: "#0086b3",
+                            color: "white",
+                          }}
+                        >
+                          {t("Navbar.TrackOrder")}
+                        </Button>
                       </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-              ))
+              </Grid>
+            ))
             : null}
         </Grid>
       </React.Fragment>

@@ -5,7 +5,7 @@ const theme = createTheme(appTheme());
 
 export const footerMobCommon = {
     footerContainer:{
-         backgroundColor: "rgb(145, 153 ,161)",
+         backgroundColor: "#0086b3",
      },
      footerlogo:{
         width: "5em",

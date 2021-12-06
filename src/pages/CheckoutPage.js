@@ -6,10 +6,15 @@ import React, {
   useReducer,
   useState,
 } from "react";
+import { useParams } from "react-router";
+
 
 import CheckoutContainer from "../components/Checkout/CheckoutContainer";
 import { GlobalContext } from "../context/Provider";
-import { getOtp, getPaymentURL, saveOrder } from "../services/checkout";
+import {  getPaymentURL, saveOrder } from "../services/checkout";
+import { login } from "../context/actions/authActions";
+import { updateAccount } from "../services/auth";
+
 
 const CHECKOUT = "CHECKOUT";
 const SHIPPING = "SHIPPING";
@@ -140,9 +145,10 @@ export const otpFormState = {
 
 export const CheckoutContext = createContext();
 
-const CheckoutPage = () => {
+const CheckoutPage = (props) => {
   const {
     languageId,
+    dispatchAuthActions,
     userState: { isAuthenticated, userEmail },
     cartState: { items: cartItems, totalAmount },
   } = useContext(GlobalContext);
@@ -162,7 +168,10 @@ const CheckoutPage = () => {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
- 
+  
+  const pathArray = window.location.pathname.split( '/' );
+  const screenName = pathArray[pathArray.length -1]
+  const { email, id = 0 } = useParams();
 
   const handleUserType = useCallback((event, newvalue) => {
     setUserType(newvalue);
@@ -189,14 +198,20 @@ const CheckoutPage = () => {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated){   
       dispatchCheckoutProcess({ type: LOGIN });
       setTabValue(1);
-    } else {
+    } else if(screenName === "1") {
+      dispatchCheckoutProcess({ type: LOGIN });
+      updateAccount(email);
+      login(email,"Mattluru7#",dispatchAuthActions, window.location.pathname)
+      ((errorMessage) => {console.log(errorMessage)});
+      setTabValue(1);
+    }else{
       dispatchCheckoutProcess({ type: LOGOUT });
       setTabValue(0);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated,email, screenName,dispatchAuthActions]);
 
   const checkoutHandler = useCallback(async () => {
     // Validations
@@ -387,6 +402,8 @@ const CheckoutPage = () => {
     otpForm,
     setOtpForm,
     errorMessage,
+  
+   
   };
 
   return (
