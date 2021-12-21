@@ -50,7 +50,7 @@ export const navbarMobCommon = {
         textAlign: "left",
     
         "& .MuiMenu-paper":{
-          backgroundColor: theme.palette.common.blue,
+          backgroundColor: "#0086b3 !important",
           color: "white",
           borderRadius: "0px",
           marginRight: "10px",
@@ -64,7 +64,7 @@ export const navbarMobCommon = {
         }
       },
       menudrop:{
-        backgroundColor: theme.palette.common.blue,
+        backgroundColor:"#0086b3 !important",
         color: "white"
       },
       menuPopper: {
@@ -78,7 +78,7 @@ export const navbarMobCommon = {
           opacity: 1, 
         },
         "& .MuiMenu-paper":{
-          backgroundColor: theme.palette.common.blue,
+          backgroundColor: "#0086b3 !important",
           color: "white",
           borderRadius: "0px",
           marginLeft: "1px",

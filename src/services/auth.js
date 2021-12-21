@@ -43,6 +43,16 @@ export const signUp = async (newUser, languageId) => {
   }
 };
 
+export const updateAccount = async (email) => {
+  try{
+    const response = await axiosInstance().post(`/updateaccountverification/${email}`);
+    console.log(response);
+  }
+  catch(error){
+    throw error;
+  }
+}
+
 export const getUserDetails = async (emailId) => {
   try {
     const response = await axiosInstance().get(`/user/${emailId}`);

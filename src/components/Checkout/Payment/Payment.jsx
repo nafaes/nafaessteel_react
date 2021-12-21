@@ -3,6 +3,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Paper from "@material-ui/core/Paper";
+import { limitMaxlength } from "../../../utils/validations";
+
 import {
   Button,
   CircularProgress,
@@ -13,8 +15,6 @@ import {
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import PaymentIcon from '@material-ui/icons/Payment';
-import OtpInput from 'react-otp-input';
-
 import { CheckoutContext } from "../../../pages/CheckoutPage";
 import checkoutStyles from "../../../assets/jss/viewStyles/checkout/checkout";
 import RadioButton from "../../../common/RadioButton/RadioButton";
@@ -27,7 +27,6 @@ export const Payment = (props) => {
   const { languageId, userState: { userEmail }} = useContext(GlobalContext);
   const { t } = useTranslation();
   const classes = checkoutStyles();
-  const [OTP, setOTP] = useState("");
   const [OtpVerify, setOtpVerify] = useState([])
  
   const handlePaymentType = async(event, newValue) => {
@@ -103,6 +102,11 @@ export const Payment = (props) => {
               <Grid item className={classes.otpInput}>  
               
                  <TextField variant="standard" name="otp"
+                 type="number"
+                 onKeyPress={(event) => {
+                  limitMaxlength(event, 5);
+                
+                }}
                     onChange={otpFormChangeHandler}
                     value={otpForm.otp.value ? otpForm.otp.value : ""}
                     error={errorMessage ? errorMessage : !otpForm.otp.valid && otpForm.otp.value === ""}
@@ -150,9 +154,9 @@ export const Payment = (props) => {
             >
               {t("Checkout.Pay")}
             </Button>
-            {/* {paymentType !== "" ? paymentLoading && (
+            {paymentType !== "" ? paymentLoading && (
               <CircularProgress size={28} className={classes.buttonProgress} />
-            ):null} */}
+            ):null}
           </div>
         </Grid>
       </Grid>

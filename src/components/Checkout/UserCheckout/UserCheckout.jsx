@@ -16,12 +16,12 @@ import SignupPage from "../../../pages/Signup";
 import { CheckoutContext } from "../../../pages/CheckoutPage";
 
 const UserCheckout = () => {
-  const { handleTabChange, guestForm, setGuestForm, userType, handleUserType } = useContext(CheckoutContext);
+  const { handleTabChange, guestForm, setGuestForm, userType, handleUserType} = useContext(CheckoutContext);
   const { t } = useTranslation();
-  const classes = checkoutStyles();
+  const classes = checkoutStyles(); 
 
   const submitDetailsHandler = useCallback(() => {
-    if (userType === "guest") {
+    if (userType === "guest" ) {
       if (!guestForm.formIsValid) {
         setGuestForm((guestForm) => {
           let updatedForm = { formIsValid: false };
@@ -36,10 +36,12 @@ const UserCheckout = () => {
           return updatedForm;
         });
       } else {
+        console.log(userType)
         handleTabChange(undefined, 1);
       }
     }
   }, [userType, guestForm.formIsValid, setGuestForm, handleTabChange]);
+
 
   let renderUserType;
   if (userType === "guest") {
@@ -50,7 +52,7 @@ const UserCheckout = () => {
     );
   } else if (userType === "register") {
     renderUserType = (
-      <SignupPage isDisplayImage={false} userCheckoutStyles={true} />
+      <SignupPage isDisplayImage={false} userCheckoutStyles={true}/>
     );
   }
 

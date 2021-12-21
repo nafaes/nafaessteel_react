@@ -1,12 +1,12 @@
-import React, { Fragment, useCallback, useContext, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useContext, useState } from "react";
 
 import SignUp from "../components/SignUp/Signup";
 import { signUp } from "../services/auth";
 import Notification from "../common/Notification/Notification";
 import { updateObject } from "../utils/updateObject";
 import { checkValidity } from "../utils/validations";
-import { login } from "../context/actions/authActions";
 import { GlobalContext } from "../context/Provider";
+import EmailVerifyDetails from "../components/SignUp/EmailVerifyDetails";
 
 const signupFormInitialState = {
   name: {
@@ -74,11 +74,19 @@ const SignupPage = (props) => {
     type: "",
   });
   const [submit, setSubmit] = useState(false);
-  const previousPath = props.location?.state?.previousPath;
+  const [openDialog, setOpenDialog] = useState(false);
+  const handleClickOpen = () => {
+    setOpenDialog(true);  
+  };
+  const handleClose = useCallback(() => {
+    setOpenDialog(false);
+  }, []);
+  const [gotSuccess, setGotSuccess] = useState(false);
+  const {languageId } = useContext(GlobalContext);
+  const pathArray = window.location.pathname.split( '/' );
+  const screenName = pathArray[pathArray.length -1]
+ 
 
-  const { dispatchAuthActions, languageId } = useContext(GlobalContext);
-
-  
   const conformPasswordHandler = useCallback(
     ({ target: { value, name } }) => {
       let valid = true;
@@ -142,6 +150,7 @@ const SignupPage = (props) => {
   };
 
   const signupHandler = useCallback(async () => {
+    console.log("signup")
     setSubmit(true);
     if (signupForm.password.value !== signupForm.confirmPassword.value) {
       const updatedFormDetails = updateObject(signupForm, {
@@ -163,26 +172,16 @@ const SignupPage = (props) => {
             email: signupForm.email.value,
             mobile: signupForm.mobileNumber.value,
             password: signupForm.password.value,
+            screenName: screenName,
           },
           languageId
         );
         if (response) {
+          console.log("success");
           setSignupForm(signupFormInitialState);
-          setNotify({
-            isOpen: true,
-            message: "Account is created successfully",
-            type: "success",
-          });
-          setTimeout(() => {
-            login(
-              signupForm.email.value,
-              signupForm.password.value,
-              dispatchAuthActions,
-              previousPath
-            )((errorMessage) => {
-              setNotify({ isOpen: true, message: errorMessage, type: "error" });
-            });
-          }, 1000);
+          setSubmit(false);
+          setGotSuccess(true);
+          handleClickOpen();       
         }
       } catch (err) {
         setSignupForm(signupFormInitialState);
@@ -190,10 +189,10 @@ const SignupPage = (props) => {
         setNotify({ isOpen: true, message: err.message, type: "error" });
       }
     }
-  }, [dispatchAuthActions, languageId, signupForm,previousPath]);
-
+  }, [ languageId, signupForm,screenName]);
   return (
     <Fragment>
+
       <SignUp
         isDisplayImage={
           props?.isDisplayImage === false ? props.isDisplayImage : true
@@ -205,8 +204,10 @@ const SignupPage = (props) => {
         conformPasswordHandler={conformPasswordHandler}
         formChangeHandler={formChangeHandler}
         signupHandler={signupHandler}
-        submit={submit}
+        submit={submit}  
+         
       />
+      {gotSuccess === true && <EmailVerifyDetails openDialog={openDialog} handleClose={handleClose}/>}
       {notify.isOpen && <Notification notify={notify} setNotify={setNotify} />}
     </Fragment>
   );

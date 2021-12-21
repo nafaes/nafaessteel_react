@@ -1,10 +1,10 @@
-import React, { Fragment, useCallback, useContext, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useContext, useState } from "react";
 
 import SignIn from "../components/SignIn/Signin";
 import Notification from "../common/Notification/Notification";
 import { checkValidity } from "../utils/validations";
 import { GlobalContext } from "../context/Provider";
-import { accountVerify, login } from "../context/actions/authActions";
+import { login } from "../context/actions/authActions";
 
 const signinFormInitialState = {
   email: {
@@ -85,8 +85,7 @@ const SigninPage = (props) => {
 
     if (signinForm.email.valid && signinForm.password.valid) {
       console.log(signinForm.email.valid, "VALID");   
-      login(signinForm.email.value, signinForm.password.value, dispatchAuthActions, previousPath)
-           
+      login(signinForm.email.value, signinForm.password.value, dispatchAuthActions, previousPath)         
         ((errorMessage) => {
           setNotify({ isOpen: true, message: errorMessage, type: "error" });
             setSigninForm((signinForm) => {

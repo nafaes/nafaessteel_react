@@ -8,11 +8,8 @@ export const axiosInstance = (props) => {
 
   const user = JSON.parse(localStorage.getItem("user"));
   console.log(user);
-
-
   let axiosInst;
   if (user) {
-
     axiosInst = axios.create({
       baseURL: process.env.REACT_APP_OAUTH_API_URL,
       headers: {
@@ -21,7 +18,6 @@ export const axiosInstance = (props) => {
       },
     });
   } else {
-    console.log("User")
     axiosInst = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
@@ -38,9 +34,6 @@ export const axiosInstance = (props) => {
         resolve(response);
       }),
     async (error) => {
-      console.log(error.response, "error")
-
-
       if (!error.response) {
         return new Promise((resolve, reject) => {
           reject(error);
@@ -55,7 +48,6 @@ export const axiosInstance = (props) => {
           const bytes = CryptoJS.AES.decrypt(encrpytPassword, 'my-secret-key@123');
           const password = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
           const response = await logIn(email, password);
-          console.log(response);
           user.token = response.access_token;
           user.expiresIn = response.expires_in;
           localStorage.setItem('user', JSON.stringify(user));
