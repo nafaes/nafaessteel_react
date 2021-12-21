@@ -28,5 +28,4 @@ export const signinEngMobile = (userCheckoutStyles) => {
       ...loginContainForm,
     },
   }));
-  
 };
