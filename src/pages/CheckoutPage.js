@@ -233,10 +233,11 @@ const CheckoutPage = (props) => {
           }
           return updatedForm;
         });
-      } else if (userType !== "guest") {
-        setTabValue(0);
-        isCheckoutValid = false;
       }
+    }
+    else{
+      setTabValue(0);
+      isCheckoutValid = false
     }
     // console.log(shippingForm,"shippingForm")
     if (shippingType === "delivery" && shippingForm.formIsValid === false) {

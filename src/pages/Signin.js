@@ -85,8 +85,7 @@ const SigninPage = (props) => {
 
     if (signinForm.email.valid && signinForm.password.valid) {
       console.log(signinForm.email.valid, "VALID");   
-      login(signinForm.email.value, signinForm.password.value, dispatchAuthActions, previousPath)
-           
+      login(signinForm.email.value, signinForm.password.value, dispatchAuthActions, previousPath)         
         ((errorMessage) => {
           setNotify({ isOpen: true, message: errorMessage, type: "error" });
             setSigninForm((signinForm) => {

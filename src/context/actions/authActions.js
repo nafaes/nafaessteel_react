@@ -19,6 +19,7 @@ import {
 } from "../../constants/routes";
 import history from "../../helpers/history";
 
+
 const CryptoJS = require("crypto-js");
 
 export const loginLoading = () => {
@@ -53,85 +54,81 @@ export const accountVerify = (message) => {
 export const userLogout = () => {
   console.log("removeUser")
   localStorage.removeItem("user");
-  if(matchPath(history.location.pathname, {
+  if (matchPath(history.location.pathname, {
     path: CHECKOUT,
     exact: true,
   })) {
     history.push(CHECKOUT[1])
   }
-
-  // history.push(LANDING)
-
   return {
     type: LOGOUT_USER,
   };
 };
 
 export const login = (email, password, dispatch, previousPath = "") => async (onError) => {
-    dispatch(loginLoading());
-    try {
-      const response = await logIn(email, password);
-      console.log(response,"loginDetails")
-    
-      if (response.isverified === false){   
-          onError("Account Is not verified");
-          dispatch(accountVerify("Account Is not verified"));
-      }
+  dispatch(loginLoading());
+  try {
+    const response = await logIn(email, password);
+    console.log(response, "loginDetails")
 
-      else{
+    if (response.isverified === false) {
+      onError("Account Is not verified");
+      dispatch(accountVerify("Account Is not verified"));
+    }
 
-        const userPassword = CryptoJS.AES.encrypt(JSON.stringify(password), 'my-secret-key@123').toString();
-        console.log(userPassword);
-  
-        localStorage.setItem("user",
+    else {
+
+      const userPassword = CryptoJS.AES.encrypt(JSON.stringify(password), 'my-secret-key@123').toString();
+      console.log(userPassword);
+
+      localStorage.setItem("user",
+        JSON.stringify({
+          token: response.access_token,
+          expiresIn: response.expires_in,
+          email,
+          userPass: userPassword,
+          isVerified: response.isverified,
+        })
+      );
+
+      if (response) {
+        const { userid, name } = await getUserDetails(email);
+        dispatch(
+          loginSuccess({
+            token: response.access_token,
+            expiresIn: response.expires_in,
+            email,
+            userid,
+            name,
+            isVerified: response.isverified,
+          })
+        );
+        localStorage.setItem(
+          "user",
           JSON.stringify({
             token: response.access_token,
             expiresIn: response.expires_in,
             email,
-            userPass:userPassword,
+            userid,
+            name,
+            userPassword: userPassword,
             isVerified: response.isverified,
           })
         );
-        
-        if (response) {
-          const { userid, name } = await getUserDetails(email);
-          dispatch(
-            loginSuccess({
-              token: response.access_token,
-              expiresIn: response.expires_in,
-              email,
-              userid,
-              name,
-              isVerified: response.isverified,
-            })
-          );
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              token: response.access_token,
-              expiresIn: response.expires_in,
-              email,
-              userid,
-              name,
-              userPassword:userPassword,
-              isVerified: response.isverified,
-            })
-          );
-          console.log(previousPath)
-          console.log(history.location.pathname)
-          if (previousPath === SIGNIN || previousPath === SIGNUP || previousPath === GUESTTRACKORDER || previousPath === ORDERS || previousPath === "" ) {
-            console.log(previousPath,"110")
-            history.push(LANDING);
-          } else if (history.location.pathname !== CHECKOUT) {
-            history.goBack();
-          }
-        
+
+        if (previousPath === SIGNIN || previousPath === SIGNUP || previousPath === GUESTTRACKORDER || previousPath === ORDERS || previousPath !== "") {
+          console.log(previousPath, "110")
+          history.push(LANDING);
+        }
+        else if (history.location.pathname !== CHECKOUT[1]) {
+          history.goBack();
         }
       }
-    } catch (error) {
-      onError(error.message);
-      dispatch(loginFailed(error.message));
     }
+  } catch (error) {
+    onError(error.message);
+    dispatch(loginFailed(error.message));
+  }
 };
 
 export const authCheckState = (dispatch) => {
@@ -140,9 +137,10 @@ export const authCheckState = (dispatch) => {
     if (user) {
       const userDetails = JSON.parse(user);
       dispatch(loginSuccess(userDetails));
-    } else if(matchPath(history.location.pathname, {
+    } else if (matchPath(history.location.pathname, {
       path: CHECKOUT,
-      exact: true})) {
+      exact: true
+    })) {
       return;
     } else {
       dispatch(userLogout());

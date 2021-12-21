@@ -21,7 +21,7 @@ const UserCheckout = () => {
   const classes = checkoutStyles(); 
 
   const submitDetailsHandler = useCallback(() => {
-    if (userType === "guest") {
+    if (userType === "guest" ) {
       if (!guestForm.formIsValid) {
         setGuestForm((guestForm) => {
           let updatedForm = { formIsValid: false };
@@ -36,6 +36,7 @@ const UserCheckout = () => {
           return updatedForm;
         });
       } else {
+        console.log(userType)
         handleTabChange(undefined, 1);
       }
     }

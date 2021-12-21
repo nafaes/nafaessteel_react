@@ -32,7 +32,7 @@ export const landingMobCommon = {
       },
       root: {
             maxWidth: 300,
-            transition: "transform 0.15s ease-in-out",
+            // transition: "transform 0.15s ease-in-out",
             borderRadius: "1.5em",
       }
 }
