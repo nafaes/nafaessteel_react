@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router";
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import failed from "../assets/img/failed.png";
+import failed from "../assets/img/failed.jpg";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {

@@ -28,13 +28,16 @@ const ItemsPage = (props) => {
   }, [location.state]);
 
   const getCatergoryItems = useCallback(async () => {
-    try{
+    try {
       setIsLoading(true);
-      const response = await getAllCatergoryItems(categoryId, level, languageId);
+      const response = await getAllCatergoryItems(
+        categoryId,
+        level,
+        languageId
+      );
       setCategoryItems(response);
       setIsLoading(false);
-    }
-    catch (err) {
+    } catch (err) {
       setIsLoading(false);
     }
   }, [categoryId, level, languageId]);
@@ -48,7 +51,7 @@ const ItemsPage = (props) => {
     };
   }, [categoryId, getCatergoryItems]);
 
-  return <Items items={catergoryItems} loading={loading}/>;
+  return <Items items={catergoryItems} loading={loading} />;
 };
 
 export default ItemsPage;

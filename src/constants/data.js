@@ -11,7 +11,7 @@ export const allCategories = [
       {
         itemId: "item1",
         itemName: "Kuwaiti Steel",
-        image: "https://www.nafaessteel.com/IronImages/kwt_steel.png",
+        image: "https://www.nafaessteel.com/IronImages/kwt_steel.jpg",
         cost: "247.000 KWD Per Ton.",
         nextLevel: 3,
         noOfSelections: 1,
@@ -139,7 +139,7 @@ export const allCategories = [
       {
         itemId: "item2",
         itemName: "Omani Steel",
-        image: "https://www.nafaessteel.com/IronImages/oman_steel.png",
+        image: "https://www.nafaessteel.com/IronImages/oman_steel.jpg",
         cost: "240.000 KWD Per Ton.",
         nextLevel: 3,
         noOfSelections: 1,
@@ -171,7 +171,7 @@ export const allCategories = [
       {
         itemId: "item3",
         itemName: "Allitefaq Steel KSA",
-        image: "https://www.nafaessteel.com/IronImages/ksa_steel.png",
+        image: "https://www.nafaessteel.com/IronImages/ksa_steel.jpg",
         cost: "240.000 KWD Per Ton.",
         nextLevel: 3,
         noOfSelections: 1,
@@ -227,7 +227,7 @@ export const allCategories = [
       {
         itemId: "item4",
         itemName: "Iranian Steel",
-        image: "https://www.nafaessteel.com/IronImages/irani_steel.png",
+        image: "https://www.nafaessteel.com/IronImages/irani_steel.jpg",
         cost: "240.000 KWD Per Ton.",
         nextLevel: 3,
         noOfSelections: 1,

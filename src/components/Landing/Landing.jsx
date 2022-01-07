@@ -15,7 +15,6 @@ import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
 import LoaderImg from "../LoaderImg";
 import { useTranslation } from "react-i18next";
 
-
 const Landing = (props) => {
   const {
     allCategories,
@@ -34,7 +33,7 @@ const Landing = (props) => {
 
   useEffect(() => {
     let timeOut;
-  
+
     if (state?.message === "from contactus" && contactUs.current) {
       contactUs.current.scrollIntoView({
         behavior: "smooth",
@@ -51,27 +50,46 @@ const Landing = (props) => {
     };
   });
 
-   const landing = (
+  const landing = (
     <Fragment>
       <Grid container direction="column">
         <Categories allCategories={allCategories} loading={loading} />
 
         <div ref={contactUs}>
-          <Grid container direction="column" style={{ marginTop: "4em" }} className={classes.contactContainer}>
+          <Grid
+            container
+            direction="column"
+            style={{ marginTop: "4em" }}
+            className={classes.contactContainer}
+          >
             <Grid item container justifyContent="center">
-              <Typography variant="h6"
+              <Typography
+                variant="h6"
                 className={clsx(
                   classes.contactHeader,
                   classesExternal.contactHeader
-                )}>
+                )}
+              >
                 {t("Landing.GetInTouch")}
               </Typography>
             </Grid>
-            <Grid item container direction={largeScreen ? "row" : "column"} justifyContent="center" alignItems="center"
+            <Grid
+              item
+              container
+              direction={largeScreen ? "row" : "column"}
+              justifyContent="center"
+              alignItems="center"
               className={clsx(
                 classes.contactContent,
-                classesExternal.contactContent)}>
-              <Grid item container direction="column" style={{ textAlign: "center" }}>
+                classesExternal.contactContent
+              )}
+            >
+              <Grid
+                item
+                container
+                direction="column"
+                style={{ textAlign: "center" }}
+              >
                 <Grid item style={{ padding: "10px" }}>
                   <Grid item>
                     <IconButton>
@@ -79,20 +97,29 @@ const Landing = (props) => {
                     </IconButton>
                   </Grid>
                   <Grid item>
-                    <Typography variant="h6" gutterBottom
-                      className={clsx(classes.info, classesExternal.info)}>
+                    <Typography
+                      variant="h6"
+                      gutterBottom
+                      className={clsx(classes.info, classesExternal.info)}
+                    >
                       info@nafaes.com
                     </Typography>
                   </Grid>
                 </Grid>
               </Grid>
-              <Divider orientation={largeScreen ? "vertical" : "horizontal"} flexItem
+              <Divider
+                orientation={largeScreen ? "vertical" : "horizontal"}
+                flexItem
                 style={{ backgroundColor: "#fff" }}
               />
-              <Grid item container direction="column"
+              <Grid
+                item
+                container
+                direction="column"
                 style={{
                   textAlign: "center",
-                }}>
+                }}
+              >
                 <Grid item style={{ padding: "10px" }}>
                   <Grid item>
                     <IconButton>
@@ -103,7 +130,8 @@ const Landing = (props) => {
                     <Typography
                       variant="h6"
                       gutterBottom
-                      className={clsx(classes.info, classesExternal.info)}>
+                      className={clsx(classes.info, classesExternal.info)}
+                    >
                       (+965) 96065464
                     </Typography>
                   </Grid>
@@ -112,8 +140,14 @@ const Landing = (props) => {
               <Divider
                 orientation={largeScreen ? "vertical" : "horizontal"}
                 flexItem
-                style={{ backgroundColor: "#fff" }} />
-              <Grid item container direction="column" style={{ textAlign: "center" }}>
+                style={{ backgroundColor: "#fff" }}
+              />
+              <Grid
+                item
+                container
+                direction="column"
+                style={{ textAlign: "center" }}
+              >
                 <Grid item style={{ padding: "10px" }}>
                   <Grid item>
                     <IconButton>
@@ -121,8 +155,11 @@ const Landing = (props) => {
                     </IconButton>
                   </Grid>
                   <Grid item>
-                    <Typography variant="h6" gutterBottom
-                      className={clsx(classes.info, classesExternal.info)}>
+                    <Typography
+                      variant="h6"
+                      gutterBottom
+                      className={clsx(classes.info, classesExternal.info)}
+                    >
                       {t("Landing.Address")}
                     </Typography>
                   </Grid>
@@ -132,26 +169,42 @@ const Landing = (props) => {
           </Grid>
         </div>
 
-        <Grid container direction="column" className={clsx(classes.aboutContainer, classesExternal.aboutContainer)}>
+        <Grid
+          container
+          direction="column"
+          className={clsx(
+            classes.aboutContainer,
+            classesExternal.aboutContainer
+          )}
+        >
           <Grid item container justifyContent="center">
-            <Typography variant="h6"
+            <Typography
+              variant="h6"
               className={clsx(
                 classes.contactHeader,
                 classesExternal.contactHeader
-              )}>
+              )}
+            >
               About Us
             </Typography>
           </Grid>
-          <Grid item container direction="row" justifyContent="center" alignItems="center"
-            className={clsx(classes.aboutContent, classesExternal.aboutContent)}>
+          <Grid
+            item
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            className={clsx(classes.aboutContent, classesExternal.aboutContent)}
+          >
             <Typography
               variant="body1"
-              className={clsx(classes.info, classesExternal.info)}>
+              className={clsx(classes.info, classesExternal.info)}
+            >
               Nafees International Group was established in 2006 as a limited
               liability company, and aims to provide its services according to
               innovative solutions that serve all the clients and provide the
-              necessary protection. Nafaes online service for Rebars is one of the
-              services offered by a group of valuables to meet the need of
+              necessary protection. Nafaes online service for Rebars is one of
+              the services offered by a group of valuables to meet the need of
               customers from consumers and entrepreneurs to provide types of
               reinforcing steel of different sizes at competitive prices with a
               guarantee of quality.
@@ -163,14 +216,12 @@ const Landing = (props) => {
           <Fab color="secondary" size="small" aria-label="scroll back to top">
             <KeyboardArrowUpIcon />
           </Fab>
-      </ScrollTop> */}
+        </ScrollTop> */}
       </Grid>
     </Fragment>
-  )
-
-  return (
-    loading === true ?  <LoaderImg /> : landing 
   );
+
+  return landing;
 };
 
 export default withRouter(Landing);
