@@ -216,12 +216,12 @@ const Landing = (props) => {
           <Fab color="secondary" size="small" aria-label="scroll back to top">
             <KeyboardArrowUpIcon />
           </Fab>
-      </ScrollTop> */}
+        </ScrollTop> */}
       </Grid>
     </Fragment>
   );
 
-  return loading === true ? <LoaderImg /> : landing;
+  return landing;
 };
 
 export default withRouter(Landing);

@@ -7,7 +7,7 @@ import { getAllCategories } from "../services/categories.js";
 const LandingPage = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [loading, setIsLoading] = useState(false);
-  const [,setError] = useState(null);
+  const [, setError] = useState(null);
   const { languageId } = useContext(GlobalContext);
 
   const getCategories = useCallback(async () => {
@@ -26,9 +26,7 @@ const LandingPage = () => {
     getCategories();
   }, [getCategories]);
 
-  return (
-    <Landing allCategories={allCategories} loading={loading}/>
-  );
+  return <Landing allCategories={allCategories} loading={loading} />;
 };
 
 export default LandingPage;

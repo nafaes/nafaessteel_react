@@ -12,15 +12,17 @@ import LoaderImg from "../LoaderImg";
 import useHistoryNavigation from "../../hooks/useHistoryNavigation";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import { landingMobEng } from "../../assets/jss/viewStyles/landing/english";
+import ProductLoader from "../Loaders/product-loader";
 
 const Categories = (props) => {
   const { allCategories, loading } = props;
   const navigate = useHistoryNavigation();
-
+  const countValue = allCategories.length;
+  console.log(countValue);
   const englishMobileStyles = landingMobEng();
   let classesExternal = landingEngDesk;
   let classes = englishMobileStyles;
-
+  console.log("allCategories", allCategories);
   const allCatergory = (
     <React.Fragment>
       <Grid
@@ -40,59 +42,61 @@ const Categories = (props) => {
           justifyContent="flex-start"
           spacing={6}
         >
-          {allCategories
-            ? allCategories.map((category, index) => (
-                <Grid
-                  item
-                  container
-                  lg={4}
-                  md={4}
-                  sm={6}
-                  xs={12}
-                  key={category.categoryId}
-                  style={{ textDecoration: "none" }}
+          {allCategories && allCategories.length !== 0 ? (
+            allCategories.map((category, index) => (
+              <Grid
+                item
+                container
+                lg={4}
+                md={4}
+                sm={6}
+                xs={12}
+                key={category.categoryId}
+                style={{ textDecoration: "none" }}
+              >
+                <Card
+                  raised
+                  elevation={12}
+                  className={clsx(classes.root, classesExternal.animateCard)}
+                  onClick={navigate.bind(null, category)}
                 >
-                  <Card
-                    raised
-                    elevation={12}
-                    className={clsx(classes.root, classesExternal.animateCard)}
-                    onClick={navigate.bind(null, category)}
-                  >
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        alt="Contemplative Reptile"
-                        height="250"
-                        image={
-                          require(`../../assets/img/${category.picturePath}`)
-                            .default
-                        }
-                        title={category.categoryName}
-                      />
-                      <Divider />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                          {category.categoryName}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          Description
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))
-            : null}
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      alt="Contemplative Reptile"
+                      height="250"
+                      image={
+                        require(`../../assets/img/${category.picturePath}`)
+                          .default
+                      }
+                      title={category.categoryName}
+                    />
+                    <Divider />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {category.categoryName}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        description
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <ProductLoader count={4} />
+          )}
         </Grid>
       </Grid>
     </React.Fragment>
   );
 
-  return loading === true ? <LoaderImg /> : allCatergory;
+  return allCatergory;
 };
 
 export default React.memo(Categories);

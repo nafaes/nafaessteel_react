@@ -11,6 +11,7 @@ import clsx from "clsx";
 import useHistoryNavigation from "../../hooks/useHistoryNavigation";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
 import LoaderImg from "../LoaderImg";
+import ProductLoader from "../Loaders/product-loader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,56 +40,58 @@ const Items = (props) => {
       justifyContent="center"
       spacing={2}
     >
-      {items
-        ? items.map((item, index) => (
-            <Grid
-              item
-              lg={3}
-              md={4}
-              sm={6}
-              xs={12}
-              key={index}
-              style={{ columnGap: "12px" }}
+      {items && items.length !== 0 ? (
+        items.map((item, index) => (
+          <Grid
+            item
+            lg={3}
+            md={4}
+            sm={6}
+            xs={12}
+            key={index}
+            style={{ columnGap: "12px" }}
+          >
+            <Card
+              raised
+              elevation={12}
+              className={clsx(classes.root, classesExternal.animateCard)}
+              onClick={navigate.bind(null, item)}
             >
-              <Card
-                raised
-                elevation={12}
-                className={clsx(classes.root, classesExternal.animateCard)}
-                onClick={navigate.bind(null, item)}
+              <CardHeader
+                title={item.categoryName}
+                titleTypographyProps={{ variant: "h6" }}
+                className={classes.cardStyles}
+              />
+              <Divider />
+              <CardMedia
+                component="img"
+                alt="Contemplative Reptile"
+                src={require(`../../assets/img/${item.picturePath}`).default}
+                title={item.categoryName}
+                style={{ height: "13em ", width: "auto", margin: "auto" }}
+              />
+              <Divider />
+              <CardContent
+                style={{
+                  backgroundColor: "#0086b3",
+                  color: "#fff",
+                  textAlign: "center",
+                }}
               >
-                <CardHeader
-                  title={item.categoryName}
-                  titleTypographyProps={{ variant: "h6" }}
-                  className={classes.cardStyles}
-                />
-                <Divider />
-                <CardMedia
-                  component="img"
-                  alt="Contemplative Reptile"
-                  src={require(`../../assets/img/${item.picturePath}`).default}
-                  title={item.categoryName}
-                  style={{ height: "13em ", width: "auto", margin: "auto" }}
-                />
-                <Divider />
-                <CardContent
-                  style={{
-                    backgroundColor: "#0086b3",
-                    color: "#fff",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography gutterBottom variant="h6" component="h6">
-                    {item.cost}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))
-        : null}
+                <Typography gutterBottom variant="h6" component="h6">
+                  {item.cost}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))
+      ) : (
+        <ProductLoader count={6} />
+      )}
     </Grid>
   );
 
-  return loading === true ? <LoaderImg /> : itemsCart;
+  return itemsCart;
 };
 
 export default Items;
