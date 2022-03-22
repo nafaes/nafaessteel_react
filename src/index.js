@@ -8,6 +8,7 @@ import history from "./helpers/history";
 import "../src/translations/i18n";
 import reportWebVitals from "./reportWebVitals";
 
+
 ReactDOM.render(
   <Router history={history} basename="{IRON}">
     <GlobalProvider>

@@ -1,17 +1,14 @@
 @mixin containerForm {
   // width: 60%;
-  padding: 1em;
-  margin: 4em auto 0 auto;
-  border-radius: 1em;
-  // background: linear-gradient(
-  //     to right,
-  //     rgba(20, 30, 48, 0.9),
-  //     rgba(36, 59, 85, 0.6)
-  // );
+  padding: 0.8em ;
+  margin: 0em auto 0 auto;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
   background: linear-gradient(
-    90deg,
-    rgba(0, 134, 179, 0.8),
-    rgba(0, 134, 179, 0.8)
+    65deg,
+    rgb(143,193,210) 15%,
+    rgb(41, 137, 171) 45%
   );
+  // background: linear-gradient(90deg, rgba(160, 183 ,191, .8), rgb(38 ,169 ,213 , .8)),
 }
 

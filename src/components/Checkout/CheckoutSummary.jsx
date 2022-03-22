@@ -24,6 +24,11 @@ const useStyles = makeStyles({
   //     backgroundColor: "green",
   //   },
   // },
+  root: {
+    "& .MuiTableCell-head": {
+        backgroundColor: "#f5f5f5"
+    },
+  }
 });
 
 
@@ -40,28 +45,27 @@ const CheckoutSummary = () => {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} sm={12} md={6} lg={6} style={{ marginTop: "1.2em" }}>
+    <Grid item xs={12} sm={12} md={5} lg={5} style={{ margin: "1.2em auto auto auto" }}>
       <TableContainer
         component={Paper}
-        style={{ height: "32em", overflowY: "auto", clear: "both" }}
+        style={{ height: "30em", overflowY: "auto", clear: "both" }}
       >
         <Table
           className={classes.table}
           aria-label="spanning table"
-          stickyHeader
-        >
+          stickyHeader>
           <TableHead>
-            <TableRow>
+            <TableRow className={classes.root}>
               <TableCell
                 align="center"
                 colSpan={4}
-                style={{ fontWeight: "600" }}
+                style={{ fontWeight: "600"}}
               >
                 {/* <Typography variant="h5">Order Summary</Typography> */}
                 {t("Cart.OrderSummary")}
               </TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow className={classes.root} >
               <TableCell style={{ top: 57 }}>{t("Cart.Items")}</TableCell>
               <TableCell align="right" style={{ top: 57 }}>
                 {t("Checkout.Qty")}
@@ -110,19 +114,16 @@ const CheckoutSummary = () => {
             </TableRow>
             <TableRow>
               <TableCell rowSpan={3} />
-              <TableCell colSpan={2}>{t("Cart.Subtotal")}</TableCell>
-              <TableCell align="right">{ccyFormat(totalAmount)}</TableCell>
+              <TableCell style={{backgroundColor:"#f5f5f5"}} colSpan={2}>{t("Cart.Subtotal")}</TableCell>
+              <TableCell style={{backgroundColor:"#f5f5f5"}} align="right">{ccyFormat(totalAmount)}</TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow style={{backgroundColor:"#f5f5f5"}}>
               <TableCell>{t("Checkout.ShippingCharges")}</TableCell>
-              {/* <TableCell align="right">{`${(Shipping_Charges * 100).toFixed(
-                0
-              )} %`}</TableCell> */}
               <TableCell align="right" colSpan={2}>
                 {ccyFormat(shippingCharges)}
               </TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow style={{backgroundColor:"#f5f5f5"}}>
               <TableCell colSpan={2}>{t("Checkout.Total")}</TableCell>
               <TableCell align="right">
                 {ccyFormat(totalAmount + shippingCharges)}

@@ -75,11 +75,11 @@ const UserCheckout = () => {
           onChange={handleUserType}
           value={userType}
         >
-          <FormControlLabel
+          {/* <FormControlLabel
             value="guest"
             control={<RadioButton />}
             label={t("Checkout.AsGuest")}
-          />
+          /> */}
           <FormControlLabel
             value="member"
             control={<RadioButton />}

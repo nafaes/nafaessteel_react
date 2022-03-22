@@ -6,6 +6,9 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LoaderImg from "../LoaderImg";
+import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
+import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
+import clsx from "clsx";
 
 const BreadcrumbsNavigation = ({
   historyItems,
@@ -13,29 +16,19 @@ const BreadcrumbsNavigation = ({
   loading,
 }) => {
   const { t } = useTranslation();
-
+  const englishMobileStyles = addToCartMobEng();
+  let classesExternal = addTocartEngDesk;
+  let classes = englishMobileStyles;
+  // .MuiInput-underline:before
   return loading === true ? (
     <LoaderImg />
   ) : (
-    <Grid
-      item
-      container
-      direction="row"
-      justifyContent="space-between"
-      style={{
-        color: "#fff",
-        background: "linear-gradient(45deg,  #3397b8 40%,#2b86a6 90%)",
-        padding: ".6em",
-        borderRadius: "1em",
-        width: "80%",
-        margin: "0px auto",
-      }}
-    >
+    <Grid item container direction="row" justifyContent="center" className={clsx(classes.breadcrumTab,classesExternal.breadCrumbs)}>
       <Grid item style={{ color: "#fff" }}>
         <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
+          separator={<NavigateNextIcon fontSize="medium" />}
           aria-label="breadcrumb"
-          style={{ color: "#fff" }}
+          style={{ color: "#ffffff" }}
         >
           <Link color="inherit" component={RouterLink} to="/">
             {t("AddToCart.AllCategories")}

@@ -5,12 +5,11 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import { CardHeader, Divider } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import clsx from "clsx";
 
 import useHistoryNavigation from "../../hooks/useHistoryNavigation";
 import landingEngDesk from "../../assets/scss/landing.module.scss";
-import LoaderImg from "../LoaderImg";
 import ProductLoader from "../Loaders/product-loader";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Items = (props) => {
-  const { items, loading } = props;
+  const { items } = props;
   const navigate = useHistoryNavigation();
   const classes = useStyles();
   let classesExternal = landingEngDesk;
@@ -57,29 +56,28 @@ const Items = (props) => {
               className={clsx(classes.root, classesExternal.animateCard)}
               onClick={navigate.bind(null, item)}
             >
-              <CardHeader
+              {/* <CardHeader
                 title={item.categoryName}
                 titleTypographyProps={{ variant: "h6" }}
                 className={classes.cardStyles}
-              />
+              /> */}
               <Divider />
               <CardMedia
                 component="img"
                 alt="Contemplative Reptile"
                 src={require(`../../assets/img/${item.picturePath}`).default}
                 title={item.categoryName}
-                style={{ height: "13em ", width: "auto", margin: "auto" }}
+                style={{ height: "10em ", width: "auto", margin: "auto",padding:"1em 0"}}
               />
-              <Divider />
+               <Divider />
               <CardContent
-                style={{
-                  backgroundColor: "#0086b3",
-                  color: "#fff",
+                style={{              
                   textAlign: "center",
+                  padding:"8px"
                 }}
               >
                 <Typography gutterBottom variant="h6" component="h6">
-                  {item.cost}
+                  {item.categoryName}
                 </Typography>
               </CardContent>
             </Card>

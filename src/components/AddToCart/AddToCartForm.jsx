@@ -23,11 +23,29 @@ const AddToCartForm = (props) => {
   let classes = englishMobileStyles;
 
   return (
-    <Grid item container direction="row" justifyContent="center" style={{ color: "#fff", marginTop: "1em" }}>
-      <Grid item lg={8} md={8} xs={10}>
+    <Grid item container direction="row" justifyContent="center" style={{ color: "#fff"}}>
+       <Grid container item xs={12} justifyContent="center" style={{marginBottom:"10px",minHeight:"2.3em",textAlign:"center"}}>
+           {addToCartForm.price && (
+             <Grid item lg={5} md={5} sm={5} xs={5}>
+                <ButtonGroup variant="outlined" size="small" disabled aria-label="outlined secondary button group" >
+                  <Button>{`${t("AddToCart.Price")}`}:</Button>
+                  <Button>{`${addToCartForm.price}`}</Button>
+                </ButtonGroup>
+             </Grid>
+          )}
+           {addToCartForm.unit && (
+             <Grid item lg={5} md={5} sm={5} xs={5}>
+                <ButtonGroup variant="outlined" size="small" disabled aria-label="outlined secondary button group">
+                  <Button>{`${t("AddToCart.Unit")}`}:</Button>
+                  <Button>{`${addToCartForm.unit}`}</Button>
+                </ButtonGroup>
+             </Grid>
+          )}
+        </Grid>
+      <Grid item lg={8} md={8} xs={10}>        
         {item?.selections &&
           item.selections.map((select, index) => (
-            <FormControl variant="outlined" autoComplete="off" style={{ width: "100%", marginBottom: "1em" }}
+            <FormControl variant="standard" autoComplete="off" style={{ width: "100%", marginBottom: "0.5em" }}
               key={index}>
               <InputLabel id="dynamic-select" style={{ color: "#fff" }}>
                 {select.name}
@@ -52,8 +70,8 @@ const AddToCartForm = (props) => {
                 label={select.name}
                 style={{ color: "#fff" }}
                 className={clsx(
-                  classes.selectComponentCls,
-                  classesExternal.selectComponentCls
+                  classes.selectCls,
+                  classesExternal.selectCls
                 )}
                 MenuProps={{ disableScrollLock: true }}
               >
@@ -74,32 +92,12 @@ const AddToCartForm = (props) => {
               ) : null}
             </FormControl>
           ))}
-
-
-        <Grid container item xs={12} style={{ marginBottom: 16 }}>
-           {addToCartForm.price && (
-             <Grid item lg={6} md={6} sm={6} xs={6}>
-                <ButtonGroup variant="contained" color="secondary" disabled aria-label="outlined primary button group">
-                  <Button>{`${t("AddToCart.Price")}`}:</Button>
-                  <Button>{`${addToCartForm.price}`}</Button>
-                </ButtonGroup>
-             </Grid>
-          )}
-           {addToCartForm.unit && (
-             <Grid item lg={6} md={6} sm={6} xs={6}>
-                <ButtonGroup variant="contained" color="secondary" disabled aria-label="outlined primary button group">
-                  <Button>{`${t("AddToCart.Unit")}`}:</Button>
-                  <Button>{`${addToCartForm.unit}`}</Button>
-                </ButtonGroup>
-             </Grid>
-          )}
-        </Grid>
         <TextField
           label={t("AddToCart.InputFields.Quantity")}
           name="quantity"
           value={addToCartForm.quantity.value}
           onChange={formChangeHandler}
-          variant="outlined"
+          variant="standard"
           className={clsx(
             classes.selectComponentCls,
             classesExternal.selectComponentCls
@@ -114,11 +112,11 @@ const AddToCartForm = (props) => {
               ? t(addToCartForm.quantity.validationMsg)
               : null
           }
-          style={{ width: "100%", marginBottom: "2em" }}
+          style={{ width: "100%", marginBottom: "1.5em" }}
         />
 
         <Grid item container direction="row" justifyContent="center"
-          style={{ color: "#fff", marginTop: "1em" }}>
+          style={{ color: "#fff"}}>
           <Grid item lg={10} md={10} xs={10}>
             <Grid item container
               className={clsx(
@@ -126,7 +124,7 @@ const AddToCartForm = (props) => {
                 classesExternal.addCartSubBtnContainer
               )}
               justifyContent="center">
-              <Grid item lg={8} md={8} xs={8}>
+              <Grid item lg={10} md={10} xs={10}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -138,7 +136,7 @@ const AddToCartForm = (props) => {
                   )}
                   fullWidth
                   margin="dense"
-                  style={{ fontSize: ".95rem" }}
+                  // style={{ fontSize: ".95rem" }}
                   startIcon={
                     <AddShoppingCartIcon style={{ fontSize: "1.5rem" }} />
                   }

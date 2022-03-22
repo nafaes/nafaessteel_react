@@ -26,6 +26,18 @@ export const logIn = async (email, password) => {
   }
 };
 
+export const revokeToken = async (token) => {
+  try{
+    const response = await axiosInstance().post(`/tokens/revoke/${token}`);
+    console.log(response);
+    return response;
+  }
+  catch(error){
+    console.log(error);
+    throw error;
+  }
+};
+
 export const signUp = async (newUser, languageId) => {
   try {
     const { data } = await axiosInstance().post(`/createaccount/${languageId}`, newUser);
