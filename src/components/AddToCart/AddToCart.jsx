@@ -4,11 +4,11 @@ import clsx from "clsx";
 
 import addTocartEngDesk from "../../assets/scss/addToCart.module.scss";
 import { addToCartMobEng } from "../../assets/jss/viewStyles/addToCart/english";
-// import brickImg from "../../assets/img/cement.jpg";
 import BreadcrumbsNavigation from "./BreadcrumbsNavigation";
 import AddToCartForm from "./AddToCartForm";
 import ProductSummary from "./ProductSummary";
 import LoaderImg from "../LoaderImg";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const AddToCart = (props) => {
   const {
@@ -25,28 +25,31 @@ const AddToCart = (props) => {
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
+  const mobileScreen = useMediaQuery(theme => theme.breakpoints.up('xs'));
+
   return (
     <Fragment>
+      <div className={clsx(classes.addToCartContainer, classesExternal.addToCartContainer)}>
+      <BreadcrumbsNavigation
+        historyItems={historyItems}
+        breadcrumbNavigation={breadcrumbNavigation}
+        loading={loading}
+      />
       <div className={clsx(classes.ContainerForm, classesExternal.ContainerForm)}>
         <Grid container justifyContent="center">
-          <Grid item lg={12} md={12} sm={12} xs={12}>
-            <Grid item container>
-              <Grid item lg={4} md={4} sm={4} xs={6} style={{ display: "flex", alignItems: "center" }}>
-                {item?.image && (
-                  <img
-                    alt=""
-                    // src={brickImg}
-                    src={require(`../../assets/img/${item?.image}`).default}
-                    style={{ width: "100%", margin: "0px auto", borderRadius: ".75em" }}
-                  />
-                )}
+          <Grid item lg={12} md={12} sm={12} xs={12} >
+            <Grid item container className={clsx(classes.flexDirect, classesExternal.flexDirect)}>
+              <Grid item lg={4} md={4} sm={4} xs={12} style={{ display:"flex" ,alignItems: "center" ,textAlign:"center"}}>
+                <Grid item >
+                  {item?.image && (
+                    <img alt=""
+                      src={require(`../../assets/img/${item?.image}`).default}
+                      className={clsx(classes.addToCartImg,classesExternal.addToCartImg)}
+                    />
+                  )}
+                </Grid>            
               </Grid>
-              <Grid item lg={8} md={8} sm={8} xs={6}>
-                <BreadcrumbsNavigation
-                  historyItems={historyItems}
-                  breadcrumbNavigation={breadcrumbNavigation}
-                  loading = {loading}
-                />
+              <Grid item lg={8} md={8} sm={8} xs={12}>
                 <AddToCartForm
                   item={item}
                   addToCartForm={addToCartForm}
@@ -55,12 +58,17 @@ const AddToCart = (props) => {
                 />
               </Grid>
             </Grid>
+          </Grid>
         </Grid>
-        </Grid> 
-        {loading === true ? <LoaderImg/> : itemSummary ? <ProductSummary itemSummary={itemSummary} /> : null}
       </div>
+     
+      </div>
+      {loading === true ? <LoaderImg /> : itemSummary ? <ProductSummary itemSummary={itemSummary} /> : null}
     </Fragment>
+    
   );
 };
 
 export default React.memo(AddToCart);
+
+

@@ -17,7 +17,8 @@ import {
   ORDERS,
   GUESTTRACKORDER,
   LOADER,
-  ACCOUNTVERIFY
+  ACCOUNTVERIFY,
+  CONTACTUS
 } from "../constants/routes";
 import {
   AddToCartPage,
@@ -37,6 +38,7 @@ import {
   TrackOrdersPage,
   LoadingPage,
   AccountVerify,
+  ContactUsPage,
 } from "../pages";
 // import PrivateRoute from "./PrivateRoute";
 
@@ -54,6 +56,7 @@ const Routes = ({ isAuthenticated }) => {
         <Route exact={true} path={PAYMENTFAILED} component={PaymentFailed} />
         <Route exact={true} path={ORDERS} component={OrdersPage} />
         <Route exact={true} path={TRACKORDER} component={TrackOrdersPage} />
+        <Route exact={true} path={CONTACTUS} component={ContactUsPage} />
         <Route exact={true} path={LOADER} component={LoadingPage} />
         {isAuthenticated === false ? (
           <>

@@ -28,14 +28,4 @@ export const signupEngMobile = (userCheckoutStyles) => {
       ...signupContainForm,
     },
   }));
-
-  return makeStyles((theme) => ({
-    ...signupMobCommon,
-    formContainer: {
-      ...formContainer,
-    },
-    signupContainForm: {
-      ...signupContainForm,
-    },
-  }));
 };

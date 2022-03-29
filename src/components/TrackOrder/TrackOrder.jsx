@@ -111,10 +111,10 @@ function getSteps() {
 }
 
 const TrackOrder = (props) => {
-  const { openTrackOrder, handleCloseTrackOrder, orders, activeState } = props;
+  const { openTrackOrder, handleCloseTrackOrder, activeState } = props;
   const classes = useStyles();
   const steps = getSteps();
-  console.log(orders);
+ 
   return (
     <Dialog
       open={openTrackOrder}

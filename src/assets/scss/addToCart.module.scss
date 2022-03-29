@@ -17,3 +17,26 @@
     color: #fff !important;
     font-weight: 600;
 }
+// .breadCrumbs {
+//     width: 36.3%;
+// }.
+
+.addCartTabBdyRow td{
+    //  &.MuiTableCell-sizeSmall {
+        padding: 2px 5px !important;
+    //  }
+      
+    
+}
+.flexDirect{
+    flex-direction: row;
+}
+.addToCartContainer{
+    width:37%;
+    margin: 0px auto;
+  }
+.addToCartImg{
+    width: 100%;
+     margin: 0px auto ;
+     border-radius: 50%
+}

@@ -10,7 +10,7 @@ import ToolBar from "@material-ui/core/Toolbar";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import TranslateIcon from "@material-ui/icons/Translate";
@@ -49,10 +49,12 @@ import {
   ITEMS,
   ORDERS,
   SIGNIN,
+  CONTACTUS
 } from "../../constants/routes";
 import logo from "../../assets/img/Nafaeslogonew.png";
 import navbarEngDesk from "../../assets/scss/navbar.module.scss";
 import { navbarEngMobile } from "../../assets/jss/viewStyles/navbar/english";
+import { revokeToken } from "../../services/auth";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -72,7 +74,7 @@ const Navbar = () => {
   let classesExternal = navbarEngDesk;
   let classes = englishMobileStyles;
   const {
-    userState: { isAuthenticated, userName },
+    userState: { isAuthenticated, userName,token },
     cartState: { totalItems },
     languageChangeHandler,
     dispatchAuthActions,
@@ -90,17 +92,10 @@ const Navbar = () => {
     variant: "popover",
     deferOpenClose: true,
   });
-
-  const history = useHistory();
+ 
   const location = useLocation();
 
-  const goToContactUs = useCallback(() => {
-    history.push("/", {
-      message: "from contactus",
-    });
-  }, [history]);
-
-  const handleChange = (e, newValue) => {
+   const handleChange = (e, newValue) => {
     setValue(newValue);
   };
 
@@ -156,17 +151,27 @@ const Navbar = () => {
       case ORDERS:
         setValue(2);
         break;
+      case CONTACTUS:
+        setValue(3);
+        break;
       default:
         setValue();
         break;
     }
   }, [location.pathname]);
 
-  const logOutHandler = useCallback(
-    (event) => {
-      console.log("userLogout");
-      handleClose(event);
-      dispatchAuthActions(userLogout());
+  const logOutHandler = useCallback(async (event) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userToken = user.token
+      try{      
+        const response = await revokeToken(userToken);  
+        console.log(response.data);
+        handleClose(event);
+        dispatchAuthActions(userLogout());
+      }
+      catch(error){
+        throw error;
+      }     
     },
     [dispatchAuthActions]
   );
@@ -186,6 +191,7 @@ const Navbar = () => {
           label={t("Navbar.Home")}
           tabIndex={0}
         />
+        
         <Tab
           className={clsx(classes.tab, classesExternal.tab)}
           label={t("Navbar.Products")}
@@ -210,12 +216,13 @@ const Navbar = () => {
             label={t("Navbar.TrackOrder")}
           />
         )}
-        <Tab
-          className={clsx(classes.tab, classesExternal.tab)}
-          component={Button}
-          onClick={goToContactUs.bind(null)}
-          label={t("Navbar.ContactUS")}
-        />
+         <Tab
+              className={clsx(classes.tab, classesExternal.tab)}
+              component={Link}             
+              to={CONTACTUS}
+              tabIndex={3}
+              label={t("Navbar.ContactUS")}
+            />
       </Tabs>
       <Menus popupState={popupState} allMenus={allCategoryItems} />
     </React.Fragment>
@@ -224,7 +231,6 @@ const Navbar = () => {
   const popper = (
     <React.Fragment>
       <ClickAwayListener onClickAway={handleClose}>
-        {/* // onClickAway={(event) => handleClose.bind(null, event)} > */}
         <Popper
           open={openDrop}
           anchorEl={anchorRef.current}
@@ -290,7 +296,6 @@ const Navbar = () => {
 
   const drawer = (
     <SideDrawer
-      goToContactUs={goToContactUs}
       openDrawer={openDrawer}
       toggleDrawer={toggleDrawer}
       value={value}

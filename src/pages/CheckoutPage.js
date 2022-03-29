@@ -171,7 +171,7 @@ const CheckoutPage = (props) => {
   
   const pathArray = window.location.pathname.split( '/' );
   const screenName = pathArray[pathArray.length -1]
-  const { email, id = 0 } = useParams();
+  const { email } = useParams();
 
   const handleUserType = useCallback((event, newvalue) => {
     setUserType(newvalue);

@@ -82,7 +82,7 @@ const DesktopCartItems = (props) => {
 
         <Divider variant="fullWidth" />
 
-        <Grid container xs={12} lg={12} sm={12} md={12} justifyContent="flex-start">
+        <Grid container  justifyContent="flex-start">
           <Grid item xs={5} lg={5} sm={5} md={5} >
             <Typography variant="body1" color="textSecondary">
             {t("Cart.ProductDetails")}
@@ -107,13 +107,13 @@ const DesktopCartItems = (props) => {
 
         {cartItems.map((item, index) => (
           <Fragment key={item.itemId}>
-            <Grid container xs={12} lg={12} sm={12} md={12} className={classes.itemContainer}>
-              <Grid container xs={5} lg={5} sm={5} md={5} style={{flexWrap: "noWrap"}}>
+            <Grid container className={classes.itemContainer}>
+              <Grid item container xs={5} lg={5} sm={5} md={5} style={{flexWrap: "noWrap"}}>
                   <Grid item className={classes.image}>
                      <img alt={item.itemName} className={classes.orderImage}
                         src={require(`../../../../assets/img/${item.itemImage}`).default} />
                   </Grid>
-                  <Grid item container direction="column" style={{ margin: "0.2em 1em 0px 1em" }}>
+                  <Grid item style={{ margin: "0.2em 1em 0px 1em" }}>
                       <Grid item>
                         <Typography gutterBottom variant="subtitle1" className={classes.textContainer}>
                           {item.itemName}
@@ -141,8 +141,7 @@ const DesktopCartItems = (props) => {
                       </Grid>
                 </Grid>
               </Grid>
-              <Grid container xs={3} lg={3} sm={3} md={3}>
-                <Grid item>
+              <Grid item  xs={3} lg={3} sm={3} md={3}>             
                   <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
                     <Button onClick={dispatchCartActions.bind(null, removeItem(item.itemId, 1))}>
                       -
@@ -151,29 +150,24 @@ const DesktopCartItems = (props) => {
                     <Button onClick={dispatchCartActions.bind(null, addItem({ itemId: item.itemId, quantity: 1 }))}>
                       +
                     </Button>
-                  </ButtonGroup>
-                </Grid>
+                  </ButtonGroup>                
               </Grid>
-              <Grid container xs={2} lg={2} sm={2} md={2}>
-                <Grid item>
+              <Grid item  xs={2} lg={2} sm={2} md={2}>
                   <Typography
                     variant="subtitle1"
                     color="textPrimary"
                     style={{ fontWeight: "bold" }} >
                     {item.price.toFixed(3)}
                   </Typography>
-                </Grid>
               </Grid>
-              <Grid container xs={2} lg={2} sm={2} md={2}>
-                <Grid item>
+              <Grid item  xs={2} lg={2} sm={2} md={2}>
                   <Typography
                     variant="subtitle1"
                     color="textPrimary"
                     style={{ fontWeight: "bold" }} >
-                        {/* {(Number(item.quantity) * Number(item.price)).toFixed(3)} */}
-                        {`${(Number(item.quantity) * Number(item.price)).toFixed(3)} ${t("Cart.Kwd")}`}
+                         {/* {(Number(item.quantity) * Number(item.price)).toFixed(3)} */}
+                         {`${(Number(item.quantity) * Number(item.price)).toFixed(3)} ${t("Cart.Kwd")}`}
                   </Typography>
-                </Grid>
               </Grid>
             </Grid>
           </Fragment>

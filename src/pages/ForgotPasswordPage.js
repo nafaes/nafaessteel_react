@@ -47,8 +47,7 @@ const ForgotPasswordPage = () => {
     });
   };
 
-  const submitHandler = useCallback(
-    async (event) => {
+  const submitHandler = useCallback(async (event) => {
       event.preventDefault();
       if (!email.valid) {
         setEmail((prevEmail) => {

@@ -17,7 +17,7 @@ export const appTheme = (direction) => {
       },
       action: {
         disabledBackground: "lightGray",
-        disabled: "black",
+        disabled: "white",
       },
     },
     typography: {

@@ -84,6 +84,7 @@ const AddToCartPage = (props) => {
     }
   }, [languageId, historyItem,t]);
 
+  // linear-gradient(45deg, rgb(41 137 171) 40%, rgb(143, 193, 210) 90%)
   useEffect(() => {
     if (historyItem) {
       getItemDetails();
