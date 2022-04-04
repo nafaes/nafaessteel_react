@@ -8,7 +8,6 @@ import BreadcrumbsNavigation from "./BreadcrumbsNavigation";
 import AddToCartForm from "./AddToCartForm";
 import ProductSummary from "./ProductSummary";
 import LoaderImg from "../LoaderImg";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const AddToCart = (props) => {
   const {
@@ -25,7 +24,7 @@ const AddToCart = (props) => {
   const englishMobileStyles = addToCartMobEng();
   let classesExternal = addTocartEngDesk;
   let classes = englishMobileStyles;
-  const mobileScreen = useMediaQuery(theme => theme.breakpoints.up('xs'));
+  
 
   return (
     <Fragment>
@@ -70,5 +69,6 @@ const AddToCart = (props) => {
 };
 
 export default React.memo(AddToCart);
+
 
 

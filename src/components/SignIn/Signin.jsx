@@ -34,7 +34,7 @@ const SignIn = (props) => {
   const englishMobileStyles = signinEngMobile(userCheckoutStyles)();
   let classesExternal = signinEngDesk;
   let classes = englishMobileStyles;
-  const mobileScreen = useMediaQuery(theme => theme.breakpoints.up('xs'));
+  const mobileScreen = useMediaQuery(theme => theme.breakpoints.down('xs'));
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = useCallback(() => {
@@ -45,40 +45,34 @@ const SignIn = (props) => {
     event.preventDefault();
   }, []);
 
+  const mobileQuery = (
+    
+     (isDisplayImage ? 
+      <Grid item container lg={6} justifyContent="center" alignItems="center"
+        style={{
+          background: "linear-gradient(to bottom, #9199a1 0%, #e3e6e8 80%)",
+          borderTopLeftRadius: "5%",
+          borderBottomLeftRadius: "5%",
+        }}
+      >
+        <Grid item>
+          <img
+            src={login}
+            alt="bg"
+            className={clsx(classes.loginImage, classesExternal.loginImage)}
+          />
+        </Grid>
+      </Grid>
+     : null)
+  );
+
   return (
     <Grid container direction="row"
       className={clsx(classes.formContainer, classesExternal.formContainer)}>
-      
-      {isDisplayImage ? (
-        <Grid
-          item
-          container
-          lg={6}
-          justifyContent="center"
-          alignItems="center"
-          style={{
-            background: "linear-gradient(to bottom, #9199a1 0%, #e3e6e8 80%)",
-            borderTopLeftRadius: "5%",
-            borderBottomLeftRadius: "5%",
-          }}
-        >
-          <Grid item>
-            <img
-              src={login}
-              alt="bg"
-              className={clsx(classes.loginImage, classesExternal.loginImage)}
-            />
-          </Grid>
-        </Grid>
-      ) : null}
+        
+    {mobileScreen ? null : mobileQuery}   
 
-      <Grid
-        item
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        lg={6}
+      <Grid item container  lg={6} direction="column" justifyContent="center" alignItems="center"
         className={clsx(
           classes.loginContainForm,
           classesExternal.loginContainForm
@@ -133,7 +127,7 @@ const SignIn = (props) => {
                   classesExternal.formTextfield
                 )}
                 label={t("SignIn.InputFields.Password")}
-                required={true}
+                 required={true}
                 id="password"
                 type={showPassword ? "text" : "password"}
                 variant="outlined"

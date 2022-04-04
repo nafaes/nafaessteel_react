@@ -50,7 +50,7 @@ const ProductSummary = (props) => {
   return (
     <React.Fragment>
       <Grid container justifyContent="center" style={{ marginTop: "2em" }}>
-        <Grid item lg={7} md={7} xs={12}>
+        <Grid item lg={6} md={6} xs={12}>
 
           <TableContainer component={Paper}>
             <Table
@@ -87,7 +87,6 @@ const ProductSummary = (props) => {
                     ))}
                     <TableCell align="center">
                       <ButtonGroup
-
                         variant="contained"
                         color="primary"
                         aria-label="contained primary button group"

@@ -13,7 +13,6 @@ import {
   PAYMENTFAILED,
   FORGOTPASSWORD,
   RESETPASSWORD,
-  TRACKORDER,
   ORDERS,
   GUESTTRACKORDER,
   LOADER,
@@ -35,7 +34,7 @@ import {
   ResetPasswordPage,
   SigninPage,
   SignupPage,
-  TrackOrdersPage,
+  // TrackOrdersPage,
   LoadingPage,
   AccountVerify,
   ContactUsPage,
@@ -55,7 +54,7 @@ const Routes = ({ isAuthenticated }) => {
         <Route exact={true} path={ACCOUNTVERIFY} component={AccountVerify} />
         <Route exact={true} path={PAYMENTFAILED} component={PaymentFailed} />
         <Route exact={true} path={ORDERS} component={OrdersPage} />
-        <Route exact={true} path={TRACKORDER} component={TrackOrdersPage} />
+        {/* <Route exact={true} path={TRACKORDER} component={TrackOrdersPage} /> */}
         <Route exact={true} path={CONTACTUS} component={ContactUsPage} />
         <Route exact={true} path={LOADER} component={LoadingPage} />
         {isAuthenticated === false ? (

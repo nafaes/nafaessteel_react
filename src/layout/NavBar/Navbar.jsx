@@ -74,7 +74,7 @@ const Navbar = () => {
   let classesExternal = navbarEngDesk;
   let classes = englishMobileStyles;
   const {
-    userState: { isAuthenticated, userName,token },
+    userState: { isAuthenticated, userName},
     cartState: { totalItems },
     languageChangeHandler,
     dispatchAuthActions,

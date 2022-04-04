@@ -41,7 +41,6 @@ const CartPage = ({ history }) => {
 
     try {
       const response = await validateOrder(orderItems, languageId);
-      console.log(response.items)
       setPlaceOrder(false);
       if (response.code === 200 && response.hasOwnProperty("items")) {
         setOpenDialog(true);

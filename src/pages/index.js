@@ -10,7 +10,7 @@ export const AddToCartPage = React.lazy(() => import("./AddToCartPage"));
 export const CartPage = React.lazy(() => import("./CartPage"));
 export const CheckoutPage = React.lazy(() => import("./CheckoutPage"));
 export const OrdersPage = React.lazy(() => import("./Orders"));
-export const TrackOrdersPage = React.lazy(() => import("./TrackOrder"));
+// export const TrackOrdersPage = React.lazy(() => import("./TrackOrder"));
 export const ContactUsPage = React.lazy(() => import("../components/ContactUs"));
 export const LoadingPage = React.lazy(() => import("./Loader"));
 export const GuestTrackOrderPage = React.lazy(() =>import("./GuestTrackOrderPage"));

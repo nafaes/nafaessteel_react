@@ -56,7 +56,7 @@ const ContactUs = (props) => {
                             variant="body1" color="secondary"
                             style={{padding:"1em"}}
                         >
-                            Nafees International Group was established in 2006 as a limited
+                            Nafaes International Group was established in 2006 as a limited
                             liability company, and aims to provide its services according to
                             innovative solutions that serve all the clients and provide the
                             necessary protection. Nafaes online service for Rebars is one of

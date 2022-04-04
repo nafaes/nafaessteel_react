@@ -7,7 +7,6 @@ const CryptoJS = require("crypto-js");
 export const axiosInstance = (props) => {
 
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
   let axiosInst;
   if (user) {
     axiosInst = axios.create({

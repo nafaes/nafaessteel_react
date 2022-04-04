@@ -13,11 +13,10 @@ export const signinMobCommon = {
     },
   },
   loginContainForm: {
-    [theme.breakpoints.down("xs")]: {
-      borderTop: "1px solid  rgba(0, 134, 179,0.7) ",
-      borderTopStyle: "dotted",
+    [theme.breakpoints.down("xs")]: {    
       height: "22em",
       borderLeft: "none",
+      borderRadius: "0px !important "
     },
     // height: "26em",
     borderLeft: "1px solid  rgba(0, 134, 179,0.7)",

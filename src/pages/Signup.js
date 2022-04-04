@@ -7,8 +7,6 @@ import { updateObject } from "../utils/updateObject";
 import { checkValidity } from "../utils/validations";
 import { GlobalContext } from "../context/Provider";
 import EmailVerifyDetails from "../components/SignUp/EmailVerifyDetails";
-import { useEffect } from "react";
-import axios from "axios";
 
 
 const signupFormInitialState = {
@@ -86,23 +84,22 @@ const SignupPage = (props) => {
     setOpenDialog(false);
   }, []);
 
-  const [ip, setIP] = useState('');
+  // const [ip, setIP] = useState('');
 
-  //creating function to load ip address from the API
-  const getData = async () => {
-    const res = await axios.get('https://geolocation-db.com/json/')
-    console.log(res.data);
-    setIP(res.data.IPv4)
-  }
+  //creating function to load ip 
+  // const getData = async () => {
+  //   const res = await axios.get('https://geolocation-db.com/json/')
+  //   console.log(res.data);
+  //   setIP(res.data.IPv4)
+  // }
   const [gotSuccess, setGotSuccess] = useState(false);
   const {languageId } = useContext(GlobalContext);
   const pathArray = window.location.pathname.split( '/' );
   const screenName = pathArray[pathArray.length -1]
-  useEffect(() => {
-      const response = getData()
-      console.log(response)
-  }, []);
-  
+  // useEffect(() => {
+  //     const response = getData()
+  //     console.log(response)
+  // }, []);
 
   const conformPasswordHandler = useCallback(
     ({ target: { value, name } }) => {
